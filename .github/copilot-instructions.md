@@ -1,50 +1,53 @@
-<!-- .github/copilot-instructions.md - guidance for AI coding agents -->
-# Copilot / AI Agent Instructions — webLogrosApp
+<!-- Copilot instructions for AI coding agents working on this repo -->
+# Copilot / AI Agent Instructions
 
-This file gives focused, actionable guidance to AI coding agents working on this repo. Keep suggestions concrete and grounded in the repository's discoverable patterns.
+This file contains concise, actionable guidance to help an AI coding agent become productive in this repository.
 
-- **Big picture:** The project is split into a Next.js frontend and an Express backend (separate services). Frontend talks to backend over a REST API exposed at `/api`. The backend uses Prisma + PostgreSQL and issues JWTs in HttpOnly cookies for admin auth. See `README.md` and `docs/Architecture.md` for the canonical diagram and auth flow.
+## Guidance-only agent (important)
 
-- **Where to look first:**
-  - `README.md` — high-level stack and goals.
-  - `docs/Architecture.md` — routing, auth, and data-flow specifics.
-  - `docs/setup_local.md` — local run commands and required env vars.
-  - `docs/Deployment.md` — Docker Compose and Nginx routing examples.
+- **Agent mode:** This repository is for learning and guidance only. Do NOT create, modify, or commit source files, scaffolding, or infra manifests unless you have explicit permission from the repository owner. Provide step-by-step guidance, code snippets, and example commands, but always ask for approval before applying changes.
+- **Interaction style:** Prioritize explanations, short examples, and safe-to-run commands. When proposing a change, include a one-line summary, a small patch example, and the exact commands a developer should run to apply it locally.
 
-- **Immediate dev workflows (copyable):**
-  - Frontend: run in the frontend root with `npm install` then `npm run dev`.
-  - Backend: run in the backend root with `npm install` then `npm run dev`.
-  - Start full stack for production-like testing: `docker compose up -d --build` (see `docs/Deployment.md`).
+- **Big picture**: this is a monorepo with `apps/` (frontend: Next.js, backend: Express), `infra/` (Docker + deployment), and `docs/` (architecture, setup, deployment). See `README.md` and `docs/Architecture.md` for the intended architecture.
 
-- **Important env vars / examples:**
-  - Frontend: `NEXT_PUBLIC_API_BASE_URL=http://localhost:4000/api` (used by client-side code to call the API).
-  - Backend: `DATABASE_URL` (Postgres connection), `JWT_SECRET` (signing tokens). See `docs/setup_local.md`.
+- **Current repo state (important)**: `apps/frontend` and `apps/backend` directories exist but are empty in this clone; `infra/docker/` is present but appears to have no checked-in `docker-compose.yml`. Always verify files exist before making assumptions or changes.
 
-- **Auth pattern to preserve:**
-  - Admin auth uses JWT stored in an HttpOnly cookie. When working on auth or admin endpoints, follow the flow in `docs/Architecture.md`: login -> backend sets HttpOnly JWT cookie -> protected endpoints validate cookie.
+- **Primary flows to inspect and preserve**:
+  - Frontend calls backend at `/api`. The frontend expects `NEXT_PUBLIC_API_BASE_URL` to point at `http://localhost:4000/api` in local development (see `docs/setup_local.md`).
+  - Backend uses Prisma and PostgreSQL. Configuration is expected in `apps/backend/.env` with `DATABASE_URL` and `JWT_SECRET`.
+  - Auth uses JWT stored in an HttpOnly cookie for admin routes (see `docs/Architecture.md`).
 
-- **Conventions & patterns (code-level):**
-  - Services are independent: prefer edits scoped to frontend or backend directories only unless changing cross-cutting concerns (e.g., API shape, env names).
-  - API surface is REST-style under `/api`. Avoid introducing GraphQL or RPC without explicit team approval.
-  - Database interactions use Prisma ORM — migrations and schema changes should include a migration step and seed updates.
+- **Developer workflows / commands** (copyable):
+  - Start frontend (when present):
+    - `cd apps/frontend && npm install && npm run dev` (frontend default port: 3000)
+  - Start services with Docker (when `infra/docker/docker-compose.yml` exists):
+    - `docker compose up -d --build`
 
-- **Docker & Deployment cues:**
-  - Use `docker compose` for multi-service runs. Nginx is expected to route `/api` to the backend and the rest to the Next.js app (see `docs/Deployment.md`).
+- **Files to check first (examples)**:
+  - `README.md` (project overview)
+  - `docs/Architecture.md` (routing, auth flow)
+  - `docs/setup_local.md` (local dev commands and .env locations)
+  - `apps/frontend/.env.local` (place `NEXT_PUBLIC_API_BASE_URL`)
+  - `apps/backend/.env` (place `DATABASE_URL`, `JWT_SECRET`)
 
-- **Testing and debugging hints (repo-specific):**
-  - Local Postgres is recommended via Docker Compose per `docs/setup_local.md` — tests and dev runs assume a reachable `DATABASE_URL`.
-  - For auth bugs, reproduce with DevTools disabled for JS-only cookie inspection (HttpOnly cookies are not visible to JS); inspect server responses and the request cookie header.
+- **Patterns & conventions**:
+  - Monorepo: keep frontend and backend separated under `apps/` and treat them as independently buildable services.
+  - Environment-specific files: frontend uses Next.js `.env.local`; backend uses `.env` at `apps/backend`.
+  - API routing: backend endpoints mount under `/api` (Nginx -> Express). When modifying server routes, update frontend API base or Next.js rewrites accordingly.
+  - Database migrations: backend uses Prisma ORM — look for `prisma/` (if present) and run `npx prisma migrate dev` when schema changes.
 
-- **When modifying public API endpoints:**
-  - Update the README and `docs/Architecture.md` if you change routes or auth behavior.
-  - Prefer additive changes; document breaking changes explicitly in the docs.
+- **When making changes**:
+ - **When making changes**:
+  - This repo owner prefers guidance-only interactions. Verify `apps/*` actually contain source before suggesting scaffolding. If source is missing, propose a minimal scaffold and explicitly ask for permission before creating files.
+  - If you change API shapes, update `docs/Architecture.md` and `docs/setup_local.md` with examples and dev commands.
+  - For deployments, prefer modifying `infra/docker/*` and `docs/Deployment.md` together so docs and infra stay aligned.
 
-- **Files that are authoritative:** `README.md`, `docs/Architecture.md`, `docs/setup_local.md`, `docs/Deployment.md`, and `docs/Roadmap.md`.
+- **Checks to perform before submitting a PR**:
+  - `apps/frontend` builds (`npm run build`) without errors (if present).
+  - `apps/backend` compiles and starts with Node 20 LTS (if TypeScript present): `npm run build && npm start`.
+  - If adding DB schema changes, include Prisma migration and update `docs/` with any required env changes.
 
-- **Do not assume:**
-  - Exact repo layout (frontend/backend directories are separate repos in original plan). If you cannot find a service root, ask the user where the frontend/backend live in the workspace.
+If any section is unclear or files are missing where the docs expect them, tell the repository owner which file(s) you couldn't find and propose a minimal scaffold. Ask for permission before creating large scaffolding changes.
 
-- **Examples to follow in PRs:**
-  - Small, focused commits. When adding a migration, include the migration files and a small README note on how to run `prisma migrate dev` and seed data.
-
-If anything above is unclear or you need specific file locations (frontend vs backend root), ask and I'll point to the exact paths. Please propose one change at a time in PRs so maintainers can review easily.
+---
+Please review — I can refine wording, add examples, or merge with any existing instructions you prefer.

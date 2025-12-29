@@ -36,25 +36,32 @@ Browser
   │
   ├── Frontend (React + Nginx)
   │
-  └── Backend API (Express)
-          │
-          └── PostgreSQL
+  ├── Frontend (Next.js)
+  │
+  ├── Backend API (Express)
+  │
+  └── PostgreSQL
 ```
 
 The frontend communicates with the backend through a REST API. The backend handles authentication, authorization, and database access.
 
 ---
 
-## Repositories Structure
+## Repository Structure (Monorepo)
 
 ```
-team-achievements-frontend/
-team-achievements-backend/
+team-achievements/
+├── apps/
+│ ├── frontend/ # Next.js
+│ └── backend/ # Express API
+├── infra/ # Docker, Nginx, deployment scripts
+└── docs/ # Project documentation
 ```
 
-Frontend and backend are developed and deployed independently.
+Frontend and backend are developed in the same repository but can be built and deployed as separate services.
 
 ---
+
 
 ## Environments
 
