@@ -1,0 +1,28 @@
+# Technical Decisions
+
+## Why Next.js instead of React + React Router?
+- Built-in routing and project structure
+- Better SEO options (SSR/SSG) for public pages
+- Single framework for public site + admin UI
+
+## Why keep Express as a separate backend?
+- Clear separation of concerns (frontend vs API)
+- Better learning of REST, auth, middlewares, and deployment
+- Easier to scale and version the API independently
+
+## Database choice: PostgreSQL
+- Strong relational model for achievements and statistics
+- Reliable and common in production
+
+## ORM choice: Prisma
+- Great developer experience and type safety
+- Easy migrations and schema evolution
+
+## Auth choice: JWT (default: HttpOnly cookie)
+- Simple stateless auth
+- Safer browser storage when using HttpOnly cookies
+
+## Infra: Docker + Compose + Nginx
+- Reproducible environments
+- One-command deploy
+- Nginx handles TLS and reverse proxy
