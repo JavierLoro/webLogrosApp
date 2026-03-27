@@ -50,6 +50,7 @@ services:
     container_name: weblogros_watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json:ro
     environment:
       WATCHTOWER_POLL_INTERVAL: 30
     command: --label-enable
