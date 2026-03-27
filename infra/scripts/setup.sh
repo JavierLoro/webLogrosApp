@@ -85,7 +85,7 @@ else
   echo ""
   ask "  Docker se instalará usando el script oficial de get.docker.com."
   ask "  ¿Continuar? [s/N]"
-  read -r CONFIRM_DOCKER
+  read -r CONFIRM_DOCKER < /dev/tty
   if [[ "${CONFIRM_DOCKER,,}" != "s" ]]; then
     error "Instalación cancelada por el usuario."
   fi
@@ -115,10 +115,10 @@ info "Puedes crearlo en: https://github.com/settings/tokens"
 echo ""
 
 ask "  Usuario de GitHub:"
-read -r GITHUB_USER
+read -r GITHUB_USER < /dev/tty
 
 ask "  Personal Access Token (PAT):"
-read -rs GITHUB_PAT
+read -rs GITHUB_PAT < /dev/tty
 echo ""
 
 info "Iniciando sesión en ghcr.io..."
@@ -132,7 +132,7 @@ echo -e "${BOLD}── Variables de entorno ────────────
 echo ""
 
 ask "  Contraseña de PostgreSQL (dejar vacío para generar una aleatoria):"
-read -rs DB_PASS
+read -rs DB_PASS < /dev/tty
 echo ""
 if [[ -z "$DB_PASS" ]]; then
   DB_PASS=$(openssl rand -hex 16)
@@ -140,7 +140,7 @@ if [[ -z "$DB_PASS" ]]; then
 fi
 
 ask "  JWT Secret (dejar vacío para generar uno aleatorio):"
-read -rs JWT_SECRET
+read -rs JWT_SECRET < /dev/tty
 echo ""
 if [[ -z "$JWT_SECRET" ]]; then
   JWT_SECRET=$(openssl rand -hex 32)
@@ -151,10 +151,10 @@ fi
 echo ""
 info "Directorio de instalación: ${INSTALL_DIR}"
 ask "  ¿Usar este directorio? [S/n]"
-read -r CONFIRM_DIR
+read -r CONFIRM_DIR < /dev/tty
 if [[ "${CONFIRM_DIR,,}" == "n" ]]; then
   ask "  Introduce la ruta completa:"
-  read -r INSTALL_DIR
+  read -r INSTALL_DIR < /dev/tty
 fi
 
 mkdir -p "${INSTALL_DIR}/infra/nginx"
@@ -191,7 +191,7 @@ echo ""
 # ── 11. Levantar los contenedores ─────────────
 echo ""
 ask "  ¿Levantar los contenedores ahora? [S/n]"
-read -r CONFIRM_UP
+read -r CONFIRM_UP < /dev/tty
 if [[ "${CONFIRM_UP,,}" == "n" ]]; then
   info "Puedes levantar manualmente con:"
   echo "  cd ${INSTALL_DIR}"
