@@ -1,32 +1,37 @@
 # Roadmap
 
+## Ruta de aprendizaje
+JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT → Nginx → **Proxmox**
+
+---
+
 ## Phase 1 – Project Base
-- [ ] Create GitHub repositorie
-- [ ] Next.js + TypeScript initialized
-- [ ] Express + TypeScript initialized
-- [ ] Basic health endpoints and local run scripts
-- [ ] Basic CI (optional) + basic linting (optional)
+- [x] Create GitHub repository
+- [x] Next.js + TypeScript initialized
+- [x] Express + TypeScript initialized
+- [x] Basic health endpoints and local run scripts
 
 ## Phase 2 – Public Website
-- [ ] Public homepage
-- [ ] Achievements list page
-- [ ] Public stats page
-- [ ] Backend public endpoints (GET)
+- [x] Public homepage
+- [x] Achievements list page (`/logros`, `/logros/[id]`)
+- [x] Backend public endpoints (GET /logros, GET /logros/:id)
 
-## Phase 3 – Admin Panel
-- [ ] Admin login page
-- [ ] Auth (JWT)
-- [ ] Protected admin pages
-- [ ] Admin endpoints (CRUD)
+## Phase 3 – Auth & Admin
+- [x] Register + Login pages (Client Components)
+- [x] Auth (JWT) — backend: register, login, authMiddleware
+- [x] Protected create-logro form (token from localStorage)
+- [x] Session-aware header (usePathname + useEffect)
+- [x] Backend protected endpoints (POST /logros)
 
 ## Phase 4 – Database
-- [ ] PostgreSQL container
-- [ ] Prisma schema + migrations
+- [x] PostgreSQL container (Docker)
+- [x] Prisma schema + migrations
 - [ ] Seed data
 
 ## Phase 5 – Deployment
-- [ ] Dockerfiles (frontend + backend)
-- [ ] Docker Compose (frontend + backend + db)
-- [ ] Nginx reverse proxy config
+- [x] Dockerfiles (frontend + backend)
+- [x] Docker Compose (db + backend + frontend + nginx)
+- [x] Nginx reverse proxy (puerto 80, /api/* → backend, /* → frontend)
+- [ ] Proxmox — despliegue en servidor local/VM
 - [ ] HTTPS (Let's Encrypt)
 - [ ] GitHub-based deployment workflow

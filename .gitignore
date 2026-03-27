@@ -12,13 +12,20 @@ out
 # Build
 dist
 build
+*.tsbuildinfo
 
 # Env
 .env
 .env.*
 !.env.example
 
+# Legacy
+_legacy/
+
 # OS/IDE
 .DS_Store
 .vscode
 .idea
+
+# Prisma (si se configura output personalizado fuera de node_modules)
+apps/backend/src/generated/
