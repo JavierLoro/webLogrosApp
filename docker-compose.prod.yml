@@ -53,6 +53,7 @@ services:
       - /root/.docker/config.json:/config.json:ro
     environment:
       WATCHTOWER_POLL_INTERVAL: 30
+      DOCKER_API_VERSION: "1.41"
     command: --label-enable
     restart: unless-stopped
 
