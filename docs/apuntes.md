@@ -346,9 +346,12 @@ datasource db {
 }
 
 model Logro {
-  id     Int    @id @default(autoincrement())
-  nombre String
-  puntos Int
+  id          Int    @id @default(autoincrement())
+  nombre      String
+  puntos      Int
+  descripcion String
+  categoria   String
+  icono       String
 }
 ```
 
@@ -407,7 +410,7 @@ const logro = await prisma.logro.findUnique({ where: { id } })
 
 // Crear
 const nuevo = await prisma.logro.create({
-  data: { nombre, puntos }
+  data: { nombre, puntos, descripcion, categoria, icono }
 })
 ```
 
@@ -794,6 +797,24 @@ page.tsx (Server Component)
 ```
 
 El fetch de `page.tsx` sigue corriendo en el servidor (sin CORS). El formulario de `NuevoLogro.tsx` corre en el navegador (con token de localStorage).
+
+### URLs en Client Components con Docker
+
+En desarrollo local, `http://localhost:3001` funciona porque el backend está expuesto en ese puerto. En Docker, el backend no está expuesto — solo Nginx (en el 8080) es accesible desde el navegador.
+
+**Regla:** los Client Components deben usar rutas relativas (`/api/...`) para que la petición pase por Nginx:
+
+```ts
+// MAL — falla en Docker (el navegador no puede llegar a backend:3001)
+const res = await fetch("http://localhost:3001/auth/login", ...)
+
+// BIEN — funciona en Docker y en local
+const res = await fetch("/api/auth/login", ...)
+```
+
+Los **Server Components** sí pueden usar `process.env.BACKEND_URL` porque su fetch sale del servidor de Next.js (dentro de Docker), no del navegador.
+
+---
 
 ### cache: "no-store" en fetch del servidor
 

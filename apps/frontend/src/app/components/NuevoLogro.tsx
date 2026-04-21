@@ -9,6 +9,9 @@ export default function NuevoLogro() {
   const [token, setToken] = useState<string | null>(null)
   const [nombre, setNombre] = useState("")
   const [puntos, setPuntos] = useState("")
+  const [descripcion, setDescripcion] = useState("")
+  const [categoria, setCategoria] = useState("")
+  const [icono, setIcono] = useState("")
   const [error, setError] = useState("")
 
   useEffect(() => {
@@ -31,13 +34,13 @@ export default function NuevoLogro() {
     setError("")
 
     try {
-      const res = await fetch("http://localhost:3001/logros", {
+      const res = await fetch("/api/logros", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ nombre, puntos: Number(puntos) }),
+        body: JSON.stringify({ nombre, puntos: Number(puntos), descripcion, categoria, icono }),
       })
 
       if (!res.ok) {
@@ -47,6 +50,9 @@ export default function NuevoLogro() {
 
       setNombre("")
       setPuntos("")
+      setCategoria("")
+      setDescripcion("")
+      setIcono("")
       router.refresh()
     } catch (err) {
       setError("No se pudo conectar con el servidor")
@@ -71,6 +77,30 @@ export default function NuevoLogro() {
         placeholder="Puntos"
         value={puntos}
         onChange={(e) => setPuntos(e.target.value)}
+        className="border rounded-lg p-2"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Descripción"
+        value={descripcion}
+        onChange={(e) => setDescripcion(e.target.value)}
+        className="border rounded-lg p-2"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Categoría"
+        value={categoria}
+        onChange={(e) => setCategoria(e.target.value)}
+        className="border rounded-lg p-2"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Icono"
+        value={icono}
+        onChange={(e) => setIcono(e.target.value)}
         className="border rounded-lg p-2"
         required
       />

@@ -22,15 +22,15 @@ router.get("/:id", async (req: Request, res: Response) => {
 })
 
 router.post("/", authMiddleware, async (req: Request, res: Response) => {
-  const { nombre, puntos }: { nombre: string; puntos: number } = req.body ?? {}
+  const { nombre, puntos, descripcion, categoria, icono }: { nombre: string; puntos: number; descripcion: string; categoria: string; icono: string } = req.body ?? {}
 
-  if (!nombre || !puntos) {
-    res.status(400).json({ error: "Faltan campos: nombre y puntos" })
+  if (!nombre || !puntos || !descripcion || !categoria || !icono) {
+    res.status(400).json({ error: "Faltan campos: nombre, puntos, descripcion, categoria o icono" })
     return
   }
 
   const nuevoLogro = await prisma.logro.create({
-    data: { nombre, puntos }
+    data: { nombre, puntos, descripcion, categoria, icono },
   })
 
   res.status(201).json(nuevoLogro)

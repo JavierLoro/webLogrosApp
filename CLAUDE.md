@@ -44,6 +44,17 @@ Enseña a pensar, no a copiar: decision tree de frameworks, principios de async,
 
 ---
 
+## Reglas de trabajo para Claude
+
+- Leer el archivo completo antes de editar. Planificar todos los cambios y hacer UNA sola edición completa.
+- Cuando el usuario corrija algo, releer su mensaje, citar lo que pidió y confirmar antes de proceder.
+- Cada pocos turnos, releer el pedido original para no desviarse del objetivo.
+- Cuando esté atascado, resumir lo intentado y pedir orientación en vez de reintentar lo mismo.
+- Releer el último mensaje del usuario antes de responder. Completar cada instrucción al 100%.
+- Trabajar con más autonomía. Tomar decisiones razonables sin pedir confirmación en cada paso.
+
+---
+
 ## IMPORTANTE — Contexto de aprendizaje
 
 > Este proyecto es un entorno de aprendizaje progresivo. Aplica siempre estas reglas, sin excepción:

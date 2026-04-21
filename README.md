@@ -6,7 +6,7 @@ Plataforma de logros de equipo. Proyecto de aprendizaje progresivo con stack com
 
 | Capa | Tecnología |
 |------|-----------|
-| Frontend | Next.js 15 + TypeScript + Tailwind CSS |
+| Frontend | Next.js 16 + TypeScript + Tailwind CSS |
 | Backend | Express + TypeScript + Prisma ORM |
 | Base de datos | PostgreSQL 16 |
 | Auth | JWT (jsonwebtoken + bcryptjs) |
