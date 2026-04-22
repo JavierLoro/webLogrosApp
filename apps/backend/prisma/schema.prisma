@@ -13,6 +13,7 @@ model Logro {
   descripcion String
   categoria String
   icono String
+  usuarios UserLogros[]
 }
 
 model User {
@@ -20,12 +21,16 @@ model User {
   email    String @unique
   password String
   role String @default("USER")
-  logros
+  logros UserLogros[]
 }
 
 model UserLogros{
   id Int @id @default(autoincrement())
-  user Int
-  logro Int
+  userId Int 
+  user User @relation(fields: [userId], references: [id])
+  logroId Int
+  logro Logro @relation(fields: [logroId], references: [id])
+  fechaObtenido DateTime @default(now())
+  @@unique([userId, logroId])
 
 }
