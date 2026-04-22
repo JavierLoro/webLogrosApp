@@ -886,6 +886,83 @@ export default nextConfig
 
 ---
 
+## Autorización — Roles y middlewares
+
+### Autenticación vs. Autorización
+
+Dos conceptos distintos que se confunden:
+
+| | Autenticación | Autorización |
+|---|---|---|
+| Pregunta | ¿Quién eres? | ¿Qué puedes hacer? |
+| Verifica | Identidad (token JWT) | Permisos (rol del usuario) |
+| Middleware | `authMiddleware` | `adminMiddleware` |
+| Error si falla | 401 Unauthorized | 403 Forbidden |
+
+### Códigos 401 vs 403
+
+- **401** — no sé quién eres. No hay token, o el token es inválido. El cliente debería hacer login.
+- **403** — sé quién eres, pero no tienes permiso. Token válido, pero el rol no alcanza.
+
+### Encadenamiento de middlewares
+
+Los middlewares se ejecutan en orden. `adminMiddleware` depende de `authMiddleware` porque necesita `req.userId`:
+
+```ts
+router.post("/", authMiddleware, adminMiddleware, async (req, res) => {
+  // solo llega aquí si el token es válido Y el usuario es ADMIN
+})
+```
+
+### adminMiddleware
+
+```ts
+// src/middleware/admin.ts
+import { Request, Response, NextFunction } from "express"
+import prisma from "../lib/prisma"
+
+export default async function adminMiddleware(req: Request, res: Response, next: NextFunction) {
+  const userId = req.userId
+
+  const user = await prisma.user.findUnique({ where: { id: userId } })
+  if (!user || user.role !== "ADMIN") {
+    res.status(403).json({ error: "Sin permisos" })
+    return
+  }
+  next()
+}
+```
+
+### Extender tipos de Express — Declaration Merging
+
+TypeScript no sabe que `authMiddleware` añade `userId` al objeto `req`. Para decírselo sin modificar la librería, se crea un archivo `.d.ts`:
+
+```ts
+// src/types/express.d.ts
+export {}   // necesario para que TypeScript trate esto como "augmentation" y no como reemplazo
+
+declare module "express" {
+  interface Request {
+    userId?: number
+  }
+}
+```
+
+- **Sin `export {}`** — TypeScript interpreta el archivo como un reemplazo del módulo entero y borra todos los tipos originales de Express.
+- **Con `export {}`** — TypeScript lo trata como una extensión (module augmentation) y los tipos originales se conservan.
+
+### npx prisma generate
+
+Cuando añades un campo nuevo al schema (como `role`), el cliente de Prisma no se actualiza automáticamente. Hay que regenerarlo:
+
+```bash
+npx prisma generate
+```
+
+Si el error persiste en el IDE después de generarlo, reiniciar el servidor de TypeScript: `Ctrl+Shift+P` → "TypeScript: Restart TS Server".
+
+---
+
 ## Nginx
 
 Servidor web que actúa como **reverse proxy**: recibe todas las peticiones y las redirige a la aplicación correcta según la URL.
@@ -1044,6 +1121,11 @@ webLogrosApp/
 │   │   │   ├── server.ts      # punto de entrada (puerto 3001)
 │   │   │   ├── lib/
 │   │   │   │   └── prisma.ts  # cliente Prisma singleton
+│   │   │   ├── middleware/
+│   │   │   │   ├── auth.ts    # verifica JWT → inyecta req.userId
+│   │   │   │   └── admin.ts   # verifica role === ADMIN en BD
+│   │   │   ├── types/
+│   │   │   │   └── express.d.ts  # extiende Request con userId
 │   │   │   └── routes/
 │   │   │       └── logros.ts  # rutas del recurso logros
 │   │   ├── prisma.config.ts   # configuración Prisma CLI
