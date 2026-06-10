@@ -1,12 +1,14 @@
 # webLogrosApp
 
-Plataforma de logros de equipo. Proyecto de aprendizaje progresivo con stack completo: frontend, backend, autenticación, base de datos, Docker, CI/CD y despliegue en servidor propio.
+Plataforma **multi-tenant** de logros: se ofrece a equipos y cada uno recibe su espacio propio (`/equipos/[slug]`) con sus jugadores, logros, ranking y stats. Incluye comunidad cross-team para compartir ideas de logros. Mapa de rutas y roles en [docs/Architecture.md](docs/Architecture.md).
+
+Proyecto de aprendizaje progresivo con stack completo: frontend, backend, autenticación, base de datos, Docker, CI/CD y despliegue en servidor propio.
 
 ## Stack
 
 | Capa | Tecnología |
 |------|-----------|
-| Frontend | Next.js 15 + TypeScript + Tailwind CSS |
+| Frontend | Next.js 16 + TypeScript + Tailwind CSS |
 | Backend | Express + TypeScript + Prisma ORM |
 | Base de datos | PostgreSQL 16 |
 | Auth | JWT (jsonwebtoken + bcryptjs) |
@@ -38,8 +40,11 @@ webLogrosApp/
 │   └── nginx/
 │       └── nginx.conf    # Reverse proxy interno
 ├── docs/
-│   ├── Roadmap.md
-│   └── apuntes.md
+│   ├── Roadmap.md        # Fases de aprendizaje y estado
+│   ├── apuntes.md        # Apuntes de cada concepto implementado
+│   ├── Architecture.md   # Visión general y flujo de auth
+│   ├── Decisions         # Decisiones técnicas y sus porqués
+│   └── Notes.md          # Logbook: TODOs y decisiones puntuales
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml    # CI/CD: build + push a GHCR

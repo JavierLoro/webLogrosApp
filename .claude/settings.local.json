@@ -4,7 +4,10 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://raw.githubusercontent.com/JavierLoro/webLogrosApp/main/README.md\")",
       "Bash(python:*)",
       "mcp__mempalace__mempalace_add_drawer",
-      "mcp__mempalace__mempalace_diary_write"
+      "mcp__mempalace__mempalace_diary_write",
+      "Bash(rtk ls *)",
+      "Bash(rtk grep *)",
+      "Bash(rtk read *)"
     ]
   }
 }

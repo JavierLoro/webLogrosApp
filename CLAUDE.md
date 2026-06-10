@@ -55,7 +55,7 @@ Enseña a pensar, no a copiar: decision tree de frameworks, principios de async,
 > **Nota:** Usa la skill `progressive-tutor` como guía operativa completa para el modo tutor. Las reglas anteriores son el resumen; la skill tiene el protocolo detallado.
 
 ## Descripción del proyecto
-Plataforma de logros de equipo. Proyecto de aprendizaje progresivo:
+Plataforma **multi-tenant** de logros: se ofrece a equipos y cada uno recibe su espacio propio (`/equipos/[slug]`) con sus jugadores, logros, ranking y stats. Roles: `SUPER_ADMIN` (dueño plataforma) · `TEAM_ADMIN` (por equipo) · `PLAYER`. Mapa de rutas completo en `docs/Architecture.md`. Proyecto de aprendizaje progresivo:
 **JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT → Nginx → Proxmox**
 
 ## Arrancar el proyecto
@@ -136,4 +136,4 @@ JWT_SECRET="..."
 ```
 
 ## Estado actual del roadmap
-Fases 1–3 completadas (base, web pública, auth JWT). Fase 4 parcial (sin seed). Fase 5 parcial (Docker + Nginx listos, falta Proxmox/HTTPS). Siguiente: **Phase 6** — relaciones en Prisma (`UserLogro`, roles).
+Fases 1–3 completadas (base, web pública, auth JWT). Fase 4 parcial (sin seed). Fase 5 casi completa (Docker + Nginx + CI/CD a GHCR + Watchtower + Proxmox listos; falta HTTPS). Siguiente: **Phase 5.5** — hardening (fix URLs frontend, Zod, error handler, fail-fast, rate limiting, healthcheck, backup DB), luego **Phase 6** — relaciones en Prisma (`UserLogro`, roles).

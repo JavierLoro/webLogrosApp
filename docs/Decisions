@@ -1,5 +1,16 @@
 # Technical Decisions
 
+## App concept: plataforma multi-tenant de logros (2026-06-10)
+- **Multi-tenant**: la plataforma se ofrece a equipos; cada uno recibe espacio propio con sus jugadores
+- **URLs de tenant — ruta por slug** (`/equipos/[slug]`): el Universal SSL gratuito de Cloudflare solo cubre un nivel de subdominio (`*.jlc-dev.me`); un sub-subdominio (`equipo.logros.jlc-dev.me`) exigiría Advanced Certificate Manager (~10$/mes) + wildcard en el Tunnel + middleware de Host. El slug es gratis, simple, y migrable a subdominios después sin cambiar el modelo de datos
+- **Roles**: `SUPER_ADMIN` (dueño plataforma) · `TEAM_ADMIN` (por equipo) · `PLAYER`
+- **Catálogo de logros propio de cada equipo** (`Logro` pertenece a `Team`): un equipo de fútbol y uno de gaming no comparten logros
+- **Ganar logros**: asignación directa del TEAM_ADMIN + flujo solicitud/aprobación del jugador
+- **Visibilidad**: flag público/privado por equipo (lo decide cada equipo)
+- **Sin login**: solo landing publicitaria + solicitar acceso; el resto requiere sesión
+- **Zona admin separada** (`/admin` y `/equipos/[slug]/admin`): buen ejercicio de layouts anidados y autorización contextual en Next.js
+- **Comunidad de logros** (`/comunidad`): implementar un logro ajeno crea **copia independiente con atribución** (preserva aislamiento entre tenants); jugadores proponen publicar/implementar y el TEAM_ADMIN aprueba (reutiliza el flujo solicitud+aprobación)
+
 ## Why Next.js instead of React + React Router?
 - Built-in routing and project structure
 - Better SEO options (SSR/SSG) for public pages
@@ -18,9 +29,10 @@
 - Great developer experience and type safety
 - Easy migrations and schema evolution
 
-## Auth choice: JWT (default: HttpOnly cookie)
+## Auth choice: JWT (implementado: Bearer token + localStorage)
 - Simple stateless auth
-- Safer browser storage when using HttpOnly cookies
+- Bearer + localStorage elegido por simplicidad durante el aprendizaje
+- Trade-off conocido: localStorage es vulnerable a XSS; migrar a HttpOnly cookie es mejora futura
 
 ## Infra: Docker + Compose + Nginx
 - Reproducible environments
