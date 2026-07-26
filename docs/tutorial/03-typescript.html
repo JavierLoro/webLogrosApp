@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html" class="active"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>TypeScript</h1>
+    <p class="subtitle">JavaScript con tipos: detecta errores antes de ejecutar el código.</p>
+
+    <!-- POR QUÉ EXISTE -->
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>JavaScript es un lenguaje dinámico: no comprueba tipos hasta que el código está corriendo. Eso significa que un error como pasar un <code>string</code> donde se esperaba un <code>number</code> solo aparece en producción, cuando un usuario real lo descubre. A medida que los proyectos crecen (más archivos, más desarrolladores), este modelo se vuelve costoso en tiempo de depuración.</p>
+      <p>TypeScript es un <strong>superconjunto</strong> de JavaScript: todo JavaScript válido es TypeScript válido. Le añade un sistema de tipos estático que el compilador (<code>tsc</code>) verifica <em>antes</em> de ejecutar nada. Si hay un error de tipos, <code>tsc</code> lo señala con la línea exacta. El resultado: errores capturados al escribir el código, no al ejecutarlo.</p>
+    </div>
+
+    <!-- INSTALACIÓN -->
+    <h2>Instalación</h2>
+    <pre><code>npm install --save-dev typescript ts-node @types/node @types/express
+npx tsc --init   # genera tsconfig.json con opciones comentadas</code></pre>
+    <p><code>ts-node</code> ejecuta TypeScript directamente sin compilar a un archivo intermedio — ideal para desarrollo. <code>@types/*</code> son paquetes que añaden tipos a librerías escritas originalmente en JavaScript (como Express).</p>
+
+    <!-- TIPOS BÁSICOS -->
+    <h2>Tipos básicos</h2>
+    <p>La anotación de tipo va después del nombre de la variable, separada por dos puntos:</p>
+    <pre><code>const nombre: string = "Javier"
+const puntos: number = 150
+const activo: boolean = true
+const PORT: number = 3001</code></pre>
+    <div class="callout note">
+      <p class="callout-title">Aviso</p>
+      <p>TypeScript puede <strong>inferir</strong> el tipo automáticamente en muchos casos: <code>const nombre = "Javier"</code> ya sabe que es <code>string</code> sin que lo escribas. La anotación explícita es útil cuando la inferencia no llega (parámetros de funciones, objetos complejos).</p>
+    </div>
+
+    <!-- INTERFACES -->
+    <h2>Interfaces — la forma de un objeto</h2>
+    <p>Una <strong>interfaz</strong> describe la estructura que debe tener un objeto: qué propiedades existe y de qué tipo es cada una. Es como un contrato que TypeScript verifica en tiempo de compilación.</p>
+    <pre><code>interface Logro {
+  id: number
+  nombre: string
+  puntos: number
+}
+
+const logro: Logro = { id: 1, nombre: "Primer login", puntos: 10 }
+const logros: Logro[] = [...]   // array de Logros (el [] indica "lista de")</code></pre>
+
+    <!-- TIPOS EN FUNCIONES -->
+    <h2>Tipos en funciones</h2>
+    <p>Se anotan los parámetros y el tipo de retorno. TypeScript verificará que la función siempre devuelva el tipo prometido:</p>
+    <pre><code>const sumar = (a: number, b: number): number => a + b
+//                    ^tipo param  ^tipo param  ^tipo retorno</code></pre>
+
+    <!-- MÓDULOS -->
+    <h2>Módulos en TypeScript (ES Modules)</h2>
+    <p>TypeScript usa <code>import</code>/<code>export</code> en lugar de <code>require</code>/<code>module.exports</code>. El compilador los transforma al sistema que necesite el entorno de destino.</p>
+    <pre><code>// exportar
+export default router
+
+// importar — módulo con export default
+import logrosRouter from "./routes/logros"
+
+// importar — módulo con exports nombrados
+import express, { Request, Response } from "express"</code></pre>
+
+    <!-- EXPRESS CON TS -->
+    <h2>Express con TypeScript</h2>
+    <p>Los tipos <code>Request</code> y <code>Response</code> de Express describen qué propiedades tiene cada objeto. Así el editor autocompletará <code>req.body</code>, <code>res.json()</code>, etc., y avisará si los usas mal:</p>
+    <pre><code>import express, { Request, Response } from "express"
+
+const router = express.Router()
+
+router.get("/", (req: Request, res: Response) => {
+  res.json(logros)
+})
+
+router.post("/", (req: Request, res: Response) => {
+  const { nombre, puntos }: { nombre: string; puntos: number } = req.body
+  // TypeScript sabe que nombre es string y puntos es number
+})</code></pre>
+
+    <!-- TSCONFIG -->
+    <h2>tsconfig.json — la configuración del compilador</h2>
+    <p><code>tsconfig.json</code> le dice a <code>tsc</code> cómo compilar el proyecto: qué versión de JavaScript generar, dónde está el código fuente, dónde dejar el resultado…</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>La configuración real del backend está en <span class="fileref">apps/backend/tsconfig.json</span>:</p>
+      <pre><code>{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "types": ["node"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "sourceMap": true
+  },
+  "exclude": ["prisma.config.ts", "node_modules", "dist"]
+}</code></pre>
+      <table>
+        <thead>
+          <tr><th>Opción</th><th>Qué hace</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>target: "ES2020"</code></td><td>Genera JavaScript compatible con Node 14+ (soporta async/await nativo)</td></tr>
+          <tr><td><code>module: "commonjs"</code></td><td>Usa <code>require()</code> en el JS generado (el sistema de módulos de Node.js clásico)</td></tr>
+          <tr><td><code>rootDir: "./src"</code></td><td>Todo el código fuente TypeScript está en <code>src/</code></td></tr>
+          <tr><td><code>outDir: "./dist"</code></td><td>El JavaScript compilado va a <code>dist/</code> (se ejecuta en producción)</td></tr>
+          <tr><td><code>strict: true</code></td><td>Activa todas las comprobaciones de tipo estrictas (recomendado)</td></tr>
+          <tr><td><code>esModuleInterop: true</code></td><td>Permite usar <code>import x from "x"</code> con librerías CommonJS</td></tr>
+          <tr><td><code>sourceMap: true</code></td><td>Genera mapas para que los errores de <code>dist/</code> apunten a líneas de <code>src/</code></td></tr>
+          <tr><td><code>exclude</code></td><td>Excluye <code>prisma.config.ts</code> para que <code>tsc</code> no intente compilarlo (está fuera de <code>rootDir</code>)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GOTCHA TSCONFIG -->
+    <div class="callout note">
+      <p class="callout-title">Gotcha: prisma.config.ts fuera de rootDir</p>
+      <p>Si añades un archivo TypeScript en la raíz del backend (como <code>prisma.config.ts</code>) y <code>rootDir</code> apunta a <code>./src</code>, <code>tsc</code> lanzará el error <code>TS6059: File is not under rootDir</code>. La solución es añadirlo al array <code>exclude</code> del <code>tsconfig.json</code>, como ya está hecho en este proyecto.</p>
+    </div>
+
+    <!-- FLUJO COMPILACIÓN -->
+    <h2>El flujo de compilación</h2>
+    <p>En desarrollo y en producción el código sigue caminos distintos:</p>
+    <table>
+      <thead>
+        <tr><th>Entorno</th><th>Herramienta</th><th>Cómo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Desarrollo</td><td><code>ts-node</code></td><td>Transpila en memoria al vuelo; no genera archivos <code>.js</code></td></tr>
+        <tr><td>Producción</td><td><code>tsc</code> + <code>node</code></td><td>Compila a <code>dist/</code> y luego Node ejecuta el JS generado</td></tr>
+      </tbody>
+    </table>
+    <pre><code># Desarrollo (ts-node via nodemon — script "dev")
+nodemon --exec ts-node src/server.ts
+
+# Producción (compilar primero, ejecutar después — script "build" + CMD en Docker)
+tsc
+node dist/server.js</code></pre>
+
+    <!-- SERVER.TS EN ACCIÓN -->
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp — server.ts en acción</p>
+      <p><span class="fileref">apps/backend/src/server.ts</span> muestra TypeScript real en uso: imports de ES Modules, tipo explícito en <code>PORT</code>, y el middleware CORS escrito como arrow function tipada con los tipos de Express:</p>
+      <pre><code>import "dotenv/config"
+import express from "express"
+import logrosRouter from "./routes/logros"
+import authRouter from "./routes/auth"
+
+const app = express()
+const PORT: number = 3001
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200)
+    return
+  }
+  next()
+})
+app.use(express.json())
+
+app.use("/auth", authRouter)
+app.use("/logros", logrosRouter)
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`)
+})</code></pre>
+      <p>Fíjate en el <code>import "dotenv/config"</code> al principio: carga las variables de entorno del archivo <span class="fileref">apps/backend/.env</span> antes de que cualquier otro módulo las necesite.</p>
+    </div>
+
+    <div class="pager">
+      <a href="02-node-npm.html"><span class="dir">← Anterior</span>02 · Node y npm</a>
+      <a class="next" href="04-express.html"><span class="dir">Siguiente →</span>04 · Express</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

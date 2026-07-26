@@ -6,7 +6,11 @@ datasource db {
   provider = "postgresql"
 }
 
+// 📚 Cada "model" = una tabla. Prisma genera el cliente tipado a partir de esto, y cada
+//    cambio aquí se materializa en la BD con una migración (npx prisma migrate dev).
+
 model Logro {
+  // 📚 @id = clave primaria. @default(autoincrement()) → Postgres asigna 1,2,3... solo.
   id     Int    @id @default(autoincrement())
   nombre String
   puntos Int
@@ -14,6 +18,8 @@ model Logro {
 
 model User {
   id       Int    @id @default(autoincrement())
+  // 📚 @unique: no puede haber dos usuarios con el mismo email (lo aprovechamos en register).
   email    String @unique
+  // 📚 Guardamos el HASH de bcrypt, nunca la contraseña en claro (ver routes/auth.ts).
   password String
 }

@@ -1,17 +1,24 @@
 import Link from "next/link"
 import NuevoLogro from "./components/NuevoLogro"
 
+// 📚 Tipamos la forma de un Logro para que TS valide el .map() de abajo.
 type Logro = {
   id: number
   nombre: string
   puntos: number
 }
 
+// 📚 Este fetch corre en el SERVIDOR (esto es un Server Component async, ver Home). Por eso
+//    usa process.env.BACKEND_URL (red interna de Docker) y NO una ruta relativa /api: aquí
+//    "localhost" sí es la máquina del servidor. Es el caso opuesto a los Client Components.
 async function getLogros(): Promise<Logro[]> {
+  // 📚 cache: "no-store" → Next no cachea; pedimos la lista fresca en cada carga.
   const res = await fetch(`${process.env.BACKEND_URL ?? "http://localhost:3001"}/logros`, { cache: "no-store" })
   return res.json()
 }
 
+// 📚 SERVER COMPONENT (sin "use client"). Un componente async que hace fetch en el servidor
+//    y manda al navegador el HTML ya renderizado. No puede usar useState/localStorage.
 export default async function Home() {
   const logros = await getLogros()
 

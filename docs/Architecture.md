@@ -74,6 +74,16 @@ localmente y no cambia si el original cambia. Esto preserva el aislamiento entre
 > **Decisión revisable:** el alta de jugadores la gestionará el TEAM_ADMIN (invitación);
 > el `/register` abierto actual evolucionará hacia ese modelo.
 
+## Diagramas
+
+| Diagrama | Ver |
+|----------|-----|
+| Arquitectura completa (nginx → Next.js / Express → Prisma → PostgreSQL) | [arquitectura.html](tutorial/diagramas/arquitectura.html) |
+| Flujo de autenticación JWT (login → token → petición protegida) | [auth-jwt.html](tutorial/diagramas/auth-jwt.html) |
+| Pipeline CI/CD (git push → Actions → GHCR → Watchtower → Proxmox) | [despliegue.html](tutorial/diagramas/despliegue.html) |
+| Client vs Server Components + flujo /api/* | [flujo-api.html](tutorial/diagramas/flujo-api.html) |
+| Modelo de datos actual y evolución multi-tenant (Phase 6+) | [modelo-datos.html](tutorial/diagramas/modelo-datos.html) |
+
 ## Overview
 - Frontend: Next.js app (public pages + admin pages)
 - Backend: Express REST API

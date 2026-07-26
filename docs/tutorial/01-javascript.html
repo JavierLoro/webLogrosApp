@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html" class="active"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>JavaScript moderno</h1>
+    <p class="subtitle">El lenguaje que hace funcionar todo: navegador, servidor y herramientas.</p>
+
+    <!-- POR QUÉ EXISTE -->
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Antes de JavaScript, las páginas web eran documentos estáticos. Para cualquier interacción (validar un formulario, mostrar un mensaje de error) había que recargar la página entera y esperar una respuesta del servidor. JavaScript nació en 1995 para ejecutar lógica <em>dentro del navegador</em>, sin viajes de red. Con el tiempo se expandió al servidor (Node.js) y hoy es el único lenguaje que corre en todos los eslabones de una aplicación web: interfaz, backend y herramientas de build.</p>
+    </div>
+
+    <!-- VARIABLES -->
+    <h2>Variables: <code>const</code> y <code>let</code></h2>
+    <p>En JavaScript moderno (ES6+) ya no se usa <code>var</code>. Hay dos palabras clave:</p>
+    <table>
+      <thead>
+        <tr><th>Palabra clave</th><th>¿Se puede reasignar?</th><th>Cuándo usarla</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>const</code></td><td>No</td><td>Casi siempre (valor que no cambia)</td></tr>
+        <tr><td><code>let</code></td><td>Sí</td><td>Contadores, acumuladores, estado que muta</td></tr>
+      </tbody>
+    </table>
+    <pre><code>const nombre = "valor"   // no cambia
+let contador = 0         // puede cambiar</code></pre>
+    <div class="callout note">
+      <p class="callout-title">Aviso</p>
+      <p>Preferir siempre <code>const</code>. Solo bajar a <code>let</code> cuando realmente necesites reasignar. Esto hace el código más predecible: si ves <code>const</code>, sabes que el valor no cambiará más abajo.</p>
+    </div>
+
+    <!-- ARROW FUNCTIONS -->
+    <h2>Arrow functions (funciones flecha)</h2>
+    <p>Son una sintaxis más compacta para definir funciones. Además, capturan el contexto <code>this</code> del lugar donde se definen, lo que evita muchos errores clásicos de JavaScript.</p>
+    <pre><code>// Una línea — return implícito (no hacen falta llaves ni return)
+const sumar = (a, b) => a + b
+
+// Varias líneas — sí necesitan llaves y return
+const saludar = (nombre) => {
+  const mensaje = `Hola ${nombre}`
+  return mensaje
+}</code></pre>
+
+    <!-- TEMPLATE LITERALS -->
+    <h2>Template literals</h2>
+    <p>Permiten incrustar expresiones dentro de un string sin concatenar con <code>+</code>. Se delimitan con <strong>backticks</strong> (`) en lugar de comillas.</p>
+    <pre><code>const nombre = "Javier"
+const mensaje = `Hola ${nombre}`   // backticks ` y ${variable}
+// resultado: "Hola Javier"</code></pre>
+
+    <!-- OBJETOS Y ARRAYS -->
+    <h2>Objetos y arrays</h2>
+    <p>Un <strong>objeto</strong> agrupa propiedades relacionadas bajo una misma variable. Un <strong>array</strong> es una lista ordenada de valores.</p>
+    <pre><code>// Objeto — clave: valor
+const usuario = {
+  nombre: "Javier",
+  puntos: 150
+}
+console.log(usuario.nombre)   // acceder a una propiedad → "Javier"
+
+// Array — lista indexada desde 0
+const logros = ["Primer login", "Primera tarea"]
+console.log(logros[0])        // → "Primer login"
+console.log(logros.length)    // → 2</code></pre>
+
+    <!-- ASYNC / AWAIT -->
+    <h2>async / await — código que espera</h2>
+    <p>Las operaciones lentas (consultar una base de datos, llamar a una API) no son instantáneas. JavaScript es <em>no bloqueante</em>: en lugar de congelar el programa mientras espera, gestiona estas operaciones de forma asíncrona. <code>async/await</code> es la sintaxis moderna para escribir ese código como si fuera secuencial.</p>
+    <pre><code>// Cuando el código tiene que esperar (BD, APIs, etc.)
+const obtenerUsuario = async (id) => {
+  const usuario = await consultarBaseDeDatos(id)
+  // esta línea NO se ejecuta hasta que la anterior termine
+  return usuario
+}</code></pre>
+    <div class="callout note">
+      <p class="callout-title">Aviso</p>
+      <p><code>await</code> solo puede usarse dentro de una función marcada con <code>async</code>. Si lo olvidas, obtendrás un error de sintaxis.</p>
+    </div>
+
+    <!-- MÓDULOS -->
+    <h2>Módulos — compartir código entre archivos</h2>
+    <p>Los módulos permiten dividir el código en archivos y reutilizarlo. En Node.js con <code>"type": "commonjs"</code> (el sistema clásico) se usa <code>module.exports</code> y <code>require</code>. En TypeScript y ESM moderno se usa <code>export</code> e <code>import</code> (lo verás en la página de TypeScript).</p>
+    <pre><code>// usuarios.js — exportar una función
+module.exports = { obtenerUsuario }
+
+// server.js — importar esa función
+const { obtenerUsuario } = require("./usuarios")</code></pre>
+
+    <!-- EN EL PROYECTO -->
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El backend usa estos conceptos desde el primer archivo. En <span class="fileref">apps/backend/src/server.ts</span>, la constante <code>PORT</code> es un ejemplo de tipado (lo verás en TypeScript), y el callback de <code>app.listen</code> es una arrow function:</p>
+      <pre><code>const PORT: number = 3001
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`)
+})</code></pre>
+      <p>El template literal <code>`Servidor escuchando en http://localhost:${PORT}`</code> construye el mensaje de inicio con la variable <code>PORT</code>, exactamente como el ejemplo de la sección anterior.</p>
+    </div>
+
+    <!-- PAGINACIÓN -->
+    <div class="pager">
+      <a href="index.html"><span class="dir">← Anterior</span>Portada</a>
+      <a class="next" href="02-node-npm.html"><span class="dir">Siguiente →</span>02 · Node y npm</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

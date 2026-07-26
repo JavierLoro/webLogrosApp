@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node y npm — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html" class="active"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>Node.js y npm</h1>
+    <p class="subtitle">JavaScript fuera del navegador, y el gestor de paquetes que lo alimenta.</p>
+
+    <!-- NODE: POR QUÉ EXISTE -->
+    <h2>Node.js</h2>
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>JavaScript nació encerrado en el navegador. Para escribir un servidor web había que usar otro lenguaje: Python, Ruby, Java… En 2009, Ryan Dahl tomó el motor V8 de Chrome (el que interpreta JavaScript) y lo sacó del navegador para ejecutarlo como proceso independiente en el sistema operativo. Eso es Node.js: el mismo lenguaje que ya conoces, pero corriendo como una aplicación de línea de comandos capaz de abrir sockets, leer archivos y escuchar en un puerto de red. La consecuencia práctica: un solo lenguaje para frontend y backend.</p>
+    </div>
+
+    <h3>Comandos básicos de Node</h3>
+    <pre><code>node archivo.js       # ejecutar un archivo JavaScript
+node --version        # ver qué versión tienes instalada
+npm --version         # ver la versión de npm (viene con Node)</code></pre>
+
+    <!-- NPM: POR QUÉ EXISTE -->
+    <h2>npm — el gestor de paquetes</h2>
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Programar sería insoportable si tuvieras que escribir desde cero cada pieza de funcionalidad: parsear JSON, gestionar fechas, crear servidores HTTP… La comunidad ya resolvió esos problemas y publicó las soluciones como <strong>paquetes</strong>. npm (Node Package Manager) es el registro y la herramienta de línea de comandos que te permite instalar esos paquetes en segundos. También es el que registra qué paquetes usa tu proyecto (en <code>package.json</code>) para que cualquiera pueda reproducir el entorno exacto con un simple <code>npm install</code>.</p>
+    </div>
+
+    <h3>Comandos esenciales</h3>
+    <pre><code>npm init -y                        # inicializar proyecto (crea package.json)
+npm install express                # instalar paquete de producción
+npm install --save-dev nodemon     # instalar paquete solo para desarrollo
+npm run dev                        # ejecutar el script "dev" del package.json</code></pre>
+
+    <h3>Diferencia: dependencia vs devDependency</h3>
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Flag</th><th>Cuándo se necesita</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Producción</td><td><em>(ninguno)</em></td><td>En producción y en desarrollo</td><td>express, prisma</td></tr>
+        <tr><td>Desarrollo</td><td><code>--save-dev</code></td><td>Solo en el entorno del desarrollador</td><td>nodemon, typescript</td></tr>
+      </tbody>
+    </table>
+
+    <h3>package.json — el corazón del proyecto</h3>
+    <p>Registra el nombre del proyecto, sus dependencias y los <strong>scripts</strong> que puedes ejecutar con <code>npm run</code>. Funciona como un contrato: si otra persona clona tu repositorio y ejecuta <code>npm install</code>, obtendrá exactamente los mismos paquetes.</p>
+
+    <!-- NODEMON -->
+    <h2>nodemon — recarga automática en desarrollo</h2>
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Cuando modificas el código de un servidor Node.js, los cambios no surten efecto hasta que reinicies el proceso a mano (<code>Ctrl+C</code> + <code>node server.js</code> de nuevo). En desarrollo eso se vuelve tedioso muy rápido. nodemon observa los archivos del proyecto y reinicia el servidor automáticamente cada vez que guardas un cambio. Es una herramienta de desarrollo puro: en producción el servidor arranca una vez y no necesita observar archivos.</p>
+    </div>
+    <pre><code>npm install --save-dev nodemon
+npm run dev   # arranca el servidor con nodemon</code></pre>
+
+    <!-- GOTCHA: PROCESO ZOMBIE -->
+    <div class="callout note">
+      <p class="callout-title">Gotcha: proceso zombie en el puerto</p>
+      <p>Al cerrar nodemon con <code>Ctrl+C</code>, a veces el proceso hijo (<code>ts-node</code>) no muere correctamente. La siguiente vez que arrancas <code>npm run dev</code>, nodemon muestra <code>clean exit - waiting for changes before restart</code> y no levanta el servidor. El proceso viejo sigue ocupando el puerto y respondiendo peticiones <em>sin</em> tus últimos cambios.</p>
+      <p><strong>Diagnóstico:</strong></p>
+      <pre><code>netstat -ano | grep :3001   # ver qué proceso ocupa el puerto</code></pre>
+      <p><strong>Solución:</strong></p>
+      <pre><code># PowerShell
+Stop-Process -Id &lt;PID&gt; -Force
+
+# CMD
+taskkill /PID &lt;PID&gt; /F</code></pre>
+      <p>Después vuelve a lanzar <code>npm run dev</code>. El servidor debería mantenerse activo sin mostrar <code>clean exit</code>.</p>
+    </div>
+
+    <!-- EN EL PROYECTO -->
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El script <code>dev</code> del backend combina nodemon con TypeScript. En <span class="fileref">apps/backend/package.json</span>:</p>
+      <pre><code>"scripts": {
+  "dev": "nodemon --exec ts-node src/server.ts",
+  "build": "tsc",
+  "postinstall": "prisma generate"
+}</code></pre>
+      <p><code>nodemon --exec ts-node</code> significa: "en lugar de ejecutar el archivo con <code>node</code>, ejecútalo con <code>ts-node</code> (que entiende TypeScript)". Así el servidor se reinicia automáticamente con cada guardado y no hay que compilar a mano.</p>
+      <p>Las dependencias de producción del backend son: <span class="fileref">express</span>, <span class="fileref">prisma</span>, <span class="fileref">@prisma/client</span>, <span class="fileref">bcryptjs</span>, <span class="fileref">jsonwebtoken</span>, <span class="fileref">dotenv</span> y <span class="fileref">pg</span>. Las de desarrollo: <span class="fileref">nodemon</span>, <span class="fileref">typescript</span>, <span class="fileref">ts-node</span> y los paquetes <code>@types/*</code>.</p>
+    </div>
+
+    <div class="pager">
+      <a href="01-javascript.html"><span class="dir">← Anterior</span>01 · JavaScript</a>
+      <a class="next" href="03-typescript.html"><span class="dir">Siguiente →</span>03 · TypeScript</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

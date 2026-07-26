@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html" class="active"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>Docker</h1>
+    <p class="subtitle">Empaquetar una aplicación en un contenedor reproducible en cualquier máquina</p>
+
+    <!-- ¿Por qué existe esto? -->
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Antes de Docker, preparar un servidor era una odisea: instalar la versión correcta de Node, la versión correcta de PostgreSQL, configurar variables de entorno, rezar para que el sistema operativo del servidor coincidiera con el de desarrollo… Un error típico era «en mi máquina funciona». Docker resuelve esto empaquetando la app <em>junto con todo su entorno</em> en una imagen. La imagen se ejecuta igual en tu portátil, en el servidor de producción y en el CI de GitHub.</p>
+    </div>
+
+    <h2>Conceptos fundamentales</h2>
+    <p>Docker distingue entre dos cosas que es fácil confundir al principio:</p>
+    <table>
+      <thead>
+        <tr><th>Concepto</th><th>Analogía</th><th>Descripción</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Imagen</strong></td><td>Plano de un apartamento</td><td>Plantilla inmutable con el sistema de archivos, dependencias y comandos de arranque. Se <em>construye</em> una vez con <code>docker build</code>.</td></tr>
+        <tr><td><strong>Contenedor</strong></td><td>El apartamento habitado</td><td>Instancia en ejecución de una imagen. Se puede parar, reiniciar o borrar sin tocar la imagen.</td></tr>
+        <tr><td><strong>Volumen</strong></td><td>Cajón fuera del apartamento</td><td>Almacenamiento persistente que sobrevive cuando el contenedor se elimina. Los datos de PostgreSQL viven aquí.</td></tr>
+        <tr><td><strong>Registry</strong></td><td>Tienda de planos</td><td>Servidor donde se guardan y distribuyen imágenes. Docker Hub es el público; GHCR (GitHub Container Registry) es el que usa este proyecto.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Comandos básicos</h2>
+    <pre><code>docker compose up -d        # levantar todos los contenedores en segundo plano
+docker compose down         # parar y eliminar contenedores (los datos del volumen sobreviven)
+docker ps                   # ver contenedores corriendo
+docker logs weblogros_backend   # ver la salida de un contenedor
+docker exec -it weblogros_db psql -U admin -d weblogros   # entrar a la BD</code></pre>
+
+    <h2>docker-compose.yml — orquestación local</h2>
+    <p>Compose describe todos los servicios del proyecto en un solo archivo YAML. Con un único comando se levantan todos coordinados.</p>
+
+    <!-- En webLogrosApp -->
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El archivo <span class="fileref">docker-compose.yml</span> define 4 servicios para desarrollo local:</p>
+      <pre><code>services:
+  db:
+    image: postgres:16
+    container_name: weblogros_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: weblogros
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./apps/backend
+    container_name: weblogros_backend
+    environment:
+      DATABASE_URL: postgresql://admin:admin123@db:5432/weblogros
+      JWT_SECRET: clave_secreta_muy_larga_y_aleatoria_weblogros_2026
+    depends_on:
+      - db
+
+  frontend:
+    build: ./apps/frontend
+    container_name: weblogros_frontend
+    environment:
+      BACKEND_URL: http://backend:3001
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: weblogros_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  postgres_data:</code></pre>
+      <p>Los contenedores de producción (<span class="fileref">docker-compose.prod.yml</span>) añaden un quinto servicio — <strong>Watchtower</strong> — que se encarga del auto-despliegue automático al detectar nuevas imágenes en GHCR.</p>
+    </div>
+
+    <h2>La tabla de los 5 contenedores</h2>
+    <p>En producción el proyecto tiene exactamente 5 contenedores corriendo al mismo tiempo:</p>
+    <table>
+      <thead>
+        <tr><th>Contenedor</th><th>Imagen</th><th>Puerto interno</th><th>Función</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>weblogros_db</code></td><td><code>postgres:16</code></td><td>5432</td><td>Base de datos PostgreSQL (datos en volumen)</td></tr>
+        <tr><td><code>weblogros_backend</code></td><td><code>ghcr.io/…/weblogros-backend:latest</code></td><td>3001</td><td>API Express + Prisma</td></tr>
+        <tr><td><code>weblogros_frontend</code></td><td><code>ghcr.io/…/weblogros-frontend:latest</code></td><td>3000</td><td>Next.js (SSR)</td></tr>
+        <tr><td><code>weblogros_nginx</code></td><td><code>nginx:alpine</code></td><td>80 → host 8080</td><td>Reverse proxy: enruta peticiones a backend o frontend</td></tr>
+        <tr><td><code>weblogros_watchtower</code></td><td><code>containrrr/watchtower</code></td><td>—</td><td>Detecta nuevas imágenes y redespliega automáticamente</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Dockerfiles — construir la imagen</h2>
+    <p>Cada aplicación tiene su propio Dockerfile. Docker lo lee línea a línea y construye una imagen por capas.</p>
+
+    <h3>Backend — <span class="fileref">apps/backend/Dockerfile</span></h3>
+    <pre><code>FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY prisma ./prisma      # ← necesario ANTES de npm install
+RUN npm install
+
+COPY . .
+RUN npm run build         # compila TypeScript → dist/
+
+COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
+
+EXPOSE 3001
+
+CMD ["./entrypoint.sh"]</code></pre>
+
+    <p>El <span class="fileref">apps/backend/entrypoint.sh</span> hace dos cosas al arrancar el contenedor:</p>
+    <pre><code>#!/bin/sh
+npx prisma migrate deploy   # aplica migraciones pendientes en la BD
+exec node dist/server.js    # inicia el servidor</code></pre>
+    <p>Esto garantiza que la base de datos siempre está actualizada antes de que el servidor empiece a atender peticiones.</p>
+
+    <h3>Frontend — <span class="fileref">apps/frontend/Dockerfile</span></h3>
+    <pre><code>FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build         # genera build de producción Next.js
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]</code></pre>
+
+    <h2>Capas y caché — el truco de la velocidad</h2>
+    <p>Docker guarda cada paso del Dockerfile como una capa. Si una capa no cambia, la reutiliza del caché. Por eso el patrón de los Dockerfiles es siempre:</p>
+    <ol>
+      <li>Copiar <strong>solo</strong> <code>package*.json</code> (y <code>prisma/</code> en el backend)</li>
+      <li>Ejecutar <code>npm install</code></li>
+      <li>Luego copiar el resto del código</li>
+    </ol>
+    <p>Así, si solo cambias código fuente (no dependencias), Docker reutiliza la capa de <code>npm install</code> y el build es segundos en vez de minutos.</p>
+
+    <div class="callout note">
+      <p class="callout-title">Por qué el backend copia <code>prisma/</code> antes de <code>npm install</code></p>
+      <p>El <code>package.json</code> del backend tiene un script <code>postinstall: "prisma generate"</code>. Este script se ejecuta automáticamente al terminar <code>npm install</code> y necesita leer el <code>schema.prisma</code> para generar el cliente TypeScript. Si <code>prisma/</code> no está copiado en ese momento, el build falla con «schema not found».</p>
+    </div>
+
+    <h2>.dockerignore — qué no copiar</h2>
+    <p>Sin <code>.dockerignore</code>, el <code>COPY . .</code> copiaría <code>node_modules</code> local (miles de archivos) encima de los instalados dentro del contenedor — corrompiendo el build. El <code>.dockerignore</code> funciona igual que <code>.gitignore</code> pero para Docker:</p>
+    <pre><code># backend/.dockerignore y frontend/.dockerignore
+node_modules
+dist          # solo backend
+.next         # solo frontend
+.env          # las vars de entorno llegan por docker-compose, no por el .env local</code></pre>
+
+    <h2>Variables de entorno en Docker</h2>
+    <p>El <code>.env</code> local está en <code>.dockerignore</code> y <strong>no entra al contenedor</strong>. Las variables se definen directamente en el <code>docker-compose.yml</code>:</p>
+    <pre><code>backend:
+  environment:
+    DATABASE_URL: postgresql://admin:admin123@db:5432/weblogros
+    JWT_SECRET: clave_secreta_muy_larga_y_aleatoria_weblogros_2026
+
+frontend:
+  environment:
+    BACKEND_URL: http://backend:3001   # nombre de contenedor, no localhost</code></pre>
+
+    <div class="callout note">
+      <p class="callout-title">Gotcha: <code>localhost</code> no existe dentro de un contenedor</p>
+      <p>Dentro de un contenedor, <code>localhost</code> se refiere al propio contenedor, no al host ni a otro contenedor. Para que el backend hable con la base de datos, la URL usa <code>@db:5432</code> — donde <code>db</code> es el nombre del servicio definido en Compose. Docker crea una red interna y resuelve automáticamente los nombres de servicio como hostnames.</p>
+    </div>
+
+    <h2>Volúmenes — datos que sobreviven</h2>
+    <p>Cuando un contenedor se elimina, su sistema de archivos desaparece. Los volúmenes son directorios gestionados por Docker que persisten aunque el contenedor se borre:</p>
+    <pre><code>volumes:
+  postgres_data:    # Docker gestiona dónde guarda esto en el host</code></pre>
+    <p>Así puedes hacer <code>docker compose down</code> y volver a levantar los contenedores sin perder los datos de PostgreSQL. El volumen vive en el host hasta que lo borras explícitamente con <code>docker volume rm</code>.</p>
+
+    <div class="pager">
+      <a href="09-cors.html"><span class="dir">← Anterior</span>09 · CORS</a>
+      <a class="next" href="11-nginx-despliegue.html"><span class="dir">Siguiente →</span>11 · Nginx y despliegue</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

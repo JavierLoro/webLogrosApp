@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next.js — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html" class="active"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>Next.js</h1>
+    <p class="subtitle">El framework que convierte React en una aplicación web completa, con rutas, servidor y renderizado inteligente.</p>
+
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>React es una librería de componentes de UI. Pero una aplicación web real necesita más: rutas (<code>/login</code>, <code>/logros/1</code>), un servidor que sirva las páginas, optimizaciones de rendimiento y una forma de obtener datos antes de mostrar la pantalla. Next.js aporta todo eso encima de React. En lugar de configurar un router, un servidor, un bundler y un sistema de rutas por separado, Next.js los unifica en un solo framework con convenciones claras.</p>
+    </div>
+
+    <h2>App Router — rutas por archivos</h2>
+    <p>Next.js crea rutas automáticamente según la estructura de carpetas dentro de <code>src/app/</code>. No hay que registrar rutas en código; el sistema de ficheros es el router.</p>
+
+    <pre><code>src/app/page.tsx              →  /
+src/app/logros/[id]/page.tsx  →  /logros/1, /logros/2, ...
+src/app/login/page.tsx        →  /login
+src/app/register/page.tsx     →  /register</code></pre>
+
+    <p>Cada <code>page.tsx</code> es una página. Los corchetes <code>[id]</code> marcan un <strong>segmento dinámico</strong>: captura cualquier valor en esa posición de la URL.</p>
+
+    <h2>Server Components vs Client Components</h2>
+    <p>Esta es la distinción más importante de Next.js App Router. Por defecto, todos los componentes son <strong>Server Components</strong>: se ejecutan en el servidor, generan HTML y lo envían al navegador. Para interactividad (formularios, eventos, estado) se necesitan <strong>Client Components</strong>, que se ejecutan en el navegador.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Server Component</th>
+          <th>Client Component</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ejecución</strong></td>
+          <td>Servidor</td>
+          <td>Navegador</td>
+        </tr>
+        <tr>
+          <td><strong><code>useState</code>, <code>useEffect</code></strong></td>
+          <td>✗ No disponible</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong><code>localStorage</code></strong></td>
+          <td>✗ No disponible</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong><code>fetch</code></strong></td>
+          <td>✓ Sin CORS (servidor a servidor)</td>
+          <td>✓ Con CORS (navegador → API)</td>
+        </tr>
+        <tr>
+          <td><strong>Directiva</strong></td>
+          <td>(ninguna, por defecto)</td>
+          <td><code>"use client"</code> al inicio del archivo</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>¿Cuándo usar Client Component?</h3>
+    <ul>
+      <li>Formularios (login, registro, crear logro)</li>
+      <li>Cualquier hook: <code>useState</code>, <code>useEffect</code>, <code>useRouter</code></li>
+      <li>Acceso a <code>localStorage</code> o eventos del DOM</li>
+      <li>Componentes que reaccionan a interacción del usuario</li>
+    </ul>
+
+    <h2>Server Component en la práctica</h2>
+    <p>Un Server Component puede ser una función <code>async</code> que hace <code>fetch</code> directamente, sin <code>useEffect</code>. Los datos están disponibles antes de que el HTML llegue al navegador.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p><span class="fileref">apps/frontend/src/app/page.tsx</span> — la página principal es un Server Component. Hace <code>fetch</code> al backend y pinta la lista de logros sin ningún hook:</p>
+      <pre><code>async function getLogros(): Promise&lt;Logro[]&gt; {
+  const res = await fetch(
+    `${process.env.BACKEND_URL ?? "http://localhost:3001"}/logros`,
+    { cache: "no-store" }
+  )
+  return res.json()
+}
+
+export default async function Home() {
+  const logros = await getLogros()
+  return (
+    &lt;main className="max-w-2xl mx-auto p-8 flex flex-col gap-8"&gt;
+      &lt;h1 className="text-3xl font-bold"&gt;Logros del equipo&lt;/h1&gt;
+      &lt;NuevoLogro /&gt;
+      &lt;ul className="flex flex-col gap-4"&gt;
+        {logros.map((logro) =&gt; (
+          &lt;li key={logro.id}&gt;
+            &lt;Link href={`/logros/${logro.id}`} ...&gt;
+              &lt;span&gt;{logro.nombre}&lt;/span&gt;
+              &lt;span&gt;{logro.puntos} pts&lt;/span&gt;
+            &lt;/Link&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/main&gt;
+  )
+}</code></pre>
+      <p>Nota que el <code>fetch</code> usa <code>process.env.BACKEND_URL</code> (variable de servidor) con fallback a <code>http://localhost:3001</code>. Esto funciona en producción (Docker) y en desarrollo.</p>
+    </div>
+
+    <div class="callout note">
+      <p class="callout-title">Gotcha: URLs hardcodeadas en Client Components</p>
+      <p>En el proyecto actual, <span class="fileref">apps/frontend/src/app/login/page.tsx</span> y <span class="fileref">apps/frontend/src/app/components/NuevoLogro.tsx</span> hacen <code>fetch("http://localhost:3001/...")</code> directamente. Esto <strong>romperá en producción</strong> cuando el frontend corra en un contenedor Docker: <code>localhost:3001</code> no es el backend, es el mismo contenedor del frontend.</p>
+      <p>En Client Components no se puede usar <code>process.env.BACKEND_URL</code> (variable de servidor). La solución es usar variables de entorno con prefijo <code>NEXT_PUBLIC_</code> (se exponen al navegador) o hacer que los Client Components llamen a rutas internas de Next.js (<code>/api/...</code>) que sí pueden hablar con el backend internamente.</p>
+    </div>
+
+    <h2>Client Component — formulario con estado</h2>
+    <p>La primera línea del archivo debe ser exactamente <code>"use client"</code>. Activa todos los hooks de React.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p><span class="fileref">apps/frontend/src/app/login/page.tsx</span> — Client Component con formulario, estado y navegación programática:</p>
+      <pre><code>"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+
+export default function LoginPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError("")
+    try {
+      const res = await fetch("http://localhost:3001/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      })
+      if (!res.ok) { setError("Email o contraseña incorrectos"); return }
+      const data = await res.json()
+      localStorage.setItem("token", data.token)  // guardar token en el navegador
+      router.push("/")                            // redirigir al inicio
+    } catch (err) {
+      setError("No se pudo conectar con el servidor")
+    }
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input type="email" value={email} onChange={(e) =&gt; setEmail(e.target.value)} /&gt;
+      &lt;input type="password" value={password} onChange={(e) =&gt; setPassword(e.target.value)} /&gt;
+      {error &amp;&amp; &lt;p&gt;{error}&lt;/p&gt;}
+      &lt;button type="submit"&gt;Entrar&lt;/button&gt;
+    &lt;/form&gt;
+  )
+}</code></pre>
+    </div>
+
+    <h2>useEffect y usePathname</h2>
+    <p><code>useEffect</code> ejecuta código <em>después</em> de que el componente se renderiza en el navegador. Es la única forma de acceder a APIs del navegador (como <code>localStorage</code>) desde un componente React, porque el servidor no tiene <code>localStorage</code>.</p>
+
+    <pre><code>useEffect(() => {
+  // esto solo corre en el navegador
+  const token = localStorage.getItem("token")
+  setLogueado(!!token)
+}, [])  // [] = solo al montar el componente (una vez)</code></pre>
+
+    <p>El array de dependencias controla cuándo se re-ejecuta el efecto:</p>
+    <ul>
+      <li><code>[]</code> — solo al montar (una vez)</li>
+      <li><code>[valor]</code> — cada vez que <code>valor</code> cambia</li>
+      <li>sin array — en cada render (evitar)</li>
+    </ul>
+
+    <p><code>usePathname()</code> devuelve la ruta actual. Pasarlo como dependencia de <code>useEffect</code> hace que el efecto se re-ejecute al navegar entre páginas.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p><span class="fileref">apps/frontend/src/app/components/Header.tsx</span> — detecta si el usuario está logueado y se actualiza al navegar. Sin <code>pathname</code> como dependencia, el Header mostraría el estado de sesión desactualizado hasta recargar la página:</p>
+      <pre><code>"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import Link from "next/link"
+
+export default function Header() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const [logueado, setLogueado] = useState(false)
+
+  useEffect(() => {
+    setLogueado(!!localStorage.getItem("token"))
+  }, [pathname])  // se re-ejecuta cada vez que cambia la ruta
+
+  function handleLogout() {
+    localStorage.removeItem("token")
+    router.push("/login")
+  }
+
+  return (
+    &lt;header&gt;
+      &lt;Link href="/"&gt;Logros del equipo&lt;/Link&gt;
+      {logueado
+        ? &lt;button onClick={handleLogout}&gt;Cerrar sesión&lt;/button&gt;
+        : &lt;&gt;
+            &lt;Link href="/login"&gt;Iniciar sesión&lt;/Link&gt;
+            &lt;Link href="/register"&gt;Registrarse&lt;/Link&gt;
+          &lt;/&gt;
+      }
+    &lt;/header&gt;
+  )
+}</code></pre>
+    </div>
+
+    <h2>router.refresh() — refrescar datos del servidor</h2>
+    <p>Después de crear un logro desde un Client Component, la lista (que es un Server Component) sigue mostrando los datos anteriores. <code>router.refresh()</code> le dice a Next.js que vuelva a ejecutar los Server Components de la página y traiga datos frescos, sin cambiar de ruta.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p><span class="fileref">apps/frontend/src/app/components/NuevoLogro.tsx</span> — tras crear un logro con éxito, refresca la lista. El formulario es Client Component (<code>"use client"</code>, usa <code>useState</code> y <code>localStorage</code>), pero la lista que se actualiza es el Server Component padre:</p>
+      <pre><code>async function handleSubmit(e: React.FormEvent) {
+  e.preventDefault()
+  try {
+    const res = await fetch("http://localhost:3001/logros", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,   // token de localStorage
+      },
+      body: JSON.stringify({ nombre, puntos: Number(puntos) }),
+    })
+    if (!res.ok) { setError("Error al crear el logro"); return }
+    setNombre("")
+    setPuntos("")
+    router.refresh()   // recarga la lista del Server Component padre
+  } catch (err) {
+    setError("No se pudo conectar con el servidor")
+  }
+}</code></pre>
+    </div>
+
+    <h2>Mezclar Server y Client Components</h2>
+    <p>Un Server Component puede importar y renderizar un Client Component. El Client Component se "hidrata" en el navegador (React lo convierte en interactivo). Lo importante es que ambos coexisten en la misma página:</p>
+
+    <pre><code>// page.tsx (Server Component) — hace fetch sin CORS
+export default async function Home() {
+  const logros = await getLogros()   // fetch en el servidor
+  return (
+    &lt;main&gt;
+      &lt;NuevoLogro /&gt;   {/* Client Component — corre en el navegador */}
+      &lt;ul&gt;{logros.map(...)}&lt;/ul&gt;
+    &lt;/main&gt;
+  )
+}</code></pre>
+
+    <pre><code>// NuevoLogro.tsx — Client Component
+"use client"
+
+export default function NuevoLogro() {
+  const [token, setToken] = useState&lt;string | null&gt;(null)
+  // ...
+}</code></pre>
+
+    <h2>Rutas dinámicas</h2>
+    <p>El valor del segmento entre corchetes llega como <code>params</code>. En Next.js App Router, <code>params</code> es una <code>Promise</code> (hay que usar <code>await</code>):</p>
+
+    <pre><code>// src/app/logros/[id]/page.tsx
+export default async function LogroPage({
+  params,
+}: {
+  params: Promise&lt;{ id: string }&gt;
+}) {
+  const { id } = await params
+  const res = await fetch(`http://localhost:3001/logros/${id}`, { cache: "no-store" })
+  const logro = await res.json()
+  return &lt;div&gt;{logro.nombre}&lt;/div&gt;
+}</code></pre>
+
+    <h2>Componente Link</h2>
+    <p><code>&lt;Link&gt;</code> de Next.js navega entre páginas <strong>sin recargar</strong> el navegador completo. Es más rápido que un <code>&lt;a href="..."&gt;</code> normal porque Next.js solo actualiza la parte de la página que cambia.</p>
+
+    <pre><code>import Link from "next/link"
+
+// Enlace estático
+&lt;Link href="/login"&gt;Iniciar sesión&lt;/Link&gt;
+
+// Enlace dinámico con template literal
+&lt;Link href={`/logros/${logro.id}`}&gt;Ver detalle&lt;/Link&gt;</code></pre>
+
+    <h2>Tailwind CSS</h2>
+    <p>Tailwind reemplaza los archivos CSS separados por clases de utilidad directamente en el JSX. Cada clase hace una sola cosa: <code>text-3xl</code> define el tamaño del texto, <code>font-bold</code> lo pone en negrita, <code>mb-6</code> añade margen inferior.</p>
+
+    <pre><code>&lt;h1 className="text-3xl font-bold mb-6"&gt;Logros del equipo&lt;/h1&gt;
+
+&lt;span className="font-bold text-blue-600"&gt;{logro.puntos} pts&lt;/span&gt;
+
+&lt;button className="bg-blue-600 text-white rounded-lg p-2 hover:bg-blue-700 transition-colors"&gt;
+  Entrar
+&lt;/button&gt;</code></pre>
+
+    <div class="callout note">
+      <p class="callout-title">cache: "no-store" en Server Components</p>
+      <p>Por defecto Next.js cachea los resultados de <code>fetch</code> en Server Components. Si creas un logro nuevo pero la caché sigue devolviendo la lista anterior, añade <code>{ cache: "no-store" }</code>:</p>
+      <pre><code>const res = await fetch("http://localhost:3001/logros", { cache: "no-store" })</code></pre>
+      <p>Así Next.js siempre consulta el backend en lugar de devolver una respuesta guardada.</p>
+    </div>
+
+    <div class="pager">
+      <a href="06-prisma.html"><span class="dir">← Anterior</span>06 · Prisma</a>
+      <a class="next" href="08-jwt-auth.html"><span class="dir">Siguiente →</span>08 · JWT y Auth</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

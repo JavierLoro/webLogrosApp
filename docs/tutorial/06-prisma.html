@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prisma — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html" class="active"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>Prisma ORM</h1>
+    <p class="subtitle">Queries tipadas, migraciones automáticas y el schema como fuente de verdad</p>
+
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Escribir SQL a mano desde TypeScript tiene tres problemas serios: primero, los errores de sintaxis SQL solo se detectan en tiempo de ejecución, no cuando escribes el código. Segundo, el resultado de una query es un array de objetos sin tipo: TypeScript no sabe qué campos tiene cada fila. Tercero, gestionar los cambios de esquema de la base de datos a mano (añadir columnas, renombrar tablas…) es propenso a errores y difícil de reproducir en distintos entornos. Prisma resuelve los tres problemas: genera un cliente TypeScript totalmente tipado a partir de tu schema, y gestiona las migraciones automáticamente.</p>
+    </div>
+
+    <h2>Los tres ficheros clave</h2>
+    <p>Prisma separa su responsabilidad en tres lugares:</p>
+    <table>
+      <thead>
+        <tr><th>Fichero</th><th>Propósito</th><th>Quién lo usa</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>prisma/schema.prisma</code></td><td>Define los modelos (tablas)</td><td>Prisma CLI + generator</td></tr>
+        <tr><td><code>prisma.config.ts</code></td><td>URL de BD para la CLI (migraciones)</td><td>CLI en tiempo de desarrollo</td></tr>
+        <tr><td><code>src/lib/prisma.ts</code></td><td>Instancia del cliente para el runtime</td><td>Tu código Express en producción</td></tr>
+      </tbody>
+    </table>
+
+    <h2>El schema — definir los modelos</h2>
+    <p>El schema de Prisma es el centro de todo. Defines los modelos y Prisma se encarga de generar el SQL de las tablas y el cliente TypeScript tipado.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El schema real está en <span class="fileref">apps/backend/prisma/schema.prisma</span>:</p>
+      <pre><code>generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Logro {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  puntos Int
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+}</code></pre>
+      <p>Cada <code>model</code> es una tabla. <code>@id</code> marca la clave primaria; <code>@default(autoincrement())</code> equivale a <code>SERIAL</code> en SQL; <code>@unique</code> añade un índice único (el email no puede repetirse).</p>
+    </div>
+
+    <h2>Tipos de campo en Prisma</h2>
+    <table>
+      <thead>
+        <tr><th>Tipo Prisma</th><th>Tipo TypeScript</th><th>Tipo PostgreSQL</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>String</code></td><td><code>string</code></td><td><code>TEXT</code></td></tr>
+        <tr><td><code>Int</code></td><td><code>number</code></td><td><code>INTEGER</code></td></tr>
+        <tr><td><code>Boolean</code></td><td><code>boolean</code></td><td><code>BOOLEAN</code></td></tr>
+        <tr><td><code>DateTime</code></td><td><code>Date</code></td><td><code>TIMESTAMP</code></td></tr>
+        <tr><td><code>String?</code></td><td><code>string | null</code></td><td>columna nullable</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Migraciones — llevar los cambios a la BD</h2>
+    <p>Una migración es un archivo SQL que describe cómo transformar la base de datos del estado anterior al nuevo. Prisma las genera automáticamente comparando el schema actual con el último estado conocido.</p>
+    <pre><code># Crear y aplicar una nueva migración
+npx prisma migrate dev --name nombre-descriptivo
+
+# Resetear la BD completamente (solo en desarrollo)
+npx prisma migrate reset --force
+
+# Regenerar el cliente TypeScript tras cambiar el schema
+npx prisma generate</code></pre>
+    <p>Los archivos de migración se guardan en <code>prisma/migrations/</code> y deben subirse a git: son el historial de la estructura de tu base de datos.</p>
+
+    <div class="callout note">
+      <p class="callout-title">Nota Windows: schema-engine bloqueado por antivirus</p>
+      <p><code>prisma migrate dev</code> usa un binario nativo llamado <code>schema-engine-windows.exe</code> que Windows Defender o OneDrive pueden bloquear silenciosamente. Si el comando falla o se cuelga en Windows, el workaround es aplicar el SQL directamente al contenedor y regenerar solo el cliente:</p>
+      <pre><code># Aplicar el SQL de la migración manualmente
+docker exec weblogros_db psql -U admin -d weblogros -c "CREATE TABLE ..."
+
+# Regenerar el cliente sin necesitar el schema engine
+npx prisma generate</code></pre>
+    </div>
+
+    <h2>prisma.config.ts — configurar la CLI</h2>
+    <p>A partir de Prisma 7, la URL de conexión para las operaciones de CLI (migraciones, studio…) se configura en un archivo separado del código de runtime.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp — prisma.config.ts</p>
+      <p>El archivo <span class="fileref">apps/backend/prisma.config.ts</span> tiene este contenido real:</p>
+      <pre><code>import "dotenv/config";
+import { defineConfig } from "prisma/config";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  migrations: {
+    path: "prisma/migrations",
+  },
+  datasource: {
+    url: process.env["DATABASE_URL"],
+  },
+});</code></pre>
+      <p><code>dotenv/config</code> carga el <span class="fileref">apps/backend/.env</span> antes de que Prisma lea <code>DATABASE_URL</code>. Sin esa importación, la variable de entorno sería <code>undefined</code>.</p>
+    </div>
+
+    <div class="callout note">
+      <p class="callout-title">Gotcha: prisma.config.ts fuera de rootDir</p>
+      <p>Este archivo vive en la raíz del backend, no en <code>src/</code>. Si <code>tsconfig.json</code> tiene <code>"rootDir": "./src"</code>, TypeScript intentará compilarlo y fallará con <em>"File 'prisma.config.ts' is not under 'rootDir'"</em>. La solución es excluirlo explícitamente:</p>
+      <pre><code>// tsconfig.json
+{
+  "compilerOptions": { ... },
+  "exclude": ["prisma.config.ts", "node_modules", "dist"]
+}</code></pre>
+    </div>
+
+    <h2>src/lib/prisma.ts — el cliente de runtime</h2>
+    <p>Para las queries desde el código Express se usa una instancia singleton de <code>PrismaClient</code>. En Prisma 7 el cliente runtime necesita un <strong>adapter explícito</strong> que gestiona la conexión real a la base de datos.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp — lib/prisma.ts</p>
+      <p>El archivo real está en <span class="fileref">apps/backend/src/lib/prisma.ts</span>:</p>
+      <pre><code>import "dotenv/config"
+import { PrismaClient } from "@prisma/client"
+import { PrismaPg } from "@prisma/adapter-pg"
+
+const adapter = new PrismaPg({ connectionString: process.env["DATABASE_URL"]! })
+const prisma = new PrismaClient({ adapter })
+
+export default prisma</code></pre>
+      <p>El <code>!</code> al final de <code>process.env["DATABASE_URL"]!</code> es el operador de aserción no-nula de TypeScript: le dice al compilador "confía en mí, esta variable tiene valor en tiempo de ejecución". Si no estuviera, TypeScript se quejaría porque <code>process.env["DATABASE_URL"]</code> podría ser <code>undefined</code>.</p>
+    </div>
+
+    <div class="callout note">
+      <p class="callout-title">Nota Prisma 7: el adapter es obligatorio</p>
+      <p>En versiones anteriores de Prisma (5 y 6), el cliente leía <code>DATABASE_URL</code> directamente del entorno sin adapter. En Prisma 7 el adapter es explícito y obligatorio: hay que crear <code>PrismaPg</code> (o el adapter de otro driver) y pasarlo al constructor. Si no, el cliente no sabe cómo conectarse.</p>
+      <p>Las dependencias necesarias son:</p>
+      <pre><code>npm install @prisma/client @prisma/adapter-pg pg
+npm install --save-dev prisma @types/pg</code></pre>
+    </div>
+
+    <h2>Queries básicas</h2>
+    <p>El cliente de Prisma ofrece métodos tipados para cada operación CRUD. Los nombres de los métodos son predecibles y el autocompletado del editor funciona sobre ellos:</p>
+    <pre><code>import prisma from "../lib/prisma"
+
+// Leer todos los logros
+const logros = await prisma.logro.findMany()
+// → Logro[]  (TypeScript sabe exactamente qué campos tiene cada elemento)
+
+// Leer un logro por id (devuelve null si no existe)
+const logro = await prisma.logro.findUnique({ where: { id } })
+// → Logro | null
+
+// Crear un logro nuevo
+const nuevo = await prisma.logro.create({
+  data: { nombre, puntos }
+})
+// → Logro  (con el id generado por la BD)
+
+// Buscar un usuario por email (campo @unique)
+const user = await prisma.user.findUnique({ where: { email } })
+
+// Crear un usuario con contraseña hasheada
+const user = await prisma.user.create({
+  data: { email, password: hash }
+})</code></pre>
+
+    <p>Este código aparece en las rutas reales del proyecto. En <span class="fileref">apps/backend/src/routes/logros.ts</span>:</p>
+    <pre><code>router.get("/", async (_req: Request, res: Response) => {
+  const logros = await prisma.logro.findMany()
+  res.json(logros)
+})
+
+router.get("/:id", async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const logro = await prisma.logro.findUnique({ where: { id } })
+
+  if (!logro) {
+    res.status(404).json({ error: "Logro no encontrado" })
+    return
+  }
+
+  res.json(logro)
+})</code></pre>
+
+    <h2>Resumen del flujo completo</h2>
+    <p>La cadena completa desde cambiar el schema hasta consultar datos en una ruta:</p>
+    <table>
+      <thead>
+        <tr><th>Paso</th><th>Comando / acción</th><th>Resultado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1. Editar schema</td><td>Editar <code>prisma/schema.prisma</code></td><td>Definir o cambiar modelos</td></tr>
+        <tr><td>2. Migrar BD</td><td><code>npx prisma migrate dev --name …</code></td><td>SQL aplicado a la BD + archivo de migración</td></tr>
+        <tr><td>3. Regenerar cliente</td><td><code>npx prisma generate</code></td><td>Tipos TypeScript actualizados</td></tr>
+        <tr><td>4. Usar en código</td><td><code>prisma.logro.findMany()</code> etc.</td><td>Queries tipadas en las rutas</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="diagrama">
+      <iframe src="diagramas/modelo-datos.html" height="540" title="Modelo de datos actual y evolución multi-tenant (Phase 6+)"></iframe>
+      <figcaption>Modelo de datos actual (Prisma schema) y evolución multi-tenant prevista — <a href="diagramas/modelo-datos.html" target="_blank">abrir en pantalla completa ↗</a></figcaption>
+    </figure>
+
+    <div class="pager">
+      <a href="05-postgres-sql.html"><span class="dir">← Anterior</span>05 · PostgreSQL y SQL</a>
+      <a class="next" href="07-nextjs.html"><span class="dir">Siguiente →</span>07 · Next.js</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

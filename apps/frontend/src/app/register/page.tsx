@@ -1,3 +1,4 @@
+// 📚 Client Component (igual que login): corre en el navegador porque usa estado y eventos.
 "use client"
 
 import { useState } from "react"
@@ -14,18 +15,22 @@ export default function RegisterPage() {
     setError("")
 
     try {
-      const res = await fetch("http://localhost:3001/auth/register", {
+      // 📚 Ruta relativa /api (ver login/page.tsx). No hardcodear localhost:3001.
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       })
 
       if (!res.ok) {
+        // 📚 Leemos el JSON de error del backend para mostrar su mensaje concreto
+        //    (p.ej. "El email ya está registrado") con fallback si no viniera.
         const data = await res.json()
         setError(data.error ?? "Error al registrarse")
         return
       }
 
+      // 📚 Tras registrar, redirigimos a /login (no guardamos sesión en el registro).
       router.push("/login")
     } catch (err) {
       setError("No se pudo conectar con el servidor")

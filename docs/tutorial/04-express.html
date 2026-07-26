@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html" class="active"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>Express</h1>
+    <p class="subtitle">El framework que convierte Node.js en un servidor web cómodo de usar</p>
+
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Node.js puede crear un servidor HTTP con unas pocas líneas, pero si quieres hacer algo real tienes que parsear la URL a mano, leer el método (<code>GET</code>, <code>POST</code>…), convertir el cuerpo de la petición de bytes a JSON, comparar rutas con cadenas… todo sin ayuda. Es tedioso y propenso a errores. Express resuelve exactamente eso: envuelve el servidor HTTP de Node y ofrece un sistema de rutas, middlewares y respuestas que hace que escribir una API sea directo al grano.</p>
+    </div>
+
+    <h2>Estructura mínima</h2>
+    <p>Una aplicación Express en su forma más básica:</p>
+    <pre><code>import express from "express"
+
+const app = express()
+const PORT = 3001
+
+app.use(express.json())   // middleware: parsea el body JSON automáticamente
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`)
+})</code></pre>
+    <p><code>express()</code> crea la aplicación. <code>app.listen()</code> abre el puerto. Entre medias, todo lo que se registre con <code>app.use()</code> o <code>app.get/post/…()</code> define el comportamiento.</p>
+
+    <h2>¿Qué es un middleware?</h2>
+    <p>Un <strong>middleware</strong> es una función que Express ejecuta en orden para cada petición, antes de llegar a la ruta final. Recibe tres parámetros: <code>req</code> (la petición), <code>res</code> (la respuesta) y <code>next</code> (función para pasar al siguiente middleware).</p>
+    <pre><code>app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`)  // loguear cada petición
+  next()                                   // continuar
+})</code></pre>
+    <p>Si no llamas a <code>next()</code>, la petición queda bloqueada ahí. Si llamas a <code>res.json()</code> sin llamar a <code>next()</code>, la petición termina ahí. Así se construye la lógica en capas.</p>
+
+    <h2>Definir rutas</h2>
+    <p>Cada ruta es una combinación de método HTTP + patrón de URL + función manejadora:</p>
+    <pre><code>// GET — obtener datos
+app.get("/logros", (req, res) => {
+  res.json([{ id: 1, nombre: "Primer login", puntos: 10 }])
+})
+
+// GET con parámetro dinámico — el :id captura el valor del segmento
+app.get("/logros/:id", (req, res) => {
+  const id = Number(req.params.id)   // params contiene los segmentos dinámicos
+  res.json({ id })
+})
+
+// POST — recibir datos en el body
+app.post("/logros", (req, res) => {
+  const { nombre, puntos } = req.body   // funciona gracias a express.json()
+  res.status(201).json({ nombre, puntos })
+})</code></pre>
+
+    <h2>Códigos de estado HTTP</h2>
+    <p>Cada respuesta lleva un número que indica si fue bien o mal. Express devuelve 200 por defecto; tú lo cambias con <code>.status()</code>:</p>
+    <table>
+      <thead>
+        <tr><th>Código</th><th>Significado</th><th>Cuándo usarlo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>200</td><td>OK</td><td>Respuesta exitosa por defecto (GET, etc.)</td></tr>
+        <tr><td>201</td><td>Creado correctamente</td><td>Tras un POST que crea un recurso</td></tr>
+        <tr><td>400</td><td>Bad Request</td><td>Error en la petición (datos incorrectos o faltantes)</td></tr>
+        <tr><td>401</td><td>No autorizado</td><td>Token ausente o inválido</td></tr>
+        <tr><td>404</td><td>No encontrado</td><td>El recurso solicitado no existe</td></tr>
+        <tr><td>500</td><td>Error interno del servidor</td><td>Error inesperado en el backend</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Organizar rutas con Router</h2>
+    <p>Cuando la API crece, poner todas las rutas en <code>server.ts</code> se vuelve inmanejable. Express ofrece <code>Router</code> para separar las rutas en archivos propios:</p>
+    <pre><code>// routes/logros.ts
+import express from "express"
+const router = express.Router()
+
+router.get("/", ...)       // responde a GET /logros
+router.get("/:id", ...)    // responde a GET /logros/1, /logros/2, etc.
+router.post("/", ...)      // responde a POST /logros
+
+export default router
+
+// server.ts
+import logrosRouter from "./routes/logros"
+app.use("/logros", logrosRouter)   // monta el router bajo /logros</code></pre>
+    <p>Las rutas dentro del Router son relativas al prefijo que se le da en <code>app.use()</code>. El <code>/</code> dentro del router equivale a <code>/logros</code> en la URL real.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El punto de entrada del backend es <span class="fileref">apps/backend/src/server.ts</span>. Registra dos middlewares globales (CORS manual + <code>express.json()</code>) y monta dos routers:</p>
+      <pre><code>app.use("/auth", authRouter)
+app.use("/logros", logrosRouter)</code></pre>
+      <p>Las rutas de logros viven en <span class="fileref">apps/backend/src/routes/logros.ts</span>. El <code>GET /</code> y <code>GET /:id</code> son públicos; el <code>POST /</code> aplica el middleware <code>authMiddleware</code> antes del handler:</p>
+      <pre><code>router.post("/", authMiddleware, async (req: Request, res: Response) => {
+  const { nombre, puntos }: { nombre: string; puntos: number } = req.body ?? {}
+
+  if (!nombre || !puntos) {
+    res.status(400).json({ error: "Faltan campos: nombre y puntos" })
+    return
+  }
+
+  const nuevoLogro = await prisma.logro.create({ data: { nombre, puntos } })
+  res.status(201).json(nuevoLogro)
+})</code></pre>
+      <p>De la misma manera, <span class="fileref">apps/backend/src/routes/auth.ts</span> expone <code>POST /auth/register</code> y <code>POST /auth/login</code>.</p>
+    </div>
+
+    <h2>Async/await en las rutas</h2>
+    <p>En cuanto las rutas tocan la base de datos, necesitan ser asíncronas. Express 5 (que usa este proyecto) maneja las excepciones de funciones async automáticamente — en Express 4 había que envolverlas a mano en un try/catch o usar un wrapper.</p>
+    <pre><code>router.get("/", async (_req: Request, res: Response) => {
+  const logros = await prisma.logro.findMany()
+  res.json(logros)
+})</code></pre>
+
+    <div class="callout note">
+      <p class="callout-title">Gotcha: olvidarse de <code>return</code> tras enviar la respuesta</p>
+      <p>En Express, enviar una respuesta (<code>res.json()</code>, <code>res.status().json()</code>…) no detiene la ejecución de la función. Si después hay más código que intenta enviar otra respuesta, obtendrás el error <em>"Cannot set headers after they are sent"</em>. La solución es añadir <code>return</code> justo después de la respuesta de error:</p>
+      <pre><code>if (!logro) {
+  res.status(404).json({ error: "Logro no encontrado" })
+  return   // ← sin este return, el código de abajo también se ejecuta
+}
+res.json(logro)</code></pre>
+    </div>
+
+    <div class="pager">
+      <a href="03-typescript.html"><span class="dir">← Anterior</span>03 · TypeScript</a>
+      <a class="next" href="05-postgres-sql.html"><span class="dir">Siguiente →</span>05 · PostgreSQL y SQL</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

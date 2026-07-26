@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT y Auth — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html" class="active"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>JWT y Autenticación</h1>
+    <p class="subtitle">Cómo un servidor sin memoria puede saber quién eres en cada petición.</p>
+
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>HTTP es un protocolo <strong>sin estado</strong> (<em>stateless</em>): cada petición es completamente independiente de la anterior. El servidor no recuerda que hace un momento hiciste login. Entonces, ¿cómo demuestra el cliente quién es en cada petición?</p>
+      <p>La solución clásica eran las <em>sesiones</em>: el servidor guarda en memoria que el usuario X está logueado y le entrega un ID. Pero esto obliga al servidor a mantener estado y no escala bien en múltiples servidores.</p>
+      <p>JWT (<em>JSON Web Token</em>) invierte el problema: el servidor genera un token firmado criptográficamente y se lo entrega al cliente. En cada petición, el cliente adjunta ese token. El servidor solo necesita su clave secreta para verificar la firma — no consulta ninguna base de datos ni guarda nada en memoria. Cualquier servidor que conozca la clave puede verificar el token.</p>
+    </div>
+
+    <h2>¿Qué es un token JWT?</h2>
+    <p>Un token JWT es una cadena de texto con tres partes separadas por puntos. Cada parte está codificada en Base64:</p>
+
+    <pre><code>eyJhbGciOiJIUzI1NiJ9 . eyJ1c2VySWQiOjF9 . abc123xyz
+      CABECERA               DATOS (payload)      FIRMA</code></pre>
+
+    <ul>
+      <li><strong>Cabecera:</strong> el algoritmo de firma usado (ej: HS256)</li>
+      <li><strong>Payload:</strong> los datos que el servidor guarda en el token (ej: <code>{ userId: 1 }</code>). Son <strong>legibles por cualquiera</strong> — no guardes contraseñas aquí.</li>
+      <li><strong>Firma:</strong> el servidor la calcula con su clave secreta. Si alguien modifica el payload, la firma ya no coincide y el token queda inválido.</li>
+    </ul>
+
+    <div class="callout note">
+      <p class="callout-title">JWT es legible pero no falsificable</p>
+      <p>Cualquiera puede decodificar el payload de un JWT (no está cifrado, solo codificado en Base64). Pero <strong>nadie puede falsificar la firma</strong> sin conocer la clave secreta del servidor. Por eso, nunca guardes información sensible en el payload; guarda solo identificadores (<code>userId</code>, roles).</p>
+    </div>
+
+    <h2>Las dos librerías</h2>
+    <pre><code>npm install jsonwebtoken bcryptjs
+npm install --save-dev @types/jsonwebtoken @types/bcryptjs</code></pre>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Librería</th>
+          <th>Para qué sirve</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>bcryptjs</strong></td>
+          <td>Hashear contraseñas. Nunca guardar passwords en texto plano en la BD.</td>
+        </tr>
+        <tr>
+          <td><strong>jsonwebtoken</strong></td>
+          <td>Crear y verificar tokens JWT.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>bcrypt — hashear contraseñas</h2>
+    <p>Un <em>hash</em> es una transformación de una sola vía: dado un password puedes calcular su hash, pero dado el hash no puedes recuperar el password original. bcrypt añade además un factor de trabajo (<em>rounds</em>) que hace el cálculo lento a propósito, dificultando los ataques de fuerza bruta.</p>
+
+    <pre><code>import bcrypt from "bcryptjs"
+
+// Al registrar — hashear antes de guardar en la BD
+const hash = await bcrypt.hash(password, 10)   // 10 = rounds (coste computacional)
+await prisma.user.create({ data: { email, password: hash } })
+
+// Al hacer login — comparar el password con el hash guardado
+const esValido = await bcrypt.compare(passwordRecibido, hashGuardado)
+// bcrypt.compare devuelve true o false</code></pre>
+
+    <div class="callout note">
+      <p class="callout-title">¿Por qué no basta con cifrar el password?</p>
+      <p>El cifrado es reversible (con la clave correcta recuperas el original). El hasheo no lo es. Si un atacante roba tu base de datos y consigue la clave de cifrado, obtiene todos los passwords. Con hashing solo obtiene hashes que son computacionalmente muy difíciles de revertir. Por eso los passwords se hashean, no se cifran.</p>
+    </div>
+
+    <h2>jwt.sign y jwt.verify</h2>
+    <pre><code>import jwt from "jsonwebtoken"
+
+const SECRET = process.env["JWT_SECRET"]!   // clave secreta del servidor
+
+// Generar token — incluye userId en el payload, expira en 7 días
+const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: "7d" })
+
+// Verificar token — lanza excepción si es inválido o ha expirado
+const payload = jwt.verify(token, SECRET) as { userId: number }
+console.log(payload.userId)   // el userId que guardamos al firmar</code></pre>
+
+    <h2>Flujo completo: register → login → petición protegida</h2>
+    <pre><code>1. Cliente  →  POST /auth/register  { email, password }
+   Servidor:   hashea password, crea usuario en BD
+   Respuesta:  { id, email }   (sin token — el usuario aún no está "dentro")
+
+2. Cliente  →  POST /auth/login  { email, password }
+   Servidor:   busca usuario, compara password con hash, genera token
+   Respuesta:  { token: "eyJ..." }
+   Cliente:    guarda el token en localStorage
+
+3. Cliente  →  POST /logros   Authorization: Bearer eyJ...
+   Servidor:   middleware verifica token, extrae userId, permite continuar
+   Respuesta:  { id, nombre, puntos }   (logro creado)</code></pre>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp — rutas de auth</p>
+      <p><span class="fileref">apps/backend/src/routes/auth.ts</span> — implementación real de register y login:</p>
+      <pre><code>// POST /auth/register
+router.post("/register", async (req, res) => {
+  const { email, password } = req.body ?? {}
+
+  if (!email || !password) {
+    res.status(400).json({ error: "Faltan campos: email y password" })
+    return
+  }
+
+  const existe = await prisma.user.findUnique({ where: { email } })
+  if (existe) {
+    res.status(400).json({ error: "El email ya está registrado" })
+    return
+  }
+
+  const hash = await bcrypt.hash(password, 10)
+  const user = await prisma.user.create({ data: { email, password: hash } })
+  res.status(201).json({ id: user.id, email: user.email })
+})
+
+// POST /auth/login
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body ?? {}
+
+  const user = await prisma.user.findUnique({ where: { email } })
+  if (!user) {
+    res.status(401).json({ error: "Credenciales incorrectas" })
+    return
+  }
+
+  const esValido = await bcrypt.compare(password, user.password)
+  if (!esValido) {
+    res.status(401).json({ error: "Credenciales incorrectas" })
+    return
+  }
+
+  const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: "7d" })
+  res.json({ token })
+})</code></pre>
+      <p>Nota: tanto si el email no existe como si la contraseña es incorrecta, el servidor responde con el mismo mensaje genérico <em>"Credenciales incorrectas"</em>. Esto es deliberado — no queremos revelar si el email está registrado o no.</p>
+    </div>
+
+    <h2>Middleware de autenticación</h2>
+    <p>Un <em>middleware</em> de Express es una función que se ejecuta antes de la ruta. El middleware de auth extrae el token del header <code>Authorization</code>, lo verifica y, si es válido, deja pasar la petición a la ruta. Si no, responde con 401 directamente.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp — el middleware real</p>
+      <p><span class="fileref">apps/backend/src/middleware/auth.ts</span> — código completo del middleware:</p>
+      <pre><code>import { Request, Response, NextFunction } from "express"
+import jwt from "jsonwebtoken"
+
+const SECRET = process.env["JWT_SECRET"]!
+
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  const header = req.headers["authorization"]  // "Bearer &lt;token&gt;"
+  const token = header?.split(" ")[1]          // extrae la parte después de "Bearer "
+
+  if (!token) {
+    res.status(401).json({ error: "Token requerido" })
+    return
+  }
+
+  try {
+    const payload = jwt.verify(token, SECRET) as { userId: number }
+    ;(req as any).userId = payload.userId   // inyecta userId en la petición
+    next()                                  // continuar a la ruta
+  } catch {
+    res.status(401).json({ error: "Token inválido" })
+  }
+}</code></pre>
+      <p>El <code>header?.split(" ")[1]</code> usa <em>optional chaining</em> (<code>?.</code>): si <code>header</code> es <code>undefined</code>, no lanza error, simplemente devuelve <code>undefined</code>.</p>
+    </div>
+
+    <h2>Proteger una ruta con el middleware</h2>
+    <p>El middleware se pasa como segundo argumento al método de ruta. Express lo ejecuta antes de llegar al handler:</p>
+
+    <pre><code>import { authMiddleware } from "../middleware/auth"
+
+// GET / — público (sin middleware)
+router.get("/", async (req, res) => { ... })
+
+// POST / — protegido (requiere token válido)
+router.post("/", authMiddleware, async (req, res) => {
+  // Solo llega aquí si el token es válido
+  // req.userId tiene el id del usuario autenticado
+  const { nombre, puntos } = req.body
+  const logro = await prisma.logro.create({ data: { nombre, puntos } })
+  res.status(201).json(logro)
+})</code></pre>
+
+    <h2>El token en el frontend — localStorage</h2>
+    <p>El frontend guarda el token en <code>localStorage</code> (almacenamiento del navegador persistente entre sesiones) y lo adjunta en cada petición al backend:</p>
+
+    <pre><code>// Guardar al hacer login (login/page.tsx)
+const data = await res.json()
+localStorage.setItem("token", data.token)
+
+// Leer y usar al crear un logro (NuevoLogro.tsx)
+const token = localStorage.getItem("token")
+
+const res = await fetch("http://localhost:3001/logros", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,   // el servidor espera este formato exacto
+  },
+  body: JSON.stringify({ nombre, puntos }),
+})
+
+// Borrar al hacer logout (Header.tsx)
+localStorage.removeItem("token")</code></pre>
+
+    <figure class="diagrama">
+      <iframe src="diagramas/auth-jwt.html" height="620" title="Flujo de autenticación JWT: login → token → petición protegida"></iframe>
+      <figcaption>Flujo completo de autenticación JWT en webLogrosApp — <a href="diagramas/auth-jwt.html" target="_blank">abrir en pantalla completa ↗</a></figcaption>
+    </figure>
+
+    <h2>Variable de entorno — JWT_SECRET</h2>
+    <p>La clave secreta del servidor nunca debe estar hardcodeada en el código. Se lee de una variable de entorno:</p>
+
+    <pre><code># apps/backend/.env
+JWT_SECRET="una_clave_secreta_larga_y_aleatoria_minimo_32_caracteres"</code></pre>
+
+    <div class="callout note">
+      <p class="callout-title">¿Qué pasa si alguien descubre el JWT_SECRET?</p>
+      <p>Puede generar tokens válidos para cualquier userId. En ese momento, todos los usuarios están comprometidos y hay que rotar el secreto (cambiar el valor de JWT_SECRET), lo que invalida todos los tokens existentes y obliga a los usuarios a hacer login de nuevo. Por eso el <code>.env</code> nunca se sube a git.</p>
+    </div>
+
+    <div class="pager">
+      <a href="07-nextjs.html"><span class="dir">← Anterior</span>07 · Next.js</a>
+      <a class="next" href="09-cors.html"><span class="dir">Siguiente →</span>09 · CORS</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

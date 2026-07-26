@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nginx y despliegue — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html" class="active"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>Nginx y despliegue</h1>
+    <p class="subtitle">Un único punto de entrada y un pipeline de despliegue automático de extremo a extremo</p>
+
+    <!-- ¿Por qué existe esto? -->
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Sin un reverse proxy, el usuario tendría que acceder a <code>:3000</code> para el frontend y a <code>:3001</code> para la API — exponer múltiples puertos al exterior es inseguro, incómodo y hace imposible servir ambas cosas bajo el mismo dominio. Nginx resuelve esto: escucha en el puerto 80 (el estándar HTTP) y enruta cada petición al servicio correcto según la URL. Además, el ciclo de despliegue manual (modificar código → conectarse al servidor → ejecutar comandos) es lento y propenso a errores. GitHub Actions automatiza todo: un push a <code>main</code> dispara la construcción de imágenes, su publicación en GHCR, y Watchtower las despliega automáticamente en el servidor.</p>
+    </div>
+
+    <h2>Nginx como reverse proxy</h2>
+    <p>Un <strong>reverse proxy</strong> es un intermediario que recibe peticiones del exterior y las reenvía al servicio interno adecuado. El cliente no sabe que hay dos aplicaciones distintas detrás — todo parece venir del mismo servidor.</p>
+    <pre><code>Sin Nginx:
+  Navegador → tudominio.com:3000  (Next.js — frontend)
+  Navegador → tudominio.com:3001  (Express — API)
+  ↑ Dos puertos expuestos, CORS entre ellos, sin TLS centralizado
+
+Con Nginx:
+  Navegador → tudominio.com:80
+                    │
+                 [Nginx]
+                /        \
+           /api/*          /*
+             │               │
+          Express         Next.js
+         (puerto 3001)   (puerto 3000)
+         ← red interna →</code></pre>
+
+    <!-- En webLogrosApp -->
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El archivo <span class="fileref">infra/nginx/nginx.conf</span> es el corazón del enrutamiento:</p>
+      <pre><code>events {}
+
+http {
+  server {
+    listen 80;
+
+    location /api/ {
+      proxy_pass http://backend:3001/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location / {
+      proxy_pass http://frontend:3000;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+  }
+}</code></pre>
+      <p>Este archivo se monta como volumen de solo lectura en el contenedor de Nginx desde <span class="fileref">docker-compose.yml</span>:</p>
+      <pre><code>nginx:
+  image: nginx:alpine
+  volumes:
+    - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro</code></pre>
+    </div>
+
+    <h2>Anatomía del nginx.conf</h2>
+    <table>
+      <thead>
+        <tr><th>Directiva</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>events {}</code></td><td>Bloque obligatorio. Vacío = usar valores por defecto (conexiones simultáneas, etc.)</td></tr>
+        <tr><td><code>listen 80</code></td><td>Escucha peticiones HTTP en el puerto estándar</td></tr>
+        <tr><td><code>location /api/ { … }</code></td><td>Las rutas más específicas se declaran primero. Todo lo que empiece por <code>/api/</code> va al backend</td></tr>
+        <tr><td><code>location / { … }</code></td><td>El resto (cualquier otra URL) va al frontend Next.js</td></tr>
+        <tr><td><code>proxy_pass http://backend:3001/</code></td><td>Reenvía al backend. <code>backend</code> es el nombre del servicio Docker (no <code>localhost</code>)</td></tr>
+        <tr><td><code>proxy_set_header X-Real-IP</code></td><td>Pasa la IP original del visitante al servicio destino</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <p class="callout-title">Gotcha: la barra final en <code>proxy_pass</code> importa mucho</p>
+      <p><code>proxy_pass http://backend:3001/;</code> — la barra al final hace que Nginx <em>quite</em> el prefijo <code>/api</code> antes de reenviar. Si un navegador pide <code>/api/logros</code>, el backend recibe <code>/logros</code> (no <code>/api/logros</code>). Sin esa barra, el backend recibiría <code>/api/logros</code> y tendría que definir rutas bajo <code>/api/</code>, lo cual es redundante.</p>
+    </div>
+
+    <div class="callout note">
+      <p class="callout-title">Gotcha: <code>http://backend:3001</code> — nombre de contenedor, no localhost</p>
+      <p>El contenedor de Nginx no puede usar <code>localhost</code> para referirse al backend — <code>localhost</code> dentro de Nginx es el propio Nginx. Docker Compose crea una red interna donde cada contenedor es accesible por su nombre de servicio: <code>backend</code>, <code>frontend</code>, <code>db</code>.</p>
+    </div>
+
+    <figure class="diagrama">
+      <iframe src="diagramas/arquitectura.html" height="560" title="Diagrama de arquitectura: nginx → Next.js / Express → Prisma → PostgreSQL"></iframe>
+      <figcaption>Arquitectura completa en Docker — <a href="diagramas/arquitectura.html" target="_blank">abrir en pantalla completa ↗</a></figcaption>
+    </figure>
+
+    <h2>Flujo de despliegue completo</h2>
+    <p>El pipeline de despliegue tiene cuatro eslabones:</p>
+    <pre><code>1. git push → main
+       ↓
+2. GitHub Actions construye las imágenes Docker y las publica en GHCR
+       ↓
+3. Watchtower (corriendo en el servidor) detecta nuevas imágenes cada 30 s
+       ↓
+4. Watchtower descarga y redespliega los contenedores marcados automáticamente</code></pre>
+
+    <h3>Eslabón 1 y 2 — GitHub Actions</h3>
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El workflow <span class="fileref">.github/workflows/deploy.yml</span> se activa en cada push a <code>main</code>:</p>
+      <pre><code>name: Build and Push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set lowercase owner
+        run: echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/backend
+          push: true
+          tags: ghcr.io/${{ env.OWNER }}/weblogros-backend:latest
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/frontend
+          push: true
+          tags: ghcr.io/${{ env.OWNER }}/weblogros-frontend:latest</code></pre>
+      <p>El resultado son dos imágenes publicadas en GHCR: <span class="tag">ghcr.io/javierloro/weblogros-backend:latest</span> y <span class="tag">ghcr.io/javierloro/weblogros-frontend:latest</span>.</p>
+    </div>
+
+    <h3>Eslabón 3 y 4 — Watchtower (auto-despliegue)</h3>
+    <p>Watchtower es un contenedor que vigila otros contenedores. Cada 30 segundos comprueba si hay una imagen más nueva en el registry para los contenedores que tienen la etiqueta <code>com.centurylinklabs.watchtower.enable=true</code>. Si la hay, descarga la nueva imagen y reinicia el contenedor.</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>En <span class="fileref">docker-compose.prod.yml</span>, backend y frontend llevan la etiqueta de Watchtower:</p>
+      <pre><code>backend:
+  image: ghcr.io/javierloro/weblogros-backend:latest
+  labels:
+    - "com.centurylinklabs.watchtower.enable=true"
+  restart: unless-stopped
+
+frontend:
+  image: ghcr.io/javierloro/weblogros-frontend:latest
+  labels:
+    - "com.centurylinklabs.watchtower.enable=true"
+  restart: unless-stopped
+
+watchtower:
+  image: containrrr/watchtower
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /root/.docker/config.json:/config.json:ro
+  environment:
+    WATCHTOWER_POLL_INTERVAL: 30     # comprobar cada 30 segundos
+    DOCKER_API_VERSION: "1.41"
+  command: --label-enable            # solo los contenedores etiquetados
+  restart: unless-stopped</code></pre>
+      <p>Watchtower necesita acceso al socket de Docker (<code>/var/run/docker.sock</code>) para poder reiniciar contenedores, y a las credenciales de Docker (<code>config.json</code>) para poder descargar imágenes privadas de GHCR.</p>
+    </div>
+
+    <h2>Servidor — Proxmox</h2>
+    <p>El servidor donde corre todo es una máquina virtual gestionada con <strong>Proxmox</strong>. Proxmox es un hipervisor de código abierto que permite crear y gestionar máquinas virtuales desde una interfaz web. El proyecto aprende aquí qué significa «tener un servidor propio» frente a contratar un VPS.</p>
+
+    <h2>Red pública — Cloudflare Tunnel + Nginx Proxy Manager</h2>
+    <p>El servidor en Proxmox no tiene IP pública accesible directamente desde internet. La arquitectura de red tiene dos capas:</p>
+    <table>
+      <thead>
+        <tr><th>Capa</th><th>Herramienta</th><th>Función</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Túnel seguro</td><td><strong>Cloudflare Tunnel</strong></td><td>Conecta el servidor con Cloudflare sin abrir puertos en el router. El tráfico entra por Cloudflare (que provee TLS/HTTPS en el borde) y sale por el túnel encriptado hacia el servidor</td></tr>
+        <tr><td>Proxy local</td><td><strong>Nginx Proxy Manager</strong></td><td>Reverse proxy con interfaz web que distribuye el tráfico entre los distintos servicios de la VM. Recibe del Cloudflare Tunnel y reenvía a <code>weblogros_nginx:8080</code></td></tr>
+        <tr><td>App</td><td><strong>Nginx (contenedor)</strong></td><td>El Nginx de la aplicación (ya visto) que enruta entre backend y frontend</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <p class="callout-title">¿Por qué Cloudflare Tunnel y no Let's Encrypt directo?</p>
+      <p>Cloudflare Tunnel es más sencillo en un entorno doméstico o de aprendizaje: no requiere IP pública fija, no hay que abrir puertos en el router, y Cloudflare termina el TLS en su borde (el navegador habla HTTPS con Cloudflare; Cloudflare habla por el túnel con el servidor). Let's Encrypt requeriría que el servidor sea accesible públicamente en el puerto 80/443 para el challenge de DNS o HTTP.</p>
+    </div>
+
+    <figure class="diagrama">
+      <iframe src="diagramas/despliegue.html" height="520" title="Pipeline CI/CD: git push → Actions → GHCR → Watchtower → Proxmox"></iframe>
+      <figcaption>Pipeline CI/CD completo — <a href="diagramas/despliegue.html" target="_blank">abrir en pantalla completa ↗</a></figcaption>
+    </figure>
+
+    <h2>Bug latente: URLs hardcodeadas en el frontend</h2>
+    <div class="callout note">
+      <p class="callout-title">Phase 5.5 — Bug prioritario a corregir</p>
+      <p>Actualmente el frontend tiene llamadas a <code>http://localhost:3001</code> hardcodeadas en varios Client Components (login, register, NuevoLogro…). Esto funciona en desarrollo porque el navegador del desarrollador tiene el backend en su <code>localhost:3001</code>. En producción, el navegador del <em>visitante</em> intenta conectarse a <em>su propio</em> <code>localhost:3001</code>, que no existe, y la petición falla silenciosamente. La solución es usar rutas relativas (<code>/api/logros</code>) para que Nginx actúe de intermediario, o una variable de entorno <code>NEXT_PUBLIC_API_URL</code>. Es el primer punto de la Phase 5.5 — Hardening.</p>
+    </div>
+
+    <div class="pager">
+      <a href="10-docker.html"><span class="dir">← Anterior</span>10 · Docker</a>
+      <a class="next" href="12-vision-proyecto.html"><span class="dir">Siguiente →</span>12 · Visión y roadmap</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -677,7 +677,7 @@ export default function LoginPage() {
     setError("")
 
     try {
-      const res = await fetch("http://localhost:3001/auth/login", {
+      const res = await fetch("/api/auth/login", {  // ruta relativa (ver sección "URLs relativas")
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -1050,3 +1050,284 @@ webLogrosApp/
 └── docs/
     └── apuntes.md             # este archivo
 ```
+
+---
+
+## URLs relativas — por qué el frontend nunca debe apuntar a `localhost:3001`
+
+Al principio, los formularios del frontend hacían `fetch("http://localhost:3001/auth/login")`.
+Eso funciona **solo en tu máquina** y es un bug grave en producción. La clave es entender
+**dónde se ejecuta cada tipo de componente** (ver la tabla de Server vs Client Components):
+
+| | Dónde corre el `fetch` | Qué significa `localhost` |
+|---|---|---|
+| **Server Component** (`page.tsx`, detalle) | En el **servidor** de Next.js | La propia máquina del servidor → `localhost:3001` sí es el backend |
+| **Client Component** (`login`, `register`, `NuevoLogro`) | En el **navegador del visitante** | La máquina *del visitante* → `localhost:3001` sería el PC del usuario, **no** tu backend |
+
+Por eso un Client Component que llama a `http://localhost:3001` falla para cualquiera que
+no sea tú: el navegador del visitante intenta conectarse a *su propio* puerto 3001, que no existe.
+
+### La solución: rutas relativas + un proxy
+
+Los Client Components usan **rutas relativas** (`/api/auth/login`, `/api/logros`). El navegador
+las resuelve contra el mismo host que sirvió la página, y alguien las reenvía al backend:
+
+- **En producción:** **nginx** (`infra/nginx/nginx.conf`) — `/api/` → `http://backend:3001/`
+  (la barra final del `proxy_pass` elimina el prefijo `/api`).
+- **En desarrollo:** el `rewrites()` de `next.config.ts` hace de proxy equivalente:
+
+```ts
+async rewrites() {
+  return [
+    { source: "/api/:path*", destination: "http://localhost:3001/:path*" },
+  ];
+}
+```
+
+Así el **mismo código** (`fetch("/api/...")`) funciona en dev y en prod sin cambios.
+Los **Server Components** son distintos: corren en el servidor, así que usan
+`process.env.BACKEND_URL ?? "http://localhost:3001"` (red interna de Docker) — a esos **no** se les toca.
+
+**Regla mental:** ¿el `fetch` está en un componente con `"use client"`? → ruta relativa `/api/...`.
+¿Corre en el servidor? → variable de entorno `BACKEND_URL`.
+
+---
+
+## Migraciones de Prisma — el *drift* entre schema e historial
+
+Al levantar el proyecto desde cero en otra máquina, el registro y login daban error 500:
+`The table public.User does not exist`. La causa fue un **desajuste (drift)** entre las dos
+fuentes de verdad de Prisma:
+
+| Fuente | Qué es | Contenía |
+|---|---|---|
+| `prisma/schema.prisma` | Lo que **quieres** que sea la BD | `Logro` **y** `User` |
+| `prisma/migrations/` | Historial de cambios SQL **ya aplicados** (va en git) | solo `init` → crea `Logro` |
+
+El modelo `User` estaba en el schema pero **nunca se generó su migración**. En el servidor
+antiguo la tabla existía porque se creó con `prisma db push` (aplica el schema directo, **sin**
+dejar migración). Al reproducir el repo limpio, ese cambio no versionado se perdió.
+
+- **`prisma db push`** → aplica el schema a la BD al momento. Rápido para prototipar, pero
+  **no deja rastro en git**. Peligroso: crea drift.
+- **`prisma migrate dev --name <nombre>`** → genera un `migration.sql` versionado **y** lo aplica.
+  Es lo correcto para que el cambio sea reproducible.
+- **`prisma migrate deploy`** → en producción / CI, reproduce las migraciones pendientes del
+  historial sobre la BD. No genera nada nuevo.
+
+El arreglo fue generar la migración que faltaba:
+
+```bash
+npx prisma migrate dev --name add_user_model   # crea 20260723112540_add_user_model + CREATE TABLE "User"
+```
+
+**Regla mental:** cada cambio de `schema.prisma` se acompaña de un `migrate dev`. `db push`
+solo para experimentos desechables. Si un clon limpio + `migrate deploy` no reproduce tu BD,
+tienes drift.
+
+---
+
+## Hardening — validación de configuración y *fail-fast*
+
+### El problema: el `!` de TypeScript no valida nada
+
+En varios sitios teníamos `process.env["JWT_SECRET"]!`. El `!` es el **non-null assertion
+operator**: una promesa al *compilador* ("esto nunca será `undefined`"), pero **sin ninguna
+comprobación en runtime**. Si la variable falta de verdad, el fallo ocurre **tarde y lejos**:
+el servidor arranca "sano" y revienta más tarde, dentro de una petición, con un error críptico
+(`jwt.sign(payload, undefined)` peta cuando un usuario hace login).
+
+### La solución: *fail-fast* — validar al arrancar
+
+**Fail-fast** = comprobar la configuración **una sola vez, al inicio**, y si falta algo,
+**crashear inmediatamente** con un mensaje claro y `exit(1)`. Así un despliegue mal configurado
+no llega a aceptar peticiones: se cae en el log de arranque señalando qué falta.
+
+Módulo `src/config/env.ts`:
+
+```ts
+import "dotenv/config"   // línea 1: carga el .env ANTES de leer nada (ver "orden de carga")
+
+function requerida(nombre: string): string {
+  const value = process.env[nombre]
+  if (!value) {
+    console.error(`Environment variable ${nombre} is not defined.`)
+    process.exit(1)
+  }
+  return value
+}
+
+export const DATABASE_URL = requerida("DATABASE_URL")
+export const JWT_SECRET = requerida("JWT_SECRET")
+```
+
+El resto del código importa `{ DATABASE_URL, JWT_SECRET }` de aquí, ya validados y tipados
+como `string` — sin `!`.
+
+### Por qué `return value` compila sin `!` (tipo `never` y *narrowing*)
+
+`process.exit(1)` tiene tipo **`never`** ("nunca devuelve, corta la ejecución aquí").
+TypeScript razona: *si se llegó al `return`, es imposible haber pasado por el `if`, luego
+`value` no puede ser `undefined`* → lo estrecha (*narrowing*) a `string`. Por eso no hace
+falta `!`. (Un bucle `for` que valide **no** consigue esto: TS no sigue esa lógica; una función
+con `never` en la rama de error, sí.)
+
+### El código de salida importa (`exit(1)` vs `exit(0)`)
+
+Convención universal: **`0` = éxito, distinto de `0` = error**. Docker y los orquestadores
+miran ese código: con `1` saben que el contenedor arrancó mal (no lo marcan sano, disparan la
+política de reinicio). Con `0` pensarían que terminó bien.
+
+### La trampa del orden de carga de dotenv
+
+Los `import` se ejecutan **de arriba abajo**. `dotenv` rellena `process.env` desde el `.env`
+como *efecto secundario* de `import "dotenv/config"`. Si un módulo lee `process.env` **antes**
+de que dotenv corra, verá las variables vacías → falso positivo del fail-fast. Solución: que
+`env.ts` cargue dotenv como **su primera línea**, y que `server.ts` importe `./config/env`
+como **su primera línea** — así la validación es lo primero que ocurre, pase lo que pase.
+
+**Regla mental:** nunca leas `process.env` con `!` disperso por el código. Centraliza en un
+módulo `config` que valide al arrancar y exporte valores ya tipados.
+
+---
+
+## Manejo de errores centralizado (Express + clases de error)
+
+### El problema
+
+Sin manejo de errores, cualquier `await prisma...` que falle **borbotea** hasta el manejador
+por defecto de Express, que devuelve una **página HTML con el stack trace completo**. Dos males:
+**fuga de información** (el cliente ve tus internals) y **formato roto** (una API debe devolver
+JSON, no HTML). Además, las validaciones tipo `res.status(400).json(...)` estaban repetidas por
+todas las rutas.
+
+### Pieza A — clase de error propia (`errors/AppError.ts`)
+
+```ts
+export class AppError extends Error {
+  constructor(public statusCode: number, message: string) {
+    super(message)
+  }
+}
+```
+
+- `extends Error`: reutiliza el error nativo (`.message`, `.stack`, lo detecta `instanceof`)
+  y solo añade `statusCode`. Separa el **qué** (hubo un 404) del **cómo se responde**.
+- `super(message)`: inicializa el `Error` padre; sin él, `.message`/`.stack` no funcionarían.
+- `public statusCode` (*parameter property*): declara + asigna el campo en un gesto (azúcar TS).
+
+### Pieza B — error handler global (`middleware/errorHandler.ts`)
+
+```ts
+export function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
+  if (err instanceof AppError) {
+    res.status(err.statusCode).json({ error: err.message })   // esperado: seguro de mostrar
+  } else {
+    console.error(err)                                        // inesperado: log REAL en servidor
+    res.status(500).json({ error: "Internal server error" })  // ...y genérico al cliente
+  }
+}
+```
+
+Se monta **el último** en `server.ts`: `app.use(errorHandler)` tras las rutas.
+
+- `err: unknown` (no `any`): en JS se puede lanzar cualquier cosa → TS **obliga** a comprobar
+  con `instanceof` antes de tocar `.statusCode`. Mueve el error a **tiempo de compilación**.
+- **Defensa en profundidad:** el error real se loguea en el servidor (para ti); al cliente solo
+  el genérico. Nunca los dos mezclados.
+
+### Cómo Express distingue un error handler: `fn.length`
+
+Express **es quien llama** a tus middlewares (inversión de control: *"no nos llames, te
+llamamos"*). Mira **cuántos parámetros declaraste** y eso define tu ROL:
+
+| Parámetros | Rol | Cómo lo llama Express |
+|---|---|---|
+| `(req, res)` / `(req, res, next)` | Middleware/ruta normal | en cada petición |
+| `(err, req, res, next)` — **4** | **Error handler** | solo cuando hay error |
+
+No existe un middleware "normal" de 4 argumentos: si declaras 4, Express lo trata como manejador
+de errores. Los 4 slots son fijos (`err, req, res, next`); no puedes meter un dato propio ahí
+(para eso se usa `req`, como con `req.userId` en el authMiddleware).
+
+### Cómo llega el error de Prisma solo al handler (Express 5)
+
+1. La ruta es `async` → siempre devuelve una **Promise**.
+2. `await prisma...` falla → esa Promise **se rechaza** con el error.
+3. **Express 5** engancha automáticamente un `.catch(next)` a la Promise que devuelve tu ruta
+   → llama `next(error)` por ti. (En **Express 4** esto NO pasaba: había que `try/catch` +
+   `next(err)` a mano en cada ruta.)
+4. `next(error)` con argumento = "hay un error" → Express salta los middlewares normales y busca
+   el de 4 parámetros → tu `errorHandler`.
+
+**Regla mental:** en Express 5, `throw` dentro de una ruta async basta para llegar al error
+handler. `unknown` + `instanceof` para distinguir esperado de inesperado. El handler, siempre
+el último.
+
+---
+
+## Validación de entrada con Zod
+
+### El problema: `if (!email)` solo mira presencia, no forma
+
+La validación manual (`if (!email || !password) res.status(400)`) solo detecta valores *falsy*.
+No comprueba **tipo** (un número donde va string → Prisma lanza → `500`), ni **formato**
+(`"noesunemail"` se guardaba), ni **restricciones** (password de 1 carácter pasaba), ni descarta
+**campos extra** (mass assignment). Además: entrada mala del cliente producía un `500` (culpa
+fingida del servidor) en vez del `400` correcto (culpa del cliente). Y el `: { email: string }`
+sobre `req.body` es una **mentira al compilador**: `req.body` es `any`; TS no ve al otro lado de
+la frontera de la red. La validación es lo que hace que el tipo sea cierto en runtime.
+
+### La solución: un esquema (contrato ejecutable)
+
+```ts
+// schemas/auth.ts
+export const registerSchema = z.object({
+  email: z.email(),              // v4: formato top-level (z.string().email() está deprecado)
+  password: z.string().min(6),
+})
+```
+
+- **Valida en runtime** (`.parse()` lanza / `.safeParse()` devuelve `{ success, data, error }`).
+- **Infiere el tipo:** `type X = z.infer<typeof registerSchema>` → una sola fuente de verdad.
+- **z.object descarta claves extra** por defecto (mata el mass assignment).
+- Validadores de número: `.int()`, `.positive()` (>0), `.nonnegative()` (>=0), `.negative()`, `.nonpositive()`.
+
+### El enganche: middleware `validate(schema)` (función de orden superior)
+
+```ts
+// middleware/validate.ts
+export function validate(schema: ZodType) {
+  return (req, _res, next) => {                    // ← closure: recuerda `schema`
+    const result = schema.safeParse(req.body)
+    if (!result.success) {
+      throw new AppError(400, result.error.issues.map(i => i.message).join(", "))
+    }
+    req.body = result.data                          // datos limpios y tipados
+    next()
+  }
+}
+```
+
+- **Función de orden superior + closure:** `validate` no es el middleware; **devuelve** uno.
+  Express llama a los middlewares con args fijos `(req, res, next)` — no hay hueco para el
+  esquema, así que se "hornea" vía closure (la "mochila"). `validate(registerSchema)` recuerda
+  su esquema; `validate(loginSchema)` recuerda el suyo.
+- **Reutiliza el errorHandler sin tocarlo:** el middleware lanza `AppError(400)`, que el handler
+  global ya sabe traducir. El `ZodError` se convierte en la frontera y nunca llega al handler.
+- **`req.body = result.data`** es clave: sustituye el body crudo por el validado (sin campos extra).
+
+### Uso en las rutas (el orden importa)
+
+```ts
+router.post("/register", validate(registerSchema), handler)
+router.post("/login",    validate(loginSchema),    handler)
+router.post("/",         authMiddleware, validate(crearLogroSchema), handler)  // auth ANTES
+```
+
+En `/logros`, `authMiddleware` va **antes** que `validate`: no se gasta esfuerzo validando el
+cuerpo de alguien sin token (sin token → 401, ni se valida). Login usa un esquema más laxo
+(sin `.min`): un usuario ya registrado puede tener cualquier contraseña.
+
+**Regla mental:** un esquema por entrada, `validate(schema)` como middleware, y el error de
+validación se traduce a `AppError(400)` para reaprovechar el error handler.

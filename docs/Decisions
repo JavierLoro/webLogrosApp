@@ -10,6 +10,7 @@
 - **Sin login**: solo landing publicitaria + solicitar acceso; el resto requiere sesión
 - **Zona admin separada** (`/admin` y `/equipos/[slug]/admin`): buen ejercicio de layouts anidados y autorización contextual en Next.js
 - **Comunidad de logros** (`/comunidad`): implementar un logro ajeno crea **copia independiente con atribución** (preserva aislamiento entre tenants); jugadores proponen publicar/implementar y el TEAM_ADMIN aprueba (reutiliza el flujo solicitud+aprobación)
+- **Namespace de rutas de tenant — `/equipos/[slug]` (no `/[slug]`)**: el slug del equipo vive bajo `/equipos/` en vez de en la raíz. Un segmento dinámico en la raíz (`/[slug]`) colisiona con cada ruta de primer nivel (`/login`, `/comunidad`, `/admin`, `/solicitar-acceso`...): aunque las rutas estáticas ganan a la dinámica en Next.js, cada nueva ruta top-level se vuelve una palabra reservada que ningún equipo puede usar como slug, y obliga a mantener una blacklist para siempre (riesgo de secuestrar el espacio de un equipo al lanzar una ruta nueva). El namespace explícito hace las colisiones imposibles y la URL autoexplicativa. Migrable a `/[slug]` después sin tocar el modelo de datos (mover carpeta + validar slugs reservados) — patrón de GitHub (`/settings` reservado vs `/torvalds` usuario)
 
 ## Why Next.js instead of React + React Router?
 - Built-in routing and project structure

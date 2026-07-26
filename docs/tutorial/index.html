@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>webLogrosApp — Sitio de estudio</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a class="active" href="index.html"><span class="num">★</span> Portada</a>
+
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <section class="hero">
+      <h1>El proceso que has seguido, de principio a fin</h1>
+      <p class="subtitle">Una guía de estudio de <strong>webLogrosApp</strong>: cada concepto explicado desde el problema que resuelve (<em>first principles</em>) y anclado al código real que escribiste.</p>
+    </section>
+
+    <div class="callout note">
+      <p class="callout-title">Cómo usar este sitio</p>
+      <p>No es documentación de referencia: es un <strong>recorrido</strong>. Cada página empieza por <strong>¿por qué existe esto?</strong> — el problema concreto que apareció — y termina mostrándote <strong>cómo lo aplicaste en webLogrosApp</strong>, con rutas de archivo reales (como <span class="fileref">apps/backend/src/server.ts</span>) y fragmentos de tu propio código. Si estás perdido, léelas en orden: reconstruyen la intuición desde cero.</p>
+    </div>
+
+    <div class="callout why">
+      <p class="callout-title">📍 Dónde estás ahora</p>
+      <p>Fases 1–5 completadas (base, web pública, auth JWT, base de datos, despliegue en Docker + Proxmox). Ahora mismo en <strong>Phase 5.5 — Hardening</strong>: arreglando las URLs del frontend (de <code>localhost:3001</code> hardcodeado a rutas relativas <code>/api/*</code>). El detalle completo, en la página <a href="12-vision-proyecto.html">Visión y roadmap</a>.</p>
+    </div>
+
+    <h2>La ruta de aprendizaje</h2>
+    <p>El orden no es casual: cada pieza apareció porque la anterior creó una necesidad. Sigue las tarjetas en orden para ver la cadena completa.</p>
+
+    <div class="cards">
+      <a class="card" href="01-javascript.html"><span class="card-num">01</span><h3>JavaScript</h3><p>El lenguaje base. Variables, funciones flecha, async/await, módulos.</p></a>
+      <a class="card" href="02-node-npm.html"><span class="card-num">02</span><h3>Node y npm</h3><p>Ejecutar JS fuera del navegador y gestionar dependencias.</p></a>
+      <a class="card" href="03-typescript.html"><span class="card-num">03</span><h3>TypeScript</h3><p>Tipos sobre JS para cazar errores antes de ejecutar.</p></a>
+      <a class="card" href="04-express.html"><span class="card-num">04</span><h3>Express</h3><p>Crear una API REST: rutas, middleware, códigos HTTP.</p></a>
+      <a class="card" href="05-postgres-sql.html"><span class="card-num">05</span><h3>PostgreSQL y SQL</h3><p>Persistir datos en una base de datos relacional.</p></a>
+      <a class="card" href="06-prisma.html"><span class="card-num">06</span><h3>Prisma</h3><p>Hablar con la BD desde TypeScript, con tipos y migraciones.</p></a>
+      <a class="card" href="07-nextjs.html"><span class="card-num">07</span><h3>Next.js</h3><p>El frontend: Server vs Client Components, rutas por archivos.</p></a>
+      <a class="card" href="08-jwt-auth.html"><span class="card-num">08</span><h3>JWT y Auth</h3><p>Demostrar quién eres en cada petición sin estado en el servidor.</p></a>
+      <a class="card" href="09-cors.html"><span class="card-num">09</span><h3>CORS</h3><p>Por qué el navegador bloquea peticiones entre orígenes.</p></a>
+      <a class="card" href="10-docker.html"><span class="card-num">10</span><h3>Docker</h3><p>Empaquetar servicios en contenedores reproducibles.</p></a>
+      <a class="card" href="11-nginx-despliegue.html"><span class="card-num">11</span><h3>Nginx y despliegue</h3><p>Reverse proxy, CI/CD a GHCR, Watchtower y Proxmox.</p></a>
+      <a class="card" href="12-vision-proyecto.html"><span class="card-num">12</span><h3>Visión y roadmap</h3><p>Qué es la app (multi-tenant), dónde estás y qué viene.</p></a>
+    </div>
+
+    <h2>Stack en una frase</h2>
+    <p><span class="tag">Next.js 16</span> <span class="tag">React 19</span> <span class="tag">Express 5</span> <span class="tag">TypeScript</span> <span class="tag">Prisma 7</span> <span class="tag">PostgreSQL 16</span> <span class="tag">JWT</span> <span class="tag">Docker</span> <span class="tag">Nginx</span> <span class="tag">GitHub Actions → GHCR</span> <span class="tag">Watchtower</span> <span class="tag">Proxmox</span></p>
+
+    <div class="pager">
+      <span></span>
+      <a class="next" href="01-javascript.html"><span class="dir">Empezar →</span> 01 · JavaScript</a>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

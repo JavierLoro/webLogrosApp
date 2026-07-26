@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORS — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html" class="active"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>CORS</h1>
+    <p class="subtitle">Por qué el navegador bloquea peticiones entre orígenes distintos y cómo el servidor da permiso explícito.</p>
+
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Imagina que estás logueado en tu banco en <code>banco.com</code>. Una página maliciosa en <code>evil.com</code> podría ejecutar JavaScript que hace peticiones a <code>banco.com/transferir</code> usando tus cookies de sesión. Para impedirlo, los navegadores implementan la <strong>Same-Origin Policy</strong>: por defecto, el JavaScript de una página solo puede hacer peticiones al <strong>mismo origen</strong> (mismo protocolo, dominio y puerto).</p>
+      <p>CORS (<em>Cross-Origin Resource Sharing</em>) es el mecanismo que permite que un servidor rompa esa restricción de forma controlada, diciendo explícitamente: "Sí, acepto peticiones desde <code>http://localhost:3000</code>".</p>
+    </div>
+
+    <h2>¿Qué es un "origen"?</h2>
+    <p>Un origen es la combinación de protocolo + dominio + puerto. Para que dos URLs tengan el mismo origen, los tres deben coincidir exactamente:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th>Mismo origen que <code>http://localhost:3000</code></th>
+          <th>Razón</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>http://localhost:3000/login</code></td>
+          <td>✓ Sí</td>
+          <td>Solo cambia la ruta, no el origen</td>
+        </tr>
+        <tr>
+          <td><code>http://localhost:3001</code></td>
+          <td>✗ No</td>
+          <td>Puerto diferente (3001 ≠ 3000)</td>
+        </tr>
+        <tr>
+          <td><code>https://localhost:3000</code></td>
+          <td>✗ No</td>
+          <td>Protocolo diferente (https ≠ http)</td>
+        </tr>
+        <tr>
+          <td><code>http://midominio.com:3000</code></td>
+          <td>✗ No</td>
+          <td>Dominio diferente</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>El frontend corre en <code>http://localhost:3000</code> (Next.js) y el backend en <code>http://localhost:3001</code> (Express). Aunque ambos están en <code>localhost</code>, <strong>los puertos son distintos</strong>: son orígenes diferentes. Sin CORS configurado, cualquier petición del frontend al backend sería bloqueada por el navegador.</p>
+    </div>
+
+    <h2>El error que ves en el navegador</h2>
+    <p>Cuando CORS no está configurado, el navegador bloquea la respuesta y muestra en la consola algo como:</p>
+
+    <pre><code>Access to fetch at 'http://localhost:3001/logros' from origin
+'http://localhost:3000' has been blocked by CORS policy:
+No 'Access-Control-Allow-Origin' header is present on the
+requested resource.</code></pre>
+
+    <div class="callout note">
+      <p class="callout-title">Gotcha: Thunder Client y curl no tienen CORS</p>
+      <p>CORS es una restricción del <strong>navegador</strong>, no del servidor. Thunder Client, Postman, <code>curl</code> y los Server Components de Next.js no son navegadores, así que pueden hacer peticiones entre orígenes sin problema. Un endpoint puede funcionar perfectamente en Thunder Client y fallar en el navegador por CORS. Si tu API responde bien en las herramientas de prueba pero falla desde el frontend, lo primero que hay que revisar es CORS.</p>
+    </div>
+
+    <h2>Cómo funciona CORS</h2>
+    <p>CORS no es que el servidor "bloquee" la petición. El servidor la recibe y responde normalmente. Es el <strong>navegador</strong> quien, al recibir la respuesta, comprueba si incluye el header <code>Access-Control-Allow-Origin</code>. Si el header no está o no incluye el origen del frontend, el navegador descarta la respuesta y muestra el error.</p>
+
+    <pre><code>Sin CORS:
+  Frontend (localhost:3000)  →  petición  →  Backend (localhost:3001)
+  Frontend (localhost:3000)  ←  respuesta (sin headers CORS)
+  Navegador: "Este origen no está permitido" → descarta la respuesta ✗
+
+Con CORS configurado:
+  Frontend (localhost:3000)  →  petición  →  Backend (localhost:3001)
+  Frontend (localhost:3000)  ←  respuesta + Access-Control-Allow-Origin: http://localhost:3000
+  Navegador: "Origen permitido" → entrega la respuesta al JavaScript ✓</code></pre>
+
+    <h2>Preflight request — la petición de permiso</h2>
+    <p>Antes de hacer peticiones "no simples" (POST con JSON, cualquier petición con headers personalizados como <code>Authorization</code>), el navegador envía automáticamente una petición <code>OPTIONS</code> previa al mismo endpoint. Es una "preflight request": pregunta al servidor si la petición real está permitida antes de enviarla.</p>
+
+    <pre><code>1. Navegador  →  OPTIONS /logros
+               Origin: http://localhost:3000
+               Access-Control-Request-Method: POST
+               Access-Control-Request-Headers: Content-Type, Authorization
+
+2. Servidor   →  200 OK
+               Access-Control-Allow-Origin: http://localhost:3000
+               Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+               Access-Control-Allow-Headers: Content-Type, Authorization
+
+3. Navegador: "OK, el servidor lo permite"
+   Navegador  →  POST /logros (la petición real)
+               Authorization: Bearer eyJ...</code></pre>
+
+    <p>Si el servidor no responde correctamente al <code>OPTIONS</code>, el navegador no envía la petición real y muestra el error CORS.</p>
+
+    <h2>Solución — middleware manual en Express</h2>
+    <p>El middleware CORS se añade <strong>antes</strong> de <code>express.json()</code> y de cualquier ruta, para que todas las peticiones pasen por él:</p>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp — el middleware CORS real</p>
+      <p><span class="fileref">apps/backend/src/server.ts</span> — configuración completa. Las tres cabeceras son necesarias; falta cualquiera y el navegador bloqueará ciertas peticiones:</p>
+      <pre><code>import "dotenv/config"
+import express from "express"
+import logrosRouter from "./routes/logros"
+import authRouter from "./routes/auth"
+
+const app = express()
+const PORT: number = 3001
+
+// CORS — debe ir antes de express.json() y de las rutas
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200)
+    return
+  }
+  next()
+})
+
+app.use(express.json())
+
+app.use("/auth", authRouter)
+app.use("/logros", logrosRouter)
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`)
+})</code></pre>
+    </div>
+
+    <h2>Los tres headers explicados</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Header</th>
+          <th>Qué permite</th>
+          <th>Si falta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Access-Control-Allow-Origin</code></td>
+          <td>Qué orígenes pueden hacer peticiones</td>
+          <td>Todas las peticiones bloqueadas</td>
+        </tr>
+        <tr>
+          <td><code>Access-Control-Allow-Methods</code></td>
+          <td>Qué métodos HTTP están permitidos</td>
+          <td>Solo GET está implícitamente permitido</td>
+        </tr>
+        <tr>
+          <td><code>Access-Control-Allow-Headers</code></td>
+          <td>Qué cabeceras puede enviar el cliente</td>
+          <td>Sin <code>Authorization</code>: el token JWT no llegaría al servidor</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <p class="callout-title">¿Por qué no usar <code>Access-Control-Allow-Origin: *</code>?</p>
+      <p>El wildcard <code>*</code> permite peticiones desde cualquier origen. Es conveniente para APIs públicas, pero tiene una restricción importante: <strong>no funciona con credenciales</strong> (cookies o el header <code>Authorization</code>). Si tu API requiere autenticación mediante token, tienes que especificar el origen exacto. En producción conviene configurar el origen desde una variable de entorno en lugar de hardcodearlo.</p>
+    </div>
+
+    <h2>Alternativa — la librería cors</h2>
+    <p>En lugar de escribir el middleware a mano, existe la librería oficial <code>cors</code> para Express:</p>
+
+    <pre><code>npm install cors
+npm install --save-dev @types/cors</code></pre>
+
+    <pre><code>import cors from "cors"
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}))</code></pre>
+
+    <p>El resultado es el mismo que el middleware manual. La versión manual es útil para entender exactamente qué headers se envían; la librería es más conveniente en producción y maneja algunos casos edge automáticamente (como la preflight).</p>
+
+    <h2>CORS en producción con Nginx</h2>
+    <p>Cuando el frontend y el backend están detrás de Nginx en el mismo dominio y puerto, <strong>CORS desaparece como problema</strong>. Nginx recibe todas las peticiones en <code>https://tudominio.com</code> y las redirige internamente: <code>/api/*</code> al backend, <code>/*</code> al frontend. Para el navegador, todas las peticiones van al mismo origen.</p>
+
+    <pre><code>Sin Nginx (desarrollo):
+  Frontend: http://localhost:3000  →  Backend: http://localhost:3001
+  Orígenes diferentes → CORS necesario
+
+Con Nginx (producción):
+  Frontend: https://tudominio.com  →  Nginx → Backend (interno)
+  Mismo origen → CORS no aplica</code></pre>
+
+    <figure class="diagrama">
+      <iframe src="diagramas/flujo-api.html" height="560" title="Flujo de petición /api/*: Client vs Server Component → nginx → Express"></iframe>
+      <figcaption>Client vs Server Components y flujo de petición /api/* — <a href="diagramas/flujo-api.html" target="_blank">abrir en pantalla completa ↗</a></figcaption>
+    </figure>
+
+    <div class="pager">
+      <a href="08-jwt-auth.html"><span class="dir">← Anterior</span>08 · JWT y Auth</a>
+      <a class="next" href="10-docker.html"><span class="dir">Siguiente →</span>10 · Docker</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

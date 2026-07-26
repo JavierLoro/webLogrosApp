@@ -4,12 +4,16 @@ type Logro = {
   puntos: number
 }
 
+// 📚 Server Component: fetch en el servidor → BACKEND_URL, no ruta relativa (ver page.tsx raíz).
 async function getLogro(id: string): Promise<Logro | null> {
   const res = await fetch(`${process.env.BACKEND_URL ?? "http://localhost:3001"}/logros/${id}`)
+  // 📚 Si el backend responde 404, devolvemos null y la página muestra "no encontrado".
   if (!res.ok) return null
   return res.json()
 }
 
+// 📚 Ruta dinámica [id]: el segmento de la URL llega en params. En Next 16 params es una
+//    Promise → hay que await. Esta es la página de detalle /logros/:id.
 export default async function LogroPage({
   params,
 }: {

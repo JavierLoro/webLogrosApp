@@ -32,6 +32,11 @@ Instaladas en `.claude/skills/` — se cargan automáticamente en cada sesión.
 
 Explica el concepto ANTES de implementar (qué es, por qué se usa, cómo conecta con lo anterior), guía paso a paso sin escribir el código por el usuario. Protocolo completo en `.claude/skills/progressive-tutor/SKILL.md`.
 
+## learning-comments ⭐ (complementa a progressive-tutor)
+**Trigger:** SIEMPRE que compruebes, verifiques, edites o revises código (backend o frontend). No es opcional: comentar es parte de "comprobar código".
+
+Tras confirmar que el código funciona, anótalo con comentarios pedagógicos con prefijo `// 📚`: (a) el *porqué* de cada clase/función/decisión, y (b) las líneas donde se aplicó un concepto que el usuario está aprendiendo (super(), never/narrowing, instanceof, rutas relativas `/api`, JWT, parameter properties, fail-fast, orden de dotenv…). Protocolo completo en `.claude/skills/learning-comments/SKILL.md`.
+
 ## nodejs-backend-patterns
 **Trigger:** al implementar rutas Express, middleware, controllers, servicios, repositorios o error handling en el backend.
 
@@ -51,8 +56,9 @@ Enseña a pensar, no a copiar: decision tree de frameworks, principios de async,
 > 1. **Explicar antes de implementar.** Antes de escribir cualquier código nuevo, explicar el concepto que se va a aplicar (qué es, por qué se usa, cómo encaja en lo ya aprendido).
 > 2. **Documentar cada bloque nuevo en `docs/apuntes.md`** al terminar de implementarlo.
 > 3. El usuario está aprendiendo desde cero — adaptar el nivel de explicación en consecuencia.
+> 4. **Comentar el código con notas pedagógicas `// 📚`** cada vez que se comprueba/revisa: el porqué de clases/funciones/decisiones y las líneas de conceptos aprendidos. El código es material de estudio.
 >
-> **Nota:** Usa la skill `progressive-tutor` como guía operativa completa para el modo tutor. Las reglas anteriores son el resumen; la skill tiene el protocolo detallado.
+> **Nota:** Usa las skills `progressive-tutor` (enseñar antes de escribir) y `learning-comments` (anotar después de verificar) como guías operativas completas. Las reglas anteriores son el resumen; las skills tienen el protocolo detallado.
 
 ## Descripción del proyecto
 Plataforma **multi-tenant** de logros: se ofrece a equipos y cada uno recibe su espacio propio (`/equipos/[slug]`) con sus jugadores, logros, ranking y stats. Roles: `SUPER_ADMIN` (dueño plataforma) · `TEAM_ADMIN` (por equipo) · `PLAYER`. Mapa de rutas completo en `docs/Architecture.md`. Proyecto de aprendizaje progresivo:

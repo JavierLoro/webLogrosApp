@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostgreSQL y SQL — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html" class="active"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>PostgreSQL y SQL básico</h1>
+    <p class="subtitle">La base de datos relacional donde viven los datos de forma persistente</p>
+
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe esto?</p>
+      <p>Las variables en JavaScript existen en memoria: cuando reinicias el servidor, desaparecen. Para que los logros, usuarios y cualquier dato del proyecto sobrevivan a reinicios y sean accesibles desde varios procesos a la vez, se necesita una base de datos. PostgreSQL es una base de datos relacional: organiza los datos en <strong>tablas</strong> con <strong>filas</strong> y <strong>columnas</strong>, garantiza que los datos sean consistentes y ofrece un lenguaje estándar para consultarlos: SQL.</p>
+    </div>
+
+    <h2>Conceptos fundamentales</h2>
+    <p>Una base de datos relacional organiza los datos así:</p>
+    <table>
+      <thead>
+        <tr><th>Concepto</th><th>Analogía</th><th>Ejemplo en webLogrosApp</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Base de datos</strong></td><td>El archivo Excel completo</td><td><code>weblogros</code></td></tr>
+        <tr><td><strong>Tabla</strong></td><td>Una hoja dentro del Excel</td><td><code>logros</code>, <code>users</code></td></tr>
+        <tr><td><strong>Columna</strong></td><td>Una cabecera de columna</td><td><code>id</code>, <code>nombre</code>, <code>puntos</code></td></tr>
+        <tr><td><strong>Fila</strong></td><td>Un registro concreto</td><td><code>1 | "Primer login" | 10</code></td></tr>
+        <tr><td><strong>Primary Key</strong></td><td>El número de carnet único</td><td><code>id SERIAL PRIMARY KEY</code></td></tr>
+      </tbody>
+    </table>
+
+    <h2>SQL — el lenguaje de las bases de datos</h2>
+    <p>SQL (Structured Query Language) es el lenguaje estándar para hablar con bases de datos relacionales. Tiene cuatro operaciones fundamentales, conocidas como CRUD:</p>
+    <table>
+      <thead>
+        <tr><th>Operación</th><th>SQL</th><th>Equivalente HTTP</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Create (crear)</td><td><code>INSERT INTO</code></td><td>POST</td></tr>
+        <tr><td>Read (leer)</td><td><code>SELECT</code></td><td>GET</td></tr>
+        <tr><td>Update (actualizar)</td><td><code>UPDATE</code></td><td>PUT / PATCH</td></tr>
+        <tr><td>Delete (borrar)</td><td><code>DELETE FROM</code></td><td>DELETE</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Crear una tabla</h2>
+    <p><code>CREATE TABLE</code> define la estructura: las columnas, sus tipos y sus restricciones. Una vez creada, la tabla almacena filas que siguen esa estructura.</p>
+    <pre><code>CREATE TABLE logros (
+  id     SERIAL      PRIMARY KEY,   -- número autoincremental único
+  nombre VARCHAR(100) NOT NULL,     -- texto de hasta 100 caracteres, obligatorio
+  puntos INTEGER      NOT NULL      -- número entero, obligatorio
+);</code></pre>
+    <p>Tipos de dato más comunes en PostgreSQL:</p>
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Qué almacena</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>SERIAL</code></td><td>Entero autoincremental (1, 2, 3…) — perfecto para IDs</td></tr>
+        <tr><td><code>INTEGER</code></td><td>Número entero</td></tr>
+        <tr><td><code>VARCHAR(n)</code></td><td>Texto de hasta <em>n</em> caracteres</td></tr>
+        <tr><td><code>TEXT</code></td><td>Texto de longitud ilimitada</td></tr>
+        <tr><td><code>BOOLEAN</code></td><td>Verdadero o falso</td></tr>
+        <tr><td><code>TIMESTAMP</code></td><td>Fecha y hora</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Insertar datos</h2>
+    <pre><code>INSERT INTO logros (nombre, puntos)
+VALUES ('Primer login', 10);
+
+INSERT INTO logros (nombre, puntos)
+VALUES ('Primera tarea completada', 25);</code></pre>
+    <p>No se especifica <code>id</code> porque es <code>SERIAL</code>: PostgreSQL lo asigna automáticamente.</p>
+
+    <h2>Consultar datos</h2>
+    <pre><code>-- Todos los logros
+SELECT * FROM logros;
+
+-- Solo nombre y puntos, ordenados por puntos descendente
+SELECT nombre, puntos FROM logros ORDER BY puntos DESC;
+
+-- Un logro concreto por id
+SELECT * FROM logros WHERE id = 1;
+
+-- Logros con más de 20 puntos
+SELECT * FROM logros WHERE puntos > 20;</code></pre>
+    <p><code>*</code> significa "todas las columnas". <code>WHERE</code> filtra filas. <code>ORDER BY</code> ordena el resultado.</p>
+
+    <h2>Actualizar y borrar</h2>
+    <pre><code>-- Actualizar los puntos de un logro
+UPDATE logros SET puntos = 50 WHERE id = 1;
+
+-- Borrar un logro
+DELETE FROM logros WHERE id = 2;</code></pre>
+    <div class="callout note">
+      <p class="callout-title">Gotcha: siempre usa WHERE en UPDATE y DELETE</p>
+      <p>Si ejecutas <code>UPDATE logros SET puntos = 0</code> sin <code>WHERE</code>, actualizas <em>todas</em> las filas. Si ejecutas <code>DELETE FROM logros</code> sin <code>WHERE</code>, borras <em>toda</em> la tabla. Siempre verifica que tu filtro sea correcto antes de ejecutar estas sentencias.</p>
+    </div>
+
+    <h2>Acceder a PostgreSQL desde la terminal</h2>
+    <p>El cliente de línea de comandos de PostgreSQL se llama <code>psql</code>. Comandos especiales de psql (empiezan con <code>\</code>, sin punto y coma al final):</p>
+    <pre><code>\l          -- listar todas las bases de datos
+\c weblogros  -- conectarse a la base de datos "weblogros"
+\dt         -- listar las tablas de la BD actual
+\d logros   -- ver la estructura (columnas y tipos) de la tabla "logros"
+\q          -- salir de psql</code></pre>
+
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp</p>
+      <p>La base de datos corre en Docker. Para entrar a <code>psql</code> directamente sobre el contenedor:</p>
+      <pre><code>docker exec -it weblogros_db psql -U admin -d weblogros</code></pre>
+      <p>Desde ahí puedes inspeccionar los datos que Prisma ha creado con sus migraciones. El contenedor se llama <code>weblogros_db</code> (definido en <span class="fileref">docker-compose.yml</span>), corre PostgreSQL 16, usuario <code>admin</code>, contraseña <code>admin123</code>, base de datos <code>weblogros</code>, puerto <code>5432</code>.</p>
+      <p>Las tablas del proyecto corresponden a los modelos de Prisma: <code>Logro</code> → tabla <code>logros</code>, <code>User</code> → tabla <code>users</code>. En Prisma, por convención, los nombres de modelo en PascalCase se mapean a nombres de tabla en snake_case en plural.</p>
+      <p>Para ver todos los logros insertados:</p>
+      <pre><code>SELECT * FROM "Logro";</code></pre>
+      <div class="callout note" style="margin-top:0.75rem">
+        <p class="callout-title">Nota: mayúsculas en Prisma</p>
+        <p>Prisma usa el nombre exacto del modelo como nombre de tabla (con mayúscula inicial). En psql, los identificadores con mayúsculas hay que envolverlos en comillas dobles: <code>"Logro"</code>, <code>"User"</code>.</p>
+      </div>
+    </div>
+
+    <h2>Relaciones entre tablas</h2>
+    <p>El verdadero poder de las bases de datos relacionales está en conectar tablas entre sí con claves foráneas (<em>foreign keys</em>). Aunque webLogrosApp aún no las usa, este es el patrón que viene en la fase 6:</p>
+    <pre><code>CREATE TABLE user_logros (
+  id        SERIAL PRIMARY KEY,
+  user_id   INTEGER NOT NULL REFERENCES users(id),
+  logro_id  INTEGER NOT NULL REFERENCES logros(id),
+  ganado_en TIMESTAMP DEFAULT NOW()
+);</code></pre>
+    <p><code>REFERENCES logros(id)</code> es la clave foránea: garantiza que no puedes insertar un <code>logro_id</code> que no exista en la tabla <code>logros</code>. La integridad referencial es una de las garantías que hacen fiables las bases de datos relacionales.</p>
+
+    <div class="pager">
+      <a href="04-express.html"><span class="dir">← Anterior</span>04 · Express</a>
+      <a class="next" href="06-prisma.html"><span class="dir">Siguiente →</span>06 · Prisma</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

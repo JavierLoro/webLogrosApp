@@ -1,3 +1,5 @@
+// 📚 Client Component: formulario protegido. Necesita localStorage (leer el token) y estado,
+//    así que corre en el navegador.
 "use client"
 
 import { useState, useEffect } from "react"
@@ -11,10 +13,14 @@ export default function NuevoLogro() {
   const [puntos, setPuntos] = useState("")
   const [error, setError] = useState("")
 
+  // 📚 useEffect con deps []: se ejecuta UNA vez, tras el primer render, YA en el navegador.
+  //    Aquí es obligatorio para localStorage: durante el render en servidor no existe, así
+  //    que lo leemos después, en el cliente. token empieza null y se rellena tras montar.
   useEffect(() => {
     setToken(localStorage.getItem("token"))
   }, [])
 
+  // 📚 Sin token → mostramos enlace a login en vez del formulario (gating de UI por sesión).
   if (token === null) {
     return (
       <p className="text-sm text-gray-500">
@@ -31,7 +37,10 @@ export default function NuevoLogro() {
     setError("")
 
     try {
-      const res = await fetch("http://localhost:3001/logros", {
+      // 📚 Ruta relativa /api + cabecera "Authorization: Bearer <token>": así el backend
+      //    (authMiddleware) sabe que la petición está autenticada. El input number llega
+      //    como string → Number(puntos) lo convierte.
+      const res = await fetch("/api/logros", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,6 +56,8 @@ export default function NuevoLogro() {
 
       setNombre("")
       setPuntos("")
+      // 📚 router.refresh(): re-pide los datos del Server Component (la lista de logros) sin
+      //    recargar toda la página, para que aparezca el logro recién creado.
       router.refresh()
     } catch (err) {
       setError("No se pudo conectar con el servidor")

@@ -41,10 +41,10 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT �
 ## Phase 5.5 – Hardening
 > **Concepto nuevo:** configuración por entorno, validación en runtime, defensa en profundidad
 
-- [ ] **Fix URLs del frontend** — sustituir `http://localhost:3001` hardcodeado por rutas relativas `/api/*` (vía nginx) o `NEXT_PUBLIC_API_URL`. Bug latente: en producción el navegador del visitante intenta conectarse a *su propio* localhost:3001, que no existe
-- [ ] Validación de entrada con **Zod** en `POST /logros` y `/auth/*` — nunca confiar en el cliente
-- [ ] **Error handler global** + clases de error centralizadas (patrón de `nodejs-backend-patterns`)
-- [ ] **Fail-fast al arranque** — validar `JWT_SECRET` y `DATABASE_URL` al iniciar, con mensaje claro si faltan (eliminar el `!` que revienta en runtime de forma críptica)
+- [x] **Fix URLs del frontend** — sustituir `http://localhost:3001` hardcodeado por rutas relativas `/api/*` (vía nginx) o `NEXT_PUBLIC_API_URL`. Bug latente: en producción el navegador del visitante intenta conectarse a *su propio* localhost:3001, que no existe
+- [x] Validación de entrada con **Zod** en `POST /logros` y `/auth/*` — nunca confiar en el cliente
+- [x] **Error handler global** + clases de error centralizadas (patrón de `nodejs-backend-patterns`)
+- [x] **Fail-fast al arranque** — validar `JWT_SECRET` y `DATABASE_URL` al iniciar, con mensaje claro si faltan (eliminar el `!` que revienta en runtime de forma críptica)
 - [ ] **Rate limiting** en `/auth/login` con `express-rate-limit` — protección básica contra fuerza bruta
 - [ ] **Healthcheck** — endpoint `GET /health` en el backend + `healthcheck:` en Docker Compose con `depends_on: condition: service_healthy` (resuelve el clásico "backend arranca antes que la DB")
 - [ ] **Backup automático de PostgreSQL** — `pg_dump` programado a un volumen (los datos son lo único irrecuperable; una migración mala con Watchtower auto-desplegando puede destruirlos)

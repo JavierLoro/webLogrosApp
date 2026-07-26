@@ -1,20 +1,30 @@
+// 📚 "use client": marca este archivo como CLIENT COMPONENT → se ejecuta en el navegador
+//    del visitante. Necesario porque usa useState, eventos y localStorage, que no existen
+//    en un Server Component (que corre en el servidor).
 "use client"
 
 import { useState } from "react"
+// 📚 useRouter (de next/navigation): permite navegar por código desde un Client Component.
 import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const router = useRouter()
+  // 📚 useState: React re-renderiza el componente cuando cambian estos valores. Cada input
+  //    es "controlado": su value viene del estado y onChange lo actualiza.
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
   async function handleSubmit(e: React.FormEvent) {
+    // 📚 preventDefault evita que el form recargue la página (comportamiento HTML por defecto).
     e.preventDefault()
     setError("")
 
     try {
-      const res = await fetch("http://localhost:3001/auth/login", {
+      // 📚 RUTA RELATIVA "/api/...": este fetch corre en el navegador del visitante. Si
+      //    apuntara a http://localhost:3001 sería el PC del visitante, no el backend.
+      //    /api lo resuelve nginx (prod) o rewrites() de next.config (dev). Ver apuntes.
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -26,6 +36,8 @@ export default function LoginPage() {
       }
 
       const data = await res.json()
+      // 📚 localStorage (solo existe en el navegador): guarda el JWT para reenviarlo luego
+      //    en "Authorization: Bearer" al crear logros.
       localStorage.setItem("token", data.token)
       router.push("/")
     } catch (err) {

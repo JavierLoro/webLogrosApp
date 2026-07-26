@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visión y roadmap — webLogrosApp</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">webLogrosApp<small>Sitio de estudio</small></a>
+    <nav>
+      <div class="nav-label">Inicio</div>
+      <a href="index.html"><span class="num">★</span> Portada</a>
+      <div class="nav-label">Fundamentos</div>
+      <a href="01-javascript.html"><span class="num">01</span> JavaScript</a>
+      <a href="02-node-npm.html"><span class="num">02</span> Node y npm</a>
+      <a href="03-typescript.html"><span class="num">03</span> TypeScript</a>
+      <div class="nav-label">Backend</div>
+      <a href="04-express.html"><span class="num">04</span> Express</a>
+      <a href="05-postgres-sql.html"><span class="num">05</span> PostgreSQL y SQL</a>
+      <a href="06-prisma.html"><span class="num">06</span> Prisma</a>
+      <a href="08-jwt-auth.html"><span class="num">08</span> JWT y Auth</a>
+      <a href="09-cors.html"><span class="num">09</span> CORS</a>
+      <div class="nav-label">Frontend</div>
+      <a href="07-nextjs.html"><span class="num">07</span> Next.js</a>
+      <div class="nav-label">Infra y despliegue</div>
+      <a href="10-docker.html"><span class="num">10</span> Docker</a>
+      <a href="11-nginx-despliegue.html"><span class="num">11</span> Nginx y despliegue</a>
+      <div class="nav-label">El proyecto</div>
+      <a href="12-vision-proyecto.html" class="active"><span class="num">12</span> Visión y roadmap</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <h1>Visión y roadmap</h1>
+    <p class="subtitle">Vista de pájaro: qué construimos, por qué lo construimos así y hacia dónde va</p>
+
+    <!-- ¿Por qué existe esto? -->
+    <div class="callout why">
+      <p class="callout-title">¿Por qué existe este proyecto?</p>
+      <p>webLogrosApp es un <strong>proyecto de aprendizaje progresivo</strong>: el vehículo para aprender a construir una aplicación web completa desde cero — JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT → Nginx → CI/CD → Proxmox — llegando hasta los conceptos avanzados de multi-tenancy, roles, WebSockets y componentes de UI. Cada fase introduce una tecnología nueva sobre las anteriores, siempre con un producto funcional detrás para que el aprendizaje tenga contexto real. Esta página es el mapa del tesoro: si en algún momento te pierdes, vuelve aquí.</p>
+    </div>
+
+    <h2>Qué es la aplicación</h2>
+    <p><strong>Plataforma multi-tenant de logros.</strong> El dueño de la plataforma (<code>SUPER_ADMIN</code>) la ofrece a equipos. Cada equipo aceptado recibe su <strong>espacio propio</strong> bajo la ruta <code>/equipos/[slug]</code>, con su catálogo de logros, sus jugadores, su ranking y sus estadísticas. Un visitante sin sesión solo ve la landing publicitaria y puede solicitar acceso para su equipo.</p>
+
+    <p>«Multi-tenant» significa que <em>múltiples clientes</em> (tenants = equipos) comparten la misma instalación de la aplicación y la misma base de datos, pero cada uno ve únicamente sus propios datos. Es el modelo de SaaS como Notion, Slack o GitHub: una sola plataforma, muchos espacios separados.</p>
+
+    <h2>Los tres roles</h2>
+    <table>
+      <thead>
+        <tr><th>Rol</th><th>Quién es</th><th>Qué puede hacer</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag">SUPER_ADMIN</span></td>
+          <td>Dueño de la plataforma</td>
+          <td>Crear equipos, aprobar solicitudes de acceso de nuevos equipos, ver todo (<code>/admin</code>)</td>
+        </tr>
+        <tr>
+          <td><span class="tag">TEAM_ADMIN</span></td>
+          <td>Capitán/admin de un equipo concreto</td>
+          <td>Gestionar logros y jugadores de <em>su</em> equipo, aprobar solicitudes de logro de sus jugadores, aprobar propuestas de la comunidad (<code>/equipos/[slug]/admin</code>)</td>
+        </tr>
+        <tr>
+          <td><span class="tag">PLAYER</span></td>
+          <td>Jugador de un equipo</td>
+          <td>Ver su espacio, solicitar logros («yo hice esto»), proponer publicar o implementar logros de la comunidad (<code>/equipos/[slug]/solicitudes</code>)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>El rol de <code>TEAM_ADMIN</code> es <strong>contextual</strong>: alguien puede ser <code>TEAM_ADMIN</code> del equipo «Los Tigres» y <code>PLAYER</code> en «Los Leones». El rol se almacena en la relación entre usuario y equipo, no como campo global del usuario.</p>
+
+    <h2>Cómo se gana un logro</h2>
+    <p>Hay dos flujos complementarios:</p>
+    <ol>
+      <li><strong>Asignación directa</strong>: el <code>TEAM_ADMIN</code> asigna directamente un logro a un jugador (por ejemplo, para reconocimientos planificados).</li>
+      <li><strong>Solicitud + aprobación</strong>: el <code>PLAYER</code> reclama un logro («yo completé el reto de la semana»). El <code>TEAM_ADMIN</code> lo aprueba o rechaza. Este flujo es una máquina de estados simple: <code>PENDIENTE → APROBADA / RECHAZADA</code>.</li>
+    </ol>
+
+    <h2>Mapa de rutas del frontend</h2>
+    <pre><code>PÚBLICO (sin sesión)
+/                                Landing publicitaria de la plataforma
+/solicitar-acceso                Formulario: un equipo pide su espacio
+/login                           Iniciar sesión
+
+ESPACIO DE EQUIPO (tenant) — /equipos/[teamSlug]/
+/equipos/[slug]                  Dashboard del equipo:
+                                   · Logros recientes obtenidos (feed)
+                                   · Mini-ranking (top 3-5) → enlace a /ranking
+                                   · Stats del equipo (widgets)
+/equipos/[slug]/ranking          Ranking completo + stats detalladas
+/equipos/[slug]/logros           Catálogo de logros del equipo (sala de trofeos)
+/equipos/[slug]/logros/[id]      Detalle de un logro (quiénes lo tienen)
+/equipos/[slug]/jugadores        Lista de jugadores del equipo
+/equipos/[slug]/jugadores/[id]   Perfil de jugador (sus logros, puntos)
+/equipos/[slug]/solicitudes      PLAYER: mis solicitudes de logro (estado)
+
+COMUNIDAD (cross-team, requiere sesión)
+/comunidad                       Galería de logros publicados por equipos
+/comunidad/[id]                  Detalle de un logro publicado
+
+ADMIN DE EQUIPO — TEAM_ADMIN
+/equipos/[slug]/admin            Gestión: logros, jugadores, solicitudes del equipo
+
+SUPER ADMIN
+/admin                           Equipos de la plataforma, solicitudes de acceso</code></pre>
+
+    <!-- Decisiones clave -->
+    <div class="callout inproject">
+      <p class="callout-title">En webLogrosApp — Decisiones clave (de <span class="fileref">docs/Decisions</span>)</p>
+
+      <p><strong>Slug en la URL en vez de subdominio</strong> (<code>/equipos/los-tigres</code> en lugar de <code>los-tigres.logros.jlc-dev.me</code>): el Universal SSL gratuito de Cloudflare solo cubre un nivel de subdominio (<code>*.jlc-dev.me</code>). Un sub-subdominio requeriría Advanced Certificate Manager (~10$/mes) más configuración de wildcard en el Cloudflare Tunnel y middleware de Host. El slug bajo <code>/equipos/</code> es gratis, simple, y migrable a subdominios en el futuro sin cambiar el modelo de datos.</p>
+
+      <p><strong><code>/equipos/[slug]</code> en vez de <code>/[slug]</code> en la raíz</strong>: un segmento dinámico en la raíz (<code>/[slug]</code>) colisiona con cada ruta de primer nivel. Aunque Next.js da preferencia a rutas estáticas sobre dinámicas, cada nueva página top-level se convierte en una palabra reservada que ningún equipo puede usar como slug — habría que mantener una blacklist para siempre. El namespace explícito <code>/equipos/</code> hace las colisiones imposibles, la URL es autoexplicativa, y el patrón es migrable después (igual que GitHub reserva <code>/settings</code> pero sirve perfiles de usuario en <code>/torvalds</code>).</p>
+
+      <p><strong>Comunidad de logros — copia independiente con atribución</strong>: cuando un equipo «implementa» un logro de la comunidad, se crea una copia totalmente independiente en su catálogo, con atribución al equipo autor («idea de Los Tigres»). La copia es editable localmente y no cambia si el original cambia. Esto preserva el aislamiento entre tenants: un equipo no puede depender del catálogo de otro ni verse afectado por sus cambios.</p>
+    </div>
+
+    <h2>Estado actual del proyecto</h2>
+    <table>
+      <thead>
+        <tr><th>Fase</th><th>Estado</th><th>Qué cubre</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Phase 1 — Base</td><td><span class="tag">✓ Hecha</span></td><td>Repositorio, Express + Next.js inicializados</td></tr>
+        <tr><td>Phase 2 — Web pública</td><td><span class="tag">✓ Hecha</span></td><td>Listado y detalle de logros públicos</td></tr>
+        <tr><td>Phase 3 — Auth JWT</td><td><span class="tag">✓ Hecha</span></td><td>Register/Login, middleware, rutas protegidas, localStorage</td></tr>
+        <tr><td>Phase 4 — Base de datos</td><td><span class="tag">✓ Hecha</span></td><td>PostgreSQL + Prisma + migraciones (falta seed)</td></tr>
+        <tr><td>Phase 5 — Despliegue</td><td><span class="tag">✓ Hecha</span></td><td>Docker, Nginx, Proxmox, GitHub Actions → GHCR, Watchtower (falta HTTPS confirmado)</td></tr>
+        <tr><td><strong>Phase 5.5 — Hardening</strong></td><td><span class="tag">⏳ En progreso</span></td><td>Fix URLs localhost hardcodeadas, Zod, error handler global, fail-fast, rate limiting, healthcheck, backup DB</td></tr>
+        <tr><td>Phase 6 — Multi-tenancy (Prisma)</td><td><span class="tag">Pendiente</span></td><td>Modelo <code>Team</code>, relaciones, endpoints scoped por equipo, rutas <code>/equipos/[slug]/…</code></td></tr>
+        <tr><td>Phase 7 — Roles</td><td><span class="tag">Pendiente</span></td><td>SUPER_ADMIN / TEAM_ADMIN / PLAYER, middlewares de autorización, seed</td></tr>
+        <tr><td>Phase 7.5 — Auth Hardening</td><td><span class="tag">Pendiente</span></td><td>Migrar JWT de localStorage a cookie HttpOnly</td></tr>
+        <tr><td>Phase 7.6 — Admin y solicitudes</td><td><span class="tag">Pendiente</span></td><td>Flujos solicitud/aprobación, paneles admin, landing pública</td></tr>
+        <tr><td>Phase 8 — Ranking y SQL</td><td><span class="tag">Pendiente</span></td><td>GROUP BY, SUM, COUNT; página de ranking; stats del equipo</td></tr>
+        <tr><td>Phase 8.5 — Comunidad</td><td><span class="tag">Pendiente</span></td><td>Galería cross-tenant, implementar logro = copia independiente</td></tr>
+        <tr><td>Phase 9 — shadcn/ui</td><td><span class="tag">Pendiente</span></td><td>Design system, componentes accesibles, dark mode</td></tr>
+        <tr><td>Phase 10 — File uploads</td><td><span class="tag">Pendiente</span></td><td>Imágenes de logros (multer), Nginx sirve /uploads/</td></tr>
+        <tr><td>Phase 11 — Testing</td><td><span class="tag">Pendiente</span></td><td>Vitest + Supertest, React Testing Library, CI como gate real</td></tr>
+        <tr><td>Phase 12 — WebSockets</td><td><span class="tag">Pendiente</span></td><td>Notificaciones en tiempo real al ganar un logro (socket.io)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Lo que está activo en este momento (Phase 5.5)</h2>
+    <p>El hardening es la fase donde la app pasa de «funciona en mi máquina» a «funciona de forma robusta en producción». El problema más urgente — y el primer punto — es el de las URLs hardcodeadas:</p>
+    <pre><code>// Esto está en varios Client Components del frontend:
+const res = await fetch("http://localhost:3001/auth/login", { … })
+//                       ↑ En producción, el navegador del visitante
+//                         intenta conectar a SU propio localhost:3001
+//                         que no existe → error silencioso
+
+// La corrección es usar rutas relativas (Nginx se encarga del resto):
+const res = await fetch("/api/auth/login", { … })</code></pre>
+
+    <h2>La ruta de aprendizaje completa</h2>
+    <pre><code>JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT
+→ Nginx → CI/CD → Proxmox → Hardening → Multi-tenancy → Roles
+→ Auth Hardening → Solicitudes/Admin → Aggregaciones SQL
+→ Comunidad → shadcn/ui → File uploads → Testing → WebSockets</code></pre>
+    <p>Cada tecnología de la lista es una herramienta real usada en producción. Al final de la ruta, habrás construido una aplicación SaaS completa con autenticación, autorización contextual, base de datos relacional, despliegue automatizado y tiempo real.</p>
+
+    <h2>Arquitectura resumida</h2>
+    <figure class="diagrama">
+      <iframe src="diagramas/arquitectura.html" height="540" title="Arquitectura: nginx → Next.js / Express → Prisma → PostgreSQL"></iframe>
+      <figcaption>Vista de pájaro de la arquitectura en producción — <a href="diagramas/arquitectura.html" target="_blank">abrir en pantalla completa ↗</a></figcaption>
+    </figure>
+    <table>
+      <thead>
+        <tr><th>Capa</th><th>Tecnología</th><th>Dónde vive</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Frontend</td><td>Next.js 16 + React 19 + Tailwind CSS 4</td><td><span class="fileref">apps/frontend/</span></td></tr>
+        <tr><td>Backend (API REST)</td><td>Express 5 + TypeScript + Prisma</td><td><span class="fileref">apps/backend/</span></td></tr>
+        <tr><td>Base de datos</td><td>PostgreSQL 16 (en Docker)</td><td>Volumen Docker <code>postgres_data</code></td></tr>
+        <tr><td>Reverse proxy</td><td>Nginx (alpine)</td><td><span class="fileref">infra/nginx/nginx.conf</span></td></tr>
+        <tr><td>Orquestación</td><td>Docker Compose</td><td><span class="fileref">docker-compose.prod.yml</span></td></tr>
+        <tr><td>CI/CD</td><td>GitHub Actions → GHCR → Watchtower</td><td><span class="fileref">.github/workflows/deploy.yml</span></td></tr>
+        <tr><td>Servidor</td><td>VM en Proxmox + Cloudflare Tunnel</td><td>Infraestructura local</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pager">
+      <a href="11-nginx-despliegue.html"><span class="dir">← Anterior</span>11 · Nginx y despliegue</a>
+      <a class="next" href="index.html"><span class="dir">Volver →</span>Volver a la portada</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>
