@@ -8,9 +8,19 @@ import express from "express"
 import logrosRouter from "./routes/logros"
 import authRouter from "./routes/auth"
 import { errorHandler } from "./middleware/errorHandler"
+import prisma from "./lib/prisma"
 
 const app = express()
+// 📚 trust proxy = 1: detrás de nginx TODAS las peticiones llegan con la IP interna del proxy.
+//    Esto le dice a Express que confíe en 1 salto de proxy y lea la IP real del cliente desde
+//    la cabecera X-Forwarded-For. Sin esto, el rate limiter contaría a todo el mundo como una
+//    sola IP (bloquearía a usuarios legítimos) y express-rate-limit avisa del riesgo al arrancar.
+//    Se pone 1 y no `true`: con `true` confiaríamos en CUALQUIER X-Forwarded-For y un atacante
+//    podría falsear su IP para saltarse el límite.
+app.set("trust proxy", 1)
 const PORT: number = 3001
+
+
 
 // 📚 CORS MANUAL (sin librería). El navegador bloquea peticiones entre orígenes distintos
 //    salvo que el servidor devuelva estas cabeceras. Permite al frontend (:3000) llamar al
@@ -32,7 +42,18 @@ app.use((req, res, next) => {
 //    req.body sería undefined. Va antes de las rutas que lo necesitan.
 app.use(express.json())
 
-app.get("/", (req, res) => {
+app.get("/health", async(_req, res) => {
+  try {
+    // 📚 Prisma hace ping a la BD para comprobar que está viva. Si falla, lanzará error.
+    await prisma.$queryRaw`SELECT 1`
+    res.status(200).json({ status: "ok" })
+  } catch (error) {
+    console.error("Error de salud:", error)
+    res.status(503).json({ status: "error", message: "Error de salud del servidor" })
+  }
+})
+
+app.get("/", (_req, res) => {
   res.send("Servidor funcionando")
 })
 

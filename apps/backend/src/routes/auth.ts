@@ -7,6 +7,7 @@ import prisma from "../lib/prisma"
 import { JWT_SECRET } from "../config/env"
 import { validate } from "../middleware/validate"
 import { registerSchema, loginSchema } from "../schemas/auth"
+import { registerLimiter, loginLimiter } from "../middleware/rateLimit"
 
 
 // 📚 Router de Express: mini-app con sus rutas, que server.ts monta bajo el prefijo /auth.
@@ -14,10 +15,12 @@ const router = express.Router()
 const SECRET = JWT_SECRET
 
 // POST /auth/register — crear cuenta
+// 📚 CADENA: registerLimiter → validate(registerSchema) → handler. El limiter va PRIMERO
+//    (filtro más barato: solo mira IP + contador) para no gastar Zod/bcrypt en abuso.
 // 📚 validate(registerSchema) va ANTES del handler: valida req.body contra el esquema y, si
 //    falla, lanza AppError(400) → nunca se ejecuta el handler. Sustituye al if manual de
 //    presencia por validación de FORMA. Al pasar, req.body ya viene limpio y tipado.
-router.post("/register", validate(registerSchema), async (req: Request, res: Response) => {
+router.post("/register", registerLimiter, validate(registerSchema), async (req: Request, res: Response) => {
   // 📚 Aquí email/password YA están garantizados por validate (existen y bien formados).
   const { email, password }: { email: string; password: string } = req.body ?? {}
 
@@ -38,8 +41,9 @@ router.post("/register", validate(registerSchema), async (req: Request, res: Res
 })
 
 // POST /auth/login — iniciar sesión
+// 📚 loginLimiter (5/15min, estricto) primero: es el objetivo típico de fuerza bruta.
 // 📚 validate(loginSchema): mismo patrón que register, con el esquema laxo de login.
-router.post("/login", validate(loginSchema), async (req: Request, res: Response) => {
+router.post("/login", loginLimiter, validate(loginSchema), async (req: Request, res: Response) => {
   const { email, password }: { email: string; password: string } = req.body ?? {}
 
   const user = await prisma.user.findUnique({ where: { email } })

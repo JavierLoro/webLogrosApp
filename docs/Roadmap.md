@@ -45,8 +45,8 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT �
 - [x] Validación de entrada con **Zod** en `POST /logros` y `/auth/*` — nunca confiar en el cliente
 - [x] **Error handler global** + clases de error centralizadas (patrón de `nodejs-backend-patterns`)
 - [x] **Fail-fast al arranque** — validar `JWT_SECRET` y `DATABASE_URL` al iniciar, con mensaje claro si faltan (eliminar el `!` que revienta en runtime de forma críptica)
-- [ ] **Rate limiting** en `/auth/login` con `express-rate-limit` — protección básica contra fuerza bruta
-- [ ] **Healthcheck** — endpoint `GET /health` en el backend + `healthcheck:` en Docker Compose con `depends_on: condition: service_healthy` (resuelve el clásico "backend arranca antes que la DB")
+- [x] **Rate limiting** en `/auth/login` con `express-rate-limit` — protección básica contra fuerza bruta (también en `/auth/register`; `trust proxy` para nginx)
+- [x] **Healthcheck** — endpoint `GET /health` (readiness, `SELECT 1` a la BD, 503 si falla) + `healthcheck:` en Docker Compose (db con `pg_isready`, backend con Node `fetch`) + `depends_on: condition: service_healthy` (resuelve el clásico "backend arranca antes que la DB")
 - [ ] **Backup automático de PostgreSQL** — `pg_dump` programado a un volumen (los datos son lo único irrecuperable; una migración mala con Watchtower auto-desplegando puede destruirlos)
 - [ ] `apuntes.md`: sección "Hardening — validación, errores y configuración"
 

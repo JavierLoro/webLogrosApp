@@ -1331,3 +1331,129 @@ cuerpo de alguien sin token (sin token → 401, ni se valida). Login usa un esqu
 
 **Regla mental:** un esquema por entrada, `validate(schema)` como middleware, y el error de
 validación se traduce a `AppError(400)` para reaprovechar el error handler.
+
+## Rate limiting (protección contra abuso por IP)
+
+`express-rate-limit` cuenta peticiones **por IP** dentro de una ventana de tiempo y corta con
+**429 Too Many Requests** al superar el máximo — sin llegar a tu handler. Defensa básica contra
+fuerza bruta y creación masiva de cuentas.
+
+- **Es una factoría (mismo patrón que `validate`):** `rateLimit({...})` no es el middleware;
+  **devuelve** uno `(req, res, next)` que "recuerda" su config vía closure. Cada llamada crea
+  una **instancia con su propio contador** → por eso hay un limiter por ruta.
+
+```ts
+// middleware/rateLimit.ts
+export const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, max: 5,          // 5 intentos / 15 min (estricto: fuerza bruta)
+  message: { error: "Demasiados intentos..." },
+  standardHeaders: true,  // cabeceras RateLimit-* (estándar moderno)
+  legacyHeaders: false,   // quita las viejas X-RateLimit-*
+})
+export const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, max: 10,          // 10 / hora (laxo: registro es acción rara)
+  ...
+})
+```
+
+- **Login vs register llevan limiters distintos:** el abuso del login es *fuerza bruta de
+  contraseñas* (estricto); el del registro es *creación masiva de cuentas* (laxo). Instancias
+  y contadores independientes.
+- **Orden en la cadena — va PRIMERO:** `loginLimiter → validate → handler`. El limiter es el
+  filtro **más barato** (solo mira IP + contador en memoria); descarta al atacante antes de
+  gastar Zod y `bcrypt.compare` (que es lento a propósito). Regla: *cuanto más barato el filtro
+  y más peticiones descarta, más arriba en la cadena.*
+- **`message` como objeto `{ error: ... }`:** así la respuesta 429 tiene el MISMO formato JSON
+  que el resto de errores (los que emite tu `errorHandler`). Coherencia de la API.
+
+### La trampa de nginx: `trust proxy`
+
+Detrás de nginx, **todas** las peticiones llegan a Express con la IP interna del proxy
+(`172.x` de Docker). Si el limiter cuenta por esa IP, contaría a *todo el mundo como una sola*
+→ bloquearías a usuarios legítimos. nginx pasa la IP real en `X-Forwarded-For`; para que
+Express se fíe:
+
+```ts
+app.set("trust proxy", 1)   // confía en 1 salto de proxy por delante (nginx)
+```
+
+Se pone **`1`, no `true`**: con `true` confiarías en *cualquier* `X-Forwarded-For`, y un
+atacante podría falsear su IP para saltarse el límite. Además `express-rate-limit` avisa del
+riesgo al arrancar si detecta la incoherencia.
+
+**Verificación en vivo:** 6 `POST /auth/login` seguidos → los 5 primeros `401`, el 6º `429`
+con cabeceras `RateLimit-Policy: 5;w=900`, `RateLimit-Remaining: 0`, `Retry-After: <seg>`.
+
+## Healthchecks (arranque ordenado y monitorización)
+
+Resuelve el bug clásico: **el backend arranca antes de que Postgres esté listo** → `ECONNREFUSED`.
+Hay que distinguir DOS healthchecks:
+
+### 1. Endpoint `GET /health` en el backend (readiness)
+
+Un health endpoint puede responder a dos preguntas:
+- **Liveness** ("¿estoy vivo?") → el proceso responde. Trivial: `res.json({ status: "ok" })`.
+- **Readiness** ("¿estoy listo para trabajar?") → además compruebo que **llego a la BD**.
+
+Elegimos readiness porque es el útil: una query trivial que solo confirma la conexión.
+
+```ts
+app.get("/health", async (_req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`   // no lee tablas; solo fuerza a Postgres a responder
+    res.status(200).json({ status: "ok" })
+  } catch (error) {
+    res.status(503).json({ status: "error" })   // 503 Service Unavailable, no 500
+  }
+})
+```
+
+- **503 (no 500):** no es un bug de programación, es un estado temporal de indisponibilidad.
+- Va **antes de los routers y sin rate limiter** (un monitor debe poder consultarlo libremente).
+- **Verificado en vivo:** BD arriba → `200 {"status":"ok"}`; `docker stop` de la BD → `$queryRaw`
+  lanza `ECONNREFUSED` → el catch responde `503 {"status":"error"}`.
+
+### 2. Healthchecks en Docker Compose (arranque ordenado)
+
+El fallo sutil: `depends_on: - db` (sintaxis **corta**, una lista) solo espera a que db
+**ARRANQUE**, no a que esté **LISTO**. Por eso el backend petaba en el arranque.
+
+**db** — healthcheck con `pg_isready` (viene en la imagen postgres):
+
+```yaml
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+```
+
+**backend** — sintaxis **larga** de `depends_on` (mapa, sin guion) con `condition`:
+
+```yaml
+    depends_on:
+      db:
+        condition: service_healthy   # espera a que db esté SANO, no solo arrancado
+```
+
+**Healthcheck del backend (opcional, da uso al /health):** la trampa → la imagen Node no trae
+`curl`/`wget`, pero sí Node (v18+ tiene `fetch` global). El exit code es el idioma: 0=sano, ≠0=enfermo.
+
+```yaml
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3001/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s   # margen inicial: los fallos NO cuentan como retries mientras arranca
+```
+
+Luego `frontend` y `nginx` esperan a `backend: condition: service_healthy`.
+
+**Conceptos clave:**
+- **exit code** = idioma del healthcheck (0 sano / ≠0 enfermo).
+- **`start_period`** da margen de arranque sin marcar `unhealthy` por pings tempranos.
+- **corta vs larga en `depends_on`:** corta = lista (solo *started*); larga = mapa con `condition`
+  (permite *service_healthy*).
+- **`CMD` vs `CMD-SHELL`:** `CMD` ejecuta el binario directo; `CMD-SHELL` pasa por un shell
+  (necesario para expandir `${VARIABLES}`).
