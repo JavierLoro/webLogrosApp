@@ -29,3 +29,7 @@ _legacy/
 
 # Prisma (si se configura output personalizado fuera de node_modules)
 apps/backend/src/generated/
+
+# Backups de PostgreSQL — dumps con datos reales, nunca al repo (solo se versiona la carpeta)
+backups/*
+!backups/.gitkeep

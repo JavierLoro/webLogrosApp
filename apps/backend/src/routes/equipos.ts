@@ -1,0 +1,69 @@
+import express from "express"
+import prisma from "../lib/prisma"
+import { resolveTeam } from "../middleware/resolveTeam"
+import { authMiddleware } from "../middleware/auth"
+import { validate } from "../middleware/validate"
+import { crearLogroSchema } from "../schemas/logros"
+
+// 📚 ROUTER SCOPED POR EQUIPO. Se monta en server.ts como app.use("/equipos/:slug", router),
+//    así que aquí las rutas son relativas: "/logros" = "/equipos/:slug/logros".
+// 📚 mergeParams: true es OBLIGATORIO. El :slug lo captura el prefijo del PADRE (server.ts);
+//    sin mergeParams, un router hijo NO ve los params del padre y req.params.slug sería
+//    undefined → resolveTeam buscaría where:{slug:undefined} → 404 en todo. Con él, se heredan.
+const router = express.Router({mergeParams: true})
+
+// 📚 resolveTeam a nivel de router: corre ANTES de cada ruta de abajo (composición de middlewares).
+//    Traduce :slug → req.team (o lanza 404). Puesto aquí una vez, no hay que repetirlo por ruta.
+//    Es lo que garantiza que req.team exista en los handlers y justifica el "!" de req.team!.id.
+router.use(resolveTeam)
+
+// 📚 GET lista: EL scoping. where:{ teamId } filtra por ESTE equipo → un equipo nunca ve los
+//    logros de otro. Antes (routes/logros.ts, borrado) era findMany() sin filtro = todos mezclados.
+router.get("/logros", async (req, res) => {
+    // 📚 req.team!.id: "!" (non-null assertion) legítimo — resolveTeam garantiza que req.team existe
+    //    (o ya lanzó 404 y no llegamos aquí). TS lo ve como Team|undefined por el "?" del .d.ts; el
+    //    "!" cierra el hueco entre lo que sabemos y lo que el compilador puede probar. Distinto del
+    //    "!" que quitamos de JWT_SECRET, que tapaba un fallo real.
+    const logros = await prisma.logro.findMany({
+        where: { teamId: req.team!.id }
+    })
+    res.json(logros)
+})
+
+router.get("/logros/:id", async (req, res) => {
+    // 📚 Los params llegan como string → Number() para consultar la BD con un int.
+    const id = Number(req.params.id)
+    // 📚 findFirst (no findUnique) porque filtramos por DOS columnas: id Y teamId. findUnique solo
+    //    admite campos únicos en el where, y teamId no es único (un equipo tiene muchos logros).
+    // 📚 El teamId en el where es un CANDADO anti-fuga: sin él, /equipos/lobos/logros/1 devolvería
+    //    un logro de Halcones. Con él, un logro de otro equipo cae al 404 de abajo (verificado).
+    const logro = await prisma.logro.findFirst({
+        where: { id, teamId: req.team!.id }
+    })
+
+    if (!logro) {
+        res.status(404).json({ error: "Logro no encontrado" })
+        return
+    }
+    res.json(logro)
+})
+
+
+// 📚 POST (escritura): cadena authMiddleware → validate → handler. Orden intencionado: primero auth
+//    (sin token, 401 y no gastamos esfuerzo), luego validar el body, y solo entonces crear.
+router.post("/logros", authMiddleware, validate(crearLogroSchema), async (req, res) => {
+  const { nombre, puntos }: { nombre: string; puntos: number } = req.body ?? {}
+
+  // 📚 teamId NO viene del body: lo dicta el :slug de la URL (ya resuelto en req.team). Que el
+  //    cliente eligiera el equipo sería un fallo de seguridad. Añadir teamId aquí es además lo que
+  //    arregla el "Property 'team' is missing" que rompía el build tras la migración multi-tenant.
+  const nuevoLogro = await prisma.logro.create({
+    data: { nombre, puntos, teamId: req.team!.id }
+  })
+
+  res.status(201).json(nuevoLogro)
+})
+
+
+
+export default router

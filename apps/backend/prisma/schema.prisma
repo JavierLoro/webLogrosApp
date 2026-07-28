@@ -9,17 +9,57 @@ datasource db {
 // 📚 Cada "model" = una tabla. Prisma genera el cliente tipado a partir de esto, y cada
 //    cambio aquí se materializa en la BD con una migración (npx prisma migrate dev).
 
-model Logro {
-  // 📚 @id = clave primaria. @default(autoincrement()) → Postgres asigna 1,2,3... solo.
-  id     Int    @id @default(autoincrement())
-  nombre String
-  puntos Int
+model User {
+  id            Int         @id @default(autoincrement())
+  // 📚 @unique: no puede haber dos usuarios con el mismo email (lo aprovechamos en register).
+  email         String      @unique
+  // 📚 Guardamos el HASH de bcrypt, nunca la contraseña en claro (ver routes/auth.ts).
+  password      String
+  teamId        Int?
+  team          Team?       @relation(fields: [teamId], references: [id])
+  logrosGanados UserLogro[]
 }
 
-model User {
-  id       Int    @id @default(autoincrement())
-  // 📚 @unique: no puede haber dos usuarios con el mismo email (lo aprovechamos en register).
-  email    String @unique
-  // 📚 Guardamos el HASH de bcrypt, nunca la contraseña en claro (ver routes/auth.ts).
-  password String
+// 📚 Team = el "tenant" (inquilino) de la multi-tenancy. Todo cuelga de un equipo.
+model Team {
+  id       Int     @id @default(autoincrement())
+  // 📚 slug = identificador PÚBLICO de la URL (/equipos/leones). @unique: es por donde se busca
+  //    el equipo y dos equipos no pueden compartirlo. Se usa en vez del id para no filtrar
+  //    cuántos equipos hay (/equipos/1 revelaría el orden de creación).
+  slug     String  @unique
+  nombre   String
+  // 📚 Lado "uno" de la relación 1:N. VIRTUAL (no es columna): permite team.logros para traer
+  //    todos los logros del equipo. El [] indica "muchos".
+  logros   Logro[]
+  miembros User[]
+}
+
+// 📚 Logro = INSTANCIA del catálogo de UN equipo (la plantilla comunitaria proponible es otra
+//    tabla, en Phase 8.5). Relación 1:N con Team: muchos logros pertenecen a un equipo.
+model Logro {
+  id          Int         @id @default(autoincrement())
+  nombre      String
+  puntos      Int
+  // 📚 El ? = campo OPCIONAL (columna admite NULL). Adornos que pueden faltar.
+  descripcion String?
+  categoria   String?
+  icono       String? // emoji, p.ej. "🏆"
+  // 📚 teamId = la CLAVE FORÁNEA real (columna en la BD). Sin ? → OBLIGATORIA: no hay logros
+  //    huérfanos, todo logro pertenece a un equipo (regla de la multi-tenancy).
+  teamId      Int
+  // 📚 team = campo de NAVEGACIÓN (virtual, no columna). @relation conecta teamId → Team.id, y
+  //    permite logro.team / include: { team: true }. Prisma exige los DOS lados (aquí y en Team).
+  team        Team        @relation(fields: [teamId], references: [id])
+  obtenidos   UserLogro[]
+}
+
+model UserLogro {
+  id      Int      @id @default(autoincrement())
+  userId  Int
+  logroId Int
+  fecha   DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id])
+  logro   Logro    @relation(fields: [logroId], references: [id])
+
+  @@unique([userId, logroId]) // un usuario no puede ganar el mismo logro dos veces
 }

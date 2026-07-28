@@ -5,7 +5,7 @@
 //    antes de montar rutas o escuchar. Explícito = a prueba de refactors.
 import "./config/env"
 import express from "express"
-import logrosRouter from "./routes/logros"
+import equiposRouter from "./routes/equipos"
 import authRouter from "./routes/auth"
 import { errorHandler } from "./middleware/errorHandler"
 import prisma from "./lib/prisma"
@@ -60,7 +60,8 @@ app.get("/", (_req, res) => {
 // 📚 Montaje de routers bajo su prefijo: todo lo de authRouter cuelga de /auth, etc.
 //    El ORDEN de los app.use define la cadena de middlewares que atraviesa cada petición.
 app.use("/auth", authRouter)
-app.use("/logros", logrosRouter)
+app.use("/equipos/:slug", equiposRouter)
+
 
 // 📚 EL ÚLTIMO de la cadena: la "red" que captura los errores lanzados en las rutas de
 //    arriba. Si se pusiera antes, esas rutas aún no existirían en la cadena y sus errores

@@ -47,20 +47,22 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT �
 - [x] **Fail-fast al arranque** — validar `JWT_SECRET` y `DATABASE_URL` al iniciar, con mensaje claro si faltan (eliminar el `!` que revienta en runtime de forma críptica)
 - [x] **Rate limiting** en `/auth/login` con `express-rate-limit` — protección básica contra fuerza bruta (también en `/auth/register`; `trust proxy` para nginx)
 - [x] **Healthcheck** — endpoint `GET /health` (readiness, `SELECT 1` a la BD, 503 si falla) + `healthcheck:` en Docker Compose (db con `pg_isready`, backend con Node `fetch`) + `depends_on: condition: service_healthy` (resuelve el clásico "backend arranca antes que la DB")
-- [ ] **Backup automático de PostgreSQL** — `pg_dump` programado a un volumen (los datos son lo único irrecuperable; una migración mala con Watchtower auto-desplegando puede destruirlos)
-- [ ] `apuntes.md`: sección "Hardening — validación, errores y configuración"
+- [x] **Backup automático de PostgreSQL** — sidecar DIY (`postgres:16` + bucle `pg_dump | gzip`, retención 7d con `find -mtime`) a `./backups` (volumen host); `backups/` en `.gitignore` (los datos son lo único irrecuperable; una migración mala con Watchtower auto-desplegando puede destruirlos)
+- [x] `apuntes.md`: sección "Hardening — validación, errores y configuración" (fail-fast, error handler, Zod, rate limiting, healthchecks, backup)
+- [ ] **Copias offsite del backup** (pasos manuales del host, documentados en apuntes) — cronjob `rsync` a otro disco/CT del Proxmox + opción `rclone` a Google Drive (regla 3-2-1)
 
 ## Phase 6 – Multi-tenancy: modelo de datos (Relaciones en Prisma)
 > **Concepto nuevo:** relaciones one-to-many / many-to-many, `@relation`, `@@unique`, rutas dinámicas anidadas
 
-- [ ] Nuevo modelo `Team` — `slug` único, flag `esPublico` (privado: solo miembros; público: lectura para logueados)
-- [ ] `Logro` pasa a pertenecer a un equipo (`teamId`) + campos: `descripcion`, `categoria`, `icono` (emoji)
-- [ ] Membership `User` ↔ `Team` (un jugador pertenece a un equipo)
-- [ ] Nuevo modelo `UserLogro` — junction table (quién ganó qué logro y cuándo)
-- [ ] Migración Prisma con las nuevas relaciones
-- [ ] Endpoints scoped por equipo: `GET /equipos/:slug/logros`, `GET /equipos/:slug/jugadores/:id/logros`, etc.
+- [x] Nuevo modelo `Team` — `slug` único, `nombre` (DECISIÓN: sin `esPublico`; los logros de un equipo son SIEMPRE privados a sus miembros. La reutilización entre equipos se hace por publicación *a nivel de logro* en Phase 8.5, no por equipos públicos)
+- [x] `Logro` pasa a pertenecer a un equipo (`teamId`) + campos: `descripcion`, `categoria`, `icono` (emoji). DECISIÓN: `Logro` es la INSTANCIA del equipo; la PLANTILLA proponible/comunitaria (con `firma`/atribución) es una tabla aparte en Phase 8.5, no ahora
+- [x] Membership `User` ↔ `Team` (un jugador pertenece a un equipo) — `teamId Int?` opcional (super admin / recién registrado sin equipo)
+- [x] Nuevo modelo `UserLogro` — junction table explícita (`fecha` + `@@unique([userId, logroId])`)
+- [x] Migración Prisma con las nuevas relaciones (`add_multitenancy`, vía reset en dev)
+- [x] **Endpoints scoped por equipo**: `routes/equipos.ts` montado en `/equipos/:slug` (`mergeParams` + `router.use(resolveTeam)`). `GET /logros`, `GET /logros/:id` (con doble filtro `id`+`teamId` anti-fuga), `POST /logros` (auth + `teamId` desde `req.team`, no del body). Viejo `routes/logros.ts` borrado. Verificado en vivo: aislamiento entre Halcones/Lobos, 404 cross-tenant, 401 sin token. `apuntes.md` actualizado.
+- [ ] Endpoints scoped restantes: `GET /equipos/:slug/jugadores/:id/logros`, etc. (cuando existan jugadores/UserLogro en la API)
 - [ ] Frontend: estructura `/equipos/[slug]/...` — dashboard, `/logros`, `/jugadores`, `/jugadores/[id]` (ver mapa en Architecture.md)
-- [ ] `apuntes.md`: sección "Prisma — Relaciones y multi-tenancy"
+- [x] `apuntes.md`: sección "Prisma — Relaciones y multi-tenancy"
 
 ## Phase 7 – Autorización por Roles
 > **Concepto nuevo:** autenticación vs autorización, autorización contextual (rol *dentro de* un equipo), middleware composition, seed scripts
@@ -103,7 +105,7 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT �
 ## Phase 8.5 – Comunidad de logros
 > **Concepto nuevo:** features cross-tenant, copia vs referencia, atribución
 
-- [ ] Publicación de logros: modelo `LogroPublicado` (o flag + atribución sobre `Logro`)
+- [ ] Publicación de logros: **tabla PLANTILLA separada** (`PlantillaLogro`/`LogroPublicado`) distinta del `Logro`-instancia del equipo — decidido en Phase 6. Lleva `firma` (`@default("anonimo")`, autoría *display* que elige el proponente) + atribución al autor real. El `Logro` del equipo es una COPIA de la plantilla
 - [ ] Página `/comunidad` — galería navegable de logros publicados; `/comunidad/[id]` — detalle (qué equipos lo implementaron)
 - [ ] Acción "implementar": **copia independiente** al catálogo del equipo, con atribución al autor (la copia es editable y no cambia si el original cambia)
 - [ ] Proponer publicar/implementar: PLAYER propone → TEAM_ADMIN aprueba (reutiliza el flujo de Phase 7.6)

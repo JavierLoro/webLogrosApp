@@ -87,5 +87,36 @@ services:
     command: --label-enable
     restart: unless-stopped
 
+
+  # 📚 BACKUP sidecar DIY: los datos son lo ÚNICO irrecuperable. Watchtower auto-despliega, así
+  #    que una migración destructiva podría llegar sola → este dump periódico es la red de seguridad.
+  backup:
+    image: postgres:16          # 📚 misma versión que db → pg_dump 100% compatible con el servidor
+    container_name: weblogros_backup
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      # 📚 PGPASSWORD: libpq (la lib cliente de Postgres) la lee sola → no ponemos la contraseña
+      #    en el comando pg_dump. La resuelve Compose desde el .env (aquí SÍ queremos ${...}).
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # 📚 bind mount: el dump se escribe en /backups (dentro) pero persiste en ./backups (host).
+      #    Sin esto, al recrear el contenedor perderías los backups.
+      - ./backups:/backups
+    depends_on:
+      db:
+        condition: service_healthy   # 📚 no dumpear una BD que aún no acepta conexiones
+    restart: unless-stopped
+    # 📚 Bucle: dump → borrar viejos → dormir 24h → repetir. pg_dump = backup LÓGICO (SQL que
+    #    recrea estructura + datos), no copia binaria. -h db resuelve por DNS interno de Docker.
+    #    | gzip comprime al vuelo. find -mtime +7 -delete = retención casera (últimos 7 días).
+    # 📚 CLAVE del $$: Compose también usa $ para SUS variables. $$ escapa el $ para que llegue
+    #    al SHELL del contenedor (runtime), no a Compose. Por eso $$POSTGRES_USER y $$(date ...).
+    entrypoint: >
+      bash -c "while true; do
+      pg_dump -h db -U $$POSTGRES_USER -d $$POSTGRES_DB | gzip > /backups/weblogros-$$(date +%Y%m%d-%H%M%S).sql.gz;
+      find /backups -name '*.sql.gz' -mtime +7 -delete;
+      sleep 86400;
+      done"
 volumes:
   postgres_data:

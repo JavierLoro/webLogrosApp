@@ -8,7 +8,10 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "sourceMap": true
+    "sourceMap": true,
+  },
+  "ts-node": {
+    "files": true
   },
   "exclude": ["prisma.config.ts", "node_modules", "dist"]
 }

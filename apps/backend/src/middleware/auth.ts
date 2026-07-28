@@ -24,9 +24,8 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     // 📚 jwt.verify comprueba la firma con SECRET. Si el token fue manipulado o expiró,
     //    LANZA → caemos al catch. El "as { userId }" tipa el payload que nosotros firmamos.
     const payload = jwt.verify(token, SECRET) as { userId: number }
-    // 📚 Inyectamos userId en req para las rutas siguientes. El "as any" es un parche:
-    //    Express no conoce userId en su tipo Request (mejora futura: extender el tipo).
-    ;(req as any).userId = payload.userId
+    // 📚 Inyectamos userId en req para las rutas siguientes.
+    req.userId = payload.userId
     // 📚 next(): todo OK, pasa el control a la siguiente función (la ruta protegida).
     next()
   } catch {

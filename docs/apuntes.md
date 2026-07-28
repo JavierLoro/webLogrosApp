@@ -1457,3 +1457,271 @@ Luego `frontend` y `nginx` esperan a `backend: condition: service_healthy`.
   (permite *service_healthy*).
 - **`CMD` vs `CMD-SHELL`:** `CMD` ejecuta el binario directo; `CMD-SHELL` pasa por un shell
   (necesario para expandir `${VARIABLES}`).
+
+## Backup automático de PostgreSQL (`pg_dump`)
+
+**Por qué es el item más crítico:** todo lo demás (imágenes, contenedores) es *recreable* desde
+el código; **los datos son lo único irrecuperable**. Y Watchtower **auto-despliega** cada 30s →
+una migración destructiva podría llegar sola y arrasar la BD sin que estés mirando. El backup es
+la red de seguridad.
+
+**`pg_dump` = backup LÓGICO:** no copia los ficheros binarios de Postgres, genera un **script SQL**
+(`CREATE TABLE` + `COPY/INSERT`) que *recrea* la BD. Portable entre versiones, restaurable con
+`psql`/`pg_restore`. (Verificado: el dump contenía `CREATE TABLE "Logro"/"User"` + `COPY ... FROM stdin`.)
+
+**Matiz honesto sobre "dónde":** guardar el dump en un volumen del host protege de desastres
+*lógicos* (migración mala, borrado) pero **NO de un fallo físico del disco** (mueren BD y backups
+juntos). La protección real es *offsite* (otra máquina / S3). Para este proyecto, volumen local
+es el alcance pragmático; offsite = siguiente nivel.
+
+### Sidecar DIY (servicio en Compose)
+
+```yaml
+  backup:
+    image: postgres:16                 # misma versión que db → pg_dump compatible
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}  # libpq la lee sola → no va en el comando
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./backups:/backups             # dump persiste en el host, no en el contenedor
+    depends_on:
+      db:
+        condition: service_healthy      # no dumpear una BD que aún no acepta conexiones
+    entrypoint: >
+      bash -c "while true; do
+      pg_dump -h db -U $$POSTGRES_USER -d $$POSTGRES_DB | gzip > /backups/weblogros-$$(date +%Y%m%d-%H%M%S).sql.gz;
+      find /backups -name '*.sql.gz' -mtime +7 -delete;
+      sleep 86400;
+      done"
+```
+
+**Piezas:**
+- **Bucle** `while true; do ... sleep 86400; done` → backup diario (86400s = 24h).
+- **`| gzip`** → comprime el dump al vuelo (los SQL comprimen muchísimo).
+- **`find -mtime +7 -delete`** → **retención casera**: borra dumps de más de 7 días (si no, llenas
+  el disco).
+- **`-h db`** → resuelve el servicio `db` por DNS interno de Docker.
+
+### ⚠️ La trampa del `$$` (Compose vs shell)
+
+Compose **también** usa `$` para sus variables. Un `$(date)` o `$POSTGRES_USER` en el `entrypoint`
+lo interpretaría **Compose** (y lo estropea). Regla: **todo `$` destinado al shell del contenedor
+se escribe doble `$$`** → `$$POSTGRES_USER`, `$$(date ...)`. En `environment:` sí usas `${...}`
+(ahí quieres que Compose lo lea del `.env`). Compruébalo con `docker compose config`: el `$$` sale
+como `$` en la config resuelta.
+
+**Extra:** `backups/` va al `.gitignore` (`backups/*` + `!backups/.gitkeep`) — nunca subir dumps
+con datos reales al repo.
+
+### Copias offsite — pasos manuales (pendiente de montar en el host)
+
+El sidecar da **1 copia** en el mismo disco: protege de desastres *lógicos*, no de fallo *físico*
+del disco. La **regla 3-2-1** (3 copias, 2 medios, 1 offsite) se completa con estos pasos, que
+NO van en el compose (son del host Proxmox, no de la imagen que despliega Watchtower):
+
+**A) Cronjob → copiar los dumps a otro disco / otro CT (LXC) del Proxmox**
+
+```bash
+# En el host (o en el CT que corre docker): editar el crontab
+crontab -e
+
+# Cada día a las 04:00, sincroniza los dumps a otro disco montado localmente...
+0 4 * * * rsync -av --delete /ruta/al/repo/backups/ /mnt/otro-disco/weblogros-backups/
+
+# ...o a otro CT/máquina por SSH (requiere clave SSH sin passphrase para el cron):
+0 4 * * * rsync -av /ruta/al/repo/backups/ usuario@otro-ct:/backups/weblogros/
+```
+- `rsync -av` = copia solo lo nuevo/cambiado, preservando permisos y fechas (incremental).
+- `--delete` (opcional) espeja el origen: borra en destino lo que ya no está en origen.
+- Requisito para SSH: `ssh-keygen` + `ssh-copy-id` al destino, para que el cron entre sin
+  contraseña.
+
+**B) Opción: copia a Google Drive con `rclone`**
+
+```bash
+# Instalar y configurar el remoto una sola vez (interactivo):
+apt install rclone            # o curl https://rclone.org/install.sh | bash
+rclone config                 # crear un remoto tipo "drive" → lo llamamos p.ej. gdrive
+
+# Subida manual:
+rclone copy /ruta/al/repo/backups/ gdrive:weblogros-backups/
+
+# Automatizar en cron (cada noche a las 04:30):
+30 4 * * * rclone copy /ruta/al/repo/backups/ gdrive:weblogros-backups/
+```
+- `rclone config` guarda el token OAuth de Google Drive; luego el cron sube sin interacción.
+- `rclone copy` es incremental (no re-sube lo ya presente). Para espejar usa `rclone sync`.
+
+**Restauración (recordatorio):** para recuperar un dump →
+`gunzip -c weblogros-<fecha>.sql.gz | docker exec -i weblogros_db psql -U <user> -d <db>`.
+
+## Prisma — Relaciones y multi-tenancy (Phase 6)
+
+**Multi-tenancy = "cada fila tiene dueño".** Varios equipos comparten la BD pero cada uno solo ve
+lo suyo. La pieza técnica: cada fila sabe a qué equipo pertenece (una **clave foránea**, FK). "Dame
+los logros de leones" = `WHERE teamId = <id de leones>`.
+
+**Relación = una tabla apunta a otra guardando su PK en una columna (la FK).**
+
+### Los tres tipos de relación
+
+**1:N (uno a muchos)** — un `Team` tiene muchos `Logro`; cada `Logro` pertenece a un `Team`. La FK
+vive en el lado "muchos". Se escribe en **ambos** modelos:
+
+```prisma
+model Team {
+  logros Logro[]   // lado "uno": VIRTUAL (no es columna), permite team.logros
+}
+model Logro {
+  teamId Int                                             // FK REAL (columna en la BD)
+  team   Team @relation(fields: [teamId], references: [id])  // navegación VIRTUAL
+}
+```
+
+- Solo `teamId` es columna real. `team` y `logros` son **campos de navegación** (Prisma los usa
+  para `include: { team: true }` / `team.logros`, pero no ocupan espacio).
+- Prisma **exige los dos lados** para entender la relación.
+
+**El `?` = decisión de dominio, no sintaxis.** `Logro.teamId Int` (sin `?`, obligatorio → no hay
+logros huérfanos). `User.teamId Int?` (opcional → el SUPER_ADMIN no tiene equipo, y un usuario recién
+registrado tampoco). Misma forma técnica, distinta regla de negocio. En la relación opcional el `?`
+va en **ambos**: `teamId Int?` y `team Team? @relation(...)`.
+
+**N:M (muchos a muchos) → tabla puente.** Un `User` gana muchos `Logro` y un `Logro` lo ganan muchos
+`User`. Una columna FK no guarda "muchos" → tabla intermedia donde **cada fila es un cruce**:
+
+```prisma
+model UserLogro {
+  id      Int      @id @default(autoincrement())
+  userId  Int
+  user    User     @relation(fields: [userId], references: [id])
+  logroId Int
+  logro   Logro    @relation(fields: [logroId], references: [id])
+  fecha   DateTime @default(now())      // dato DEL CRUCE (cuándo se ganó)
+
+  @@unique([userId, logroId])           // no ganar el mismo logro dos veces
+}
+```
+
+- **Puente explícito vs implícito:** Prisma puede crear la tabla puente oculta (`Logro[]` en ambos
+  lados), PERO no admite campos extra. Como necesitamos `fecha` (dato del cruce), el puente debe ser
+  **explícito** (modelo propio `UserLogro`). Regla: si la relación tiene atributos → puente explícito.
+- **`@@` (doble arroba) = atributo a nivel de MODELO** (varios campos), frente a `@` (un campo).
+  `@@unique([userId, logroId])` = **unicidad compuesta**: el *par* es único (cada uno por separado
+  se repite). La BD garantiza la integridad sola.
+- User y Logro **no se referencian entre sí**: ambos referencian a `UserLogro`. La N:M = dos 1:N
+  contra el puente.
+
+### Migración: añadir una FK obligatoria a una tabla con datos
+
+Problema clásico: `Logro.teamId` es `NOT NULL` pero ya había filas → Postgres no sabe qué equipo
+poner → la migración falla. Dos caminos:
+- **Reset (solo dev):** borra todo y re-aplica desde cero. `npx prisma migrate reset`. Datos de
+  prueba desechables.
+- **Backfill (producción):** nunca resetear en prod. 3 tiempos: añadir columna nullable → `UPDATE`
+  asignando un equipo por defecto → cambiar a `NOT NULL`.
+- **Regla de oro:** en dev puedes resetear; en producción, JAMÁS.
+
+**Prisma tiene un guardarraíl anti-agente:** `migrate reset`/comandos destructivos se niegan a
+correr desde Claude Code sin consentimiento explícito (o se ejecutan en un shell normal del usuario).
+
+### Cómo se traduce a SQL (verificado con `\d`)
+
+| Prisma | SQL |
+|---|---|
+| `@@unique([userId, logroId])` | `UNIQUE btree (userId, logroId)` |
+| `@relation(fields: [x], references: [id])` | `FOREIGN KEY (x) REFERENCES ...` |
+| `@default(now())` | `DEFAULT CURRENT_TIMESTAMP` |
+| `teamId Int` (sin `?`) | `NOT NULL` |
+
+**`ON DELETE RESTRICT`** (default de Prisma en las FKs): no puedes borrar un `Team` con logros, ni
+un `User`/`Logro` con filas en `UserLogro` → evita huérfanos. Cambiable a `CASCADE` si se necesita.
+
+### El schema tipado como "lista de tareas"
+
+Tras cambiar el schema + `prisma generate`, TypeScript marca **en compilación** cada línea que quedó
+incoherente (ej.: `logro.create({ nombre, puntos })` sin `teamId` → `Property 'team' is missing`).
+El compilador te dice qué actualizar; sin tipos, reventaría en runtime en producción.
+⚠️ `migrate dev` normalmente regenera el cliente, pero si el build pasa "sospechosamente" tras un
+cambio de schema, fuerza `npx prisma generate` (el cliente estaba cacheado).
+
+---
+
+## Endpoints scoped por equipo (Phase 6)
+
+Con multi-tenancy, cada `Logro` pertenece a un `Team`. Los endpoints dejan de ser globales
+(`/logros`) y pasan a estar **acotados a un equipo** vía la URL: `/equipos/:slug/logros`. El
+`:slug` decide de qué equipo hablamos y **todas** las consultas se filtran por ese equipo.
+
+### Routers anidados + `mergeParams`
+
+En `server.ts` montamos el router bajo un prefijo que incluye el param:
+
+```ts
+app.use("/equipos/:slug", equiposRouter)
+```
+
+El `:slug` vive en el **prefijo del padre**, no dentro del router hijo (el hijo solo conoce
+`/logros`, `/logros/:id`…). Pero por defecto un router hijo **no ve los params del padre** →
+`req.params.slug` sería `undefined`. Se arregla con la opción del constructor:
+
+```ts
+const router = express.Router({ mergeParams: true })   // hereda los params del padre
+```
+
+Es el hermano en tiempo de ejecución del genérico `Request<{ slug: string }>` de `resolveTeam`:
+uno rellena el valor, el otro lo tipa.
+
+### `router.use(resolveTeam)` — resolver el equipo una sola vez
+
+```ts
+router.use(resolveTeam)   // corre ANTES de cualquier ruta del router
+```
+
+`resolveTeam` traduce `:slug → req.team` (o lanza 404). Puesto a nivel de router, se aplica a
+todas las rutas sin repetirlo. Por eso, dentro de los handlers, `req.team!.id` usa `!` con
+**legitimidad**: `resolveTeam` garantiza por construcción que `req.team` existe (o nunca llegas
+al handler). Contrasta con el `!` de `JWT_SECRET`, que tapaba un fallo real.
+
+### El scoping en sí
+
+```ts
+// Lista — SOLO los logros de ESTE equipo
+prisma.logro.findMany({ where: { teamId: req.team!.id } })
+```
+
+### `findUnique` vs `findFirst` (detalle de seguridad)
+
+Para el detalle (`GET /logros/:id`) hay que filtrar por **id Y teamId** a la vez, si no un
+usuario podría leer un logro de otro equipo poniendo su id (fuga entre tenants):
+
+```ts
+prisma.logro.findFirst({ where: { id, teamId: req.team!.id } })
+```
+
+Se usa `findFirst` y **no** `findUnique` porque `findUnique` solo acepta campos únicos en el
+`where`; `teamId` no es único (un equipo tiene muchos logros). `findFirst` acepta cualquier
+combinación de condiciones.
+
+### El `teamId` en el POST viene de la URL, no del body
+
+```ts
+prisma.logro.create({ data: { nombre, puntos, teamId: req.team!.id } })
+```
+
+El cliente **no** elige el equipo (sería un fallo de seguridad): lo dicta el `:slug` de la URL,
+ya resuelto en `req.team`. Añadir `teamId` aquí es lo que arregla el `Property 'team' is missing`
+que rompía el build tras la migración.
+
+### Antes (plano) vs después (scoped)
+
+| Antes (`routes/logros.ts`, borrado) | Después (`routes/equipos.ts`) |
+|---|---|
+| `app.use("/logros", logrosRouter)` | `app.use("/equipos/:slug", equiposRouter)` |
+| `express.Router()` | `express.Router({ mergeParams: true })` + `router.use(resolveTeam)` |
+| `logro.findMany()` | `logro.findMany({ where: { teamId: req.team!.id } })` |
+| `logro.findUnique({ where: { id } })` | `logro.findFirst({ where: { id, teamId: req.team!.id } })` |
+| `create({ data: { nombre, puntos } })` | `create({ data: { nombre, puntos, teamId: req.team!.id } })` |
+
+> El archivo viejo se borró (git conserva el historial): `git show HEAD:apps/backend/src/routes/logros.ts`.
