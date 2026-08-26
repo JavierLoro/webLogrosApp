@@ -16,7 +16,9 @@ export default function Header() {
   //    Así, tras login/logout (que navegan), la cabecera vuelve a mirar el token y se
   //    actualiza sola. !!valor convierte a booleano (hay token → true).
   useEffect(() => {
-    setLogueado(!!localStorage.getItem("token"))
+    const updateSession = () => setLogueado(!!localStorage.getItem("token"))
+    const timeout = window.setTimeout(updateSession, 0)
+    return () => window.clearTimeout(timeout)
   }, [pathname])
 
   // 📚 Logout = borrar el token del navegador y volver a login. No hay estado en el servidor

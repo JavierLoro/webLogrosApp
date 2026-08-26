@@ -17,7 +17,8 @@ export default function NuevoLogro() {
   //    Aquí es obligatorio para localStorage: durante el render en servidor no existe, así
   //    que lo leemos después, en el cliente. token empieza null y se rellena tras montar.
   useEffect(() => {
-    setToken(localStorage.getItem("token"))
+    const timeout = window.setTimeout(() => setToken(localStorage.getItem("token")), 0)
+    return () => window.clearTimeout(timeout)
   }, [])
 
   // 📚 Sin token → mostramos enlace a login en vez del formulario (gating de UI por sesión).

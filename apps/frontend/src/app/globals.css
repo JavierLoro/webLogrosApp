@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f5f1e8;
+  --paper-bright: #fcfaf5;
+  --paper-deep: #e8e1d4;
+  --ink: #20272a;
+  --ink-soft: #536064;
+  --ink-faint: #7d8788;
+  --line: #d7d0c3;
+  --line-strong: #bcb3a4;
+  --club-red: #c84f3b;
+  --club-red-deep: #9f392d;
+  --field-green: #dfe9df;
+  --field-green-strong: #bdd1be;
+  --card-navy: #2e4960;
+  --season-gold: #e0ac42;
+  --success: #42775b;
+  --danger: #b43f36;
+  --font-app-sans: "Arial Narrow", "Roboto Condensed", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-app-mono: "Cascadia Mono", "SFMono-Regular", Consolas, ui-monospace, monospace;
+  --radius-card-value: 1.25rem;
+  --radius-control-value: 0.7rem;
+  --shadow-paper-value: 0 1px 0 rgba(32, 39, 42, 0.08), 0 12px 30px rgba(32, 39, 42, 0.08);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-bright: var(--paper-bright);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-club-red: var(--club-red);
+  --color-club-red-deep: var(--club-red-deep);
+  --color-field-green: var(--field-green);
+  --color-field-green-strong: var(--field-green-strong);
+  --color-card-navy: var(--card-navy);
+  --color-season-gold: var(--season-gold);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-app-sans);
+  --font-mono: var(--font-app-mono);
+  --radius-card: var(--radius-card-value);
+  --radius-control: var(--radius-control-value);
+  --shadow-paper: var(--shadow-paper-value);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--paper);
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: var(--paper);
+  background-image: linear-gradient(to bottom, rgba(32, 39, 42, 0.035) 1px, transparent 1px);
+  background-size: 100% 2.25rem;
+  color: var(--ink);
+  font-family: var(--font-app-sans);
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: clamp(1rem, 7vw, 7rem);
+  width: 1px;
+  background: color-mix(in srgb, var(--club-red) 22%, transparent);
+  content: "";
+  pointer-events: none;
+}
+
+::selection {
+  background: var(--season-gold);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--season-gold);
+  outline-offset: 3px;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding-bottom: 5.5rem;
+}
+
+.ruled-paper {
+  background-color: var(--paper-bright);
+  background-image: linear-gradient(to bottom, rgba(32, 39, 42, 0.045) 1px, transparent 1px);
+  background-size: 100% 2.25rem;
+}
+
+.scorecard-rule {
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
