@@ -1,0 +1,4 @@
+interface:
+  display_name: "WebLogros: entorno seguro"
+  short_description: "Arranca CT 112 sin duplicados ni OOM"
+  default_prompt: "Revisa y levanta el entorno local de WebLogros de forma segura."

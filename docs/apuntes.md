@@ -1,5 +1,24 @@
 # Apuntes — webLogrosApp
 
+## Multi-equipo e invitaciones
+
+La relación entre usuarios y equipos se modela con `TeamMembership`, una tabla intermedia
+que permite que una persona pertenezca a varios equipos y tenga un rol distinto en cada uno.
+La pareja `userId + teamId` es única para evitar membresías duplicadas.
+
+`TeamInvitation` representa un código compartible. La API devuelve el token plano una sola vez,
+pero almacena SHA-256 en la base de datos. `expiresAt`, `revokedAt`, `maxUses` y `uses` permiten
+caducarlo, revocarlo y limitar sus usos. El enlace y la entrada manual terminan en el mismo
+endpoint `POST /invitaciones/join`.
+
+El login devuelve `teams`, no `teamSlug`: una lista vacía significa que todavía no hay equipo,
+una lista de un elemento permite entrar directamente y varias requieren un selector en el cliente.
+
+Para volver a mostrar un código al administrador no basta con `tokenHash`, porque un hash es
+irreversible. Se conserva el hash para validar y una segunda copia cifrada con AES-256-GCM para
+recuperarla solo tras comprobar el rol `TEAM_ADMIN`. Las invitaciones creadas antes de añadir la
+columna cifrada siguen siendo válidas, pero su código original no puede reconstruirse.
+
 ## JavaScript moderno
 
 ### Variables
@@ -1725,3 +1744,241 @@ que rompía el build tras la migración.
 | `create({ data: { nombre, puntos } })` | `create({ data: { nombre, puntos, teamId: req.team!.id } })` |
 
 > El archivo viejo se borró (git conserva el historial): `git show HEAD:apps/backend/src/routes/logros.ts`.
+
+---
+
+## Next.js — Esqueleto de rutas multi-tenant (Phase 6)
+
+El backend ya era scoped (`/equipos/:slug/logros`); el frontend seguía en el mundo plano y
+apuntaba a endpoints borrados. Se rehízo la estructura bajo `app/equipos/[slug]/`.
+
+### Segmento dinámico `[slug]`
+
+Una **carpeta** con corchetes captura ese trozo de la URL. Es el gemelo frontend del `:slug` de
+Express: `/equipos/halcones` → `params = { slug: "halcones" }`.
+
+```tsx
+const { slug } = await params   // en Next 16 params es una Promise → await
+```
+
+### Layout anidado — el concepto clave
+
+Un `layout.tsx` puede ir en **cualquier** carpeta, no solo en la raíz, y envuelve a todas las
+páginas de esa carpeta y sus hijas. Se **anidan**:
+
+```
+RootLayout (html, body, Header)
+  └── TeamLayout (equipos/[slug]/layout.tsx — nav del equipo)
+        └── page.tsx  |  logros/page.tsx  |  ranking/page.tsx ...
+```
+
+Ventaja: el nav del equipo se escribe **una vez** y aparece en todas sus páginas. Es el mismo
+principio que `router.use(resolveTeam)` en Express — lo pones a un nivel y aplica a lo que cuelga.
+
+Dos reglas: recibe `children` **y** puede recibir `params` (si está dentro de `[slug]`), y
+**debe renderizar `{children}`** o las páginas de dentro no se ven (el layout es el marco,
+`children` el cuadro).
+
+### `<Link>` vs `<a>`
+
+`<Link href={...}>` de `next/link` navega **sin recargar la página entera** (Next carga solo lo
+que cambia → sensación de app instantánea). Un `<a>` recargaría todo el sitio y perdería el
+estado del cliente.
+
+### Alias `@/` en vez de `../../../`
+
+`tsconfig.json` define `"@/*": ["./src/*"]`, así que `@/app/components/Placeholder` funciona
+desde cualquier profundidad. Evita el infierno de rutas relativas al anidar carpetas.
+
+### Trampa: caché generada de `.next`
+
+Tras borrar `app/logros/[id]/page.tsx`, `tsc` seguía fallando… en `.next/dev/types/validator.ts`,
+un archivo **generado** por una ejecución anterior que aún referenciaba la página borrada.
+No era código fuente. Se arregla con `rm -rf .next`.
+**Regla:** si un error apunta a un archivo dentro de `.next/` (o cualquier carpeta generada), el
+problema es caché obsoleta, no tu código.
+
+### Props — los parámetros de un componente
+
+Un componente React **es una función** que en vez de un número devuelve JSX. Y como toda función,
+puede recibir datos. A esos datos se les llama **props**.
+
+La única particularidad: React no los pasa sueltos, los mete **todos en un único objeto**. Los
+atributos que escribes en el JSX se convierten en las claves de ese objeto:
+
+```tsx
+<Placeholder titulo="Ranking" fase="Phase 6" />
+// React llama internamente a:
+Placeholder({ titulo: "Ranking", fase: "Phase 6" })
+```
+
+Es la misma relación que hay entre el body de un `POST` y el `req.body` que recibes en Express.
+
+**Se desestructuran en la firma**, igual que `const { nombre, puntos } = req.body`:
+
+```tsx
+function Placeholder({ titulo, fase, descripcion }: PlaceholderProps) { ... }
+```
+
+Anatomía que confunde al principio: `{ titulo, fase, descripcion }` es **desestructuración**
+(JavaScript) y `: PlaceholderProps` tipa el **objeto entero** (TypeScript). No se tipa campo a
+campo ahí: TS deduce cada pieza a partir del tipo del paquete.
+
+### Definición ≠ uso
+
+El error más fácil de cometer: meter el ejemplo de uso **dentro** de la propia definición.
+
+```tsx
+export default function Placeholder() {   // ← definición
+  return <Placeholder titulo="..." />     // ← se llama a sí mismo → recursión infinita
+}
+```
+
+Los valores concretos (`"Catálogo de logros"`) **nunca aparecen dentro del componente**. Dentro
+solo existen los *nombres* de las props, como huecos: `{titulo}`. Los textos viven en quien lo
+usa, es decir, en cada página. Idéntico al backend: `crearLogro("Primer gol", 10)` se escribe
+donde se llama, no dentro de `function crearLogro(nombre, puntos)`.
+
+### `type` — un alias para una forma
+
+`type` no es un concepto nuevo: es **poner nombre** a un tipo de objeto que ya sabes escribir
+inline (en `equipos.ts` ya se escribió uno: `const { nombre, puntos }: { nombre: string; puntos: number }`).
+
+```ts
+type PlaceholderProps = { titulo: string; fase: string; descripcion: string }
+```
+
+Se hace por: (1) no repetir la forma en varios sitios, (2) que la firma quepa en pantalla, y
+(3) que el editor pueda navegar a ella.
+
+**Un `type` no existe en tiempo de ejecución.** `tsc` lo borra al compilar; no genera ni una línea
+de JS. Por eso no se puede hacer `new PlaceholderProps()` ni `instanceof PlaceholderProps` — para
+eso hace falta una **clase** (`AppError` sí lo es, por eso el error handler puede usar `instanceof`).
+
+| | `type` | `interface` |
+|---|---|---|
+| Reabrir/fusionar declaraciones | ❌ error de duplicado | ✅ se fusionan |
+| Uniones (`"A" \| "B"`) | ✅ | ❌ |
+| Uso típico | props de React (cerradas) | ampliar tipos de terceros |
+
+Por eso `types/express.d.ts` usa `interface Request` (se le **añade** `team` a la Request que ya
+define Express) y las props usan `type` (nadie debe ampliarlas desde fuera).
+
+### `?` opcional: ajustar el rigor a la vida útil del código
+
+`descripcion?: string` acepta que no venga; sin `?` la exige siempre. En `Placeholder` se dejó
+**obligatoria** aun siendo lo contrario de lo que parecería "más flexible": las 13 páginas la
+pasan y el componente es temporal, así que añadir el `?` más adelante cuesta una línea. Misma
+clase de decisión que marcar un campo opcional en un schema de Zod.
+
+Si fuera opcional, dentro se pintaría con **renderizado condicional**:
+
+```tsx
+{descripcion && <p>{descripcion}</p>}
+```
+
+`A && B` en JavaScript **no devuelve un booleano**: devuelve `A` si es falsy, y si no `B`. Como
+React ignora `undefined`, `null` y `false`, cuando la prop no viene no se pinta nada.
+⚠️ **Trampa:** si `A` es el número `0`, la expresión vale `0` y React **sí lo pinta**. Con
+strings vacíos no pasa. Cuidado al condicionar por `puntos`.
+
+## Prisma — seed idempotente para datos de prueba
+
+Un **seed** llena una base de desarrollo con un escenario conocido. No sustituye a una
+migración: la migración crea la estructura de las tablas y el seed crea filas útiles para
+probar la aplicación.
+
+El comando del proyecto es:
+
+```bash
+cd apps/backend
+npm run seed:dev
+```
+
+La contraseña compartida por las cuentas de prueba vive en `.env.seed.local`, un archivo
+ignorado por Git. Se puede consultar localmente siguiendo [cuentas-prueba.md](cuentas-prueba.md),
+pero no se publica junto al código. El script aplica *fail-fast* si `SEED_USER_PASSWORD` falta o
+tiene menos de seis caracteres, y bcrypt guarda únicamente su hash.
+
+El seed es **idempotente**, es decir, se puede repetir sin multiplicar el contenido:
+
+- `Team` y `User` usan `upsert` sobre sus claves únicas (`slug` y `email`).
+- Cada usuario declara también `isSuperAdmin`; el `upsert` mantiene ese permiso global
+  sincronizado sin mezclarlo con su rol contextual dentro de un equipo.
+- Cada logro se busca por nombre dentro de su equipo y después se actualiza o crea.
+- `UserLogro` usa su clave compuesta `userId_logroId` para evitar asignaciones duplicadas.
+- Todo se ejecuta en una transacción; un error revierte el conjunto completo.
+
+Esto permite refrescar nombres, descripciones, iconos y contraseñas de prueba conservando
+identificadores existentes siempre que sea posible.
+
+## Solicitudes de nuevos equipos
+
+Crear cuenta no crea automáticamente un equipo. Un usuario autenticado puede enviar una
+`TeamRequest`, que empieza en `PENDING` y después queda `ACCEPTED` o `REJECTED` por decisión del
+`SUPER_ADMIN`. La relación con `User` evita confiar en un email escrito en el formulario y
+permitirá que la aprobación cree el equipo y la membresía `TEAM_ADMIN` en una transacción.
+El mensaje es obligatorio y se limita a 1500 caracteres, pero no exige una longitud mínima:
+la calidad de la información forma parte de la revisión humana, no de la validación técnica.
+La solicitud también exige `officialEmail`, normalizado a minúsculas, como señal adicional para
+contrastar que el equipo existe. Validar su formato no prueba que el solicitante controle el
+buzón; para eso haría falta un flujo posterior de verificación por correo.
+
+El índice `status + createdAt` coincide con la cola del panel administrativo: filtrar por estado
+y ordenar las solicitudes cronológicamente.
+
+`POST /api/equipos/solicitudes` encadena autenticación, validación Zod y persistencia. La API
+toma el usuario del JWT, no del body, y responde `409 Conflict` cuando ese usuario ya tiene una
+solicitud `PENDING`. Las solicitudes aceptadas o rechazadas no bloquean una nueva petición.
+
+La autenticación y la autorización son barreras distintas. `authMiddleware` verifica el JWT y
+establece quién hace la petición; `requireSuperAdmin` consulta después el permiso actual en la
+base de datos. La ausencia de sesión produce `401`, mientras que un usuario autenticado sin el
+permiso requerido produce `403`.
+
+El slug público del equipo se deriva de `teamName` al aprobar la solicitud. `normalize("NFD")`
+separa las letras de sus marcas diacríticas; después se eliminan los acentos, se pasa a minúsculas
+y cada grupo de caracteres no alfanuméricos se reduce a un guion. Así `Club Atlético Norte` se
+convierte en `club-atletico-norte` sin añadir una dependencia externa.
+
+### Aceptación transaccional
+
+`POST /api/equipos/solicitudes/:id/aceptar` valida primero que el parámetro de ruta sea un entero
+positivo. Después ejecuta como una única transacción la lectura de la solicitud, la creación del
+equipo, la membresía `TEAM_ADMIN` del solicitante y el cambio de estado a `ACCEPTED` con su fecha
+de revisión. Dentro del callback se usa `tx`, el cliente Prisma asociado a esa transacción.
+
+La transacción solo hace *commit* cuando termina el callback. Si cualquiera de sus consultas
+lanza un error, Prisma hace *rollback* y ninguna escritura queda aplicada. El equipo se crea antes
+que la membresía porque esta necesita su `id`; la solicitud solo se marca aceptada después. Si el
+slug derivado ya pertenece a otro equipo, se añade el identificador de la solicitud para mantener
+la restricción única.
+
+`POST /api/equipos/solicitudes/:id/rechazar` aplica la otra transición posible:
+`PENDING → REJECTED`. Como solo actualiza una fila, el `update` de PostgreSQL ya es atómico y no
+necesita una transacción adicional. La ruta reutiliza las mismas comprobaciones de identificador,
+existencia y estado; responde `409 Conflict` si la solicitud ya había sido procesada y guarda
+`reviewedAt` como fecha de la decisión.
+
+El panel global consulta `GET /api/equipos`, protegido también por `requireSuperAdmin`. Prisma
+permite incluir `_count` para que PostgreSQL calcule cuántos `miembros` y `logros` tiene cada
+equipo sin traer todas esas filas por la red. Es una agregación ligera que entrega al frontend el
+resumen `{ ...equipo, _count: { miembros, logros } }` y mantiene los equipos ordenados por nombre.
+
+## Solicitudes de logro
+
+`SolicitudLogro` reutiliza la máquina de estados `PENDING → ACCEPTED | REJECTED` para representar
+que un jugador reclama un logro del catálogo. Relaciona directamente `User` y `Logro`; no guarda
+otro `teamId`, porque el tenant ya se obtiene de `logro.teamId` y duplicarlo permitiría datos
+contradictorios.
+
+No existe una clave única permanente para `userId + logroId`: una solicitud rechazada no debe
+impedir intentarlo de nuevo. La API será responsable de evitar dos solicitudes pendientes iguales.
+Los índices por usuario/fecha y estado/fecha responden a las dos lecturas previstas: historial del
+jugador y cola de revisión administrativa.
+
+La creación de una solicitud obtiene el usuario del JWT y localiza el logro usando simultáneamente
+su `id` y el `teamId` resuelto desde la URL. Antes de crear comprueba que el jugador no tenga ya el
+logro ni otra solicitud `PENDING`. `GET /equipos/:slug/solicitudes` filtra por usuario y atraviesa
+la relación `logro.teamId`; la cola `/admin/solicitudes` aplica el mismo aislamiento y queda
+protegida por `requireTeamAdmin`.

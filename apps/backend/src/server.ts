@@ -7,6 +7,8 @@ import "./config/env"
 import express from "express"
 import equiposRouter from "./routes/equipos"
 import authRouter from "./routes/auth"
+import teamsRouter from "./routes/teams"
+import invitationsRouter from "./routes/invitations"
 import { errorHandler } from "./middleware/errorHandler"
 import prisma from "./lib/prisma"
 
@@ -60,6 +62,8 @@ app.get("/", (_req, res) => {
 // 📚 Montaje de routers bajo su prefijo: todo lo de authRouter cuelga de /auth, etc.
 //    El ORDEN de los app.use define la cadena de middlewares que atraviesa cada petición.
 app.use("/auth", authRouter)
+app.use("/invitaciones", invitationsRouter)
+app.use("/equipos", teamsRouter)
 app.use("/equipos/:slug", equiposRouter)
 
 
@@ -72,5 +76,4 @@ app.use(errorHandler)
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`)
 })
-
 

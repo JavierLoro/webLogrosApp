@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["192.168.1.163"],
   // 📚 outputFileTracingRoot: en este monorepo manual, le dice a Next dónde está la raíz
   //    real (../../) para que rastree bien las dependencias al empaquetar.
   outputFileTracingRoot: path.join(__dirname, "../../"),
@@ -21,5 +22,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-

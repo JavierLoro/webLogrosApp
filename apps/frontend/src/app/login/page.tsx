@@ -4,8 +4,11 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 // 📚 useRouter (de next/navigation): permite navegar por código desde un Client Component.
 import { useRouter } from "next/navigation"
+import { apiFetch, ApiError } from "@/lib/api"
+import type { LoginResponse } from "@/types/api"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -14,74 +17,76 @@ export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     // 📚 preventDefault evita que el form recargue la página (comportamiento HTML por defecto).
     e.preventDefault()
     setError("")
+    setSubmitting(true)
 
     try {
-      // 📚 RUTA RELATIVA "/api/...": este fetch corre en el navegador del visitante. Si
-      //    apuntara a http://localhost:3001 sería el PC del visitante, no el backend.
-      //    /api lo resuelve nginx (prod) o rewrites() de next.config (dev). Ver apuntes.
-      const res = await fetch("/api/auth/login", {
+      const data = await apiFetch<LoginResponse>("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       })
-
-      if (!res.ok) {
-        setError("Email o contraseña incorrectos")
-        return
-      }
-
-      const data = await res.json()
-      // 📚 localStorage (solo existe en el navegador): guarda el JWT para reenviarlo luego
-      //    en "Authorization: Bearer" al crear logros.
       localStorage.setItem("token", data.token)
-      router.push("/")
+      localStorage.setItem("teams", JSON.stringify(data.teams))
+      localStorage.setItem("isSuperAdmin", JSON.stringify(data.isSuperAdmin))
+      window.dispatchEvent(new Event("auth-change"))
+      router.push(data.teams.length === 1 ? `/equipos/${data.teams[0].slug}` : "/equipos")
     } catch (err) {
-      setError("No se pudo conectar con el servidor")
-      console.error(err)
+      setError(err instanceof ApiError ? err.message : "No se pudo conectar con el servidor")
+    } finally {
+      setSubmitting(false)
     }
   }
 
   return (
-    <main className="max-w-md mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Iniciar sesión</h1>
+    <main className="portal-shell">
+      <div className="portal-grid">
+        <div>
+          <p className="portal-kicker">Acceso de miembros · 01</p>
+          <h1 className="portal-title">Vuelve a tu equipo.</h1>
+          <p className="portal-copy">Inicia sesión para abrir las salas a las que perteneces y consultar sus catálogos de logros.</p>
+          <div className="portal-notes"><span className="portal-note">una cuenta</span><span className="portal-note">todas tus salas</span></div>
+        </div>
+        <section className="portal-panel" aria-labelledby="login-heading">
+          <h2 id="login-heading" className="portal-panel-heading">Iniciar sesión</h2>
+          <p className="portal-panel-subtitle">Usa el email y la contraseña con los que te registraste.</p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">Email</label>
+      <form onSubmit={handleSubmit}>
+        <label className="portal-field"><span>Email</span>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border rounded-lg p-2"
+            className="portal-input"
             required
-          />
-        </div>
+          /></label>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">Contraseña</label>
+        <label className="portal-field"><span>Contraseña</span>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border rounded-lg p-2"
+            className="portal-input"
             required
-          />
-        </div>
+          /></label>
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p role="alert" className="portal-error">{error}</p>}
 
         <button
           type="submit"
-          className="bg-blue-600 text-white rounded-lg p-2 font-medium hover:bg-blue-700 transition-colors"
+          className="portal-submit"
+          disabled={submitting}
         >
-          Entrar
+          {submitting ? "Entrando…" : "Ver mis equipos"}
         </button>
       </form>
+          <p className="portal-foot">¿Primera vez aquí? <Link href="/register">Crea tu cuenta</Link></p>
+        </section>
+      </div>
     </main>
   )
 }

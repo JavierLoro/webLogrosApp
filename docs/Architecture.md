@@ -7,6 +7,14 @@ cada equipo aceptado recibe su **espacio propio** (`/equipos/[slug]`) con sus ju
 de logros, su ranking y sus stats. Un visitante sin sesión solo ve la landing publicitaria y cómo
 solicitar acceso para su equipo.
 
+### Membresías e invitaciones
+
+Un usuario puede pertenecer a varios equipos mediante `TeamMembership`; el rol (`TEAM_ADMIN` o
+`PLAYER`) se guarda en la membresía y no en `User`, porque puede variar entre equipos. Los
+administradores generan invitaciones con token aleatorio, caducidad y límite de usos. El token
+se almacena como hash y se puede consumir desde un enlace (`/unirse?token=...`) o introduciéndolo
+manualmente; ambos caminos llaman a la misma operación de unión.
+
 ### Roles
 | Rol | Quién | Qué puede hacer |
 |-----|-------|-----------------|
@@ -19,8 +27,10 @@ solicitar acceso para su equipo.
 2. **Solicitud + aprobación**: el PLAYER lo reclama ("yo hice esto") y el TEAM_ADMIN aprueba o rechaza.
 
 ### Visibilidad entre equipos
-Flag `esPublico` por equipo: privado → solo miembros (y SUPER_ADMIN); público → visible en
-lectura para cualquier usuario logueado.
+Los logros de un equipo son **siempre privados a sus miembros** (y al SUPER_ADMIN). No hay flag
+`esPublico` por equipo (decisión Phase 6). La reutilización entre equipos NO se hace abriendo el
+equipo, sino **publicando logros concretos** a la comunidad (Phase 8.5): un logro publicado puede
+ser *implementado* por otro equipo como copia independiente. Aislamiento entre tenants por defecto.
 
 ## Mapa de rutas (frontend)
 

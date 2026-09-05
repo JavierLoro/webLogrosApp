@@ -1,0 +1,2 @@
+import type { HTMLAttributes } from "react";
+export function Status({ tone="mint",className="",...props }: HTMLAttributes<HTMLSpanElement>&{tone?:"mint"|"gold"|"coral"}) { const colors={mint:"bg-mint text-ink",gold:"bg-gold-pale text-ink",coral:"bg-[#f9c0b8] text-coral-dark"}; return <span className={`inline-flex rounded-full px-3 py-1 font-mono text-[11px] uppercase tracking-wider ${colors[tone]} ${className}`} {...props}/>; }

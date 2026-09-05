@@ -10,34 +10,115 @@ datasource db {
 //    cambio aquí se materializa en la BD con una migración (npx prisma migrate dev).
 
 model User {
-  id            Int         @id @default(autoincrement())
+  id                 Int              @id @default(autoincrement())
   // 📚 @unique: no puede haber dos usuarios con el mismo email (lo aprovechamos en register).
-  email         String      @unique
+  email              String           @unique
   // 📚 Guardamos el HASH de bcrypt, nunca la contraseña en claro (ver routes/auth.ts).
-  password      String
-  teamId        Int?
-  team          Team?       @relation(fields: [teamId], references: [id])
-  logrosGanados UserLogro[]
+  password           String
+  logrosGanados      UserLogro[]
+  memberships        TeamMembership[]
+  invitationsCreated TeamInvitation[] @relation("InvitationCreator")
+  // 📚 SUPER_ADMIN es un permiso global: vive en User porque no depende de la
+  //    membresía ni del rol contextual que esta persona tenga dentro de cada equipo.
+  isSuperAdmin       Boolean          @default(false)
+  teamRequests       TeamRequest[]
+  solicitudesLogro   SolicitudLogro[]
 }
 
 // 📚 Team = el "tenant" (inquilino) de la multi-tenancy. Todo cuelga de un equipo.
 model Team {
-  id       Int     @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   // 📚 slug = identificador PÚBLICO de la URL (/equipos/leones). @unique: es por donde se busca
   //    el equipo y dos equipos no pueden compartirlo. Se usa en vez del id para no filtrar
   //    cuántos equipos hay (/equipos/1 revelaría el orden de creación).
-  slug     String  @unique
-  nombre   String
+  slug        String           @unique
+  nombre      String
   // 📚 Lado "uno" de la relación 1:N. VIRTUAL (no es columna): permite team.logros para traer
   //    todos los logros del equipo. El [] indica "muchos".
-  logros   Logro[]
-  miembros User[]
+  logros      Logro[]
+  miembros    TeamMembership[]
+  invitations TeamInvitation[]
+}
+
+enum TeamRole {
+  TEAM_ADMIN
+  PLAYER
+}
+
+// 📚 Una solicitud usa una máquina de estados: empieza pendiente y solo puede terminar
+//    aceptada o rechazada por el SUPER_ADMIN.
+enum TeamRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum SolicitudLogroStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+// 📚 La solicitud pertenece a un User autenticado; así, al aceptarla, una transacción
+//    podrá crear el equipo y convertir al solicitante en su TEAM_ADMIN sin confiar en un email.
+model TeamRequest {
+  id            Int               @id @default(autoincrement())
+  userId        Int
+  teamName      String
+  // 📚 El correo oficial aporta una señal para la revisión manual; guardarlo no demuestra
+  //    por sí solo que el solicitante controle ese buzón.
+  officialEmail String
+  message       String?
+  status        TeamRequestStatus @default(PENDING)
+  createdAt     DateTime          @default(now())
+  reviewedAt    DateTime?
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 📚 Índice compuesto para la consulta principal del panel: filtrar por estado y
+  //    mostrar primero las solicitudes más antiguas sin recorrer y ordenar toda la tabla.
+  @@index([status, createdAt])
+}
+
+// 📚 La membresía convierte la relación User↔Team en N:N: el rol vive aquí porque puede
+//    cambiar según el equipo y la clave compuesta evita duplicar una pertenencia.
+model TeamMembership {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  teamId   Int
+  role     TeamRole @default(PLAYER)
+  joinedAt DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teamId])
+  @@index([teamId])
+}
+
+// 📚 Guardamos el hash del código y no el token en claro: si alguien lee la BD no puede
+//    reutilizar directamente una invitación activa. expiresAt/revokedAt permiten gobernar su ciclo de vida.
+model TeamInvitation {
+  id              Int       @id @default(autoincrement())
+  teamId          Int
+  createdById     Int
+  tokenHash       String    @unique
+  // 📚 El hash sirve para validar; la copia cifrada permite que un administrador vuelva a
+  //    consultar el código sin almacenarlo en claro. Es opcional por compatibilidad con invitaciones antiguas.
+  tokenCiphertext String?
+  expiresAt       DateTime
+  revokedAt       DateTime?
+  maxUses         Int       @default(1)
+  uses            Int       @default(0)
+  createdAt       DateTime  @default(now())
+  team            Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdBy       User      @relation("InvitationCreator", fields: [createdById], references: [id])
+
+  @@index([teamId])
 }
 
 // 📚 Logro = INSTANCIA del catálogo de UN equipo (la plantilla comunitaria proponible es otra
 //    tabla, en Phase 8.5). Relación 1:N con Team: muchos logros pertenecen a un equipo.
 model Logro {
-  id          Int         @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   nombre      String
   puntos      Int
   // 📚 El ? = campo OPCIONAL (columna admite NULL). Adornos que pueden faltar.
@@ -49,8 +130,27 @@ model Logro {
   teamId      Int
   // 📚 team = campo de NAVEGACIÓN (virtual, no columna). @relation conecta teamId → Team.id, y
   //    permite logro.team / include: { team: true }. Prisma exige los DOS lados (aquí y en Team).
-  team        Team        @relation(fields: [teamId], references: [id])
+  team        Team             @relation(fields: [teamId], references: [id])
   obtenidos   UserLogro[]
+  solicitudes SolicitudLogro[]
+}
+
+// 📚 No duplicamos teamId: el tenant se obtiene mediante logro.teamId, evitando que una
+//    solicitud pueda declarar un equipo distinto del propietario real del logro.
+model SolicitudLogro {
+  id         Int                  @id @default(autoincrement())
+  userId     Int
+  logroId    Int
+  status     SolicitudLogroStatus @default(PENDING)
+  createdAt  DateTime             @default(now())
+  reviewedAt DateTime?
+  user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logro      Logro                @relation(fields: [logroId], references: [id], onDelete: Cascade)
+
+  // 📚 No usamos @@unique([userId, logroId]): tras un rechazo se puede volver a solicitar;
+  //    los índices aceleran la bandeja del jugador y la cola administrativa por estado.
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
 }
 
 model UserLogro {

@@ -1,0 +1,1 @@
+export function ErrorMessage({ children="No hemos podido cargar esto. Inténtalo de nuevo." }: {children?:React.ReactNode}) { return <div role="alert" className="rounded-xl border border-[#f0a49a] bg-[#fff0ed] px-4 py-3 text-sm text-coral-dark">{children}</div>; }

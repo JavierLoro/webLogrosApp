@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 256" role="img" aria-labelledby="title desc">
+  <title id="title">Lockerboard horizontal logo — color on dark</title>
+  <desc id="desc">Approved interlocking LB symbol with a Quantico Bold outlined wordmark.</desc>
+  <metadata>Wordmark: Quantico Bold, converted to fixed vector outlines. Font license: SIL Open Font License 1.1.</metadata>
+  <g transform="translate(20 20) scale(0.421875)">
+    <defs>
+      <mask id="lb-gap-quantico-h1" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+        <rect width="512" height="512" fill="#fff"/>
+        <path fill="#000" d="M61 37H175V259H337V379H61Z"/>
+      </mask>
+    </defs>
+    <path fill="#E2E2E8" fill-rule="evenodd" mask="url(#lb-gap-quantico-h1)" d="M175 133H355C405 133 445 173 445 223C445 253 429 277 403 301L439 337C443 351 445 367 445 385C445 431 407 469 361 469H175V133ZM253 199H367V247L337 277H253V199ZM253 325H337L367 355V403H253V325Z"/>
+    <path fill="#FF5545" d="M67 43H145V283H313V355H67Z"/>
+  </g>
+  <g fill="#E2E2E8" transform="translate(280 170.785) scale(0.122 -0.122)">
+      <path transform="translate(0 0)" d="M85 0V700H225V120H464V0Z"/>
+      <path transform="translate(479 0)" d="M630 62 514 -5H201L85 62V638L201 705H514L630 638ZM225 585V115H490V585Z"/>
+      <path transform="translate(1184 0)" d="M460 205H600V62L484 -5H201L85 62V638L201 705H484L600 638V495H460V585H225V115H460Z"/>
+      <path transform="translate(1849 0)" d="M85 0V700H225V385H227L488 700H654L378 372L685 0H517L294 272L225 191V0Z"/>
+      <path transform="translate(2529 0)" d="M225 300V120H504V0H85V700H504V580H225V420H444V300Z"/>
+      <path transform="translate(3068 0)" d="M616 0H462L312 264H225V0H85V700H464L580 633V331L464 264ZM225 580V384H440V580Z"/>
+      <path transform="translate(3723 0)" d="M580 413 493 363V361L580 311V67L464 0H85V700H464L580 633ZM225 302V120H440V302ZM225 580V422H440V580Z"/>
+      <path transform="translate(4378 0)" d="M630 62 514 -5H201L85 62V638L201 705H514L630 638ZM225 585V115H490V585Z"/>
+      <path transform="translate(5083 0)" d="M409 700 659 0H521L468 151H206L153 0H15L265 700ZM336 524 248 271H425L338 524Z"/>
+      <path transform="translate(5747 0)" d="M616 0H462L312 264H225V0H85V700H464L580 633V331L464 264ZM225 580V384H440V580Z"/>
+      <path transform="translate(6402 0)" d="M630 67 514 0H85V700H514L630 633ZM225 580V120H490V580Z"/>
+  </g>
+</svg>

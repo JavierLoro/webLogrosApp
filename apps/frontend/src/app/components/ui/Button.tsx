@@ -1,0 +1,3 @@
+import type { ButtonHTMLAttributes } from "react";
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary"|"quiet"|"gold"|"danger" };
+export function Button({ className="", variant="primary", ...props }: ButtonProps) { const styles={primary:"bg-coral text-white hover:bg-coral-dark",quiet:"bg-transparent text-ink hover:bg-paper-deep",gold:"bg-gold text-ink hover:brightness-95",danger:"bg-ink text-white hover:bg-coral-dark"}; return <button className={`inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold ${styles[variant]} disabled:cursor-not-allowed disabled:opacity-50 ${className}`} {...props}/>; }

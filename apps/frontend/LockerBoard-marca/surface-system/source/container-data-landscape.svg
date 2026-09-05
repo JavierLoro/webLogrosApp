@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><defs>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#E2E2E8" stroke-opacity=".032" stroke-width="1"/></pattern>
+  <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="2.2" fill="#E2E2E8" fill-opacity=".036"/></pattern>
+  <pattern id="scan" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 1H8" stroke="#E2E2E8" stroke-opacity=".022"/></pattern>
+</defs><rect width="1600" height="900" fill="#1A1C20"/><rect width="1600" height="900" fill="url(#scan)"/>
+<rect x="128" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.11"/>
+<rect x="146" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.10200000000000001"/>
+<rect x="164" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.094"/>
+<rect x="182" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.086"/>
+<rect x="200" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.078"/>
+<rect x="218" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.07"/>
+<rect x="236" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.062"/>
+<rect x="254" y="459" width="9" height="4" fill="#E2E2E8" fill-opacity="0.054"/>
+<path d="M1600 396V504.00000000000006L1588 450Z" fill="#FE9400"/></svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Lockerboard LB symbol — coral</title>
+  <desc id="desc">Single-color interlocking geometric L and B monogram.</desc>
+  <defs><mask id="lb-gap" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512"><rect width="512" height="512" fill="#fff"/><path fill="#000" d="M61 37H175V259H337V379H61Z"/></mask></defs>
+  <path fill="#FF5545" fill-rule="evenodd" mask="url(#lb-gap)" d="M175 133H355C405 133 445 173 445 223C445 253 429 277 403 301L439 337C443 351 445 367 445 385C445 431 407 469 361 469H175V133ZM253 199H367V247L337 277H253V199ZM253 325H337L367 355V403H253V325Z"/>
+  <path fill="#FF5545" d="M67 43H145V283H313V355H67Z"/>
+</svg>

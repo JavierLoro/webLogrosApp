@@ -46,7 +46,15 @@ router.post("/register", registerLimiter, validate(registerSchema), async (req: 
 router.post("/login", loginLimiter, validate(loginSchema), async (req: Request, res: Response) => {
   const { email, password }: { email: string; password: string } = req.body ?? {}
 
-  const user = await prisma.user.findUnique({ where: { email } })
+  const user = await prisma.user.findUnique({
+    where: { email },
+    include: {
+      memberships: {
+        include: { team: { select: { slug: true, nombre: true } } },
+        orderBy: { joinedAt: "asc" },
+      },
+    },
+  })
   if (!user) {
     // 📚 401 y mensaje genérico "Credenciales incorrectas": no revelamos si falló el email
     //    o la contraseña (no dar pistas a un atacante sobre qué emails existen).
@@ -65,7 +73,15 @@ router.post("/login", loginLimiter, validate(loginSchema), async (req: Request, 
   // 📚 jwt.sign firma un token con el userId dentro y caducidad 7d. El cliente lo guardará
   //    y lo mandará en "Authorization: Bearer" → authMiddleware lo verificará.
   const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: "7d" })
-  res.json({ token })
+  // 📚 El usuario puede tener 0, 1 o N membresías; devolvemos una colección para que el
+  //    frontend pueda mostrar un selector sin convertir el dominio en un teamSlug singular.
+  res.json({
+    token,
+    teams: user.memberships.map(({ role, team }) => ({ slug: team.slug, nombre: team.nombre, role })),
+    // 📚 Este valor solo orienta la interfaz; nunca concede permisos. Los endpoints de
+    //    SUPER_ADMIN volverán a comprobar el dato fiable en la BD mediante middleware.
+    isSuperAdmin: user.isSuperAdmin,
+  })
 })
 
 

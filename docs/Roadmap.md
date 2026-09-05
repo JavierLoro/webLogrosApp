@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Ruta de aprendizaje
-JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT → Nginx → CI/CD → Proxmox → Hardening → Multi-tenancy (Relaciones DB) → Roles → Auth Hardening → Solicitudes/Admin → Aggregaciones SQL → Comunidad → shadcn/ui → File uploads → Testing → **WebSockets**
+JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx → CI/CD → Proxmox → Hardening → Multi-tenancy (Relaciones DB) → **Frontend V1 code-first** → Roles → Auth Hardening → Solicitudes/Admin → Aggregaciones SQL → Comunidad → shadcn/ui → File uploads → Testing → **WebSockets**
 
 > **Concepto de la app:** plataforma multi-tenant de logros — ver mapa de rutas y roles en [Architecture.md](Architecture.md)
 
@@ -28,7 +28,7 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT �
 ## Phase 4 – Database
 - [x] PostgreSQL container (Docker)
 - [x] Prisma schema + migrations
-- [ ] Seed data
+- [x] Seed data idempotente (`npm run seed`) — equipos, logros, usuarios y asignaciones de prueba
 
 ## Phase 5 – Deployment
 - [x] Dockerfiles (frontend + backend)
@@ -61,8 +61,26 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT �
 - [x] Migración Prisma con las nuevas relaciones (`add_multitenancy`, vía reset en dev)
 - [x] **Endpoints scoped por equipo**: `routes/equipos.ts` montado en `/equipos/:slug` (`mergeParams` + `router.use(resolveTeam)`). `GET /logros`, `GET /logros/:id` (con doble filtro `id`+`teamId` anti-fuga), `POST /logros` (auth + `teamId` desde `req.team`, no del body). Viejo `routes/logros.ts` borrado. Verificado en vivo: aislamiento entre Halcones/Lobos, 404 cross-tenant, 401 sin token. `apuntes.md` actualizado.
 - [ ] Endpoints scoped restantes: `GET /equipos/:slug/jugadores/:id/logros`, etc. (cuando existan jugadores/UserLogro en la API)
-- [ ] Frontend: estructura `/equipos/[slug]/...` — dashboard, `/logros`, `/jugadores`, `/jugadores/[id]` (ver mapa en Architecture.md)
+- [x] Frontend **(a) esqueleto de rutas** — `app/equipos/[slug]/layout.tsx` (layout anidado con nav del equipo, segmento dinámico `[slug]`, `<Link>`) + 13 páginas placeholder de todo el mapa (componente `Placeholder` reutilizable). Borrados `/logros`, `NuevoLogro` y el fetch muerto de la landing. Verificado: 15 rutas responden 200, `/logros` viejo 404. DECISIONES: esqueleto de todas las rutas · empezar limpio · slug manual por URL hasta que haya roles (Phase 7)
+- [x] Frontend **(b) pantallas reales** — catálogo, detalle y crear logro cableados a los endpoints scoped. Se implementa en **Phase 6.5** como frontend V1 code-first.
 - [x] `apuntes.md`: sección "Prisma — Relaciones y multi-tenancy"
+
+## Phase 6.5 – Frontend V1 (code-first)
+> **Concepto nuevo:** construir una UI usable directamente desde el contrato de rutas/API, con estados explícitos, responsive y accesibilidad.
+>
+> El frontend se implementa de forma autónoma y code-first. No depende de Figma ni de un proceso previo de mockups; las decisiones visuales se validan en el navegador junto con el comportamiento real de la aplicación.
+
+- [x] Landing pública: propuesta de valor y acceso a registro/login
+- [x] Auth: login, registro, sesión y estados de error/401
+- [x] Shell tenant para `/equipos/[slug]`: navegación, identidad del equipo y responsive
+- [x] Dashboard básico derivado del catálogo disponible (resumen y accesos; sin ranking ni stats de agregación)
+- [x] Catálogo de logros scoped por equipo
+- [x] Detalle de logro scoped por equipo
+- [x] Crear logro scoped por equipo, conectado al endpoint existente
+- [x] Estados explícitos en las pantallas V1: loading, error, empty, 401 y 404
+- [x] Responsive mobile-first y navegación usable con teclado
+- [x] Accesibilidad básica: landmarks, labels, foco visible, contraste y mensajes asociados a controles
+- [ ] **Bloqueado por backend:** ranking, jugadores, solicitudes de logro, panel TEAM_ADMIN y comunidad; el panel global SUPER_ADMIN ya dispone del flujo de solicitudes de equipo
 
 ## Phase 7 – Autorización por Roles
 > **Concepto nuevo:** autenticación vs autorización, autorización contextual (rol *dentro de* un equipo), middleware composition, seed scripts
@@ -85,12 +103,12 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → Next.js → JWT �
 ## Phase 7.6 – Solicitudes y paneles admin
 > **Concepto nuevo:** flujos de aprobación (máquina de estados simple), layouts anidados y route groups en Next.js
 
-- [ ] Modelo `SolicitudLogro` — PLAYER reclama un logro (PENDIENTE | APROBADA | RECHAZADA)
+- [x] Modelo `SolicitudLogro` — PLAYER reclama un logro (PENDIENTE | APROBADA | RECHAZADA)
 - [ ] Endpoints: crear solicitud (PLAYER), aprobar/rechazar (TEAM_ADMIN), asignación directa (TEAM_ADMIN)
 - [ ] Página `/equipos/[slug]/solicitudes` — mis solicitudes y su estado (PLAYER)
 - [ ] Panel `/equipos/[slug]/admin` — gestión de logros, jugadores y solicitudes del equipo (TEAM_ADMIN)
-- [ ] Panel `/admin` — equipos de la plataforma + solicitudes de acceso de nuevos equipos (SUPER_ADMIN)
-- [ ] Landing pública `/` (publicidad de la idea) + `/solicitar-acceso` (formulario para equipos)
+- [x] Panel `/admin` — equipos de la plataforma + solicitudes de acceso de nuevos equipos (SUPER_ADMIN)
+- [x] Landing pública `/` (publicidad de la idea) + `/solicitar-acceso` (formulario para equipos)
 - [ ] `apuntes.md`: sección "Flujos de aprobación y layouts anidados"
 
 ## Phase 8 – Ranking y Aggregaciones SQL

@@ -2,78 +2,81 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { apiFetch, ApiError } from "@/lib/api"
+import type { RegisterResponse } from "@/types/api"
 
 export default function RegisterPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError("")
+    setSubmitting(true)
 
     try {
-      // 📚 Ruta relativa /api (ver login/page.tsx). No hardcodear localhost:3001.
-      const res = await fetch("/api/auth/register", {
+      await apiFetch<RegisterResponse>("/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       })
-
-      if (!res.ok) {
-        // 📚 Leemos el JSON de error del backend para mostrar su mensaje concreto
-        //    (p.ej. "El email ya está registrado") con fallback si no viniera.
-        const data = await res.json()
-        setError(data.error ?? "Error al registrarse")
-        return
-      }
-
-      // 📚 Tras registrar, redirigimos a /login (no guardamos sesión en el registro).
       router.push("/login")
     } catch (err) {
-      setError("No se pudo conectar con el servidor")
-      console.error(err)
+      setError(err instanceof ApiError ? err.message : "No se pudo conectar con el servidor")
+    } finally {
+      setSubmitting(false)
     }
   }
 
   return (
-    <main className="max-w-md mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Crear cuenta</h1>
+    <main className="portal-shell">
+      <div className="portal-grid">
+        <div>
+          <p className="portal-kicker">Cuenta de miembro · 02</p>
+          <h1 className="portal-title">Tu acceso empieza aquí.</h1>
+          <p className="portal-copy">Regístrate para abrir invitaciones, unirte a tu equipo y consultar los logros que comparte.</p>
+          <div className="portal-notes"><span className="portal-note">cuenta personal</span><span className="portal-note">acceso por invitación</span></div>
+        </div>
+        <section className="portal-panel" aria-labelledby="register-heading">
+          <h2 id="register-heading" className="portal-panel-heading">Crear cuenta</h2>
+          <p className="portal-panel-subtitle">Necesitarás un enlace de invitación para entrar en una sala.</p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">Email</label>
+      <form onSubmit={handleSubmit}>
+        <label className="portal-field"><span>Email</span>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border rounded-lg p-2"
+            className="portal-input"
             required
-          />
-        </div>
+          /></label>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">Contraseña</label>
+        <label className="portal-field"><span>Contraseña</span>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border rounded-lg p-2"
+            className="portal-input"
             required
-          />
-        </div>
+          /></label>
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p role="alert" className="portal-error">{error}</p>}
 
         <button
           type="submit"
-          className="bg-blue-600 text-white rounded-lg p-2 font-medium hover:bg-blue-700 transition-colors"
+          className="portal-submit"
+          disabled={submitting}
         >
-          Registrarse
+          {submitting ? "Creando cuenta…" : "Crear mi cuenta"}
         </button>
       </form>
+          <p className="portal-foot">¿Ya tienes cuenta? <Link href="/login">Inicia sesión</Link></p>
+        </section>
+      </div>
     </main>
   )
 }

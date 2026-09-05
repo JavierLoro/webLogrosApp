@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Lockerboard maskable app icon</title>
+  <desc id="desc">Approved Lockerboard LB symbol inside the maskable safe zone on a solid carbon background.</desc>
+  <rect width="1024" height="1024" fill="#0D0F12"/>
+  <g transform="translate(212 212) scale(1.171875)">
+    <defs>
+      <mask id="lb-gap-maskable" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+        <rect width="512" height="512" fill="#fff"/>
+        <path fill="#000" d="M61 37H175V259H337V379H61Z"/>
+      </mask>
+    </defs>
+    <path fill="#E2E2E8" fill-rule="evenodd" mask="url(#lb-gap-maskable)" d="M175 133H355C405 133 445 173 445 223C445 253 429 277 403 301L439 337C443 351 445 367 445 385C445 431 407 469 361 469H175V133ZM253 199H367V247L337 277H253V199ZM253 325H337L367 355V403H253V325Z"/>
+    <path fill="#FF5545" d="M67 43H145V283H313V355H67Z"/>
+  </g>
+</svg>

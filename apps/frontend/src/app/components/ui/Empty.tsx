@@ -1,0 +1,2 @@
+import type { ReactNode } from "react";
+export function Empty({ title,children,action }: {title:string;children?:ReactNode;action?:ReactNode}) { return <div className="trophy-pattern flex min-h-48 flex-col items-center justify-center rounded-2xl border border-dashed border-paper-deep p-8 text-center"><span className="mb-3 text-3xl" aria-hidden="true">✦</span><h3 className="font-display text-lg font-bold">{title}</h3>{children&&<p className="mt-1 max-w-sm text-sm text-ink-soft">{children}</p>}{action&&<div className="mt-5">{action}</div>}</div>; }
