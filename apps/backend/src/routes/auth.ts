@@ -8,11 +8,24 @@ import { JWT_SECRET } from "../config/env"
 import { validate } from "../middleware/validate"
 import { registerSchema, loginSchema } from "../schemas/auth"
 import { registerLimiter, loginLimiter } from "../middleware/rateLimit"
+import { authMiddleware } from "../middleware/auth"
+import { clearAuthCookie, setAuthCookie } from "../lib/authCookie"
 
 
 // 📚 Router de Express: mini-app con sus rutas, que server.ts monta bajo el prefijo /auth.
 const router = express.Router()
 const SECRET = JWT_SECRET
+
+async function getSession(userId: number) {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: { id: userId },
+    include: { memberships: { include: { team: { select: { slug: true, nombre: true } } }, orderBy: { joinedAt: "asc" } } },
+  })
+  return {
+    teams: user.memberships.map(({ role, team }) => ({ slug: team.slug, nombre: team.nombre, role })),
+    isSuperAdmin: user.isSuperAdmin,
+  }
+}
 
 // POST /auth/register — crear cuenta
 // 📚 CADENA: registerLimiter → validate(registerSchema) → handler. El limiter va PRIMERO
@@ -70,18 +83,31 @@ router.post("/login", loginLimiter, validate(loginSchema), async (req: Request, 
     return
   }
 
-  // 📚 jwt.sign firma un token con el userId dentro y caducidad 7d. El cliente lo guardará
-  //    y lo mandará en "Authorization: Bearer" → authMiddleware lo verificará.
+  // 📚 jwt.sign crea la credencial, pero setAuthCookie la entrega como HttpOnly: el navegador
+  //    la enviará automáticamente y JavaScript nunca recibe el token.
   const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: "7d" })
+  setAuthCookie(res, token)
   // 📚 El usuario puede tener 0, 1 o N membresías; devolvemos una colección para que el
   //    frontend pueda mostrar un selector sin convertir el dominio en un teamSlug singular.
   res.json({
-    token,
     teams: user.memberships.map(({ role, team }) => ({ slug: team.slug, nombre: team.nombre, role })),
     // 📚 Este valor solo orienta la interfaz; nunca concede permisos. Los endpoints de
     //    SUPER_ADMIN volverán a comprobar el dato fiable en la BD mediante middleware.
     isSuperAdmin: user.isSuperAdmin,
   })
+})
+
+// 📚 La sesión se reconstruye desde el JWT verificado y los roles actuales de la BD;
+//    así la interfaz no depende de información persistida por JavaScript ni de roles obsoletos.
+router.get("/session", authMiddleware, async (req, res) => {
+  res.json(await getSession(req.userId!))
+})
+
+// 📚 Un JWT no se revoca en BD en esta fase: logout elimina la cookie del navegador usando
+//    las mismas opciones con las que fue creada para que el borrado sea efectivo.
+router.post("/logout", (_req, res) => {
+  clearAuthCookie(res)
+  res.status(204).send()
 })
 
 

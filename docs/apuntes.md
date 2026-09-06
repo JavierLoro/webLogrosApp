@@ -1988,3 +1988,20 @@ estado usa una actualización condicionada por `PENDING`, equivalente a un *comp
 si dos administradores revisan a la vez, solo uno puede completar la transición. El `upsert` de
 `UserLogro` mantiene idempotente la asignación. Rechazar solo cambia el estado a `REJECTED` y la
 asignación directa vuelve a comprobar que jugador y logro pertenecen al equipo de la URL.
+
+## Auth Hardening — cookie HttpOnly
+
+Guardar el JWT en `localStorage` permitía al frontend leerlo y construir manualmente
+`Authorization: Bearer`. Eso también permitía que un script inyectado mediante XSS robara la
+credencial. Ahora `POST /auth/login` entrega el JWT en una cookie con estas propiedades:
+
+- `HttpOnly`: JavaScript no puede leerla.
+- `SameSite=Lax`: el navegador no la adjunta a peticiones POST iniciadas desde otro sitio.
+- `Secure` en producción: solo viaja sobre HTTPS.
+- `Path=/` y siete días de duración: coincide con la expiración del JWT.
+
+El navegador adjunta la cookie automáticamente en las llamadas relativas a `/api`. El middleware
+extrae una sola cookie sin añadir `cookie-parser`, verifica la firma y conserva el mismo contrato
+interno: las rutas siguen recibiendo `req.userId`. `GET /auth/session` devuelve únicamente equipos
+y permisos actuales para construir la interfaz, nunca el token. `POST /auth/logout` borra la
+cookie usando las mismas opciones con las que fue creada.

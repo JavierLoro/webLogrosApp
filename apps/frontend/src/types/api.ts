@@ -14,7 +14,6 @@ export interface ApiErrorBody {
 }
 
 export interface LoginResponse {
-  token: string
   teams: TeamSummary[]
   isSuperAdmin: boolean
 }

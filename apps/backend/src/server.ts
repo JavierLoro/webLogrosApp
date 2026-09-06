@@ -31,8 +31,8 @@ const PORT: number = 3001
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000")
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-  // 📚 Preflight: antes de un POST con JSON/Authorization, el navegador manda un OPTIONS
+  res.header("Access-Control-Allow-Headers", "Content-Type")
+  // 📚 Preflight: antes de un POST con JSON, el navegador puede mandar un OPTIONS
   //    "de sondeo". Respondemos 200 sin pasar a las rutas.
   if (req.method === "OPTIONS") {
     res.sendStatus(200)
@@ -76,4 +76,3 @@ app.use(errorHandler)
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`)
 })
-

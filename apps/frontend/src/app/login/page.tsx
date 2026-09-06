@@ -1,6 +1,5 @@
 // 📚 "use client": marca este archivo como CLIENT COMPONENT → se ejecuta en el navegador
-//    del visitante. Necesario porque usa useState, eventos y localStorage, que no existen
-//    en un Server Component (que corre en el servidor).
+//    del visitante. Es necesario porque usa estado, eventos de formulario y navegación.
 "use client"
 
 import { useState } from "react"
@@ -30,9 +29,6 @@ export default function LoginPage() {
         method: "POST",
         body: JSON.stringify({ email, password }),
       })
-      localStorage.setItem("token", data.token)
-      localStorage.setItem("teams", JSON.stringify(data.teams))
-      localStorage.setItem("isSuperAdmin", JSON.stringify(data.isSuperAdmin))
       window.dispatchEvent(new Event("auth-change"))
       router.push(data.teams.length === 1 ? `/equipos/${data.teams[0].slug}` : "/equipos")
     } catch (err) {

@@ -15,7 +15,7 @@ Use this file as a technical logbook:
 
 - Un solo repo, mas comodo para progresar en el aprendizaje
 - Next.js router: **App Router**
-- JWT transport: **Bearer token en localStorage** (migrar a HttpOnly cookie como mejora futura)
+- JWT transport: **cookie HttpOnly** con `SameSite=Lax` (`Secure` en producción); el frontend no accede al token
 - App = **plataforma multi-tenant** de logros (ver Architecture.md) — decidido 2026-06-10
 - URLs de tenant: **ruta por slug** (`/equipos/[slug]`), no subdominios — el Universal SSL gratis de Cloudflare no cubre sub-subdominios (`*.logros.jlc-dev.me` requeriría ACM ~10$/mes); migrable a subdominios más adelante sin cambiar el modelo de datos
 

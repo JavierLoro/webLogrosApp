@@ -111,11 +111,11 @@ localmente y no cambia si el original cambia. Esto preserva el aislamiento entre
 4. Backend reads/writes PostgreSQL via Prisma
 5. Backend returns JSON
 
-## Authentication Flow (implementado: Bearer token + localStorage)
+## Authentication Flow (implementado: JWT en cookie HttpOnly)
 1. Usuario hace login con email/password (`POST /auth/login`)
 2. Backend valida credenciales (bcryptjs) y devuelve un JWT (expiración 7d)
 3. El frontend guarda el JWT en `localStorage`
-4. Las peticiones protegidas envían `Authorization: Bearer <token>`; `authMiddleware` lo verifica e inyecta `req.userId`
+4. El navegador envía automáticamente la cookie HttpOnly; `authMiddleware` verifica el JWT e inyecta `req.userId`
 
 > **Mejora futura:** migrar a cookie HttpOnly. localStorage es accesible desde JS,
 > por lo que un XSS podría robar el token; una cookie HttpOnly no es legible desde JS.
