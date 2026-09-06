@@ -80,17 +80,17 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx →
 - [x] Estados explícitos en las pantallas V1: loading, error, empty, 401 y 404
 - [x] Responsive mobile-first y navegación usable con teclado
 - [x] Accesibilidad básica: landmarks, labels, foco visible, contraste y mensajes asociados a controles
-- [ ] **Bloqueado por backend:** ranking, jugadores, solicitudes de logro, panel TEAM_ADMIN y comunidad; el panel global SUPER_ADMIN ya dispone del flujo de solicitudes de equipo
+- [ ] **Bloqueado por backend:** ranking, jugadores y comunidad; solicitudes de logro y panel TEAM_ADMIN ya están disponibles
 
 ## Phase 7 – Autorización por Roles
 > **Concepto nuevo:** autenticación vs autorización, autorización contextual (rol *dentro de* un equipo), middleware composition, seed scripts
 
-- [ ] Roles `SUPER_ADMIN | TEAM_ADMIN | PLAYER` — el rol de TEAM_ADMIN es relativo a SU equipo (scoping)
-- [ ] Añadir `role` (y equipo) al payload del JWT en el login
-- [ ] Middlewares: `superAdminMiddleware`, `teamAdminMiddleware(slug)` — composición de middlewares
-- [ ] Proteger creación/asignación/borrado de logros según rol y equipo
-- [ ] Script `prisma/seed.ts` — super admin + 1 equipo + 5 logros de ejemplo (`npm run seed`)
-- [ ] `apuntes.md`: sección "Autorización — Roles y middlewares"
+- [x] Roles `SUPER_ADMIN | TEAM_ADMIN | PLAYER` — `isSuperAdmin` global y `TeamMembership.role` contextual por equipo
+- [x] Login devuelve las membresías y roles actuales; el JWT conserva solo `userId` para no congelar permisos contextuales
+- [x] Middlewares `requireSuperAdmin`, `requireTeamMember` y `requireTeamAdmin`
+- [x] Proteger lectura, creación y asignación de logros según membresía/rol y equipo
+- [x] Script `prisma/seed.ts` idempotente — super admin, equipos, membresías, logros y asignaciones (`npm run seed:dev`)
+- [x] `apuntes.md`: autorización, roles contextuales y seed idempotente
 
 ## Phase 7.5 – Auth Hardening
 > **Concepto nuevo:** seguridad del navegador, XSS, cookies HttpOnly vs localStorage
@@ -104,12 +104,12 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx →
 > **Concepto nuevo:** flujos de aprobación (máquina de estados simple), layouts anidados y route groups en Next.js
 
 - [x] Modelo `SolicitudLogro` — PLAYER reclama un logro (PENDIENTE | APROBADA | RECHAZADA)
-- [ ] Endpoints: crear solicitud (PLAYER), aprobar/rechazar (TEAM_ADMIN), asignación directa (TEAM_ADMIN)
-- [ ] Página `/equipos/[slug]/solicitudes` — mis solicitudes y su estado (PLAYER)
-- [ ] Panel `/equipos/[slug]/admin` — gestión de logros, jugadores y solicitudes del equipo (TEAM_ADMIN)
+- [x] Endpoints: crear solicitud (PLAYER), aprobar/rechazar (TEAM_ADMIN), asignación directa (TEAM_ADMIN)
+- [x] Página `/equipos/[slug]/solicitudes` — mis solicitudes y su estado (PLAYER)
+- [x] Panel `/equipos/[slug]/admin` — solicitudes, asignación directa e invitaciones (TEAM_ADMIN)
 - [x] Panel `/admin` — equipos de la plataforma + solicitudes de acceso de nuevos equipos (SUPER_ADMIN)
 - [x] Landing pública `/` (publicidad de la idea) + `/solicitar-acceso` (formulario para equipos)
-- [ ] `apuntes.md`: sección "Flujos de aprobación y layouts anidados"
+- [x] `apuntes.md`: sección "Solicitudes de logro" y aceptación transaccional
 
 ## Phase 8 – Ranking y Aggregaciones SQL
 > **Concepto nuevo:** GROUP BY, SUM, COUNT via Prisma y `$queryRaw`

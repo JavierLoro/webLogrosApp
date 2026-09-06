@@ -9,6 +9,7 @@ export function TeamNav({ slug, teamName }: { slug: string; teamName: string }) 
   const basePath = `/equipos/${slug}`
   const home = pathname === basePath
   const logros = pathname === `${basePath}/logros` || pathname.startsWith(`${basePath}/logros/`)
+  const solicitudes = pathname === `${basePath}/solicitudes`
 
   const itemClass = (active: boolean) => [
     "flex min-h-11 items-center gap-3 px-4 py-3 text-sm font-semibold tracking-wide",
@@ -46,9 +47,12 @@ export function TeamNav({ slug, teamName }: { slug: string; teamName: string }) 
       <Link href={`${basePath}/logros`} className={itemClass(logros)} aria-current={logros ? "page" : undefined}>
         <span aria-hidden="true" className="font-mono text-xs text-[var(--team-primary)]">02</span><span>Logros</span>
       </Link>
-      <span className={soonClass} aria-disabled="true"><span aria-hidden="true" className="font-mono text-xs">03</span><span>Ranking</span><span className="ml-auto font-mono text-[9px] uppercase tracking-wider">Pronto</span></span>
-      <span className={soonClass} aria-disabled="true"><span aria-hidden="true" className="font-mono text-xs">04</span><span>Jugadores</span><span className="ml-auto font-mono text-[9px] uppercase tracking-wider">Pronto</span></span>
-      <span className={soonClass} aria-disabled="true"><span aria-hidden="true" className="font-mono text-xs">05</span><span>Comunidad</span><span className="ml-auto font-mono text-[9px] uppercase tracking-wider">Pronto</span></span>
+      <Link href={`${basePath}/solicitudes`} className={itemClass(solicitudes)} aria-current={solicitudes ? "page" : undefined}>
+        <span aria-hidden="true" className="font-mono text-xs text-[var(--team-primary)]">03</span><span>Solicitudes</span>
+      </Link>
+      <span className={soonClass} aria-disabled="true"><span aria-hidden="true" className="font-mono text-xs">04</span><span>Ranking</span><span className="ml-auto font-mono text-[9px] uppercase tracking-wider">Pronto</span></span>
+      <span className={soonClass} aria-disabled="true"><span aria-hidden="true" className="font-mono text-xs">05</span><span>Jugadores</span><span className="ml-auto font-mono text-[9px] uppercase tracking-wider">Pronto</span></span>
+      <span className={soonClass} aria-disabled="true"><span aria-hidden="true" className="font-mono text-xs">06</span><span>Comunidad</span><span className="ml-auto font-mono text-[9px] uppercase tracking-wider">Pronto</span></span>
     </div>
     <div className="flex gap-1 overflow-x-auto border-t border-[var(--team-line)] px-3 py-3 md:mt-auto md:block md:overflow-visible">
       <Link href="/equipos" className={itemClass(false)}>Cambiar equipo</Link>

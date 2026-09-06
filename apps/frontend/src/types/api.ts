@@ -54,3 +54,18 @@ export interface RegisterResponse {
   id: number
   email: string
 }
+
+export interface AchievementRequest {
+  id: number
+  status: "PENDING" | "ACCEPTED" | "REJECTED"
+  createdAt: string
+  reviewedAt: string | null
+  logro: Logro
+  user?: { id: number; email: string }
+}
+
+export interface TeamMember {
+  id: number
+  email: string
+  role: "TEAM_ADMIN" | "PLAYER"
+}

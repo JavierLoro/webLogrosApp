@@ -146,4 +146,4 @@ JWT_SECRET="..."
 ```
 
 ## Estado actual del roadmap
-Fases 1–3 completadas. Phase 4 mantiene pendiente el seed. Phase 5 y Phase 5.5 están completadas salvo las copias offsite del backup y la confirmación de HTTPS del entorno. Phase 6 (multi-tenancy y relaciones Prisma) está completada en su modelo y endpoints scoped principales; quedan endpoints de jugadores cuando exista esa API. Siguiente foco: **Phase 6.5 — Frontend V1 code-first**. Roles, auth hardening, solicitudes/admin, ranking y comunidad permanecen en fases posteriores porque dependen del backend correspondiente.
+Fases 1–4 completadas. Phase 5 y Phase 5.5 están completadas salvo las copias offsite del backup y la confirmación de HTTPS del entorno. Phase 6 y 6.5 (multi-tenancy y Frontend V1) están completadas en su alcance. Phase 7 dispone de roles contextuales, middlewares y seed; Phase 7.6 incluye solicitudes de equipos y logros, asignación directa y paneles admin. Siguiente foco: **Phase 7.5 — Auth Hardening con cookie HttpOnly**. Ranking, jugadores y comunidad permanecen bloqueados hasta implementar sus endpoints.

@@ -13,6 +13,8 @@ export default function LogroDetallePage({ params }: { params: Promise<{ slug: s
   const [logro, setLogro] = useState<Logro | null>(null)
   const [error, setError] = useState<ApiError | Error | null>(null)
   const [requestVersion, setRequestVersion] = useState(0)
+  const [requesting, setRequesting] = useState(false)
+  const [notice, setNotice] = useState("")
 
   useEffect(() => {
     let active = true
@@ -38,6 +40,19 @@ export default function LogroDetallePage({ params }: { params: Promise<{ slug: s
     setLogro(null)
     setError(null)
     setRequestVersion((version) => version + 1)
+  }
+
+  async function requestAchievement() {
+    setRequesting(true)
+    setNotice("")
+    try {
+      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/logros/${encodeURIComponent(id)}/solicitudes`, { method: "POST", auth: true })
+      setNotice("Solicitud enviada. El administrador del equipo podrá revisarla.")
+    } catch (cause) {
+      setNotice(cause instanceof ApiError ? cause.message : "No se pudo enviar la solicitud.")
+    } finally {
+      setRequesting(false)
+    }
   }
 
   if (!logro && !error) {
@@ -79,6 +94,10 @@ export default function LogroDetallePage({ params }: { params: Promise<{ slug: s
             <strong className="font-mono text-5xl text-coral">{logro.puntos}</strong>
             <span className="ml-3 font-mono text-xs uppercase tracking-widest text-ink-soft">puntos</span>
           </div>
+          <Button className="mt-8" disabled={requesting} onClick={requestAchievement}>
+            {requesting ? "Enviando…" : "Solicitar este logro"}
+          </Button>
+          {notice ? <p className="mt-4 text-sm text-ink-soft" role="status">{notice}</p> : null}
         </article>
       ) : null}
     </div>

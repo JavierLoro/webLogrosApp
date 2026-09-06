@@ -30,27 +30,44 @@ router.use(resolveTeam)
 
 
 
+// 📚 La aceptación es una única transacción: cambiar el estado y otorgar el logro se
+//    confirman juntos. Si falla una escritura, Prisma revierte ambas y evita datos incoherentes.
 router.post("/admin/solicitudes/:id/aceptar", authMiddleware, requireTeamAdmin, async (req, res) => {
+  const id = parsePositiveId(req.params.id)
+  const solicitud = await prisma.$transaction(async (tx) => {
+    const pending = await tx.solicitudLogro.findFirst({
+      where: { id, status: "PENDING", logro: { teamId: req.team!.id } },
+    })
+    if (!pending) throw new AppError(404, "Solicitud pendiente no encontrada")
 
-const id = parsePositiveId(req.params.id)
+    // 📚 updateMany incluye status=PENDING como compare-and-set: dos revisiones simultáneas
+    //    no pueden procesar la misma solicitud dos veces.
+    const updated = await tx.solicitudLogro.updateMany({
+      where: { id, status: "PENDING" },
+      data: { status: "ACCEPTED", reviewedAt: new Date() },
+    })
+    if (updated.count !== 1) throw new AppError(409, "La solicitud ya fue procesada")
 
-const solicitud = await prisma.solicitudLogro.findFirst({
-  where: { id: id, logro: { teamId: req.team!.id } },
+    await tx.userLogro.upsert({
+      where: { userId_logroId: { userId: pending.userId, logroId: pending.logroId } },
+      update: {},
+      create: { userId: pending.userId, logroId: pending.logroId },
+    })
+    return tx.solicitudLogro.findUniqueOrThrow({ where: { id } })
+  })
+  res.json(solicitud)
 })
 
-if (!solicitud) {
-  res.status(404).json({ error: "Solicitud no encontrada" })
-  return
-}
-const pertenece = await prisma.teamMembership.findUnique({
-  where: { userId_teamId: { userId: req.userId, teamId: req.team!.id } },
-})
-if (!pertenece) {
-  res.status(403).json({ error: "No perteneces a este equipo" })
-  return 
-}
-
-
+// 📚 Rechazar no crea relaciones: la condición PENDING hace atómica la transición y
+//    evita sobrescribir una decisión tomada por otra petición concurrente.
+router.post("/admin/solicitudes/:id/rechazar", authMiddleware, requireTeamAdmin, async (req, res) => {
+  const id = parsePositiveId(req.params.id)
+  const updated = await prisma.solicitudLogro.updateMany({
+    where: { id, status: "PENDING", logro: { teamId: req.team!.id } },
+    data: { status: "REJECTED", reviewedAt: new Date() },
+  })
+  if (updated.count !== 1) throw new AppError(404, "Solicitud pendiente no encontrada")
+  res.json(await prisma.solicitudLogro.findUniqueOrThrow({ where: { id } }))
 })
 
 
@@ -131,6 +148,33 @@ router.get("/admin/solicitudes", authMiddleware, requireTeamAdmin, async (req, r
     orderBy: { createdAt: "asc" },
   })
   res.json(solicitudes)
+})
+
+// 📚 Esta lista devuelve solo identidad y rol de miembros del tenant; nunca expone hashes
+//    ni permite que el cliente elija usuarios pertenecientes a otro equipo.
+router.get("/admin/miembros", authMiddleware, requireTeamAdmin, async (req, res) => {
+  const memberships = await prisma.teamMembership.findMany({
+    where: { teamId: req.team!.id },
+    select: { role: true, user: { select: { id: true, email: true } } },
+    orderBy: { joinedAt: "asc" },
+  })
+  res.json(memberships.map(({ role, user }) => ({ ...user, role })))
+})
+
+// 📚 La asignación directa valida ambos IDs y vuelve a comprobar en BD que usuario y logro
+//    pertenecen al tenant de la URL; el @@unique evita otorgar dos veces el mismo logro.
+router.post("/admin/asignaciones", authMiddleware, requireTeamAdmin, async (req, res) => {
+  const userId = parsePositiveId(String(req.body?.userId ?? ""))
+  const logroId = parsePositiveId(String(req.body?.logroId ?? ""))
+  const [membership, logro] = await Promise.all([
+    prisma.teamMembership.findUnique({ where: { userId_teamId: { userId, teamId: req.team!.id } } }),
+    prisma.logro.findFirst({ where: { id: logroId, teamId: req.team!.id } }),
+  ])
+  if (!membership || !logro) throw new AppError(404, "Jugador o logro no encontrado en este equipo")
+
+  const existing = await prisma.userLogro.findUnique({ where: { userId_logroId: { userId, logroId } } })
+  if (existing) throw new AppError(409, "Este jugador ya tiene el logro")
+  res.status(201).json(await prisma.userLogro.create({ data: { userId, logroId } }))
 })
 
 

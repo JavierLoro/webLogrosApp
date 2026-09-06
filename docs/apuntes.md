@@ -1982,3 +1982,9 @@ su `id` y el `teamId` resuelto desde la URL. Antes de crear comprueba que el jug
 logro ni otra solicitud `PENDING`. `GET /equipos/:slug/solicitudes` filtra por usuario y atraviesa
 la relación `logro.teamId`; la cola `/admin/solicitudes` aplica el mismo aislamiento y queda
 protegida por `requireTeamAdmin`.
+
+Al aceptar, una transacción cambia la solicitud a `ACCEPTED` y crea `UserLogro`. El cambio de
+estado usa una actualización condicionada por `PENDING`, equivalente a un *compare-and-set*:
+si dos administradores revisan a la vez, solo uno puede completar la transición. El `upsert` de
+`UserLogro` mantiene idempotente la asignación. Rechazar solo cambia el estado a `REJECTED` y la
+asignación directa vuelve a comprobar que jugador y logro pertenecen al equipo de la URL.
