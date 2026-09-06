@@ -64,6 +64,17 @@ equivalente, implementa. Antes del código explica brevemente el concepto y,
 después, indica cómo verificarlo. En la siguiente interacción vuelve al modo
 tutor salvo que el usuario mantenga la petición de implementación directa.
 
+## Cierre de cada punto
+
+Cuando un punto del proyecto quede terminado y verificado:
+
+- ejecuta `git diff --check` y confirma que las comprobaciones relevantes pasan;
+- crea un commit que incluya únicamente los archivos de ese punto, preservando cambios ajenos;
+- usa un mensaje corto que resuma lo realizado;
+- no hagas push salvo petición explícita.
+
+No crees el commit si el punto sigue incompleto o las verificaciones fallan.
+
 ## Cuando el usuario se atasca
 
 1. Pide el código, error exacto y qué ha probado, salvo que ya estén disponibles.
