@@ -124,7 +124,7 @@ infra/nginx/    — Reverse proxy: /api/* → backend:3001, /* → frontend:3000
 - `server.ts` — punto de entrada: monta CORS manual, rutas `/auth` y `/equipos/:slug`
 - `routes/auth.ts` — `POST /register` y `POST /login` (bcryptjs + JWT, 7d de expiración)
 - `routes/equipos.ts` — resuelve el tenant y expone los endpoints scoped de logros (`GET /`, `GET /:id`, `POST /`)
-- `middleware/auth.ts` — verifica el JWT de la cookie HttpOnly e inyecta `req.userId`
+- `middleware/auth.ts` — verifica `Authorization: Bearer <token>`, inyecta `req.userId`
 - `lib/prisma.ts` — instancia singleton de PrismaClient
 
 ### Frontend (`apps/frontend/src/app/`)
@@ -146,4 +146,4 @@ JWT_SECRET="..."
 ```
 
 ## Estado actual del roadmap
-Fases 1–4 completadas. Phase 5 y Phase 5.5 están completadas salvo las copias offsite del backup y la confirmación de HTTPS del entorno. Phase 6 y 6.5 (multi-tenancy y Frontend V1) están completadas en su alcance. Phase 7 dispone de roles contextuales, middlewares y seed; Phase 7.5 usa cookie HttpOnly para la sesión; Phase 7.6 incluye solicitudes de equipos y logros, asignación directa y paneles admin. Siguiente foco: **Phase 8 — Ranking y agregaciones SQL**. Los endpoints/pantallas de jugadores y la comunidad permanecen pendientes.
+Fases 1–4 completadas. Phase 5 y Phase 5.5 están completadas salvo las copias offsite del backup y la confirmación de HTTPS del entorno. Phase 6 y 6.5 (multi-tenancy y Frontend V1) están completadas en su alcance. Phase 7 dispone de roles contextuales, middlewares y seed; Phase 7.6 incluye solicitudes de equipos y logros, asignación directa y paneles admin. Siguiente foco: **Phase 7.5 — Auth Hardening con cookie HttpOnly**. Ranking, jugadores y comunidad permanecen bloqueados hasta implementar sus endpoints.

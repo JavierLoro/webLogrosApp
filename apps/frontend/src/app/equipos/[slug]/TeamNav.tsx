@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { apiFetch } from "@/lib/api"
 
 export function TeamNav({ slug, teamName }: { slug: string; teamName: string }) {
   const pathname = usePathname()
@@ -22,8 +21,10 @@ export function TeamNav({ slug, teamName }: { slug: string; teamName: string }) 
 
   const soonClass = "flex min-h-11 items-center gap-3 border-l-2 border-transparent px-4 py-3 text-sm text-[var(--team-muted)] opacity-60"
 
-  async function handleLogout() {
-    await apiFetch("/api/auth/logout", { method: "POST" })
+  function handleLogout() {
+    localStorage.removeItem("token")
+    localStorage.removeItem("teams")
+    localStorage.removeItem("isSuperAdmin")
     window.dispatchEvent(new Event("auth-change"))
     router.push("/login")
   }

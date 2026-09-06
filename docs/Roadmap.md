@@ -95,10 +95,10 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx →
 ## Phase 7.5 – Auth Hardening
 > **Concepto nuevo:** seguridad del navegador, XSS, cookies HttpOnly vs localStorage
 
-- [x] Migrar JWT de `localStorage` a **cookie HttpOnly** — `localStorage` es accesible desde JS (XSS puede robar el token); una cookie HttpOnly no lo es
-- [x] Actualizar `authMiddleware` para leer el JWT desde la cookie en lugar del header `Authorization`
-- [x] Actualizar el frontend para no gestionar el token manualmente (la cookie se envía automáticamente)
-- [x] `apuntes.md`: sección "Cookies HttpOnly vs localStorage"
+- [ ] Migrar JWT de `localStorage` a **cookie HttpOnly** — `localStorage` es accesible desde JS (XSS puede robar el token); una cookie HttpOnly no lo es
+- [ ] Actualizar `authMiddleware` para leer el JWT desde la cookie en lugar del header `Authorization`
+- [ ] Actualizar el frontend para no gestionar el token manualmente (la cookie se envía automáticamente)
+- [ ] `apuntes.md`: sección "Cookies HttpOnly vs localStorage"
 
 ## Phase 7.6 – Solicitudes y paneles admin
 > **Concepto nuevo:** flujos de aprobación (máquina de estados simple), layouts anidados y route groups en Next.js
