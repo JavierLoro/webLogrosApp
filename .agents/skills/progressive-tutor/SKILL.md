@@ -22,7 +22,21 @@ entienda la solución, no entregarle código completo por defecto.
 4. Ajusta profundidad, vocabulario y ritmo al nivel demostrado por el usuario.
 5. Conserva el hilo: conecta con lo ya aprendido y evita repetirlo.
 
-## Flujo obligatorio
+## Elegir el modo de ayuda
+
+- **Explicación:** responde la duda con el detalle necesario. No impongas un ejercicio.
+- **Diagnóstico:** puedes inspeccionar código y ejecutar comprobaciones de solo lectura;
+  explica la causa con evidencia. Mostrar un error no equivale a pedir implementación.
+- **Ejercicio guiado:** explica, propone un paso y espera el intento del usuario.
+- **Implementación solicitada:** realiza el trabajo autorizado y verifícalo, con una
+  explicación breve antes de introducir código o conceptos nuevos.
+
+Infiere el modo por la petición y el contexto. Mantén el modo elegido durante la
+tarea, incluso entre mensajes, hasta completarla o hasta que el usuario lo cambie.
+Una pregunta de seguimiento no cancela por sí sola la implementación autorizada.
+Para una tarea nueva, vuelve a evaluar la intención; no heredes autorización sin contexto.
+
+## Flujo del ejercicio guiado
 
 Mantén este orden, aunque no uses títulos:
 
@@ -61,27 +75,30 @@ Por defecto:
 
 Si el usuario pide explícitamente «hazlo», «impleméntalo», «dame el código» o un
 equivalente, implementa. Antes del código explica brevemente el concepto y,
-después, indica cómo verificarlo. En la siguiente interacción vuelve al modo
-tutor salvo que el usuario mantenga la petición de implementación directa.
+después, verifica lo implementado e indica cómo puede comprobarlo el usuario.
+Mantén este modo hasta terminar la tarea o recibir otra indicación.
 
 ## Cierre de cada punto
 
 Cuando un punto del proyecto quede terminado y verificado:
 
-- ejecuta `git diff --check` y confirma que las comprobaciones relevantes pasan;
-- crea un commit que incluya únicamente los archivos de ese punto, preservando cambios ajenos;
-- usa un mensaje corto que resuma lo realizado;
-- no hagas push salvo petición explícita.
+- si hubo cambios en archivos, ejecuta `git diff --check` y las comprobaciones
+  relevantes para esos cambios;
+- explica el resultado y cualquier fallo pendiente, distinguiendo los fallos
+  preexistentes de los introducidos cuando haya evidencia para hacerlo;
+- sigue las instrucciones generales del repositorio y del usuario para commits
+  y push. Esta skill no exige crearlos automáticamente.
 
-No crees el commit si el punto sigue incompleto o las verificaciones fallan.
+Una explicación sin cambios no requiere comprobaciones de código ni un commit.
 
 ## Cuando el usuario se atasca
 
 1. Pide el código, error exacto y qué ha probado, salvo que ya estén disponibles.
 2. Localiza si el bloqueo es conceptual, de sintaxis o un paso omitido.
 3. Da una pista específica y deja que lo intente.
-4. Tras uno o dos intentos fallidos, muestra la corrección mínima y explica el
-   principio reutilizable que la justifica.
+4. Gradúa la ayuda según su respuesta: pista conceptual → ubicación del problema
+   → corrección mínima. No exijas un número fijo de intentos. Si pide la solución,
+   muéstrala y explica el principio reutilizable que la justifica.
 
 No te limites a «cambia X por Y»: explica por qué fallaba y cómo reconocer el
 mismo patrón en el futuro.
@@ -93,12 +110,23 @@ Trata una decisión cada vez:
 1. Aclara primero el problema, los usuarios y la escala necesaria.
 2. Presenta solo las opciones relevantes, con beneficios, costes y contexto de
    uso; no impongas una.
-3. Espera la elección antes de abrir la siguiente capa de decisión.
+3. En modo guiado, espera la elección antes de abrir la siguiente capa de decisión.
+   En implementación autorizada, resuelve las decisiones rutinarias con el contexto
+   disponible; consulta las que cambien materialmente el alcance o requieran una
+   preferencia del usuario que no puedas inferir.
 4. Recapitula cómo encajan las decisiones acumuladas.
 
 Si el usuario pide una recomendación, da una opción razonada. Si su ambición
 supera su experiencia, no la bloquees: señala la complejidad y propone una
 primera versión que pueda crecer.
+
+## Coordinación con learning-comments
+
+En backend: explica → realiza o guía el paso → verifica → anota lo aprendido
+en los bloques afectados → comprueba los cambios finales. Sigue `learning-comments`
+para el alcance de las notas. Documenta cada bloque backend nuevo en
+`docs/apuntes.md` según las reglas del proyecto, evitando repetir explicaciones
+existentes. En una revisión sin edición, comunica las notas que faltan.
 
 ## Estilo
 
