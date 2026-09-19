@@ -60,9 +60,29 @@ Enseña a pensar, no a copiar: decision tree de frameworks, principios de async,
 
 ### Alcance de estas reglas
 
-El aprendizaje guiado y `learning-comments` se conservan para el backend y para las decisiones de arquitectura backend. El frontend se implementa de forma autónoma y code-first; se preservan sus comentarios existentes, pero no se exigen comentarios pedagógicos nuevos `// 📚` ni una entrada en `docs/apuntes.md` por cada bloque frontend. La documentación frontend relevante sigue siendo válida cuando sea útil.
+El aprendizaje guiado y `learning-comments` se conservan para el backend y para las decisiones de arquitectura backend. La Frontend V1 original se implementó code-first; el rediseño visual activo se rige por el workstream image-first de `docs/ui-workstream/`. Se preservan los comentarios frontend existentes, pero no se exigen comentarios pedagógicos nuevos `// 📚` ni una entrada en `docs/apuntes.md` por cada bloque frontend.
 
 > **Nota:** Usa `progressive-tutor` (enseñar antes de escribir) y `learning-comments` (anotar después de verificar) como guías operativas para backend. Las reglas anteriores son el resumen; las skills tienen el protocolo detallado.
+
+## Workstream UI visual activo
+
+Cuando la tarea afecte al frontend visual, navegación tenant, fixtures usados por las pantallas o captura/comparación de screenshots:
+
+1. Leer primero `docs/ui-workstream/STATUS.md`.
+2. Leer la tarea actual en `docs/ui-workstream/TASKS.md` y sus dependencias en `docs/ui-workstream/PLAN.md`.
+3. Consultar `docs/ui-reference/manifest.json`. Las imágenes canónicas viven en `apps/frontend/LockerBoard-marca/ReferenciasPaginas/`; no duplicarlas ni reconstruirlas desde memoria.
+4. Aplicar la skill `.agents/skills/image-to-code/SKILL.md`.
+5. Perfil de ejecución por defecto: **Astra Low**. No escalar a modelos high por defecto; solo hacerlo si una tarea concreta queda bloqueada y se documenta el motivo.
+6. **Critic != Implementer**: quien implementa una pantalla no puede ser quien la dé por cerrada visualmente. Si solo hay un runtime, usar sesiones/agentes separados con roles distintos.
+7. Antes de congelar el shell común, no paralelizar pantallas que puedan modificar navegación, tokens o componentes compartidos.
+8. No integrar todavía imágenes reales de logros, avatares, banners ni fotografía decorativa. Mantener su geometría mediante placeholders y excluir esas regiones del juicio visual cuando corresponda.
+9. Las referencias son autoridad para composición y estilo; `docs/Architecture.md`, `docs/Roadmap.md` y las decisiones documentadas son autoridad funcional. Una idea futura dibujada en un mockup no se convierte automáticamente en requisito.
+10. Los cambios backend exigidos por fixtures, propuestas o endpoints siguen sujetos a progressive-tutor, learning-comments y actualización de `docs/apuntes.md`.
+11. Al cerrar una tarea, actualizar `TASKS.md` y `STATUS.md` en el mismo cambio.
+
+Fuente operativa: `docs/ui-workstream/README.md`.
+
+---
 
 ## Descripción del proyecto
 Plataforma **multi-tenant** de logros: se ofrece a equipos y cada uno recibe su espacio propio (`/equipos/[slug]`) con sus jugadores, logros, ranking y stats. Roles: `SUPER_ADMIN` (dueño plataforma) · `TEAM_ADMIN` (por equipo) · `PLAYER`. Mapa de rutas completo en `docs/Architecture.md`. Proyecto de aprendizaje progresivo principalmente backend/infraestructura:
@@ -128,10 +148,10 @@ infra/nginx/    — Reverse proxy: /api/* → backend:3001, /* → frontend:3000
 - `lib/prisma.ts` — instancia singleton de PrismaClient
 
 ### Frontend (`apps/frontend/src/app/`)
-- App Router de Next.js con una implementación V1 code-first.
-- Incluye landing, auth, shell tenant y las pantallas de dashboard básico, catálogo, detalle y crear logro.
-- La UI debe contemplar estados loading/error/empty/401/404, responsive y accesibilidad.
-- Ranking, jugadores, solicitudes, paneles admin y comunidad permanecen bloqueados hasta que exista el backend correspondiente.
+- App Router de Next.js. La V1 nació code-first; el rediseño visual actual es image-first y sigue `docs/ui-workstream/`.
+- Incluye landing, auth, shell tenant, dashboard básico, catálogo, detalle, creación de logro, solicitudes de obtención y paneles administrativos funcionales en su alcance actual.
+- Ranking y jugadores requieren el read slice definido en el workstream; propuestas de nuevos logros y las subrutas administrativas acordadas siguen pendientes de implementación.
+- La UI debe contemplar estados loading/error/empty/401/403/404, responsive y accesibilidad.
 
 ### Base de datos
 - PostgreSQL en Docker, contenedor `weblogros_db`
@@ -146,4 +166,4 @@ JWT_SECRET="..."
 ```
 
 ## Estado actual del roadmap
-Fases 1–4 completadas. Phase 5 y Phase 5.5 están completadas salvo las copias offsite del backup y la confirmación de HTTPS del entorno. Phase 6 y 6.5 (multi-tenancy y Frontend V1) están completadas en su alcance. Phase 7 dispone de roles contextuales, middlewares y seed; Phase 7.6 incluye solicitudes de equipos y logros, asignación directa y paneles admin. Siguiente foco: **Phase 7.5 — Auth Hardening con cookie HttpOnly**. Ranking, jugadores y comunidad permanecen bloqueados hasta implementar sus endpoints.
+Fases 1–4 completadas. Phase 5 y Phase 5.5 están completadas salvo las copias offsite del backup y la confirmación de HTTPS del entorno. Phase 6 y 6.5 (multi-tenancy y Frontend V1) están completadas en su alcance. Phase 7 dispone de roles contextuales, middlewares y seed; Phase 7.6 incluye solicitudes de equipos y logros, asignación directa y paneles admin. Foco de entrega activo: **UI Visual Convergence Workstream**, actualmente en `UI-G0-T04`. Phase 7.5 Auth Hardening permanece pendiente en el roadmap de aprendizaje. Ranking/jugadores requieren el read slice de UI-G1; propuestas de nuevos logros corresponden a Phase 7.7 y también entran en UI-G1.

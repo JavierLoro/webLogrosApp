@@ -52,7 +52,7 @@ Referencias recibidas y verificadas para el nuevo flujo:
 Las pantallas principales de las 17 rutas activas ya tienen referencia de escritorio. La landing continúa aplazada.
 
 1. Corregir catálogo (creación directa solo administrativa). El formulario de propuesta no requiere cambios por el flujo de obtención. Edición con datos existentes ya recibida.
-2. Detalle de solicitud del jugador. El formulario de motivos/evidencia para obtener un logro existente es solo una opción futura; el flujo actual solicita desde el detalle con un botón. No confundirlo con el nuevo formulario de propuesta.
+2. Detalle personal de solicitud de obtención recibido (`detalles-solicitud-logro-v1.png`). No pedirlo de nuevo. El flujo actual sigue iniciándose desde el detalle del logro existente.
 3. Detalles administrativos de obtención y propuesta recibidos; no pedirlos otra vez.
 4. Confirmaciones y resultados de acciones administrativas.
 5. Variantes móviles y estados compartidos loading/error/empty/401/403/404 donde correspondan.
@@ -99,7 +99,7 @@ Vigentes: catálogo v2, administración general v2, solicitudes personales v3, s
 
 Correcciones: catálogo de jugador no debe ofrecer creación directa; propuesta aprobada debe indicar incorporación al catálogo, no una incorporación aplazada. «En revisión» y «Sugerir cambios» quedan como ideas visuales pendientes de decisión. En propuestas internas usar «miembros del equipo», evitando confundirlas con comunidad cross-team.
 
-No se requiere crear tres pantallas nuevas independientes: las variantes y tablas recibidas cubren los apartados propuestos. Permanece pendiente el detalle de solicitud de obtención, variantes móviles y estados generales; revisión de propuesta ya recibida. La landing sigue aplazada.
+No se requiere crear tres pantallas nuevas independientes: las variantes y tablas recibidas cubren los apartados propuestos. El detalle personal de solicitud de obtención y la revisión de propuesta ya están recibidos. Permanecen pendientes variantes móviles y estados generales. La landing sigue aplazada.
 
 ## Navegación administrativa reorganizada
 
@@ -109,6 +109,6 @@ Ver [índice de administración](ReferenciasPaginas/equipos/[slug]/admin/README.
 
 ## Pendientes tras la última comprobación
 
-Todas las pantallas principales del equipo y los detalles administrativos tienen referencia de escritorio. Detalle de mi propuesta del jugador recibido. No se localiza archivo del detalle personal de solicitud de obtención; confirmar guardado antes de pedir regenerarlo. Puede adaptarse del administrativo al implementar.
+Todas las pantallas principales del equipo y los detalles administrativos tienen referencia de escritorio. También están recibidos el detalle de mi propuesta y el detalle personal de solicitud de obtención del jugador (`detalles-solicitud-logro-v1.png`). No pedir regenerarlos.
 
 No se requieren referencias de estados vacíos ni correcciones menores; se resolverán al montar las pantallas. Landing aplazada. Vistas futuras opcionales: áreas secundarias de superadministración y pestañas secundarias del perfil. Las variantes móviles pueden resolverse con criterios responsive o una referencia representativa; no exigir una imagen por ruta.

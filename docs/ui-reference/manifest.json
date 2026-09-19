@@ -1,0 +1,263 @@
+{
+  "version": 2,
+  "canonicalRoot": "apps/frontend/LockerBoard-marca/ReferenciasPaginas",
+  "fixture": "halcones-visual",
+  "defaultViewport": {
+    "width": 1440,
+    "height": 1024
+  },
+  "policy": {
+    "realMediaAssetsEnabled": false,
+    "pixelSimilarityIsGate": false,
+    "criticMustDifferFromImplementer": true,
+    "visualAuthority": "reference images",
+    "functionalAuthority": [
+      "docs/Architecture.md",
+      "docs/Roadmap.md",
+      "docs/Decisions"
+    ]
+  },
+  "references": [
+    {
+      "id": "dashboard-desktop",
+      "route": "/equipos/halcones",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/dashboard-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": [
+        "player-avatar",
+        "achievement-media",
+        "decorative-media"
+      ],
+      "notes": [
+        "Seasons/challenges/progress shown in the mockup are not automatically approved features."
+      ]
+    },
+    {
+      "id": "achievements-catalog-desktop",
+      "route": "/equipos/halcones/logros",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/logros/catalogo-desktop-v2.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/logros/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": [
+        "achievement-media"
+      ],
+      "notes": [
+        "PLAYER shows Proponer logro; direct creation is reserved for TEAM_ADMIN even if the image contains an inconsistent CTA."
+      ]
+    },
+    {
+      "id": "achievement-proposal-form-desktop",
+      "route": "/equipos/halcones/logros/nuevo",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/logros/nuevo/nuevo-logro-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/logros/nuevo/README.md",
+      "status": "available",
+      "state": "form",
+      "ignoredRegions": [
+        "achievement-media"
+      ],
+      "notes": [
+        "Submitting a proposal does not request or grant the achievement."
+      ]
+    },
+    {
+      "id": "ranking-desktop",
+      "route": "/equipos/halcones/ranking",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/ranking/ranking-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/ranking/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": [
+        "player-avatar"
+      ]
+    },
+    {
+      "id": "players-desktop",
+      "route": "/equipos/halcones/jugadores",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/jugadores/jugadores-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/jugadores/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": [
+        "player-avatar"
+      ],
+      "notes": [
+        "Illustrative numeric inconsistencies must be replaced with real fixture data."
+      ]
+    },
+    {
+      "id": "requests-and-proposals-desktop",
+      "route": "/equipos/halcones/solicitudes",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/solicitudes/solicitudes-desktop-v3.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/solicitudes/README.md",
+      "status": "available",
+      "state": "mixed-statuses",
+      "ignoredRegions": [
+        "achievement-media",
+        "player-avatar"
+      ],
+      "notes": [
+        "Treat En revisión as visual PENDING until a separate functional state is approved.",
+        "Approved proposal copy should say Añadida al catálogo."
+      ]
+    },
+    {
+      "id": "player-request-detail-desktop",
+      "route": "/equipos/halcones/solicitudes",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/solicitudes/detalles-solicitud-logro-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/solicitudes/README.md",
+      "status": "available",
+      "state": "detail",
+      "ignoredRegions": [
+        "achievement-media",
+        "player-avatar"
+      ],
+      "notes": [
+        "Do not invent a new URL unless Architecture defines it."
+      ]
+    },
+    {
+      "id": "player-proposal-detail-desktop",
+      "route": "/equipos/halcones/solicitudes",
+      "role": "PLAYER",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/solicitudes/detalles-propuesta-propia.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/solicitudes/README.md",
+      "status": "available",
+      "state": "detail",
+      "ignoredRegions": [
+        "achievement-media"
+      ],
+      "notes": [
+        "Editing an already approved proposal is not functionally approved."
+      ]
+    },
+    {
+      "id": "team-admin-overview-desktop",
+      "route": "/equipos/halcones/admin",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/administracion-equipo-desktop-v2.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": [
+        "player-avatar",
+        "achievement-media"
+      ]
+    },
+    {
+      "id": "team-admin-invitations-desktop",
+      "route": "/equipos/halcones/admin/invitaciones",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/invitaciones/invitaciones-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/invitaciones/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": []
+    },
+    {
+      "id": "team-admin-players-desktop",
+      "route": "/equipos/halcones/admin/jugadores",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/jugadores/gestion-jugadores-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/jugadores/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": [
+        "player-avatar"
+      ]
+    },
+    {
+      "id": "team-admin-achievements-desktop",
+      "route": "/equipos/halcones/admin/logros",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/logros/gestion-logros-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/logros/README.md",
+      "status": "available",
+      "state": "populated",
+      "ignoredRegions": [
+        "achievement-media"
+      ]
+    },
+    {
+      "id": "team-admin-requests-desktop",
+      "route": "/equipos/halcones/admin/solicitudes",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/solicitudes/solicitudes-logros-desktop-v3.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/solicitudes/README.md",
+      "status": "available",
+      "state": "mixed-statuses",
+      "ignoredRegions": [
+        "player-avatar",
+        "achievement-media"
+      ]
+    },
+    {
+      "id": "team-admin-request-detail-desktop",
+      "route": "/equipos/halcones/admin/solicitudes/[id]",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/solicitudes/[id]/detalles-obtencion-logro-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/solicitudes/[id]/README.md",
+      "status": "available",
+      "state": "detail",
+      "ignoredRegions": [
+        "player-avatar",
+        "achievement-media"
+      ]
+    },
+    {
+      "id": "team-admin-proposals-desktop",
+      "route": "/equipos/halcones/admin/propuestas",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/propuestas/solicitudes-propuestas-logros-desktop-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/propuestas/README.md",
+      "status": "available",
+      "state": "mixed-statuses",
+      "ignoredRegions": [
+        "achievement-media"
+      ]
+    },
+    {
+      "id": "team-admin-proposal-detail-desktop",
+      "route": "/equipos/halcones/admin/propuestas/[id]",
+      "role": "TEAM_ADMIN",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/propuestas/[id]/revision-propuesta-logro-v1.png",
+      "sourceReadme": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/equipos/[slug]/admin/propuestas/[id]/README.md",
+      "status": "available",
+      "state": "detail",
+      "ignoredRegions": [
+        "achievement-media"
+      ],
+      "notes": [
+        "Reject requires a reason.",
+        "Solicitar cambios and En revisión remain future ideas unless approved later."
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "id": "landing",
+      "route": "/",
+      "reason": "Explicitly deferred by product decision."
+    },
+    {
+      "id": "community",
+      "route": "/comunidad",
+      "reason": "Outside initial visual workstream scope."
+    },
+    {
+      "id": "superadmin-expansion",
+      "route": "/admin",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/admin/superadministracion-desktop-v1.png",
+      "reason": "Global superadmin redesign is outside initial scope."
+    }
+  ]
+}

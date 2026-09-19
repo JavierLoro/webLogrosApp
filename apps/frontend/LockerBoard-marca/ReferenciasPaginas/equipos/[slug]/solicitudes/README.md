@@ -17,10 +17,10 @@ Pendiente transversal: móvil y estados de carga, vacío, error y acceso restrin
 
 [Mis solicitudes y mis propuestas — v3](solicitudes-desktop-v3.png) muestra las dos tablas y estados. Cubre Mis propuestas: no se necesita una imagen independiente con otro nombre. v1 y v2 se conservan como histórico.
 
-Ajustes pendientes: sustituir «Se añadirá esta temporada» en una propuesta aprobada por «Añadida al catálogo» para reflejar el flujo acordado. «En revisión» aparece como estado adicional no acordado; tratarlo como variante visual de pendiente hasta definirlo. Falta detalle individual. La propuesta no incluye una solicitud de obtención; esta solo se inicia después desde el catálogo.
+Ajustes pendientes: sustituir «Se añadirá esta temporada» en una propuesta aprobada por «Añadida al catálogo» para reflejar el flujo acordado. «En revisión» aparece como estado adicional no acordado; tratarlo como variante visual de pendiente hasta definirlo. La propuesta no incluye una solicitud de obtención; esta solo se inicia después desde el catálogo.
 
 ## Última comprobación
 
-[Detalle de mi propuesta](detalles-propuesta-propia.png) recibido y revisado: propuesta aprobada, añadida al catálogo y enlace Ver logro. No se localiza todavía una imagen propia del detalle de solicitud de obtención del jugador; el detalle administrativo no sustituye esa vista. Puede derivarse al implementar si no se necesita referencia específica.
+[Detalle de mi propuesta](detalles-propuesta-propia.png) recibido y revisado: propuesta aprobada, añadida al catálogo y enlace Ver logro. [Detalle de solicitud de obtención](detalles-solicitud-logro-v1.png) también recibido y disponible para la vista personal.
 
 No pedir imágenes adicionales de estados vacíos: se resolverán al implementar. Editar una propuesta ya aprobada aparece en la imagen, pero su comportamiento no está acordado y debe ajustarse al implementar.
