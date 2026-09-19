@@ -4,6 +4,10 @@ Plataforma **multi-tenant** de logros: se ofrece a equipos y cada uno recibe su 
 
 Proyecto de aprendizaje progresivo con stack completo: frontend, backend, autenticación, base de datos, Docker, CI/CD y despliegue en servidor propio.
 
+## Próximo flujo acordado: propuestas de logros
+
+Pendiente de implementación: cualquier miembro podrá proponer un logro para su equipo; un administrador aprobará su incorporación al catálogo o lo rechazará con motivo. Proponer no equivale a conseguirlo. Solo después de aprobarse e incorporarse al catálogo, el jugador podrá solicitar su obtención desde el detalle como cualquier otro logro. Ver [decisión y flujo](docs/Architecture.md#proponer-un-logro-nuevo--acordado-pendiente-de-implementación-2026-09-17) y [Roadmap](docs/Roadmap.md).
+
 ## Stack
 
 | Capa | Tecnología |

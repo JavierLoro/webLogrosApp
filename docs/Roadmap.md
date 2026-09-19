@@ -111,6 +111,18 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx →
 - [x] Landing pública `/` (publicidad de la idea) + `/solicitar-acceso` (formulario para equipos)
 - [x] `apuntes.md`: sección "Solicitudes de logro" y aceptación transaccional
 
+## Phase 7.7 – Propuestas de nuevos logros (acordado, pendiente)
+
+Decisión de producto del 2026-09-17. Amplía Phase 7.6; sus tareas completadas siguen describiendo solicitudes de obtención de logros existentes. No sustituye el foco actual de Auth Hardening.
+
+- [ ] Permitir a cualquier miembro proponer un logro nuevo para su equipo: nombre, descripción, criterios e imagen (coordinar subida de imágenes con Phase 10).
+- [ ] Mantener equipo y autor desde el envío; estados pendiente, aprobada y rechazada con motivo. Solo la aprobación incorpora el logro al catálogo; mantener creación directa administrativa.
+- [ ] Flujo secuencial: aprobar propuesta e incorporar al catálogo; después permitir al jugador solicitar la obtención desde el detalle. Sin solicitud simultánea, automática ni puntos por proponer.
+- [ ] Adaptar `/equipos/[slug]/logros/nuevo` al rol; separar propuestas y solicitudes de obtención en el historial personal y panel admin.
+- [ ] Dividir el panel administrativo en resumen y subrutas invitaciones, jugadores, logros, solicitudes y propuestas; detalles solicitudes/[id] y propuestas/[id]. Mantener navegación compartida, enlaces directos, estados por área y permisos contextuales. Referencias ya reorganizadas; páginas aún pendientes.
+- [ ] Definir persistencia y API; verificar aislamiento entre equipos, permisos, rechazo y aprobaciones repetidas sin duplicar logros ni asignaciones.
+- [ ] Completar referencias de propuesta, revisión y estados; documentar implementación y conceptos en `apuntes.md` cuando se construya.
+
 ## Phase 8 – Ranking y Aggregaciones SQL
 > **Concepto nuevo:** GROUP BY, SUM, COUNT via Prisma y `$queryRaw`
 
