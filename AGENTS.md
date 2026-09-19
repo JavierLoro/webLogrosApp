@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides project-wide guidance to coding agents working in this repository.
 
 ---
 
@@ -63,6 +63,51 @@ Enseña a pensar, no a copiar: decision tree de frameworks, principios de async,
 El aprendizaje guiado y `learning-comments` se conservan para el backend y para las decisiones de arquitectura backend. La Frontend V1 original se implementó code-first; el rediseño visual activo se rige por el workstream image-first de `docs/ui-workstream/`. Se preservan los comentarios frontend existentes, pero no se exigen comentarios pedagógicos nuevos `// 📚` ni una entrada en `docs/apuntes.md` por cada bloque frontend.
 
 > **Nota:** Usa `progressive-tutor` (enseñar antes de escribir) y `learning-comments` (anotar después de verificar) como guías operativas para backend. Las reglas anteriores son el resumen; las skills tienen el protocolo detallado.
+
+## Adaptive Coordinator / Agent Router
+
+El punto de entrada normal del usuario es **una única sesión raíz**. Esa sesión actúa como Coordinator y decide automáticamente cómo ejecutar la tarea actual. El usuario no tiene que seleccionar workers ni coordinar una flota manualmente.
+
+Contratos:
+- `docs/ui-workstream/roles/COORDINATOR.md`
+- `docs/ui-workstream/roles/FRONTEND_WORKER.md`
+- `docs/ui-workstream/roles/BACKEND_WORKER.md`
+- `docs/ui-workstream/roles/VISUAL_CRITIC.md`
+- `docs/ui-workstream/roles/QA_CAPTURE.md`
+- índice y aliases: `docs/ui-workstream/roles/README.md`
+
+Codex dispone además de perfiles de proyecto en `.codex/agents/*.toml`. Esos perfiles no fijan un model ID: heredan la configuración de la sesión padre y aplican el contrato del rol.
+
+### Resolución automática
+
+Cuando el usuario pida continuar el plan o ejecutar la siguiente tarea:
+
+1. La sesión raíz lee `docs/ui-workstream/STATUS.md`.
+2. Resuelve `current_task` en `TASKS.md` y sus dependencias/gate en `PLAN.md`.
+3. Usa el campo **Rol principal** y la naturaleza real de la tarea para elegir:
+   - frontend/shell/screen/admin UI → `frontend_worker`;
+   - backend/schema/seed/API/fixtures → `backend_worker`;
+   - ejecución, lint/build/tests/screenshots → `qa_capture`;
+   - análisis o aprobación visual → `visual_critic`;
+   - coordinación/documentación/control-plane → Coordinator.
+4. La delegación es **secuencial por defecto**. Solo paralelizar trabajo realmente independiente, sin archivos/estado mutable compartido y cuando el gate de fase lo permita.
+5. Para una pantalla, coordinar automáticamente el ciclo:
+   `frontend_worker → qa_capture → visual_critic → frontend_worker → ... → Coordinator`.
+6. **Critic != Implementer** siempre. El critic no edita la implementación que revisa.
+7. Si el runtime no soporta subagentes, el Coordinator puede ejecutar directamente roles no críticos. Nunca debe autoaprobar visualmente su propia implementación: dejará un handoff para una sesión/agente independiente.
+
+### Control plane
+
+Solo el Coordinator modifica por defecto:
+- `docs/ui-workstream/STATUS.md`;
+- `docs/ui-workstream/TASKS.md`;
+- `docs/ui-workstream/PLAN.md`.
+
+Los subagentes devuelven evidencia, archivos modificados, validaciones y bloqueos. No marcan una tarea como DONE ni avanzan `current_task` salvo delegación explícita.
+
+El Coordinator verifica el gate antes de actualizar el estado. No avanza solo porque un worker declare que terminó.
+
+---
 
 ## Workstream UI visual activo
 

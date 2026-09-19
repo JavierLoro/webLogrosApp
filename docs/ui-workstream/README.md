@@ -11,7 +11,8 @@ Este directorio es la fuente operativa del rediseño visual de LockerBoard. Perm
 5. `docs/ui-reference/manifest.json`
 6. README de la ruta bajo `apps/frontend/LockerBoard-marca/ReferenciasPaginas/`
 7. `.agents/skills/image-to-code/SKILL.md`
-8. `docs/ui-workstream/AGENT_CONTRACT.md` cuando haya más de un agente o se haga revisión visual
+8. `docs/ui-workstream/roles/README.md` para routing/delegación
+9. `docs/ui-workstream/AGENT_CONTRACT.md` para reglas multi-agente/gates
 
 ## Fuentes de verdad
 
@@ -48,6 +49,14 @@ Orden previsto:
 8. pasada de consistencia.
 
 No se integran todavía imágenes reales de logros, avatares, banners ni fotografía decorativa. Sí se implementan sus dimensiones, relación de aspecto y espacio visual mediante placeholders.
+
+## Punto de entrada adaptativo
+
+El usuario puede iniciar cualquier sesión con el único prompt de `RESUME_PROMPT.md`.
+
+La sesión raíz actúa como Coordinator, resuelve `current_task` y selecciona automáticamente el rol adecuado. En Codex usa los perfiles de `.codex/agents/`; en otros entornos usa los contratos portables de `docs/ui-workstream/roles/`.
+
+Delegar no implica paralelizar. El flujo es secuencial por defecto y el Coordinator conserva el control de `STATUS.md`, `TASKS.md` y `PLAN.md`.
 
 ## Regla de reanudación
 
