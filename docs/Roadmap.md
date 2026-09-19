@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Ruta de aprendizaje
-JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx → CI/CD → Proxmox → Hardening → Multi-tenancy (Relaciones DB) → **Frontend V1 code-first** → Roles → Auth Hardening → Solicitudes/Admin → Aggregaciones SQL → Comunidad → shadcn/ui → File uploads → Testing → **WebSockets**
+JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx → CI/CD → Proxmox → Hardening → Multi-tenancy (Relaciones DB) → **Frontend V1 code-first** → Roles → Auth Hardening → Solicitudes/Admin → Propuestas → **Visual convergence (image-first)** → Aggregaciones SQL → Comunidad → shadcn/ui → File uploads → Testing → **WebSockets**
 
 > **Concepto de la app:** plataforma multi-tenant de logros — ver mapa de rutas y roles en [Architecture.md](Architecture.md)
 
@@ -66,6 +66,8 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx →
 - [x] `apuntes.md`: sección "Prisma — Relaciones y multi-tenancy"
 
 ## Phase 6.5 – Frontend V1 (code-first)
+> **Nota histórica:** esta fase define la primera UI funcional. El trabajo visual activo posterior ya no es code-first: se gestiona mediante el workstream image-first de [ui-workstream/README.md](ui-workstream/README.md).
+>
 > **Concepto nuevo:** construir una UI usable directamente desde el contrato de rutas/API, con estados explícitos, responsive y accesibilidad.
 >
 > El frontend se implementa de forma autónoma y code-first. No depende de Figma ni de un proceso previo de mockups; las decisiones visuales se validan en el navegador junto con el comportamiento real de la aplicación.
@@ -122,6 +124,28 @@ Decisión de producto del 2026-09-17. Amplía Phase 7.6; sus tareas completadas 
 - [ ] Dividir el panel administrativo en resumen y subrutas invitaciones, jugadores, logros, solicitudes y propuestas; detalles solicitudes/[id] y propuestas/[id]. Mantener navegación compartida, enlaces directos, estados por área y permisos contextuales. Referencias ya reorganizadas; páginas aún pendientes.
 - [ ] Definir persistencia y API; verificar aislamiento entre equipos, permisos, rechazo y aprobaciones repetidas sin duplicar logros ni asignaciones.
 - [ ] Completar referencias de propuesta, revisión y estados; documentar implementación y conceptos en `apuntes.md` cuando se construya.
+
+
+## UI Workstream V2 – Visual convergence (ACTIVE)
+
+> Workstream de entrega paralelo al itinerario pedagógico. La fuente operativa está en [ui-workstream/README.md](ui-workstream/README.md), con estado reanudable en [ui-workstream/STATUS.md](ui-workstream/STATUS.md).
+>
+> Las imágenes canónicas ya están inventariadas bajo `apps/frontend/LockerBoard-marca/ReferenciasPaginas/`. Son autoridad visual, mientras que Architecture/Roadmap siguen siendo autoridad funcional.
+>
+> Astra Low es el perfil por defecto y **Critic != Implementer**.
+
+- [x] **UI-G0 — Reference inventory/manifest**: inventario existente reconciliado y manifest machine-readable apuntando a referencias canónicas
+- [ ] **UI-G0 — Visual extraction**: extraer tokens, shell y reglas comunes de las referencias vigentes
+- [ ] **UI-G1 — Visual Fixtures + Domain Slice**: seed determinista, ranking/jugadores/stats y soporte mínimo de propuestas acordadas
+- [ ] **UI-G2 — Shared Shell**: navegación, tokens, superficies y componentes comunes; congelar al aprobar
+- [ ] **UI-G3 — Dashboard**: `/equipos/[slug]`
+- [ ] **UI-G4 — Achievements**: catálogo + creación/propuesta según rol
+- [ ] **UI-G5 — Ranking**: `/equipos/[slug]/ranking`
+- [ ] **UI-G6 — Players**: `/equipos/[slug]/jugadores`
+- [ ] **UI-G7 — Requests / My proposals**: historial personal y detalles respaldados por las referencias vigentes
+- [ ] **UI-G8 — Team Admin**: resumen + subrutas acordadas de invitaciones, jugadores, logros, solicitudes y propuestas
+- [ ] **UI-G9 — Consistency Pass**: regresión visual, responsive base y gates finales
+- [ ] Assets reales de logros/avatares/banners y uploads quedan fuera de esta primera pasada; se preserva su geometría con placeholders hasta Phase 10.
 
 ## Phase 8 – Ranking y Aggregaciones SQL
 > **Concepto nuevo:** GROUP BY, SUM, COUNT via Prisma y `$queryRaw`
