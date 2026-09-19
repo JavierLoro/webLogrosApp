@@ -1,30 +1,36 @@
-# Resume Prompt
+# Single Adaptive Resume Prompt
 
-Trabaja en el repositorio JavierLoro/webLogrosApp y continúa el UI Visual Convergence Workstream exactamente desde su estado versionado.
+Este es el único prompt de entrada recomendado. No hace falta elegir manualmente Coordinator, Worker, QA o Critic.
 
-Antes de modificar nada:
-1. lee AGENTS.md;
-2. lee docs/ui-workstream/STATUS.md;
-3. abre la current_task en docs/ui-workstream/TASKS.md;
-4. revisa dependencias y gate en docs/ui-workstream/PLAN.md;
-5. revisa docs/ui-reference/manifest.json;
-6. abre el README y la imagen canónica de la ruta bajo apps/frontend/LockerBoard-marca/ReferenciasPaginas/;
-7. para trabajo visual aplica .agents/skills/image-to-code/SKILL.md.
+## Prompt
+
+Continúa el desarrollo de `JavierLoro/webLogrosApp` exactamente desde el estado versionado del repositorio.
+
+Actúa como **Coordinator adaptativo**. No quiero seleccionar manualmente agentes, tareas ni fases.
+
+1. Lee `AGENTS.md`.
+2. Lee `docs/ui-workstream/STATUS.md`.
+3. Identifica `current_task`.
+4. Consulta su contrato en `docs/ui-workstream/TASKS.md` y sus dependencias/gate en `docs/ui-workstream/PLAN.md`.
+5. Consulta manifest, referencias y documentación funcional necesarias.
+6. Decide automáticamente si debes ejecutar directamente o delegar en el especialista adecuado.
 
 Reglas:
-- Astra Low es el perfil por defecto;
-- Critic != Implementer;
-- referencias = autoridad visual; Architecture/Roadmap/Decisions = autoridad funcional;
-- no avances mientras la tarea actual no cumpla su contrato;
-- no integres todavía imágenes reales de logros, avatares, banners ni storage/uploads;
-- usa datos reales/deterministas para dominio;
-- Phase 7.7 de propuestas forma parte del workstream;
-- no cambies shell/tokens compartidos después de UI-G2 gate desde un screen worker;
-- cambios backend siguen las reglas pedagógicas del repo;
-- no dependas de contexto de conversaciones anteriores.
+- no delegues por delegar;
+- usa frontend worker para shell/pantallas/admin UI;
+- usa backend worker para schema/seed/API/fixtures;
+- usa QA/Capture para ejecución, tests y screenshots;
+- usa Visual Critic para análisis/aprobación visual;
+- `Critic != Implementer`;
+- delegación secuencial por defecto;
+- paraleliza solo trabajo independiente sin write scope compartido y cuando el gate lo permita;
+- para una pantalla coordina automáticamente `Implementer → Capture → Critic → Implementer` hasta cumplir el gate;
+- referencias = autoridad visual;
+- `Architecture.md`, `Roadmap.md` y `Decisions` = autoridad funcional;
+- no integres todavía assets reales/uploads fuera del alcance;
+- los cambios backend siguen las reglas pedagógicas del repo;
+- solo el Coordinator actualiza por defecto `STATUS.md`, `TASKS.md` y `PLAN.md`;
+- no avances de tarea hasta validar su contrato y gate;
+- no me preguntes qué agente utilizar.
 
-Al terminar:
-- valida lo que corresponda;
-- actualiza TASKS.md;
-- actualiza STATUS.md;
-- deja el repo reanudable por otra sesión sin contexto adicional.
+Al cerrar una tarea, actualiza el control plane y continúa con la siguiente solo cuando sea seguro hacerlo. Deja siempre el repositorio reanudable por otra sesión sin contexto externo.

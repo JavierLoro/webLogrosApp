@@ -1,6 +1,7 @@
 # UI Workstream Status
 
 workstream: ACTIVE
+orchestration: ADAPTIVE_ROUTER_READY
 current_phase: UI-G0
 current_task: UI-G0-T04
 current_iteration: 0
@@ -9,7 +10,11 @@ next_action: analizar las referencias canónicas y crear docs/ui-workstream/VISU
 
 ## Decisiones vigentes
 
-- Astra Low es el perfil por defecto.
+- El usuario usa un único prompt de entrada; la sesión raíz actúa como Coordinator adaptativo.
+- El Coordinator selecciona automáticamente frontend_worker, backend_worker, qa_capture o visual_critic según TASKS/PLAN.
+- Delegación secuencial por defecto; paralelismo solo para trabajo independiente y permitido por el gate.
+- Solo el Coordinator modifica por defecto STATUS/TASKS/PLAN.
+- Astra Low es el perfil lógico por defecto cuando el entorno lo ofrezca; los perfiles Codex heredan la configuración del Coordinator en lugar de fijar un model ID.
 - Critic != Implementer.
 - Las imágenes canónicas viven en `apps/frontend/LockerBoard-marca/ReferenciasPaginas/`.
 - `docs/ui-reference/manifest.json` es un índice; no se duplican PNG.
@@ -44,6 +49,10 @@ Ninguno para UI-G0-T04.
 
 ## Última validación
 
+- capa de orquestación adaptativa versionada: contratos portables en `docs/ui-workstream/roles/` y perfiles Codex en `.codex/agents/`;
+- TOML de los cuatro agentes validado sintácticamente;
+- `visual_critic` configurado read-only y separado del implementador;
+- `current_task` permanece en UI-G0-T04; este cambio no salta ninguna tarea del workstream;
 - rama sincronizada mediante merge con main `372244b0978c86d83b654d0ddec937e905af6d55`;
 - manifest reconciliado con las rutas reales;
 - propuesta de logros reconciliada con Phase 7.7;

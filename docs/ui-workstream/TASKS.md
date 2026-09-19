@@ -63,3 +63,12 @@ Screenshot → critic → fix se repite dentro de la misma tarea de convergencia
 ## Regla de cambio compartido
 
 Después de UI-G2-T05, un Screen Worker no puede editar tokens, TeamShell, TeamNavigation ni primitivas compartidas para resolver un problema local. Debe registrar el bloqueo y devolver el cambio al Coordinator.
+
+
+## Regla de control plane
+
+Los roles de esta tabla se resuelven mediante `docs/ui-workstream/roles/README.md`.
+
+Los workers no actualizan por defecto `TASKS.md`, `STATUS.md` ni `PLAN.md`. Devuelven evidencia al Coordinator, que verifica el gate, marca DONE y mueve `current_task`.
+
+Los roles combinados como `QA + Critic` o `Visual Critic + Shell Worker` indican un encadenamiento de especialistas, no que una misma sesión deba implementar y aprobar su propio trabajo.
