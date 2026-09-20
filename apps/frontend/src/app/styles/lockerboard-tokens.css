@@ -1,0 +1,173 @@
+/*
+ * LockerBoard visual contract
+ *
+ * The public site keeps its existing paper palette. Authenticated team routes
+ * opt into the reference-led system through `.team-theme`; the `--team-*`
+ * aliases below keep the current V1 screens stable while the shared shell is
+ * rebuilt on top of the canonical `--lb-*` tokens.
+ */
+
+:root {
+  /* Legacy/public palette */
+  --ink: #18201f;
+  --ink-soft: #52605d;
+  --paper: #f5f0e7;
+  --paper-deep: #e9e0d2;
+  --coral: #e85d4f;
+  --coral-dark: #bb3e35;
+  --gold: #d99a32;
+  --gold-pale: #f5d994;
+  --mint: #b8ddca;
+  --white: #fffdf8;
+  --background: var(--paper);
+  --foreground: var(--ink);
+
+  /* Core team palette extracted from the canonical desktop references */
+  --lb-color-bg-deep: #00090d;
+  --lb-color-bg-shell: #020d12;
+  --lb-color-surface-base: #061419;
+  --lb-color-surface-raised: #0a1a20;
+  --lb-color-surface-strong: #102128;
+  --lb-color-surface-hover: #142830;
+  --lb-color-border: #26373e;
+  --lb-color-border-strong: #3a4d55;
+  --lb-color-text-primary: #f5f3ed;
+  --lb-color-text-secondary: #bcc6cd;
+  --lb-color-text-tertiary: #899aa5;
+  --lb-color-accent: #ed0719;
+  --lb-color-accent-hover: #ff2432;
+  --lb-color-accent-pressed: #c90717;
+  --lb-color-focus: #ff5a64;
+
+  /* Status colors always pair with copy or an icon, never color alone. */
+  --lb-color-success: #61dc72;
+  --lb-color-success-surface: #102c1b;
+  --lb-color-warning: #ffc857;
+  --lb-color-warning-surface: #30240d;
+  --lb-color-danger: #ff737c;
+  --lb-color-danger-surface: #351216;
+  --lb-color-review: #62cbe8;
+  --lb-color-review-surface: #0d2931;
+  --lb-color-proposal: #f4b33e;
+
+  /* Typography */
+  --lb-font-display: var(--font-anybody), "Arial Narrow", sans-serif;
+  --lb-font-body: var(--font-space-grotesk), Arial, sans-serif;
+  --lb-font-data: var(--font-ibm-plex-mono), monospace;
+  --lb-text-page-title: clamp(2.25rem, 3vw, 2.875rem);
+  --lb-leading-page-title: 1.05;
+  --lb-text-team-identity: clamp(2rem, 2.6vw, 2.5rem);
+  --lb-leading-team-identity: 1;
+  --lb-text-section-title: 1.25rem;
+  --lb-leading-section-title: 1.15;
+  --lb-text-card-title: 1.125rem;
+  --lb-leading-card-title: 1.2;
+  --lb-text-body: 0.9375rem;
+  --lb-leading-body: 1.5;
+  --lb-text-meta: 0.75rem;
+  --lb-leading-meta: 1.35;
+  --lb-text-kpi: clamp(1.625rem, 2.3vw, 2.125rem);
+  --lb-leading-kpi: 1;
+
+  /* Four-point spacing scale */
+  --lb-space-1: 0.25rem;
+  --lb-space-2: 0.5rem;
+  --lb-space-3: 0.75rem;
+  --lb-space-4: 1rem;
+  --lb-space-6: 1.5rem;
+  --lb-space-8: 2rem;
+  --lb-panel-gap: clamp(0.625rem, 1vw, 1rem);
+  --lb-panel-padding: clamp(0.75rem, 1.25vw, 1.25rem);
+
+  /* Shell geometry: 172 px sidebar and ~1220 px usable content at 1440 px. */
+  --lb-sidebar-width: 10.75rem;
+  --lb-tenant-header-height: 8rem;
+  --lb-page-gutter: clamp(1rem, 1.7vw, 1.75rem);
+  --lb-content-width: 78rem;
+  --lb-control-height: 2.5rem;
+  --lb-table-row-height: 2.875rem;
+
+  /* Radius and border hierarchy */
+  --lb-border-width: 1px;
+  --lb-radius-panel: 0.5rem;
+  --lb-radius-control: 0.375rem;
+  --lb-radius-status: 0.25rem;
+  --lb-radius-media: 0.375rem;
+  --lb-radius-round: 999px;
+
+  /* A restrained depth cue used by shared surfaces. */
+  --lb-inset-highlight: inset 0 1px rgba(255, 255, 255, 0.035);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-coral: var(--coral);
+  --color-coral-dark: var(--coral-dark);
+  --color-gold: var(--gold);
+  --color-gold-pale: var(--gold-pale);
+  --color-mint: var(--mint);
+
+  --color-lb-bg-deep: var(--lb-color-bg-deep);
+  --color-lb-bg-shell: var(--lb-color-bg-shell);
+  --color-lb-surface: var(--lb-color-surface-base);
+  --color-lb-surface-raised: var(--lb-color-surface-raised);
+  --color-lb-surface-strong: var(--lb-color-surface-strong);
+  --color-lb-border: var(--lb-color-border);
+  --color-lb-text: var(--lb-color-text-primary);
+  --color-lb-text-secondary: var(--lb-color-text-secondary);
+  --color-lb-text-tertiary: var(--lb-color-text-tertiary);
+  --color-lb-accent: var(--lb-color-accent);
+  --color-lb-success: var(--lb-color-success);
+  --color-lb-warning: var(--lb-color-warning);
+  --color-lb-danger: var(--lb-color-danger);
+  --color-lb-review: var(--lb-color-review);
+
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-ibm-plex-mono);
+  --font-lb-display: var(--lb-font-display);
+  --font-lb-body: var(--lb-font-body);
+  --font-lb-data: var(--lb-font-data);
+
+  --radius-lb-panel: var(--lb-radius-panel);
+  --radius-lb-control: var(--lb-radius-control);
+  --radius-lb-status: var(--lb-radius-status);
+}
+
+.team-theme {
+  /* Compatibility aliases for tenant UI that predates the shared shell. */
+  --team-surface: var(--lb-color-surface-base);
+  --team-surface-lowest: var(--lb-color-bg-deep);
+  --team-surface-low: var(--lb-color-surface-raised);
+  --team-surface-mid: var(--lb-color-surface-strong);
+  --team-surface-high: var(--lb-color-surface-strong);
+  --team-surface-highest: var(--lb-color-surface-hover);
+  --team-text: var(--lb-color-text-primary);
+  --team-muted: var(--lb-color-text-secondary);
+  --team-primary: var(--lb-color-accent);
+  --team-primary-soft: var(--lb-color-accent-hover);
+  --team-orange: var(--lb-color-warning);
+  --team-green: var(--lb-color-success);
+  --team-line: var(--lb-color-border);
+  --team-outline: var(--lb-color-border);
+  --team-outline-strong: var(--lb-color-border-strong);
+  --team-on-primary: #ffffff;
+
+  --ink: var(--team-text);
+  --ink-soft: var(--team-muted);
+  --paper: var(--team-surface);
+  --paper-deep: var(--team-surface-high);
+  --coral: var(--team-primary);
+  --coral-dark: var(--lb-color-accent-pressed);
+  --gold: var(--team-orange);
+  --gold-pale: var(--lb-color-warning);
+  --mint: var(--team-green);
+  --white: var(--team-surface-low);
+  --background: var(--team-surface);
+  --foreground: var(--team-text);
+}

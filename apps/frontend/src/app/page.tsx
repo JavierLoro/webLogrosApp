@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Instrument_Serif, Inter } from "next/font/google"
-import contentBoard from "../../LockerBoard-marca/hero/final/lockerboard-hero-content-board-landscape-2560x1440.png"
-import mural from "../../LockerBoard-marca/hero/final/lockerboard-hero-mural-landscape-2560x1440.png"
+import contentBoard from "../../LockerBoard-marca/otros/hero/final/lockerboard-hero-content-board-landscape-2560x1440.png"
+import mural from "../../LockerBoard-marca/otros/hero/final/lockerboard-hero-mural-landscape-2560x1440.png"
 import { TeamCatalogPulse } from "./components/dashboard/TeamCatalogPulse"
 import { TeamQuickStats } from "./components/dashboard/TeamQuickStats"
 

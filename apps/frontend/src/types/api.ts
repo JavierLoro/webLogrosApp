@@ -1,11 +1,18 @@
 export interface Logro {
   id: number
+  createdAt: string
   nombre: string
   puntos: number
+  criterios: string[]
   descripcion?: string | null
   categoria?: string | null
   icono?: string | null
   teamId: number
+}
+
+export interface CatalogAchievement extends Logro {
+  holdersCount: number
+  earnedByMe: boolean
 }
 
 export interface ApiErrorBody {
@@ -23,6 +30,77 @@ export interface TeamSummary {
   slug: string
   nombre: string
   role: "TEAM_ADMIN" | "PLAYER"
+}
+
+export type TeamRole = TeamSummary["role"]
+
+export interface TeamContext {
+  team: {
+    id: number
+    slug: string
+    nombre: string
+  }
+  me: {
+    id: number
+    displayName: string
+    role: TeamRole
+  }
+}
+
+export interface DashboardTotals {
+  members: number
+  catalog: number
+  awards: number
+  points: number
+  uniqueEarned: number
+  participants: number
+}
+
+export interface DashboardPlayer {
+  id: number
+  displayName: string
+  role: TeamRole
+  joinedAt: string
+  puntos: number
+  logrosCount: number
+  position: number
+  ultimoLogro: {
+    id: number
+    nombre: string
+    fecha: string
+  } | null
+}
+
+export interface DashboardAchievement extends Logro {
+  createdAt: string
+  holdersCount: number
+}
+
+export interface DashboardAward {
+  id: number
+  fecha: string
+  user: {
+    id: number
+    displayName: string
+  }
+  logro: Logro & {
+    createdAt: string
+  }
+}
+
+export interface TeamDashboard {
+  totals: DashboardTotals
+  me: Pick<DashboardPlayer, "puntos" | "logrosCount" | "position">
+  topPlayers: DashboardPlayer[]
+  recentAchievements: DashboardAchievement[]
+  recentAwards: DashboardAward[]
+  mostEarned: DashboardAchievement | null
+  rarestEarned: DashboardAchievement | null
+}
+
+export interface TeamRanking {
+  players: DashboardPlayer[]
+  totals: DashboardTotals
 }
 
 export interface PlatformTeam {

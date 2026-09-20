@@ -6,8 +6,8 @@ import { useSyncExternalStore } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import lockerboardLogo from "../../../LockerBoard-marca/brand/logo/lockerboard-logo-horizontal-color-on-dark.svg"
-import lockerboardSymbol from "../../../LockerBoard-marca/brand/symbol/lockerboard-symbol-color-on-dark.svg"
+import lockerboardLogo from "../../../LockerBoard-marca/otros/brand/logo/lockerboard-logo-horizontal-color-on-dark.svg"
+import lockerboardSymbol from "../../../LockerBoard-marca/otros/brand/symbol/lockerboard-symbol-color-on-dark.svg"
 
 export default function Header() {
   const router = useRouter()

@@ -2,140 +2,182 @@
 
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
-import { TeamCatalogPulse } from "@/app/components/dashboard/TeamCatalogPulse"
-import { TeamCatalogSelection } from "@/app/components/dashboard/TeamCatalogSelection"
-import { TeamQuickStats } from "@/app/components/dashboard/TeamQuickStats"
-import { Button } from "@/app/components/ui/Button"
-import { Empty } from "@/app/components/ui/Empty"
-import { ErrorMessage } from "@/app/components/ui/Error"
+import { useEffect, useState } from "react"
+import {
+  PersonalSummaryPanel,
+  RecentAchievementsPanel,
+  RecentAwardsPanel,
+  TeamParticipationPanel,
+  TeamStatsPanel,
+  TopPlayersPanel,
+} from "@/app/components/dashboard/TeamDashboardPanels"
+import { TeamSurface } from "@/app/components/team/TeamPrimitives"
+import { useTeamContext } from "@/app/components/team/TeamShell"
+import MaterialIcon from "@/app/components/ui/icons/MaterialIcon"
 import { Skeleton } from "@/app/components/ui/Skeleton"
 import { ApiError, apiFetch } from "@/lib/api"
-import type { Logro } from "@/types/api"
+import type { TeamDashboard } from "@/types/api"
+
+type DashboardDataState = {
+  slug: string
+  value: TeamDashboard
+}
+
+type DashboardErrorState = {
+  slug: string
+  value: ApiError
+}
 
 export default function TeamDashboardPage() {
   const { slug } = useParams<{ slug: string }>()
-  const [achievements, setAchievements] = useState<Logro[] | null>(null)
-  const [error, setError] = useState<ApiError | null>(null)
+  const { team } = useTeamContext()
+  const [dashboardState, setDashboardState] = useState<DashboardDataState | null>(null)
+  const [errorState, setErrorState] = useState<DashboardErrorState | null>(null)
   const [requestVersion, setRequestVersion] = useState(0)
+  const dashboard = dashboardState?.slug === slug ? dashboardState.value : null
+  const error = errorState?.slug === slug ? errorState.value : null
 
   useEffect(() => {
-    let active = true
+    const controller = new AbortController()
 
-    apiFetch<Logro[]>(`/api/equipos/${encodeURIComponent(slug)}/logros`, { auth: true })
-      .then((data) => {
-        if (active) setAchievements(data)
-      })
+    apiFetch<TeamDashboard>(`/api/equipos/${encodeURIComponent(slug)}/dashboard`, {
+      auth: true,
+      signal: controller.signal,
+    })
+      .then((data) => setDashboardState({ slug, value: data }))
       .catch((cause: unknown) => {
-        if (!active) return
-        setError(cause instanceof ApiError ? cause : new ApiError("Error desconocido", 500))
+        if (cause instanceof DOMException && cause.name === "AbortError") return
+        setErrorState({
+          slug,
+          value: cause instanceof ApiError ? cause : new ApiError("No se pudo cargar el dashboard", 500),
+        })
       })
 
-    return () => {
-      active = false
-    }
+    return () => controller.abort()
   }, [requestVersion, slug])
 
-  const summary = useMemo(() => {
-    const items = achievements ?? []
-    const categories = new Set(
-      items.map((item) => item.categoria?.trim()).filter((category): category is string => Boolean(category)),
-    )
-
-    return {
-      total: items.length,
-      points: items.reduce((sum, item) => sum + item.puntos, 0),
-      categories: categories.size,
-    }
-  }, [achievements])
-
-  const teamName = slug.replace(/-/g, " ")
-  const notFound = error?.status === 404
-
   function retry() {
-    setAchievements(null)
-    setError(null)
+    setDashboardState(null)
+    setErrorState(null)
     setRequestVersion((version) => version + 1)
   }
 
   return (
-    <div className="mx-auto w-full max-w-[1480px] px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      <header className="mb-7 flex flex-col justify-between gap-5 border-b border-[var(--team-outline)] pb-6 sm:flex-row sm:items-end">
-        <div>
-          <p className="team-eyebrow">Panel del equipo</p>
-          <h1 className="team-display mt-2 text-4xl font-black leading-[0.95] tracking-[-0.04em] sm:text-6xl">
-            Catálogo de <span className="text-[var(--team-primary)]">{teamName}</span>
-          </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--team-muted)] sm:text-base">
-            Los logros que este equipo ha decidido celebrar, reunidos en una sola sala.
-          </p>
-        </div>
-        <Link
-          href={`/equipos/${slug}/logros`}
-          className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-[var(--team-primary)] px-5 py-2.5 text-sm font-bold text-[var(--team-on-primary)] hover:-translate-y-0.5 hover:bg-[var(--team-primary-soft)]"
-        >
-          Ver catálogo completo <span aria-hidden="true" className="ml-2">→</span>
-        </Link>
-      </header>
+    <div className="w-full px-[var(--lb-page-gutter)] py-[var(--lb-page-gutter)]">
+      <h1 className="sr-only">Dashboard de {team.nombre}</h1>
 
       {error ? (
-        <div className="max-w-2xl space-y-4">
-          <ErrorMessage>
-            {notFound
-              ? "No encontramos este equipo. Comprueba el enlace o vuelve a tus equipos."
-              : error.status === 401
-                ? "Tu sesión ha caducado. Inicia sesión para volver a entrar."
-                : error.status === 403
-                  ? "No perteneces a este equipo. Usa una invitación para unirte."
-                  : "No pudimos cargar el catálogo del equipo. Inténtalo de nuevo."}
-          </ErrorMessage>
-          {!notFound && <Button variant="quiet" onClick={retry}>Reintentar</Button>}
-        </div>
-      ) : achievements === null ? (
+        <DashboardError error={error} onRetry={retry} />
+      ) : dashboard === null ? (
         <DashboardSkeleton />
-      ) : achievements.length === 0 ? (
-        <Empty
-          title="Haz sitio al primer logro"
-          action={
-            <Link
-              href={`/equipos/${slug}/logros/nuevo`}
-              className="inline-flex min-h-11 items-center rounded-full bg-[var(--team-primary)] px-5 py-2.5 text-sm font-bold text-[var(--team-on-primary)]"
-            >
-              Crear el primer logro
-            </Link>
-          }
-        >
-          Crea el primer logro para empezar el catálogo de este equipo.
-        </Empty>
       ) : (
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-12">
-          <div className="xl:col-span-8"><TeamCatalogPulse total={summary.total} /></div>
-          <div className="xl:col-span-4"><TeamQuickStats {...summary} /></div>
-          <div className="xl:col-span-8"><TeamCatalogSelection achievements={achievements.slice(0, 3)} slug={slug} /></div>
-          <aside className="team-surface flex min-h-64 flex-col justify-between overflow-hidden border-[color:color-mix(in_srgb,var(--team-primary)_35%,transparent)] p-6 xl:col-span-4 sm:p-8">
-            <div>
-              <p className="team-eyebrow text-[var(--team-orange)]">Siguiente paso</p>
-              <h2 className="team-display mt-3 text-3xl font-extrabold leading-none">Haz crecer el catálogo</h2>
-              <p className="mt-4 text-sm leading-6 text-[var(--team-muted)]">Revisa todos los logros o crea uno nuevo si administras este equipo.</p>
-            </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link className="rounded-full bg-[var(--team-primary)] px-5 py-3 text-sm font-bold text-[var(--team-on-primary)]" href={`/equipos/${slug}/logros`}>Ver catálogo</Link>
-              <Link className="rounded-full border border-[var(--team-outline-strong)] px-5 py-3 text-sm font-bold text-[var(--team-text)] hover:border-[var(--team-primary-soft)]" href={`/equipos/${slug}/logros/nuevo`}>Crear logro</Link>
-            </div>
-          </aside>
-        </div>
+        <DashboardContent dashboard={dashboard} slug={slug} />
       )}
     </div>
   )
 }
 
-function DashboardSkeleton() {
+function DashboardContent({ dashboard, slug }: { dashboard: TeamDashboard; slug: string }) {
   return (
-    <div aria-label="Cargando panel del equipo" className="grid grid-cols-1 gap-5 xl:grid-cols-12">
-      <Skeleton className="h-80 rounded-3xl xl:col-span-8" />
-      <Skeleton className="h-80 rounded-3xl xl:col-span-4" />
-      <Skeleton className="h-72 rounded-3xl xl:col-span-8" />
-      <Skeleton className="h-72 rounded-3xl xl:col-span-4" />
+    <>
+      <div
+        className="grid gap-[var(--lb-panel-gap)] md:grid-cols-2 xl:grid-cols-[minmax(0,38fr)_minmax(0,33fr)_minmax(0,29fr)]"
+        data-dashboard-band="overview"
+      >
+        <TeamParticipationPanel totals={dashboard.totals} className="min-h-80 xl:h-[20.5rem] xl:min-h-0" />
+        <TeamStatsPanel dashboard={dashboard} className="min-h-80 xl:h-[20.5rem] xl:min-h-0" />
+        <RecentAwardsPanel awards={dashboard.recentAwards} className="min-h-80 md:col-span-2 xl:col-span-1 xl:h-[20.5rem] xl:min-h-0" />
+      </div>
+
+      <div
+        className="mt-[var(--lb-panel-gap)] grid gap-[var(--lb-panel-gap)] md:grid-cols-2 xl:grid-cols-[minmax(0,38fr)_minmax(0,27fr)_minmax(0,35fr)]"
+        data-dashboard-band="details"
+      >
+        <RecentAchievementsPanel achievements={dashboard.recentAchievements} slug={slug} className="min-h-72 md:col-span-2 xl:col-span-1 xl:h-[18.5rem] xl:min-h-0" />
+        <PersonalSummaryPanel summary={dashboard.me} className="min-h-72 xl:h-[18.5rem] xl:min-h-0" />
+        <TopPlayersPanel players={dashboard.topPlayers} slug={slug} className="min-h-72 xl:h-[18.5rem] xl:min-h-0" />
+      </div>
+    </>
+  )
+}
+
+function DashboardSkeleton() {
+  const skeletonClass = "min-h-80 rounded-[var(--lb-radius-panel)] border border-[var(--team-line)] bg-[var(--team-surface)] xl:h-[20.5rem] xl:min-h-0"
+  const secondarySkeletonClass = "min-h-72 rounded-[var(--lb-radius-panel)] border border-[var(--team-line)] bg-[var(--team-surface)] xl:h-[18.5rem] xl:min-h-0"
+
+  return (
+    <div role="status" aria-live="polite">
+      <div className="grid gap-[var(--lb-panel-gap)] md:grid-cols-2 xl:grid-cols-[minmax(0,38fr)_minmax(0,33fr)_minmax(0,29fr)]">
+        <Skeleton className={skeletonClass} />
+        <Skeleton className={skeletonClass} />
+        <Skeleton className={`${skeletonClass} md:col-span-2 xl:col-span-1`} />
+      </div>
+      <div className="mt-[var(--lb-panel-gap)] grid gap-[var(--lb-panel-gap)] md:grid-cols-2 xl:grid-cols-[minmax(0,38fr)_minmax(0,27fr)_minmax(0,35fr)]">
+        <Skeleton className={`${secondarySkeletonClass} md:col-span-2 xl:col-span-1`} />
+        <Skeleton className={secondarySkeletonClass} />
+        <Skeleton className={secondarySkeletonClass} />
+      </div>
+      <span className="sr-only">Cargando el dashboard del equipo…</span>
     </div>
+  )
+}
+
+function DashboardError({ error, onRetry }: { error: ApiError; onRetry: () => void }) {
+  const isUnauthorized = error.status === 401
+  const isForbidden = error.status === 403
+  const isNotFound = error.status === 404
+  const title = isUnauthorized
+    ? "Tu sesión ha caducado"
+    : isForbidden
+      ? "No tienes acceso a este equipo"
+      : isNotFound
+        ? "No encontramos este equipo"
+        : "No pudimos cargar el dashboard"
+  const description = isUnauthorized
+    ? "Inicia sesión de nuevo para continuar."
+    : isForbidden
+      ? "Vuelve a tus equipos para elegir una membresía disponible."
+      : isNotFound
+        ? "Comprueba el enlace o vuelve a tus equipos."
+        : "Revisa la conexión e inténtalo otra vez."
+
+  return (
+    <TeamSurface role="alert" className="max-w-xl border-[var(--lb-color-danger)]">
+      <div className="flex items-start gap-3">
+        <span className="grid size-10 shrink-0 place-items-center rounded-[var(--lb-radius-control)] bg-[var(--lb-color-danger-surface)] text-[var(--lb-color-danger)]" aria-hidden="true">
+          <MaterialIcon name="assignment" className="size-5" />
+        </span>
+        <div>
+          <h2 className="team-display text-xl font-extrabold text-[var(--team-text)]">{title}</h2>
+          <p className="mt-1 text-sm leading-6 text-[var(--team-muted)]">{description}</p>
+        </div>
+      </div>
+      <div className="mt-5">
+        {isUnauthorized ? (
+          <DashboardStateLink href="/login">Iniciar sesión</DashboardStateLink>
+        ) : isForbidden || isNotFound ? (
+          <DashboardStateLink href="/equipos">Volver a mis equipos</DashboardStateLink>
+        ) : (
+          <button
+            type="button"
+            onClick={onRetry}
+            className="inline-flex min-h-11 items-center justify-center rounded-[var(--lb-radius-control)] bg-[var(--team-primary)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--lb-color-accent-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lb-color-focus)]"
+          >
+            Reintentar
+          </button>
+        )}
+      </div>
+    </TeamSurface>
+  )
+}
+
+function DashboardStateLink({ href, children }: { href: string; children: string }) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex min-h-11 items-center justify-center rounded-[var(--lb-radius-control)] bg-[var(--team-primary)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--lb-color-accent-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lb-color-focus)]"
+    >
+      {children}
+    </Link>
   )
 }

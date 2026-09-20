@@ -20,7 +20,7 @@ export default function SolicitudesPage() {
   }, [slug])
 
   return (
-    <main className="mx-auto max-w-4xl px-5 py-12">
+    <div className="mx-auto max-w-4xl px-5 py-12">
       <p className="font-mono text-xs uppercase tracking-widest text-coral">Historial personal</p>
       <h1 className="mt-3 font-display text-4xl font-bold">Mis solicitudes</h1>
       <p className="mt-3 text-ink-soft">Consulta qué logros están pendientes y cuáles fueron revisados.</p>
@@ -32,6 +32,6 @@ export default function SolicitudesPage() {
           <div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="font-display text-xl font-bold">{request.logro.nombre}</h2><p className="mt-1 text-sm text-ink-soft">{request.logro.puntos} puntos · {new Date(request.createdAt).toLocaleDateString()}</p></div><Status tone={request.status === "ACCEPTED" ? "mint" : request.status === "REJECTED" ? "coral" : "gold"}>{request.status === "ACCEPTED" ? "Aprobada" : request.status === "REJECTED" ? "Rechazada" : "Pendiente"}</Status></div>
         </article>)}
       </div>
-    </main>
+    </div>
   )
 }
