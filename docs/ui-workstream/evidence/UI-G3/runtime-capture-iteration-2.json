@@ -1,0 +1,2502 @@
+{
+  "capturedAt": "2026-09-20T14:07:04.973Z",
+  "browserClock": "2026-09-20T12:00:00.000Z",
+  "locale": "es-ES",
+  "timezone": "Europe/Madrid",
+  "route": "/equipos/halcones",
+  "fixture": "halcones-visual",
+  "scope": "UI-G3-T05 iteration 2 technical capture",
+  "captureAuthNote": "Rate limiter was already saturated by prior iteration logins; capture used in-memory QA-signed JWTs for fixture user IDs 3 and 2. No token persisted in artifacts and backend was not restarted.",
+  "runtimeStatesTested": {
+    "populated": true,
+    "loading": false,
+    "error": false,
+    "empty": false,
+    "unauthorized": false,
+    "forbidden": false,
+    "notFound": false
+  },
+  "captures": {
+    "playerDesktop": {
+      "role": "PLAYER",
+      "email": "ana@halcones.test",
+      "authMethod": "qa-signed-token-no-login-request",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "payload": {
+        "status": 200,
+        "body": {
+          "totals": {
+            "members": 12,
+            "catalog": 14,
+            "awards": 40,
+            "points": 4280,
+            "uniqueEarned": 7,
+            "participants": 10
+          },
+          "me": {
+            "puntos": 790,
+            "logrosCount": 7,
+            "position": 1
+          },
+          "topPlayers": [
+            {
+              "id": 3,
+              "displayName": "Ana Fernández",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-03T09:00:00.000Z",
+              "puntos": 790,
+              "logrosCount": 7,
+              "ultimoLogro": {
+                "id": 7,
+                "nombre": "Pase decisivo",
+                "fecha": "2026-09-16T18:00:00.000Z"
+              },
+              "position": 1
+            },
+            {
+              "id": 4,
+              "displayName": "Marcos del Río",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-04T09:00:00.000Z",
+              "puntos": 700,
+              "logrosCount": 6,
+              "ultimoLogro": {
+                "id": 6,
+                "nombre": "Racha impecable",
+                "fecha": "2026-09-17T12:00:00.000Z"
+              },
+              "position": 2
+            },
+            {
+              "id": 5,
+              "displayName": "Laura Sánchez",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-05T09:00:00.000Z",
+              "puntos": 550,
+              "logrosCount": 5,
+              "ultimoLogro": {
+                "id": 5,
+                "nombre": "Mentoría",
+                "fecha": "2026-09-17T17:00:00.000Z"
+              },
+              "position": 3
+            }
+          ],
+          "recentAchievements": [
+            {
+              "id": 19,
+              "createdAt": "2026-09-18T10:00:00.000Z",
+              "nombre": "Guía para el siguiente vuelo",
+              "puntos": 120,
+              "criterios": [
+                "Redactar una guía con los acuerdos del equipo.",
+                "Revisarla con otra persona antes de compartirla."
+              ],
+              "descripcion": "Compartir una guía práctica que ayude a nuevas incorporaciones.",
+              "categoria": "Comunidad",
+              "icono": null,
+              "teamId": 1,
+              "holdersCount": 0
+            },
+            {
+              "id": 18,
+              "createdAt": "2026-09-18T09:00:00.000Z",
+              "nombre": "Organización compartida",
+              "puntos": 100,
+              "criterios": [
+                "Acordar fecha y lugar con el equipo.",
+                "Comunicar la planificación a todos los miembros."
+              ],
+              "descripcion": "Reconoce a quien organiza un encuentro y coordina al equipo.",
+              "categoria": "Equipo",
+              "icono": null,
+              "teamId": 1,
+              "holdersCount": 0
+            },
+            {
+              "id": 12,
+              "createdAt": "2026-09-12T09:00:00.000Z",
+              "nombre": "Una victoria compartida",
+              "puntos": 160,
+              "criterios": [
+                "Completar una tarea exigente con ayuda de varias personas del equipo.",
+                "Confirmar el resultado con un administrador del equipo."
+              ],
+              "descripcion": "Completar una tarea exigente con ayuda de varias personas del equipo.",
+              "categoria": "Equipo",
+              "icono": "🏆",
+              "teamId": 1,
+              "holdersCount": 0
+            }
+          ],
+          "recentAwards": [
+            {
+              "id": 40,
+              "fecha": "2026-09-19T12:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 4,
+                "createdAt": "2026-09-04T09:00:00.000Z",
+                "nombre": "Trabajo en equipo",
+                "puntos": 80,
+                "criterios": [
+                  "Ayudar a otra persona a completar un objetivo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Ayudar a otra persona a completar un objetivo.",
+                "categoria": "Equipo",
+                "icono": "🤝",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 39,
+              "fecha": "2026-09-19T11:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 2,
+                "createdAt": "2026-09-02T09:00:00.000Z",
+                "nombre": "Caza nocturna",
+                "puntos": 50,
+                "criterios": [
+                  "Resolver un reto fuera del horario habitual.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Resolver un reto fuera del horario habitual.",
+                "categoria": "Constancia",
+                "icono": "🌙",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 38,
+              "fecha": "2026-09-19T10:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 1,
+                "createdAt": "2026-09-01T09:00:00.000Z",
+                "nombre": "Primer vuelo",
+                "puntos": 100,
+                "criterios": [
+                  "Completar el primer objetivo del equipo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Completar el primer objetivo del equipo.",
+                "categoria": "Inicio",
+                "icono": "🪽",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 37,
+              "fecha": "2026-09-19T09:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 3,
+                "createdAt": "2026-09-03T09:00:00.000Z",
+                "nombre": "Vuelo en picado",
+                "puntos": 200,
+                "criterios": [
+                  "Cerrar una tarea crítica antes del plazo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Cerrar una tarea crítica antes del plazo.",
+                "categoria": "Impacto",
+                "icono": "⚡",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 36,
+              "fecha": "2026-09-18T20:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 2,
+                "createdAt": "2026-09-02T09:00:00.000Z",
+                "nombre": "Caza nocturna",
+                "puntos": 50,
+                "criterios": [
+                  "Resolver un reto fuera del horario habitual.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Resolver un reto fuera del horario habitual.",
+                "categoria": "Constancia",
+                "icono": "🌙",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 35,
+              "fecha": "2026-09-18T19:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 1,
+                "createdAt": "2026-09-01T09:00:00.000Z",
+                "nombre": "Primer vuelo",
+                "puntos": 100,
+                "criterios": [
+                  "Completar el primer objetivo del equipo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Completar el primer objetivo del equipo.",
+                "categoria": "Inicio",
+                "icono": "🪽",
+                "teamId": 1
+              }
+            }
+          ],
+          "mostEarned": {
+            "id": 1,
+            "createdAt": "2026-09-01T09:00:00.000Z",
+            "nombre": "Primer vuelo",
+            "puntos": 100,
+            "criterios": [
+              "Completar el primer objetivo del equipo.",
+              "Confirmar el resultado con un administrador del equipo."
+            ],
+            "descripcion": "Completar el primer objetivo del equipo.",
+            "categoria": "Inicio",
+            "icono": "🪽",
+            "teamId": 1,
+            "holdersCount": 10
+          },
+          "rarestEarned": {
+            "id": 6,
+            "createdAt": "2026-09-06T09:00:00.000Z",
+            "nombre": "Racha impecable",
+            "puntos": 150,
+            "criterios": [
+              "Completar cinco objetivos consecutivos.",
+              "Confirmar el resultado con un administrador del equipo."
+            ],
+            "descripcion": "Completar cinco objetivos consecutivos.",
+            "categoria": "Constancia",
+            "icono": "🔥",
+            "teamId": 1,
+            "holdersCount": 2
+          }
+        }
+      },
+      "metrics": {
+        "clock": "2026-09-20T12:00:00.000Z",
+        "viewport": {
+          "width": 1440,
+          "height": 1024
+        },
+        "document": {
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollHeight": 1024
+        },
+        "globalOverflowX": false,
+        "bands": {
+          "overview": {
+            "rect": {
+              "x": 196.46875,
+              "y": 153.46875,
+              "width": 1219.0625,
+              "height": 328,
+              "right": 1415.53125,
+              "bottom": 481.46875
+            },
+            "columns": "452.297px 392.797px 345.188px",
+            "children": [
+              {
+                "x": 196.46875,
+                "y": 153.46875,
+                "width": 452.296875,
+                "height": 328,
+                "right": 648.765625,
+                "bottom": 481.46875
+              },
+              {
+                "x": 663.15625,
+                "y": 153.46875,
+                "width": 392.796875,
+                "height": 328,
+                "right": 1055.953125,
+                "bottom": 481.46875
+              },
+              {
+                "x": 1070.34375,
+                "y": 153.46875,
+                "width": 345.1875,
+                "height": 328,
+                "right": 1415.53125,
+                "bottom": 481.46875
+              }
+            ]
+          },
+          "details": {
+            "rect": {
+              "x": 196.46875,
+              "y": 495.859375,
+              "width": 1219.0625,
+              "height": 296,
+              "right": 1415.53125,
+              "bottom": 791.859375
+            },
+            "columns": "452.297px 321.375px 416.609px",
+            "children": [
+              {
+                "x": 196.46875,
+                "y": 495.859375,
+                "width": 452.296875,
+                "height": 296,
+                "right": 648.765625,
+                "bottom": 791.859375
+              },
+              {
+                "x": 663.15625,
+                "y": 495.859375,
+                "width": 321.375,
+                "height": 296,
+                "right": 984.53125,
+                "bottom": 791.859375
+              },
+              {
+                "x": 998.921875,
+                "y": 495.859375,
+                "width": 416.609375,
+                "height": 296,
+                "right": 1415.53125,
+                "bottom": 791.859375
+              }
+            ]
+          }
+        },
+        "panels": [
+          {
+            "title": "Participación del equipo",
+            "rect": {
+              "x": 196.46875,
+              "y": 153.46875,
+              "width": 452.296875,
+              "height": 328,
+              "right": 648.765625,
+              "bottom": 481.46875
+            },
+            "clientWidth": 450,
+            "scrollWidth": 450,
+            "clientHeight": 326,
+            "scrollHeight": 326,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "hidden",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Estadísticas del equipo",
+            "rect": {
+              "x": 663.15625,
+              "y": 153.46875,
+              "width": 392.796875,
+              "height": 328,
+              "right": 1055.953125,
+              "bottom": 481.46875
+            },
+            "clientWidth": 391,
+            "scrollWidth": 391,
+            "clientHeight": 326,
+            "scrollHeight": 326,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Actividad reciente",
+            "rect": {
+              "x": 1070.34375,
+              "y": 153.46875,
+              "width": 345.1875,
+              "height": 328,
+              "right": 1415.53125,
+              "bottom": 481.46875
+            },
+            "clientWidth": 343,
+            "scrollWidth": 343,
+            "clientHeight": 326,
+            "scrollHeight": 326,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [
+              {
+                "x": 1089.34375,
+                "y": 207.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 255.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 255.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 303.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 303.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 351.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 351.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 399.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 399.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 447.859375
+              }
+            ],
+            "cards": []
+          },
+          {
+            "title": "Últimos logros añadidos",
+            "rect": {
+              "x": 196.46875,
+              "y": 495.859375,
+              "width": 452.296875,
+              "height": 296,
+              "right": 648.765625,
+              "bottom": 791.859375
+            },
+            "clientWidth": 450,
+            "scrollWidth": 450,
+            "clientHeight": 294,
+            "scrollHeight": 294,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": [
+              {
+                "x": 215.46875,
+                "y": 579.859375,
+                "width": 132.765625,
+                "height": 206.234375,
+                "right": 348.234375,
+                "bottom": 786.09375
+              },
+              {
+                "x": 356.234375,
+                "y": 579.859375,
+                "width": 132.765625,
+                "height": 206.234375,
+                "right": 489,
+                "bottom": 786.09375
+              },
+              {
+                "x": 497,
+                "y": 579.859375,
+                "width": 132.765625,
+                "height": 206.234375,
+                "right": 629.765625,
+                "bottom": 786.09375
+              }
+            ]
+          },
+          {
+            "title": "Tu resumen",
+            "rect": {
+              "x": 663.15625,
+              "y": 495.859375,
+              "width": 321.375,
+              "height": 296,
+              "right": 984.53125,
+              "bottom": 791.859375
+            },
+            "clientWidth": 319,
+            "scrollWidth": 319,
+            "clientHeight": 294,
+            "scrollHeight": 294,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Top 3 jugadores",
+            "rect": {
+              "x": 998.921875,
+              "y": 495.859375,
+              "width": 416.609375,
+              "height": 296,
+              "right": 1415.53125,
+              "bottom": 791.859375
+            },
+            "clientWidth": 415,
+            "scrollWidth": 415,
+            "clientHeight": 294,
+            "scrollHeight": 294,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [
+              {
+                "x": 1017.921875,
+                "y": 575.859375,
+                "width": 378.609375,
+                "height": 64,
+                "right": 1396.53125,
+                "bottom": 639.859375
+              },
+              {
+                "x": 1017.921875,
+                "y": 639.859375,
+                "width": 378.609375,
+                "height": 64,
+                "right": 1396.53125,
+                "bottom": 703.859375
+              },
+              {
+                "x": 1017.921875,
+                "y": 703.859375,
+                "width": 378.609375,
+                "height": 64,
+                "right": 1396.53125,
+                "bottom": 767.859375
+              }
+            ],
+            "cards": []
+          }
+        ],
+        "meterSegments": 20,
+        "fixture": {
+          "participation": true,
+          "totals": true,
+          "ana": true,
+          "top3": true,
+          "activity": true,
+          "highlights": true
+        },
+        "adminNavVisible": false
+      },
+      "network": {
+        "responses": [
+          {
+            "status": 200,
+            "type": "Document",
+            "url": "http://127.0.0.1:3000/equipos/halcones"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/192f2ab6b81220b0-s.p.02465tu30.o_..woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Stylesheet",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0lcynsr0~vswe.css"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/5c285b27cdda1fe8-s.p.0yo6-5yoeeudq.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/effe91970fc4db64-s.p.07ig5l8azj~hy.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/13jyg17yyyx12.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/01-0nzqgi~ste.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/turbopack-05gll5c28mkeo.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0md3ggjxck2k9.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0xi4.f-5qedg7.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0rf_gma.tr_v..js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0bmlz92jyvdcv.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/07zqrsr1x12ad.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0jksaw3l~3wdu.js"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=1h5tm"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=iz3l4"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=lwmat"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=qx071"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0ur974aq.7r3x.js"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/dashboard"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/dashboard"
+          }
+        ],
+        "httpErrors": [],
+        "failures": [
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          }
+        ],
+        "nonCanceledFailures": []
+      },
+      "console": {
+        "errors": [],
+        "exceptions": []
+      },
+      "artifact": "dashboard-player-iteration-2-1440x1024.png"
+    },
+    "adminDesktop": {
+      "role": "TEAM_ADMIN",
+      "email": "diego@halcones.test",
+      "authMethod": "qa-signed-token-no-login-request",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "payload": {
+        "status": 200,
+        "body": {
+          "totals": {
+            "members": 12,
+            "catalog": 14,
+            "awards": 40,
+            "points": 4280,
+            "uniqueEarned": 7,
+            "participants": 10
+          },
+          "me": {
+            "puntos": 100,
+            "logrosCount": 1,
+            "position": 10
+          },
+          "topPlayers": [
+            {
+              "id": 3,
+              "displayName": "Ana Fernández",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-03T09:00:00.000Z",
+              "puntos": 790,
+              "logrosCount": 7,
+              "ultimoLogro": {
+                "id": 7,
+                "nombre": "Pase decisivo",
+                "fecha": "2026-09-16T18:00:00.000Z"
+              },
+              "position": 1
+            },
+            {
+              "id": 4,
+              "displayName": "Marcos del Río",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-04T09:00:00.000Z",
+              "puntos": 700,
+              "logrosCount": 6,
+              "ultimoLogro": {
+                "id": 6,
+                "nombre": "Racha impecable",
+                "fecha": "2026-09-17T12:00:00.000Z"
+              },
+              "position": 2
+            },
+            {
+              "id": 5,
+              "displayName": "Laura Sánchez",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-05T09:00:00.000Z",
+              "puntos": 550,
+              "logrosCount": 5,
+              "ultimoLogro": {
+                "id": 5,
+                "nombre": "Mentoría",
+                "fecha": "2026-09-17T17:00:00.000Z"
+              },
+              "position": 3
+            }
+          ],
+          "recentAchievements": [
+            {
+              "id": 19,
+              "createdAt": "2026-09-18T10:00:00.000Z",
+              "nombre": "Guía para el siguiente vuelo",
+              "puntos": 120,
+              "criterios": [
+                "Redactar una guía con los acuerdos del equipo.",
+                "Revisarla con otra persona antes de compartirla."
+              ],
+              "descripcion": "Compartir una guía práctica que ayude a nuevas incorporaciones.",
+              "categoria": "Comunidad",
+              "icono": null,
+              "teamId": 1,
+              "holdersCount": 0
+            },
+            {
+              "id": 18,
+              "createdAt": "2026-09-18T09:00:00.000Z",
+              "nombre": "Organización compartida",
+              "puntos": 100,
+              "criterios": [
+                "Acordar fecha y lugar con el equipo.",
+                "Comunicar la planificación a todos los miembros."
+              ],
+              "descripcion": "Reconoce a quien organiza un encuentro y coordina al equipo.",
+              "categoria": "Equipo",
+              "icono": null,
+              "teamId": 1,
+              "holdersCount": 0
+            },
+            {
+              "id": 12,
+              "createdAt": "2026-09-12T09:00:00.000Z",
+              "nombre": "Una victoria compartida",
+              "puntos": 160,
+              "criterios": [
+                "Completar una tarea exigente con ayuda de varias personas del equipo.",
+                "Confirmar el resultado con un administrador del equipo."
+              ],
+              "descripcion": "Completar una tarea exigente con ayuda de varias personas del equipo.",
+              "categoria": "Equipo",
+              "icono": "🏆",
+              "teamId": 1,
+              "holdersCount": 0
+            }
+          ],
+          "recentAwards": [
+            {
+              "id": 40,
+              "fecha": "2026-09-19T12:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 4,
+                "createdAt": "2026-09-04T09:00:00.000Z",
+                "nombre": "Trabajo en equipo",
+                "puntos": 80,
+                "criterios": [
+                  "Ayudar a otra persona a completar un objetivo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Ayudar a otra persona a completar un objetivo.",
+                "categoria": "Equipo",
+                "icono": "🤝",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 39,
+              "fecha": "2026-09-19T11:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 2,
+                "createdAt": "2026-09-02T09:00:00.000Z",
+                "nombre": "Caza nocturna",
+                "puntos": 50,
+                "criterios": [
+                  "Resolver un reto fuera del horario habitual.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Resolver un reto fuera del horario habitual.",
+                "categoria": "Constancia",
+                "icono": "🌙",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 38,
+              "fecha": "2026-09-19T10:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 1,
+                "createdAt": "2026-09-01T09:00:00.000Z",
+                "nombre": "Primer vuelo",
+                "puntos": 100,
+                "criterios": [
+                  "Completar el primer objetivo del equipo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Completar el primer objetivo del equipo.",
+                "categoria": "Inicio",
+                "icono": "🪽",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 37,
+              "fecha": "2026-09-19T09:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 3,
+                "createdAt": "2026-09-03T09:00:00.000Z",
+                "nombre": "Vuelo en picado",
+                "puntos": 200,
+                "criterios": [
+                  "Cerrar una tarea crítica antes del plazo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Cerrar una tarea crítica antes del plazo.",
+                "categoria": "Impacto",
+                "icono": "⚡",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 36,
+              "fecha": "2026-09-18T20:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 2,
+                "createdAt": "2026-09-02T09:00:00.000Z",
+                "nombre": "Caza nocturna",
+                "puntos": 50,
+                "criterios": [
+                  "Resolver un reto fuera del horario habitual.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Resolver un reto fuera del horario habitual.",
+                "categoria": "Constancia",
+                "icono": "🌙",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 35,
+              "fecha": "2026-09-18T19:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 1,
+                "createdAt": "2026-09-01T09:00:00.000Z",
+                "nombre": "Primer vuelo",
+                "puntos": 100,
+                "criterios": [
+                  "Completar el primer objetivo del equipo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Completar el primer objetivo del equipo.",
+                "categoria": "Inicio",
+                "icono": "🪽",
+                "teamId": 1
+              }
+            }
+          ],
+          "mostEarned": {
+            "id": 1,
+            "createdAt": "2026-09-01T09:00:00.000Z",
+            "nombre": "Primer vuelo",
+            "puntos": 100,
+            "criterios": [
+              "Completar el primer objetivo del equipo.",
+              "Confirmar el resultado con un administrador del equipo."
+            ],
+            "descripcion": "Completar el primer objetivo del equipo.",
+            "categoria": "Inicio",
+            "icono": "🪽",
+            "teamId": 1,
+            "holdersCount": 10
+          },
+          "rarestEarned": {
+            "id": 6,
+            "createdAt": "2026-09-06T09:00:00.000Z",
+            "nombre": "Racha impecable",
+            "puntos": 150,
+            "criterios": [
+              "Completar cinco objetivos consecutivos.",
+              "Confirmar el resultado con un administrador del equipo."
+            ],
+            "descripcion": "Completar cinco objetivos consecutivos.",
+            "categoria": "Constancia",
+            "icono": "🔥",
+            "teamId": 1,
+            "holdersCount": 2
+          }
+        }
+      },
+      "metrics": {
+        "clock": "2026-09-20T12:00:00.000Z",
+        "viewport": {
+          "width": 1440,
+          "height": 1024
+        },
+        "document": {
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollHeight": 1024
+        },
+        "globalOverflowX": false,
+        "bands": {
+          "overview": {
+            "rect": {
+              "x": 196.46875,
+              "y": 153.46875,
+              "width": 1219.0625,
+              "height": 328,
+              "right": 1415.53125,
+              "bottom": 481.46875
+            },
+            "columns": "452.297px 392.797px 345.188px",
+            "children": [
+              {
+                "x": 196.46875,
+                "y": 153.46875,
+                "width": 452.296875,
+                "height": 328,
+                "right": 648.765625,
+                "bottom": 481.46875
+              },
+              {
+                "x": 663.15625,
+                "y": 153.46875,
+                "width": 392.796875,
+                "height": 328,
+                "right": 1055.953125,
+                "bottom": 481.46875
+              },
+              {
+                "x": 1070.34375,
+                "y": 153.46875,
+                "width": 345.1875,
+                "height": 328,
+                "right": 1415.53125,
+                "bottom": 481.46875
+              }
+            ]
+          },
+          "details": {
+            "rect": {
+              "x": 196.46875,
+              "y": 495.859375,
+              "width": 1219.0625,
+              "height": 296,
+              "right": 1415.53125,
+              "bottom": 791.859375
+            },
+            "columns": "452.297px 321.375px 416.609px",
+            "children": [
+              {
+                "x": 196.46875,
+                "y": 495.859375,
+                "width": 452.296875,
+                "height": 296,
+                "right": 648.765625,
+                "bottom": 791.859375
+              },
+              {
+                "x": 663.15625,
+                "y": 495.859375,
+                "width": 321.375,
+                "height": 296,
+                "right": 984.53125,
+                "bottom": 791.859375
+              },
+              {
+                "x": 998.921875,
+                "y": 495.859375,
+                "width": 416.609375,
+                "height": 296,
+                "right": 1415.53125,
+                "bottom": 791.859375
+              }
+            ]
+          }
+        },
+        "panels": [
+          {
+            "title": "Participación del equipo",
+            "rect": {
+              "x": 196.46875,
+              "y": 153.46875,
+              "width": 452.296875,
+              "height": 328,
+              "right": 648.765625,
+              "bottom": 481.46875
+            },
+            "clientWidth": 450,
+            "scrollWidth": 450,
+            "clientHeight": 326,
+            "scrollHeight": 326,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "hidden",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Estadísticas del equipo",
+            "rect": {
+              "x": 663.15625,
+              "y": 153.46875,
+              "width": 392.796875,
+              "height": 328,
+              "right": 1055.953125,
+              "bottom": 481.46875
+            },
+            "clientWidth": 391,
+            "scrollWidth": 391,
+            "clientHeight": 326,
+            "scrollHeight": 326,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Actividad reciente",
+            "rect": {
+              "x": 1070.34375,
+              "y": 153.46875,
+              "width": 345.1875,
+              "height": 328,
+              "right": 1415.53125,
+              "bottom": 481.46875
+            },
+            "clientWidth": 343,
+            "scrollWidth": 343,
+            "clientHeight": 326,
+            "scrollHeight": 326,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [
+              {
+                "x": 1089.34375,
+                "y": 207.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 255.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 255.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 303.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 303.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 351.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 351.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 399.859375
+              },
+              {
+                "x": 1089.34375,
+                "y": 399.859375,
+                "width": 307.1875,
+                "height": 48,
+                "right": 1396.53125,
+                "bottom": 447.859375
+              }
+            ],
+            "cards": []
+          },
+          {
+            "title": "Últimos logros añadidos",
+            "rect": {
+              "x": 196.46875,
+              "y": 495.859375,
+              "width": 452.296875,
+              "height": 296,
+              "right": 648.765625,
+              "bottom": 791.859375
+            },
+            "clientWidth": 450,
+            "scrollWidth": 450,
+            "clientHeight": 294,
+            "scrollHeight": 294,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": [
+              {
+                "x": 215.46875,
+                "y": 579.859375,
+                "width": 132.765625,
+                "height": 206.234375,
+                "right": 348.234375,
+                "bottom": 786.09375
+              },
+              {
+                "x": 356.234375,
+                "y": 579.859375,
+                "width": 132.765625,
+                "height": 206.234375,
+                "right": 489,
+                "bottom": 786.09375
+              },
+              {
+                "x": 497,
+                "y": 579.859375,
+                "width": 132.765625,
+                "height": 206.234375,
+                "right": 629.765625,
+                "bottom": 786.09375
+              }
+            ]
+          },
+          {
+            "title": "Tu resumen",
+            "rect": {
+              "x": 663.15625,
+              "y": 495.859375,
+              "width": 321.375,
+              "height": 296,
+              "right": 984.53125,
+              "bottom": 791.859375
+            },
+            "clientWidth": 319,
+            "scrollWidth": 319,
+            "clientHeight": 294,
+            "scrollHeight": 294,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Top 3 jugadores",
+            "rect": {
+              "x": 998.921875,
+              "y": 495.859375,
+              "width": 416.609375,
+              "height": 296,
+              "right": 1415.53125,
+              "bottom": 791.859375
+            },
+            "clientWidth": 415,
+            "scrollWidth": 415,
+            "clientHeight": 294,
+            "scrollHeight": 294,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [
+              {
+                "x": 1017.921875,
+                "y": 575.859375,
+                "width": 378.609375,
+                "height": 64,
+                "right": 1396.53125,
+                "bottom": 639.859375
+              },
+              {
+                "x": 1017.921875,
+                "y": 639.859375,
+                "width": 378.609375,
+                "height": 64,
+                "right": 1396.53125,
+                "bottom": 703.859375
+              },
+              {
+                "x": 1017.921875,
+                "y": 703.859375,
+                "width": 378.609375,
+                "height": 64,
+                "right": 1396.53125,
+                "bottom": 767.859375
+              }
+            ],
+            "cards": []
+          }
+        ],
+        "meterSegments": 20,
+        "fixture": {
+          "participation": true,
+          "totals": true,
+          "ana": true,
+          "top3": true,
+          "activity": true,
+          "highlights": true
+        },
+        "adminNavVisible": true
+      },
+      "network": {
+        "responses": [
+          {
+            "status": 200,
+            "type": "Document",
+            "url": "http://127.0.0.1:3000/equipos/halcones"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/192f2ab6b81220b0-s.p.02465tu30.o_..woff2"
+          },
+          {
+            "status": 200,
+            "type": "Stylesheet",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0lcynsr0~vswe.css"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/5c285b27cdda1fe8-s.p.0yo6-5yoeeudq.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/effe91970fc4db64-s.p.07ig5l8azj~hy.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/01-0nzqgi~ste.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/13jyg17yyyx12.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/turbopack-05gll5c28mkeo.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0xi4.f-5qedg7.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0md3ggjxck2k9.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/07zqrsr1x12ad.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0rf_gma.tr_v..js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0bmlz92jyvdcv.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0jksaw3l~3wdu.js"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=1h5tm"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=iz3l4"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/admin?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=lwmat"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos?_rsc=qx071"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/dashboard"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0ur974aq.7r3x.js"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/admin?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1fbzn"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/dashboard"
+          }
+        ],
+        "httpErrors": [],
+        "failures": [
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          },
+          {
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true,
+            "type": "Fetch"
+          }
+        ],
+        "nonCanceledFailures": []
+      },
+      "console": {
+        "errors": [],
+        "exceptions": []
+      },
+      "artifact": "dashboard-team-admin-iteration-2-1440x1024.png"
+    },
+    "playerMobile": {
+      "role": "PLAYER",
+      "email": "ana@halcones.test",
+      "authMethod": "qa-signed-token-no-login-request",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "payload": {
+        "status": 200,
+        "body": {
+          "totals": {
+            "members": 12,
+            "catalog": 14,
+            "awards": 40,
+            "points": 4280,
+            "uniqueEarned": 7,
+            "participants": 10
+          },
+          "me": {
+            "puntos": 790,
+            "logrosCount": 7,
+            "position": 1
+          },
+          "topPlayers": [
+            {
+              "id": 3,
+              "displayName": "Ana Fernández",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-03T09:00:00.000Z",
+              "puntos": 790,
+              "logrosCount": 7,
+              "ultimoLogro": {
+                "id": 7,
+                "nombre": "Pase decisivo",
+                "fecha": "2026-09-16T18:00:00.000Z"
+              },
+              "position": 1
+            },
+            {
+              "id": 4,
+              "displayName": "Marcos del Río",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-04T09:00:00.000Z",
+              "puntos": 700,
+              "logrosCount": 6,
+              "ultimoLogro": {
+                "id": 6,
+                "nombre": "Racha impecable",
+                "fecha": "2026-09-17T12:00:00.000Z"
+              },
+              "position": 2
+            },
+            {
+              "id": 5,
+              "displayName": "Laura Sánchez",
+              "role": "PLAYER",
+              "joinedAt": "2026-09-05T09:00:00.000Z",
+              "puntos": 550,
+              "logrosCount": 5,
+              "ultimoLogro": {
+                "id": 5,
+                "nombre": "Mentoría",
+                "fecha": "2026-09-17T17:00:00.000Z"
+              },
+              "position": 3
+            }
+          ],
+          "recentAchievements": [
+            {
+              "id": 19,
+              "createdAt": "2026-09-18T10:00:00.000Z",
+              "nombre": "Guía para el siguiente vuelo",
+              "puntos": 120,
+              "criterios": [
+                "Redactar una guía con los acuerdos del equipo.",
+                "Revisarla con otra persona antes de compartirla."
+              ],
+              "descripcion": "Compartir una guía práctica que ayude a nuevas incorporaciones.",
+              "categoria": "Comunidad",
+              "icono": null,
+              "teamId": 1,
+              "holdersCount": 0
+            },
+            {
+              "id": 18,
+              "createdAt": "2026-09-18T09:00:00.000Z",
+              "nombre": "Organización compartida",
+              "puntos": 100,
+              "criterios": [
+                "Acordar fecha y lugar con el equipo.",
+                "Comunicar la planificación a todos los miembros."
+              ],
+              "descripcion": "Reconoce a quien organiza un encuentro y coordina al equipo.",
+              "categoria": "Equipo",
+              "icono": null,
+              "teamId": 1,
+              "holdersCount": 0
+            },
+            {
+              "id": 12,
+              "createdAt": "2026-09-12T09:00:00.000Z",
+              "nombre": "Una victoria compartida",
+              "puntos": 160,
+              "criterios": [
+                "Completar una tarea exigente con ayuda de varias personas del equipo.",
+                "Confirmar el resultado con un administrador del equipo."
+              ],
+              "descripcion": "Completar una tarea exigente con ayuda de varias personas del equipo.",
+              "categoria": "Equipo",
+              "icono": "🏆",
+              "teamId": 1,
+              "holdersCount": 0
+            }
+          ],
+          "recentAwards": [
+            {
+              "id": 40,
+              "fecha": "2026-09-19T12:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 4,
+                "createdAt": "2026-09-04T09:00:00.000Z",
+                "nombre": "Trabajo en equipo",
+                "puntos": 80,
+                "criterios": [
+                  "Ayudar a otra persona a completar un objetivo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Ayudar a otra persona a completar un objetivo.",
+                "categoria": "Equipo",
+                "icono": "🤝",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 39,
+              "fecha": "2026-09-19T11:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 2,
+                "createdAt": "2026-09-02T09:00:00.000Z",
+                "nombre": "Caza nocturna",
+                "puntos": 50,
+                "criterios": [
+                  "Resolver un reto fuera del horario habitual.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Resolver un reto fuera del horario habitual.",
+                "categoria": "Constancia",
+                "icono": "🌙",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 38,
+              "fecha": "2026-09-19T10:00:00.000Z",
+              "user": {
+                "id": 10,
+                "displayName": "Álex Moreno de la Fuente"
+              },
+              "logro": {
+                "id": 1,
+                "createdAt": "2026-09-01T09:00:00.000Z",
+                "nombre": "Primer vuelo",
+                "puntos": 100,
+                "criterios": [
+                  "Completar el primer objetivo del equipo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Completar el primer objetivo del equipo.",
+                "categoria": "Inicio",
+                "icono": "🪽",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 37,
+              "fecha": "2026-09-19T09:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 3,
+                "createdAt": "2026-09-03T09:00:00.000Z",
+                "nombre": "Vuelo en picado",
+                "puntos": 200,
+                "criterios": [
+                  "Cerrar una tarea crítica antes del plazo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Cerrar una tarea crítica antes del plazo.",
+                "categoria": "Impacto",
+                "icono": "⚡",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 36,
+              "fecha": "2026-09-18T20:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 2,
+                "createdAt": "2026-09-02T09:00:00.000Z",
+                "nombre": "Caza nocturna",
+                "puntos": 50,
+                "criterios": [
+                  "Resolver un reto fuera del horario habitual.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Resolver un reto fuera del horario habitual.",
+                "categoria": "Constancia",
+                "icono": "🌙",
+                "teamId": 1
+              }
+            },
+            {
+              "id": 35,
+              "fecha": "2026-09-18T19:00:00.000Z",
+              "user": {
+                "id": 9,
+                "displayName": "Carlos Torres"
+              },
+              "logro": {
+                "id": 1,
+                "createdAt": "2026-09-01T09:00:00.000Z",
+                "nombre": "Primer vuelo",
+                "puntos": 100,
+                "criterios": [
+                  "Completar el primer objetivo del equipo.",
+                  "Confirmar el resultado con un administrador del equipo."
+                ],
+                "descripcion": "Completar el primer objetivo del equipo.",
+                "categoria": "Inicio",
+                "icono": "🪽",
+                "teamId": 1
+              }
+            }
+          ],
+          "mostEarned": {
+            "id": 1,
+            "createdAt": "2026-09-01T09:00:00.000Z",
+            "nombre": "Primer vuelo",
+            "puntos": 100,
+            "criterios": [
+              "Completar el primer objetivo del equipo.",
+              "Confirmar el resultado con un administrador del equipo."
+            ],
+            "descripcion": "Completar el primer objetivo del equipo.",
+            "categoria": "Inicio",
+            "icono": "🪽",
+            "teamId": 1,
+            "holdersCount": 10
+          },
+          "rarestEarned": {
+            "id": 6,
+            "createdAt": "2026-09-06T09:00:00.000Z",
+            "nombre": "Racha impecable",
+            "puntos": 150,
+            "criterios": [
+              "Completar cinco objetivos consecutivos.",
+              "Confirmar el resultado con un administrador del equipo."
+            ],
+            "descripcion": "Completar cinco objetivos consecutivos.",
+            "categoria": "Constancia",
+            "icono": "🔥",
+            "teamId": 1,
+            "holdersCount": 2
+          }
+        }
+      },
+      "metrics": {
+        "clock": "2026-09-20T12:00:00.000Z",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "scrollHeight": 2862
+        },
+        "globalOverflowX": false,
+        "bands": {
+          "overview": {
+            "rect": {
+              "x": 16,
+              "y": 214,
+              "width": 358,
+              "height": 1016.578125,
+              "right": 374,
+              "bottom": 1230.578125
+            },
+            "columns": "358px",
+            "children": [
+              {
+                "x": 16,
+                "y": 214,
+                "width": 358,
+                "height": 355.1875,
+                "right": 374,
+                "bottom": 569.1875
+              },
+              {
+                "x": 16,
+                "y": 579.1875,
+                "width": 358,
+                "height": 321.390625,
+                "right": 374,
+                "bottom": 900.578125
+              },
+              {
+                "x": 16,
+                "y": 910.578125,
+                "width": 358,
+                "height": 320,
+                "right": 374,
+                "bottom": 1230.578125
+              }
+            ]
+          },
+          "details": {
+            "rect": {
+              "x": 16,
+              "y": 1240.578125,
+              "width": 358,
+              "height": 1605.15625,
+              "right": 374,
+              "bottom": 2845.734375
+            },
+            "columns": "358px",
+            "children": [
+              {
+                "x": 16,
+                "y": 1240.578125,
+                "width": 358,
+                "height": 1009.15625,
+                "right": 374,
+                "bottom": 2249.734375
+              },
+              {
+                "x": 16,
+                "y": 2259.734375,
+                "width": 358,
+                "height": 288,
+                "right": 374,
+                "bottom": 2547.734375
+              },
+              {
+                "x": 16,
+                "y": 2557.734375,
+                "width": 358,
+                "height": 288,
+                "right": 374,
+                "bottom": 2845.734375
+              }
+            ]
+          }
+        },
+        "panels": [
+          {
+            "title": "Participación del equipo",
+            "rect": {
+              "x": 16,
+              "y": 214,
+              "width": 358,
+              "height": 355.1875,
+              "right": 374,
+              "bottom": 569.1875
+            },
+            "clientWidth": 356,
+            "scrollWidth": 356,
+            "clientHeight": 353,
+            "scrollHeight": 353,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "hidden",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Estadísticas del equipo",
+            "rect": {
+              "x": 16,
+              "y": 579.1875,
+              "width": 358,
+              "height": 321.390625,
+              "right": 374,
+              "bottom": 900.578125
+            },
+            "clientWidth": 356,
+            "scrollWidth": 356,
+            "clientHeight": 319,
+            "scrollHeight": 319,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Actividad reciente",
+            "rect": {
+              "x": 16,
+              "y": 910.578125,
+              "width": 358,
+              "height": 320,
+              "right": 374,
+              "bottom": 1230.578125
+            },
+            "clientWidth": 356,
+            "scrollWidth": 356,
+            "clientHeight": 318,
+            "scrollHeight": 318,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [
+              {
+                "x": 29,
+                "y": 958.96875,
+                "width": 332,
+                "height": 48,
+                "right": 361,
+                "bottom": 1006.96875
+              },
+              {
+                "x": 29,
+                "y": 1006.96875,
+                "width": 332,
+                "height": 48,
+                "right": 361,
+                "bottom": 1054.96875
+              },
+              {
+                "x": 29,
+                "y": 1054.96875,
+                "width": 332,
+                "height": 48,
+                "right": 361,
+                "bottom": 1102.96875
+              },
+              {
+                "x": 29,
+                "y": 1102.96875,
+                "width": 332,
+                "height": 48,
+                "right": 361,
+                "bottom": 1150.96875
+              },
+              {
+                "x": 29,
+                "y": 1150.96875,
+                "width": 332,
+                "height": 48,
+                "right": 361,
+                "bottom": 1198.96875
+              }
+            ],
+            "cards": []
+          },
+          {
+            "title": "Últimos logros añadidos",
+            "rect": {
+              "x": 16,
+              "y": 1240.578125,
+              "width": 358,
+              "height": 1009.15625,
+              "right": 374,
+              "bottom": 2249.734375
+            },
+            "clientWidth": 356,
+            "scrollWidth": 356,
+            "clientHeight": 1007,
+            "scrollHeight": 1007,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 2,
+            "rows": [],
+            "cards": [
+              {
+                "x": 29,
+                "y": 1318.578125,
+                "width": 332,
+                "height": 300.71875,
+                "right": 361,
+                "bottom": 1619.296875
+              },
+              {
+                "x": 29,
+                "y": 1627.296875,
+                "width": 332,
+                "height": 300.71875,
+                "right": 361,
+                "bottom": 1928.015625
+              },
+              {
+                "x": 29,
+                "y": 1936.015625,
+                "width": 332,
+                "height": 300.71875,
+                "right": 361,
+                "bottom": 2236.734375
+              }
+            ]
+          },
+          {
+            "title": "Tu resumen",
+            "rect": {
+              "x": 16,
+              "y": 2259.734375,
+              "width": 358,
+              "height": 288,
+              "right": 374,
+              "bottom": 2547.734375
+            },
+            "clientWidth": 356,
+            "scrollWidth": 356,
+            "clientHeight": 286,
+            "scrollHeight": 286,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [],
+            "cards": []
+          },
+          {
+            "title": "Top 3 jugadores",
+            "rect": {
+              "x": 16,
+              "y": 2557.734375,
+              "width": 358,
+              "height": 288,
+              "right": 374,
+              "bottom": 2845.734375
+            },
+            "clientWidth": 356,
+            "scrollWidth": 356,
+            "clientHeight": 286,
+            "scrollHeight": 286,
+            "overflowDeltaX": 0,
+            "overflowDeltaY": 0,
+            "overflowStyle": "visible",
+            "clippedDescendants": [],
+            "headingLines": 1,
+            "rows": [
+              {
+                "x": 29,
+                "y": 2631.734375,
+                "width": 332,
+                "height": 64,
+                "right": 361,
+                "bottom": 2695.734375
+              },
+              {
+                "x": 29,
+                "y": 2695.734375,
+                "width": 332,
+                "height": 64,
+                "right": 361,
+                "bottom": 2759.734375
+              },
+              {
+                "x": 29,
+                "y": 2759.734375,
+                "width": 332,
+                "height": 64,
+                "right": 361,
+                "bottom": 2823.734375
+              }
+            ],
+            "cards": []
+          }
+        ],
+        "meterSegments": 20,
+        "fixture": {
+          "participation": true,
+          "totals": true,
+          "ana": true,
+          "top3": true,
+          "activity": true,
+          "highlights": true
+        },
+        "adminNavVisible": false
+      },
+      "network": {
+        "responses": [
+          {
+            "status": 200,
+            "type": "Document",
+            "url": "http://127.0.0.1:3000/equipos/halcones"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/192f2ab6b81220b0-s.p.02465tu30.o_..woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Stylesheet",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0lcynsr0~vswe.css"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/5c285b27cdda1fe8-s.p.0yo6-5yoeeudq.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Font",
+            "url": "http://127.0.0.1:3000/_next/static/media/effe91970fc4db64-s.p.07ig5l8azj~hy.woff2"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/01-0nzqgi~ste.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/13jyg17yyyx12.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0xi4.f-5qedg7.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/turbopack-05gll5c28mkeo.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0rf_gma.tr_v..js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0bmlz92jyvdcv.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0md3ggjxck2k9.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/07zqrsr1x12ad.js"
+          },
+          {
+            "status": 200,
+            "type": "Script",
+            "url": "http://127.0.0.1:3000/_next/static/chunks/0jksaw3l~3wdu.js"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/equipos/halcones?_rsc=1eflz"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/dashboard"
+          },
+          {
+            "status": 200,
+            "type": "Fetch",
+            "url": "http://127.0.0.1:3000/api/equipos/halcones/dashboard"
+          }
+        ],
+        "httpErrors": [],
+        "failures": [],
+        "nonCanceledFailures": []
+      },
+      "console": {
+        "errors": [],
+        "exceptions": []
+      },
+      "artifact": "dashboard-player-iteration-2-390x844.png"
+    }
+  }
+}

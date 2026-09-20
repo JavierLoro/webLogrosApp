@@ -1,0 +1,661 @@
+{
+  "capturedAt": "2026-09-20T14:36:54.830Z",
+  "clock": "2026-09-20T12:00:00.000Z",
+  "auth": "qa-signed-in-memory",
+  "captures": [
+    {
+      "name": "catalog-player",
+      "role": "PLAYER",
+      "route": "/equipos/halcones/logros",
+      "viewport": {
+        "w": 1440,
+        "h": 1024
+      },
+      "metrics": {
+        "viewport": {
+          "w": 1440,
+          "h": 1024
+        },
+        "doc": {
+          "sw": 1440,
+          "cw": 1440,
+          "sh": 1258
+        },
+        "overflow": false,
+        "cardCount": 14,
+        "cardRects": [
+          {
+            "x": 196.46875,
+            "y": 381.265625,
+            "width": 234.203125,
+            "height": 288.984375,
+            "right": 430.671875,
+            "bottom": 670.25
+          },
+          {
+            "x": 442.671875,
+            "y": 381.265625,
+            "width": 234.21875,
+            "height": 288.984375,
+            "right": 676.890625,
+            "bottom": 670.25
+          },
+          {
+            "x": 688.890625,
+            "y": 381.265625,
+            "width": 234.203125,
+            "height": 288.984375,
+            "right": 923.09375,
+            "bottom": 670.25
+          },
+          {
+            "x": 935.09375,
+            "y": 381.265625,
+            "width": 234.21875,
+            "height": 288.984375,
+            "right": 1169.3125,
+            "bottom": 670.25
+          },
+          {
+            "x": 1181.3125,
+            "y": 381.265625,
+            "width": 234.203125,
+            "height": 288.984375,
+            "right": 1415.515625,
+            "bottom": 670.25
+          },
+          {
+            "x": 196.46875,
+            "y": 682.25,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 430.671875,
+            "bottom": 952.046875
+          },
+          {
+            "x": 442.671875,
+            "y": 682.25,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 676.890625,
+            "bottom": 952.046875
+          },
+          {
+            "x": 688.890625,
+            "y": 682.25,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 923.09375,
+            "bottom": 952.046875
+          },
+          {
+            "x": 935.09375,
+            "y": 682.25,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 1169.3125,
+            "bottom": 952.046875
+          },
+          {
+            "x": 1181.3125,
+            "y": 682.25,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 1415.515625,
+            "bottom": 952.046875
+          },
+          {
+            "x": 196.46875,
+            "y": 964.046875,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 430.671875,
+            "bottom": 1233.84375
+          },
+          {
+            "x": 442.671875,
+            "y": 964.046875,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 676.890625,
+            "bottom": 1233.84375
+          },
+          {
+            "x": 688.890625,
+            "y": 964.046875,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 923.09375,
+            "bottom": 1233.84375
+          },
+          {
+            "x": 935.09375,
+            "y": 964.046875,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 1169.3125,
+            "bottom": 1233.84375
+          }
+        ],
+        "grid": {
+          "rect": {
+            "x": 196.46875,
+            "y": 381.265625,
+            "width": 1219.0625,
+            "height": 852.578125,
+            "right": 1415.53125,
+            "bottom": 1233.84375
+          },
+          "columns": "234.203px 234.219px 234.203px 234.219px 234.203px"
+        },
+        "cta": {
+          "propose": true,
+          "create": false,
+          "send": false
+        },
+        "filters": {
+          "toolbar": true,
+          "categories": "Todos\nComunidad\nConstancia\nEquipo\nImpacto\nInicio",
+          "search": true
+        },
+        "form": false,
+        "formValues": null,
+        "submitDisabled": false,
+        "clock": "2026-09-20T12:00:00.000Z",
+        "filterResultCount": 2
+      },
+      "network": {
+        "http": [],
+        "fail": []
+      },
+      "consoleErrors": [],
+      "artifact": "catalog-player-1440x1024.png"
+    },
+    {
+      "name": "catalog-admin",
+      "role": "TEAM_ADMIN",
+      "route": "/equipos/halcones/logros",
+      "viewport": {
+        "w": 1440,
+        "h": 1024
+      },
+      "metrics": {
+        "viewport": {
+          "w": 1440,
+          "h": 1024
+        },
+        "doc": {
+          "sw": 1440,
+          "cw": 1440,
+          "sh": 1258
+        },
+        "overflow": false,
+        "cardCount": 14,
+        "cardRects": [
+          {
+            "x": 196.46875,
+            "y": 381.265625,
+            "width": 234.203125,
+            "height": 288.984375,
+            "right": 430.671875,
+            "bottom": 670.25
+          },
+          {
+            "x": 442.671875,
+            "y": 381.265625,
+            "width": 234.21875,
+            "height": 288.984375,
+            "right": 676.890625,
+            "bottom": 670.25
+          },
+          {
+            "x": 688.890625,
+            "y": 381.265625,
+            "width": 234.203125,
+            "height": 288.984375,
+            "right": 923.09375,
+            "bottom": 670.25
+          },
+          {
+            "x": 935.09375,
+            "y": 381.265625,
+            "width": 234.21875,
+            "height": 288.984375,
+            "right": 1169.3125,
+            "bottom": 670.25
+          },
+          {
+            "x": 1181.3125,
+            "y": 381.265625,
+            "width": 234.203125,
+            "height": 288.984375,
+            "right": 1415.515625,
+            "bottom": 670.25
+          },
+          {
+            "x": 196.46875,
+            "y": 682.25,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 430.671875,
+            "bottom": 952.046875
+          },
+          {
+            "x": 442.671875,
+            "y": 682.25,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 676.890625,
+            "bottom": 952.046875
+          },
+          {
+            "x": 688.890625,
+            "y": 682.25,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 923.09375,
+            "bottom": 952.046875
+          },
+          {
+            "x": 935.09375,
+            "y": 682.25,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 1169.3125,
+            "bottom": 952.046875
+          },
+          {
+            "x": 1181.3125,
+            "y": 682.25,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 1415.515625,
+            "bottom": 952.046875
+          },
+          {
+            "x": 196.46875,
+            "y": 964.046875,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 430.671875,
+            "bottom": 1233.84375
+          },
+          {
+            "x": 442.671875,
+            "y": 964.046875,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 676.890625,
+            "bottom": 1233.84375
+          },
+          {
+            "x": 688.890625,
+            "y": 964.046875,
+            "width": 234.203125,
+            "height": 269.796875,
+            "right": 923.09375,
+            "bottom": 1233.84375
+          },
+          {
+            "x": 935.09375,
+            "y": 964.046875,
+            "width": 234.21875,
+            "height": 269.796875,
+            "right": 1169.3125,
+            "bottom": 1233.84375
+          }
+        ],
+        "grid": {
+          "rect": {
+            "x": 196.46875,
+            "y": 381.265625,
+            "width": 1219.0625,
+            "height": 852.578125,
+            "right": 1415.53125,
+            "bottom": 1233.84375
+          },
+          "columns": "234.203px 234.219px 234.203px 234.219px 234.203px"
+        },
+        "cta": {
+          "propose": false,
+          "create": true,
+          "send": false
+        },
+        "filters": {
+          "toolbar": true,
+          "categories": "Todos\nComunidad\nConstancia\nEquipo\nImpacto\nInicio",
+          "search": true
+        },
+        "form": false,
+        "formValues": null,
+        "submitDisabled": false,
+        "clock": "2026-09-20T12:00:00.000Z",
+        "filterResultCount": 2
+      },
+      "network": {
+        "http": [],
+        "fail": []
+      },
+      "consoleErrors": [],
+      "artifact": "catalog-admin-1440x1024.png"
+    },
+    {
+      "name": "form-player",
+      "role": "PLAYER",
+      "route": "/equipos/halcones/logros/nuevo",
+      "viewport": {
+        "w": 1440,
+        "h": 1024
+      },
+      "metrics": {
+        "viewport": {
+          "w": 1440,
+          "h": 1024
+        },
+        "doc": {
+          "sw": 1440,
+          "cw": 1440,
+          "sh": 1024
+        },
+        "overflow": false,
+        "cardCount": 0,
+        "cardRects": [],
+        "grid": null,
+        "cta": {
+          "propose": true,
+          "create": false,
+          "send": true
+        },
+        "filters": {
+          "toolbar": false,
+          "categories": "",
+          "search": false
+        },
+        "form": true,
+        "formValues": {
+          "name": "Idea QA sin enviar",
+          "description": "Propuesta representativa no enviada durante la captura.",
+          "criterion": "Completar un criterio verificable.",
+          "points": null,
+          "category": null
+        },
+        "submitDisabled": false,
+        "clock": "2026-09-20T12:00:00.000Z"
+      },
+      "network": {
+        "http": [],
+        "fail": []
+      },
+      "consoleErrors": [],
+      "artifact": "form-player-1440x1024.png"
+    },
+    {
+      "name": "form-admin",
+      "role": "TEAM_ADMIN",
+      "route": "/equipos/halcones/logros/nuevo",
+      "viewport": {
+        "w": 1440,
+        "h": 1024
+      },
+      "metrics": {
+        "viewport": {
+          "w": 1440,
+          "h": 1024
+        },
+        "doc": {
+          "sw": 1440,
+          "cw": 1440,
+          "sh": 1024
+        },
+        "overflow": false,
+        "cardCount": 0,
+        "cardRects": [],
+        "grid": null,
+        "cta": {
+          "propose": false,
+          "create": true,
+          "send": false
+        },
+        "filters": {
+          "toolbar": false,
+          "categories": "",
+          "search": false
+        },
+        "form": true,
+        "formValues": {
+          "name": "Logro QA sin enviar",
+          "description": "Logro administrativo representativo no enviado.",
+          "criterion": "Validar el criterio con el equipo.",
+          "points": "75",
+          "category": "Equipo"
+        },
+        "submitDisabled": false,
+        "clock": "2026-09-20T12:00:00.000Z"
+      },
+      "network": {
+        "http": [],
+        "fail": []
+      },
+      "consoleErrors": [],
+      "artifact": "form-admin-1440x1024.png"
+    },
+    {
+      "name": "catalog-mobile",
+      "role": "PLAYER",
+      "route": "/equipos/halcones/logros",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "metrics": {
+        "viewport": {
+          "w": 390,
+          "h": 844
+        },
+        "doc": {
+          "sw": 390,
+          "cw": 390,
+          "sh": 5590
+        },
+        "overflow": false,
+        "cardCount": 14,
+        "cardRects": [
+          {
+            "x": 16,
+            "y": 665.796875,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 1005.234375
+          },
+          {
+            "x": 16,
+            "y": 1017.234375,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 1356.671875
+          },
+          {
+            "x": 16,
+            "y": 1368.671875,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 1708.109375
+          },
+          {
+            "x": 16,
+            "y": 1720.109375,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 2059.546875
+          },
+          {
+            "x": 16,
+            "y": 2071.546875,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 2410.984375
+          },
+          {
+            "x": 16,
+            "y": 2422.984375,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 2762.421875
+          },
+          {
+            "x": 16,
+            "y": 2774.421875,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 3113.859375
+          },
+          {
+            "x": 16,
+            "y": 3125.859375,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 3465.296875
+          },
+          {
+            "x": 16,
+            "y": 3477.296875,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 3816.734375
+          },
+          {
+            "x": 16,
+            "y": 3828.734375,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 4168.171875
+          },
+          {
+            "x": 16,
+            "y": 4180.171875,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 4519.609375
+          },
+          {
+            "x": 16,
+            "y": 4531.609375,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 4871.046875
+          },
+          {
+            "x": 16,
+            "y": 4883.046875,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 5222.484375
+          },
+          {
+            "x": 16,
+            "y": 5234.484375,
+            "width": 358,
+            "height": 339.4375,
+            "right": 374,
+            "bottom": 5573.921875
+          }
+        ],
+        "grid": {
+          "rect": {
+            "x": 16,
+            "y": 665.796875,
+            "width": 358,
+            "height": 4908.125,
+            "right": 374,
+            "bottom": 5573.921875
+          },
+          "columns": "358px"
+        },
+        "cta": {
+          "propose": true,
+          "create": false,
+          "send": false
+        },
+        "filters": {
+          "toolbar": true,
+          "categories": "Todos\nComunidad\nConstancia\nEquipo\nImpacto\nInicio",
+          "search": true
+        },
+        "form": false,
+        "formValues": null,
+        "submitDisabled": false,
+        "clock": "2026-09-20T12:00:00.000Z",
+        "filterResultCount": 2
+      },
+      "network": {
+        "http": [],
+        "fail": []
+      },
+      "consoleErrors": [],
+      "artifact": "catalog-player-390x844.png"
+    },
+    {
+      "name": "form-mobile",
+      "role": "PLAYER",
+      "route": "/equipos/halcones/logros/nuevo",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "metrics": {
+        "viewport": {
+          "w": 390,
+          "h": 844
+        },
+        "doc": {
+          "sw": 390,
+          "cw": 390,
+          "sh": 1684
+        },
+        "overflow": false,
+        "cardCount": 0,
+        "cardRects": [],
+        "grid": null,
+        "cta": {
+          "propose": true,
+          "create": false,
+          "send": true
+        },
+        "filters": {
+          "toolbar": false,
+          "categories": "",
+          "search": false
+        },
+        "form": true,
+        "formValues": {
+          "name": "Idea QA sin enviar",
+          "description": "Propuesta representativa no enviada durante la captura.",
+          "criterion": "Completar un criterio verificable.",
+          "points": null,
+          "category": null
+        },
+        "submitDisabled": false,
+        "clock": "2026-09-20T12:00:00.000Z"
+      },
+      "network": {
+        "http": [],
+        "fail": []
+      },
+      "consoleErrors": [],
+      "artifact": "form-player-390x844.png"
+    }
+  ]
+}

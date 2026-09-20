@@ -1,0 +1,1578 @@
+{
+  "capturedAt": "2026-09-20T12:00:00.000Z",
+  "locale": "es-ES",
+  "timezone": "Europe/Madrid",
+  "route": "/equipos/halcones",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "fixture": "halcones-visual",
+  "scope": "shared shell only; #team-main-content excluded from visual shell evaluation",
+  "captures": {
+    "player": {
+      "role": "PLAYER",
+      "email": "ana@halcones.test",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "network": [
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Document",
+          "url": "http://127.0.0.1:3000/login"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/192f2ab6b81220b0-s.p.02465tu30.o_..woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/03fncz6s0dpv0.css"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/5c285b27cdda1fe8-s.p.0yo6-5yoeeudq.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/static/media/lockerboard-symbol-color-on-dark.0e1p.53juloa2.svg"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/effe91970fc4db64-s.p.07ig5l8azj~hy.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/static/media/lockerboard-logo-horizontal-color-on-dark.15pf0j8xkapv3.svg"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/13jyg17yyyx12.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/01-0nzqgi~ste.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/turbopack-05gll5c28mkeo.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0kjg37cno2ocd.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0xi4.f-5qedg7.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0rf_gma.tr_v..js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/15qfljxycflk3.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/07zqrsr1x12ad.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=4c4j4"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=qajof"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0ojvlmy3gkow8.css"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/7ebf22b5a21034f8-s.p.10_7676vm7pyy.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=1y0qa"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=113as"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=1bt41"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=l7ymg"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=rnjqr"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/?_rsc=9c17x"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/02npar25kj58..js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0ur974aq.7r3x.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0yvi-0c-j_td3.js"
+        },
+        {
+          "method": "POST",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/api/auth/login"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Document",
+          "url": "http://127.0.0.1:3000/equipos/halcones"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/03fncz6s0dpv0.css"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/192f2ab6b81220b0-s.p.02465tu30.o_..woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/5c285b27cdda1fe8-s.p.0yo6-5yoeeudq.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/effe91970fc4db64-s.p.07ig5l8azj~hy.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/01-0nzqgi~ste.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/13jyg17yyyx12.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/turbopack-05gll5c28mkeo.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0kjg37cno2ocd.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0xi4.f-5qedg7.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/07zqrsr1x12ad.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0x_0c868ju30n.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0rf_gma.tr_v..js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/025kka~e0fc3x.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=1h5tm"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=iz3l4"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=lwmat"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=qx071"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/logros"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0ur974aq.7r3x.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flockerboard-overlay-container-data-1600x900.0~b3v0363zl08.png&w=640&q=75"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flockerboard-overlay-achievement-1600x900.13ec_ym6sc6te.png&w=640&q=75"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1eflz"
+        }
+      ],
+      "networkFailures": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "console": [
+        {
+          "source": "recommendation",
+          "level": "verbose",
+          "message": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+          "url": "http://127.0.0.1:3000/login"
+        }
+      ],
+      "login": {
+        "status": 200,
+        "teams": [
+          {
+            "slug": "halcones",
+            "nombre": "Halcones",
+            "role": "PLAYER"
+          },
+          {
+            "slug": "lobos",
+            "nombre": "Lobos",
+            "role": "PLAYER"
+          }
+        ],
+        "isSuperAdmin": false
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:3000/equipos/halcones",
+        "title": "LockerBoard | El catálogo de logros de tu equipo",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "dpr": 1
+        },
+        "document": {
+          "scrollWidth": 1425,
+          "scrollHeight": 1002,
+          "scrollX": 0,
+          "scrollY": 0
+        },
+        "overflowX": false,
+        "shell": {
+          "sidebar": {
+            "x": 0,
+            "y": 0,
+            "width": 172,
+            "height": 900
+          },
+          "header": {
+            "x": 172,
+            "y": 0,
+            "width": 1253,
+            "height": 97
+          },
+          "main": {
+            "x": 172,
+            "y": 97,
+            "width": 1253,
+            "height": 904.5625
+          }
+        },
+        "nav": [
+          {
+            "label": "Dashboard",
+            "href": "/equipos/halcones",
+            "current": "page"
+          },
+          {
+            "label": "Logros",
+            "href": "/equipos/halcones/logros",
+            "current": null
+          },
+          {
+            "label": "Ranking",
+            "href": "/equipos/halcones/ranking",
+            "current": null
+          },
+          {
+            "label": "Jugadores",
+            "href": "/equipos/halcones/jugadores",
+            "current": null
+          },
+          {
+            "label": "Solicitudes",
+            "href": "/equipos/halcones/solicitudes",
+            "current": null
+          }
+        ],
+        "sidebarLinks": [
+          {
+            "label": "LockerBoardHalconesLockerBoardEl equipo, unido",
+            "href": "/equipos/halcones",
+            "current": null
+          },
+          {
+            "label": "Dashboard",
+            "href": "/equipos/halcones",
+            "current": "page"
+          },
+          {
+            "label": "Logros",
+            "href": "/equipos/halcones/logros",
+            "current": null
+          },
+          {
+            "label": "Ranking",
+            "href": "/equipos/halcones/ranking",
+            "current": null
+          },
+          {
+            "label": "Jugadores",
+            "href": "/equipos/halcones/jugadores",
+            "current": null
+          },
+          {
+            "label": "Solicitudes",
+            "href": "/equipos/halcones/solicitudes",
+            "current": null
+          },
+          {
+            "label": "Equipo actualHalcones",
+            "href": "/equipos/halcones",
+            "current": null
+          },
+          {
+            "label": "Cambiar equipo",
+            "href": "/equipos",
+            "current": null
+          },
+          {
+            "label": "Ver catálogo",
+            "href": "/equipos/halcones/logros",
+            "current": null
+          },
+          {
+            "label": "Crear logro",
+            "href": "/equipos/halcones/logros/nuevo",
+            "current": null
+          }
+        ],
+        "identity": "AF\nAna Fernández\nJugador",
+        "contentRegionExcludedFromShellEvaluation": {
+          "x": 172,
+          "y": 97,
+          "width": 1253,
+          "height": 904.5625
+        }
+      },
+      "artifact": "player-shell-1440x900.png",
+      "consoleErrors": [],
+      "httpErrors": []
+    },
+    "teamAdmin": {
+      "role": "TEAM_ADMIN",
+      "email": "diego@halcones.test",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "network": [
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Document",
+          "url": "http://127.0.0.1:3000/login"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/03fncz6s0dpv0.css"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/192f2ab6b81220b0-s.p.02465tu30.o_..woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/5c285b27cdda1fe8-s.p.0yo6-5yoeeudq.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/effe91970fc4db64-s.p.07ig5l8azj~hy.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/static/media/lockerboard-symbol-color-on-dark.0e1p.53juloa2.svg"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/static/media/lockerboard-logo-horizontal-color-on-dark.15pf0j8xkapv3.svg"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/01-0nzqgi~ste.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/13jyg17yyyx12.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/turbopack-05gll5c28mkeo.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0xi4.f-5qedg7.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/07zqrsr1x12ad.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0kjg37cno2ocd.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/15qfljxycflk3.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0rf_gma.tr_v..js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/?_rsc=17yrj"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=4c4j4"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=qajof"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0ojvlmy3gkow8.css"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/7ebf22b5a21034f8-s.p.10_7676vm7pyy.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=113as"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/unirse?_rsc=1y0qa"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=1bt41"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=l7ymg"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/register?_rsc=rnjqr"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/02npar25kj58..js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0ur974aq.7r3x.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/?_rsc=m8m8p"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/?_rsc=9c17x"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0yvi-0c-j_td3.js"
+        },
+        {
+          "method": "POST",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/api/auth/login"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Document",
+          "url": "http://127.0.0.1:3000/equipos/halcones"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/03fncz6s0dpv0.css"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/192f2ab6b81220b0-s.p.02465tu30.o_..woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/5c285b27cdda1fe8-s.p.0yo6-5yoeeudq.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/effe91970fc4db64-s.p.07ig5l8azj~hy.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Font",
+          "url": "http://127.0.0.1:3000/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/01-0nzqgi~ste.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/13jyg17yyyx12.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0kjg37cno2ocd.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0xi4.f-5qedg7.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/turbopack-05gll5c28mkeo.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/07zqrsr1x12ad.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/025kka~e0fc3x.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0rf_gma.tr_v..js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0x_0c868ju30n.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=1h5tm"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=iz3l4"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/admin?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=lwmat"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos?_rsc=qx071"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/admin?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/logros"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Script",
+          "url": "http://127.0.0.1:3000/_next/static/chunks/0ur974aq.7r3x.js"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1fbzn"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flockerboard-overlay-container-data-1600x900.0~b3v0363zl08.png&w=640&q=75"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Image",
+          "url": "http://127.0.0.1:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flockerboard-overlay-achievement-1600x900.13ec_ym6sc6te.png&w=640&q=75"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1eflz"
+        },
+        {
+          "method": "GET",
+          "status": 200,
+          "type": "Fetch",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1eflz"
+        }
+      ],
+      "networkFailures": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/admin?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/admin?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/solicitudes?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/ranking?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/jugadores?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1fbzn",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/12?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/18?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/nuevo?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/equipos/halcones/logros/19?_rsc=1eflz",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "console": [
+        {
+          "source": "recommendation",
+          "level": "verbose",
+          "message": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+          "url": "http://127.0.0.1:3000/login"
+        }
+      ],
+      "login": {
+        "status": 200,
+        "teams": [
+          {
+            "slug": "halcones",
+            "nombre": "Halcones",
+            "role": "TEAM_ADMIN"
+          }
+        ],
+        "isSuperAdmin": false
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:3000/equipos/halcones",
+        "title": "LockerBoard | El catálogo de logros de tu equipo",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "dpr": 1
+        },
+        "document": {
+          "scrollWidth": 1425,
+          "scrollHeight": 1002,
+          "scrollX": 0,
+          "scrollY": 0
+        },
+        "overflowX": false,
+        "shell": {
+          "sidebar": {
+            "x": 0,
+            "y": 0,
+            "width": 172,
+            "height": 900
+          },
+          "header": {
+            "x": 172,
+            "y": 0,
+            "width": 1253,
+            "height": 97
+          },
+          "main": {
+            "x": 172,
+            "y": 97,
+            "width": 1253,
+            "height": 904.5625
+          }
+        },
+        "nav": [
+          {
+            "label": "Dashboard",
+            "href": "/equipos/halcones",
+            "current": "page"
+          },
+          {
+            "label": "Logros",
+            "href": "/equipos/halcones/logros",
+            "current": null
+          },
+          {
+            "label": "Ranking",
+            "href": "/equipos/halcones/ranking",
+            "current": null
+          },
+          {
+            "label": "Jugadores",
+            "href": "/equipos/halcones/jugadores",
+            "current": null
+          },
+          {
+            "label": "Solicitudes",
+            "href": "/equipos/halcones/solicitudes",
+            "current": null
+          }
+        ],
+        "sidebarLinks": [
+          {
+            "label": "LockerBoardHalconesLockerBoardEl equipo, unido",
+            "href": "/equipos/halcones",
+            "current": null
+          },
+          {
+            "label": "Dashboard",
+            "href": "/equipos/halcones",
+            "current": "page"
+          },
+          {
+            "label": "Logros",
+            "href": "/equipos/halcones/logros",
+            "current": null
+          },
+          {
+            "label": "Ranking",
+            "href": "/equipos/halcones/ranking",
+            "current": null
+          },
+          {
+            "label": "Jugadores",
+            "href": "/equipos/halcones/jugadores",
+            "current": null
+          },
+          {
+            "label": "Solicitudes",
+            "href": "/equipos/halcones/solicitudes",
+            "current": null
+          },
+          {
+            "label": "Equipo actualHalcones",
+            "href": "/equipos/halcones",
+            "current": null
+          },
+          {
+            "label": "Cambiar equipo",
+            "href": "/equipos",
+            "current": null
+          },
+          {
+            "label": "Administración",
+            "href": "/equipos/halcones/admin",
+            "current": null
+          },
+          {
+            "label": "Ver catálogo",
+            "href": "/equipos/halcones/logros",
+            "current": null
+          },
+          {
+            "label": "Crear logro",
+            "href": "/equipos/halcones/logros/nuevo",
+            "current": null
+          }
+        ],
+        "identity": "DR\nDiego Ruiz\nAdministrador",
+        "contentRegionExcludedFromShellEvaluation": {
+          "x": 172,
+          "y": 97,
+          "width": 1253,
+          "height": 904.5625
+        }
+      },
+      "artifact": "team-admin-shell-1440x900.png",
+      "consoleErrors": [],
+      "httpErrors": []
+    }
+  }
+}

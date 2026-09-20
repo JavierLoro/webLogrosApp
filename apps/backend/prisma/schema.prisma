@@ -13,6 +13,8 @@ model User {
   id                 Int              @id @default(autoincrement())
   // 📚 @unique: no puede haber dos usuarios con el mismo email (lo aprovechamos en register).
   email              String           @unique
+  // 📚 Nullable conserva cuentas anteriores sin inventar su identidad; el fixture sí aporta nombres.
+  displayName        String?
   // 📚 Guardamos el HASH de bcrypt, nunca la contraseña en claro (ver routes/auth.ts).
   password           String
   logrosGanados      UserLogro[]
@@ -23,6 +25,7 @@ model User {
   isSuperAdmin       Boolean          @default(false)
   teamRequests       TeamRequest[]
   solicitudesLogro   SolicitudLogro[]
+  propuestasLogro    PropuestaLogro[]
 }
 
 // 📚 Team = el "tenant" (inquilino) de la multi-tenancy. Todo cuelga de un equipo.
@@ -38,6 +41,7 @@ model Team {
   logros      Logro[]
   miembros    TeamMembership[]
   invitations TeamInvitation[]
+  propuestas  PropuestaLogro[]
 }
 
 enum TeamRole {
@@ -119,8 +123,12 @@ model TeamInvitation {
 //    tabla, en Phase 8.5). Relación 1:N con Team: muchos logros pertenecen a un equipo.
 model Logro {
   id          Int              @id @default(autoincrement())
+  // 📚 Permite ordenar altas reales; la migración usa su fecha como backfill, no una fecha histórica inventada.
+  createdAt   DateTime         @default(now())
   nombre      String
   puntos      Int
+  // 📚 El array conserva el orden de criterios al incorporar una propuesta al catálogo.
+  criterios   String[]         @default([])
   // 📚 El ? = campo OPCIONAL (columna admite NULL). Adornos que pueden faltar.
   descripcion String?
   categoria   String?
@@ -133,6 +141,35 @@ model Logro {
   team        Team             @relation(fields: [teamId], references: [id])
   obtenidos   UserLogro[]
   solicitudes SolicitudLogro[]
+  propuesta   PropuestaLogro?
+}
+
+enum PropuestaLogroStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+// 📚 Proponer no es obtener: este registro enlaza catálogo solo tras aprobación y nunca UserLogro.
+model PropuestaLogro {
+  id              Int                  @id @default(autoincrement())
+  teamId          Int
+  userId          Int
+  nombre          String
+  descripcion     String
+  criterios       String[]
+  status          PropuestaLogroStatus @default(PENDING)
+  rejectionReason String?
+  createdAt       DateTime             @default(now())
+  reviewedAt      DateTime?
+  logroId         Int?                 @unique
+  team            Team                 @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logro           Logro?               @relation(fields: [logroId], references: [id], onDelete: Restrict)
+
+  // 📚 Los dos índices corresponden a cola administrativa e historial propio dentro del tenant.
+  @@index([teamId, status, createdAt])
+  @@index([teamId, userId, createdAt])
 }
 
 // 📚 No duplicamos teamId: el tenant se obtiene mediante logro.teamId, evitando que una
@@ -144,6 +181,8 @@ model SolicitudLogro {
   status     SolicitudLogroStatus @default(PENDING)
   createdAt  DateTime             @default(now())
   reviewedAt DateTime?
+  // 📚 Nullable conserva resoluciones antiguas sin inventar motivos; los rechazos nuevos lo exigen.
+  rejectionReason String?
   user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   logro      Logro                @relation(fields: [logroId], references: [id], onDelete: Cascade)
 

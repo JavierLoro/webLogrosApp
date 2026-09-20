@@ -26,7 +26,7 @@ El nuevo `main` ya contiene el inventario, las versiones históricas y las refer
 ### UI-G0-T03 — Reference gaps for initial scope — DONE
 No hace falta generar nuevas referencias de escritorio para empezar el lote inicial. Los estados vacíos, responsive y ajustes menores se resolverán durante implementación. Landing permanece aplazada.
 
-### UI-G0-T04 — Visual extraction — READY
+### UI-G0-T04 — Visual extraction — DONE
 Extraer y documentar en `docs/ui-workstream/VISUAL_SYSTEM.md`:
 - fondo y superficies;
 - tipografía y escalas;

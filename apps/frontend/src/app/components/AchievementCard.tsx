@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import type { Logro } from "@/types/api"
-import achievementOverlay from "../../../LockerBoard-marca/surface-system/final/overlays/landscape/lockerboard-overlay-achievement-1600x900.png"
+import achievementOverlay from "../../../LockerBoard-marca/otros/surface-system/final/overlays/landscape/lockerboard-overlay-achievement-1600x900.png"
 
 type AchievementCardProps = { achievement?: Logro; logro?: Logro; href: string }
 

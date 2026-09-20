@@ -1,5 +1,5 @@
 import Image from "next/image"
-import dataOverlay from "../../../../LockerBoard-marca/surface-system/final/overlays/landscape/lockerboard-overlay-container-data-1600x900.png"
+import dataOverlay from "../../../../LockerBoard-marca/otros/surface-system/final/overlays/landscape/lockerboard-overlay-container-data-1600x900.png"
 
 type TeamQuickStatsProps = {
   total: number

@@ -1988,3 +1988,95 @@ estado usa una actualización condicionada por `PENDING`, equivalente a un *comp
 si dos administradores revisan a la vez, solo uno puede completar la transición. El `upsert` de
 `UserLogro` mantiene idempotente la asignación. Rechazar solo cambia el estado a `REJECTED` y la
 asignación directa vuelve a comprobar que jugador y logro pertenecen al equipo de la URL.
+
+## Fixture visual determinista — UI-G1-T02
+
+Un fixture es un conjunto de datos preparado para comprobar una interfaz con casos conocidos.
+Halcones contiene 12 miembros (10 PLAYER y 2 TEAM_ADMIN), 12 logros directos, 40 asignaciones,
+8 solicitudes y 6 invitaciones. Dos miembros no tienen logros y dos empatan en puntos: las tablas
+deben funcionar también con ceros y desempates. Ana pertenece además a Lobos, sin trasladar allí
+sus puntos de Halcones. Lobos mantiene sus 5 logros y 2 asignaciones como contraste de aislamiento.
+Las dos solicitudes aceptadas corresponden a asignaciones incluidas entre las 40; proponer logros
+y completar los dos logros restantes del catálogo corresponde a UI-G1-T04.
+
+`User.displayName` es nullable para no exigir un nombre inventado a cuentas anteriores. El fixture
+sí lo rellena. `Logro.createdAt` permite ordenar las altas; la migración da a registros antiguos la
+fecha de migración, que no debe interpretarse como una fecha histórica recuperada.
+
+Las fechas del seed son ISO UTC explícitas tanto en create como en update. Una segunda ejecución
+restaura las fechas de los registros del fixture y no las desplaza al día actual. El reloj visual
+de referencia es 20/09/2026 a las 12:00 UTC; las invitaciones activas caducan después y la caducada
+antes. El reloj del navegador no cambia la validación de caducidad del servidor.
+
+Idempotencia significa repetir sin duplicar los registros conocidos: slug/email y claves compuestas
+permiten upsert; las solicitudes se reconocen por autor, logro y fecha fija, sin imponer una
+unicidad de negocio que impida volver a solicitar tras un rechazo. No se borran registros ajenos:
+los conteos exactos solo se garantizan en una base exclusiva inicialmente vacía. No ejecutar seeds
+concurrentes; la clave natural de solicitud no es una restricción única. El seed restablece la
+contraseña de sus cuentas desde SEED_USER_PASSWORD y nunca la imprime.
+
+Las invitaciones de este fixture local tienen códigos predecibles; no son invitaciones de producción.
+Se conserva el hash para identificarlas y AES-GCM para recuperar el código, sin imprimir tokens.
+El seed rechaza NODE_ENV=production. La aleatoriedad segura de bcrypt y del IV de cifrado no afecta
+a los datos visibles y no debe eliminarse para conseguir determinismo binario. Las propuestas,
+criterios y motivos de rechazo se incorporarán en sus tareas de dominio correspondientes.
+
+## Lecturas del equipo y resolución visible — UI-G1-T03
+
+El helper `readTeam` carga membresías, catálogo y asignaciones mediante tres consultas, evitando
+una consulta adicional por jugador (N+1). Filtra asignaciones por `logro.teamId` y membresía actual:
+una persona puede estar en Halcones y Lobos sin mezclar puntos. Las estadísticas describen miembros
+actuales; las concesiones de miembros retirados no entran en este resumen. Se incluyen ceros y el
+orden es puntos descendentes, cantidad descendente, id ascendente. El puesto es ordinal, incluso
+si dos miembros empatan. El catálogo cuenta sus poseedores actuales con la misma definición.
+
+`/contexto` devuelve equipo e identidad/rol fiables; `/jugadores` devuelve la lista sin emails;
+`/ranking` añade totals (members, catalog, awards, points, uniqueEarned, participants). Dashboard
+reutiliza esos datos y devuelve me, topPlayers, recentAchievements, recentAwards, mostEarned y
+rarestEarned. El logro más raro excluye los aún no obtenidos. El feed representa solo concesiones
+persistidas, sin inferir conexiones, retos ni temporadas. No se necesita un endpoint de actividad
+general ni de resumen admin: la vista puede combinar las lecturas existentes sin ampliar el dominio.
+
+Catálogo conserva sus campos y añade holdersCount/earnedByMe. Las listas y detalles de solicitudes
+incluyen rejectionReason nullable para decisiones históricas. La cola administrativa mantiene
+PENDING por defecto; acepta status=ACCEPTED, REJECTED o all y rechaza valores desconocidos. Los
+detalles validan id y tenant simultáneamente. Administración recibe además displayName y joinedAt
+en miembros; la lectura de solicitudes selecciona identidad sin hashes ni secretos.
+
+Rechazar exige ahora `{reason}` de 1–500 caracteres tras trim; Zod evita aceptar espacios como
+explicación. Se guarda junto a REJECTED/reviewedAt en la actualización condicionada a PENDING.
+La migración nullable no inventa motivos para rechazos antiguos. El frontend actual debe adaptarse
+en su tarea UI: sus llamadas antiguas de rechazo sin body recibirán 400 hasta aportar el motivo.
+
+## Proponer, incorporar y obtener — UI-G1-T04
+
+`PropuestaLogro` pertenece a un equipo y un autor desde el envío. Guarda nombre, descripción,
+criterios ordenados y estado PENDING, ACCEPTED o REJECTED. Una propuesta aprobada enlaza un único
+Logro; no relaciona UserLogro ni crea una solicitud de obtención. El motivo obligatorio explica
+el rechazo al autor. Los índices tenant/estado/fecha y tenant/autor/fecha responden a las dos
+bandejas; la unicidad de logroId evita asociar el mismo resultado a varias propuestas.
+
+POST `/equipos/:slug/propuestas` acepta exclusivamente nombre (1–120), descripción (1–1000) y
+criterios (1–10 textos de 1–300), recortando espacios. Zod strict rechaza intentos de imponer
+userId, teamId, status o campos no aprobados. GET `/propuestas` devuelve solo las del autor;
+GET `/propuestas/:id` mantiene el filtro autor+tenant, con 404 también para propuestas ajenas.
+Los detalles personales siguen dentro de la página solicitudes; una ruta API no obliga a crear
+otra página. GET `/admin/propuestas` permite status=PENDING (default), ACCEPTED, REJECTED o all;
+el detalle `/admin/propuestas/:id` y las resoluciones exigen TEAM_ADMIN contextual.
+
+Aceptar recibe puntos (entero 0–2147483647) y categoría opcional (1–80). En una transacción,
+la actualización condicionada a PENDING reclama la propuesta antes de crear Logro. Otra revisión
+simultánea no puede reclamarla dos veces: obtiene 409. Si falla cualquier escritura, se revierte
+también el cambio de estado. Nombre, descripción y criterios pasan al catálogo sin concederlo
+al autor. Rechazar recibe reason (1–500) y usa la misma condición PENDING para no sobrescribir
+una aprobación. Una propuesta ajena al tenant devuelve 404; una ya resuelta devuelve 409.
+
+La creación directa administrativa conserva nombre/puntos y admite descripción, categoría y
+criterios; estos últimos valen [] si no se envían, preservando el formulario anterior. El array
+vacío en la migración permite conservar logros históricos sin inventar condiciones retroactivas.
+
+El fixture termina con 14 logros Halcones: 12 directos y 2 enlazados a propuestas ACCEPTED.
+Hay 6 propuestas (2 por estado), con fechas fijas, motivos para rechazadas y vínculo solo para
+aprobadas. Ana tiene ejemplos de los tres estados. Siguen siendo 40 asignaciones y 8 solicitudes:
+ninguna nace de aprobar propuestas. Repetir el seed reutiliza los vínculos existentes y no elimina
+filas ajenas; la prueba sobre PostgreSQL desechable corresponde a UI-G1-T05.

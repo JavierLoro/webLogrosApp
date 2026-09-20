@@ -1,50 +1,339 @@
 "use client"
 
 import Link from "next/link"
-import { use, useEffect, useMemo, useState } from "react"
-import { apiFetch, ApiError } from "@/lib/api"
-import { Button } from "@/app/components/ui/Button"
-import { Empty } from "@/app/components/ui/Empty"
-import { ErrorMessage } from "@/app/components/ui/Error"
-import { LoadingState } from "@/app/components/logros/LoadingState"
+import { useParams } from "next/navigation"
+import { useEffect, useMemo, useState, type ReactNode } from "react"
 import { LogroCard } from "@/app/components/logros/LogroCard"
-import type { Logro } from "@/types/api"
+import { PageHeader } from "@/app/components/team/PageHeader"
+import { TeamSurface, TeamToolbar } from "@/app/components/team/TeamPrimitives"
+import { useTeamContext } from "@/app/components/team/TeamShell"
+import MaterialIcon, { type MaterialIconName } from "@/app/components/ui/icons/MaterialIcon"
+import { ApiError, apiFetch } from "@/lib/api"
+import type { CatalogAchievement } from "@/types/api"
 
-export default function LogrosPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params)
-  const [logros, setLogros] = useState<Logro[] | null>(null)
-  const [error, setError] = useState<ApiError | Error | null>(null)
-  const [query, setQuery] = useState("")
-  const [category, setCategory] = useState("Todas")
+const ALL_CATEGORIES = "__all__"
+
+type CatalogDataState = {
+  slug: string
+  value: CatalogAchievement[]
+}
+
+type CatalogErrorState = {
+  slug: string
+  value: ApiError
+}
+
+type CatalogMetric = {
+  label: string
+  value: number
+  icon: MaterialIconName
+}
+
+export default function LogrosPage() {
+  const { slug } = useParams<{ slug: string }>()
+  const { me } = useTeamContext()
+  const [dataState, setDataState] = useState<CatalogDataState | null>(null)
+  const [errorState, setErrorState] = useState<CatalogErrorState | null>(null)
   const [requestVersion, setRequestVersion] = useState(0)
+  const [query, setQuery] = useState("")
+  const [category, setCategory] = useState(ALL_CATEGORIES)
+  const achievements = dataState?.slug === slug ? dataState.value : null
+  const error = errorState?.slug === slug ? errorState.value : null
+  const isTeamAdmin = me.role === "TEAM_ADMIN"
+  const actionLabel = isTeamAdmin ? "Crear logro" : "Proponer logro"
 
   useEffect(() => {
-    let active = true
-    apiFetch<Logro[]>(`/api/equipos/${encodeURIComponent(slug)}/logros`, { auth: true })
-      .then((data) => { if (active) setLogros(data) })
-      .catch((cause: unknown) => { if (active) setError(cause instanceof Error ? cause : new Error("No se pudieron cargar los logros.")) })
-    return () => { active = false }
+    const controller = new AbortController()
+
+    apiFetch<CatalogAchievement[]>(`/api/equipos/${encodeURIComponent(slug)}/logros`, {
+      auth: true,
+      signal: controller.signal,
+    })
+      .then((value) => {
+        setDataState({ slug, value })
+        setErrorState(null)
+      })
+      .catch((cause: unknown) => {
+        if (cause instanceof DOMException && cause.name === "AbortError") return
+        setErrorState({
+          slug,
+          value: cause instanceof ApiError ? cause : new ApiError("No se pudo cargar el catálogo", 500),
+        })
+      })
+
+    return () => controller.abort()
   }, [requestVersion, slug])
 
-  const categories = useMemo(() => ["Todas", ...Array.from(new Set((logros ?? []).map((item) => item.categoria?.trim()).filter((item): item is string => Boolean(item)))).sort((a, b) => a.localeCompare(b))], [logros])
-  const filtered = useMemo(() => {
-    const normalized = query.trim().toLocaleLowerCase()
-    return (logros ?? []).filter((item) => {
-      const searchable = `${item.nombre} ${item.descripcion ?? ""} ${item.categoria ?? ""}`.toLocaleLowerCase()
-      return (!normalized || searchable.includes(normalized)) && (category === "Todas" || item.categoria?.trim() === category)
-    })
-  }, [category, logros, query])
+  const categories = useMemo(
+    () => Array.from(new Set((achievements ?? []).map((item) => item.categoria?.trim()).filter((item): item is string => Boolean(item)))).sort((a, b) => a.localeCompare(b, "es")),
+    [achievements],
+  )
+  const activeCategory = category === ALL_CATEGORIES || categories.includes(category) ? category : ALL_CATEGORIES
 
-  function retry() { setLogros(null); setError(null); setRequestVersion((version) => version + 1) }
+  const filteredAchievements = useMemo(() => {
+    const normalizedQuery = query.trim().toLocaleLowerCase("es-ES")
+
+    return (achievements ?? []).filter((achievement) => {
+      const searchable = `${achievement.nombre} ${achievement.descripcion ?? ""} ${achievement.categoria ?? ""}`.toLocaleLowerCase("es-ES")
+      const matchesQuery = normalizedQuery.length === 0 || searchable.includes(normalizedQuery)
+      const matchesCategory = activeCategory === ALL_CATEGORIES || achievement.categoria?.trim() === activeCategory
+      return matchesQuery && matchesCategory
+    })
+  }, [achievements, activeCategory, query])
+
+  const metrics = useMemo<CatalogMetric[]>(() => {
+    const items = achievements ?? []
+    return [
+      { label: "Total", value: items.length, icon: "emoji_events" },
+      { label: "Mis logros", value: items.filter((item) => item.earnedByMe).length, icon: "check" },
+      { label: "Concesiones", value: items.reduce((sum, item) => sum + item.holdersCount, 0), icon: "groups" },
+      { label: "Categorías", value: categories.length, icon: "flag" },
+    ]
+  }, [achievements, categories.length])
+
+  function retry() {
+    setDataState(null)
+    setErrorState(null)
+    setRequestVersion((version) => version + 1)
+  }
+
+  function clearFilters() {
+    setQuery("")
+    setCategory(ALL_CATEGORIES)
+  }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8 px-5 py-10 sm:px-8 sm:py-14">
-      <header className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><p className="font-mono text-xs uppercase tracking-[.2em] text-[var(--team-muted)]">Catálogo del equipo</p><h1 className="team-display mt-3 max-w-xl text-4xl font-bold leading-[.95] tracking-[-.04em] sm:text-6xl">Los hitos que este equipo ha decidido celebrar.</h1><p className="mt-4 max-w-lg text-base leading-7 text-[var(--team-muted)]">Consulta qué significa cada logro, cuántos puntos vale y en qué categoría está.</p></div><Link className="inline-flex min-h-11 w-fit items-center rounded-xl bg-[var(--team-primary)] px-5 py-3 text-sm font-semibold text-[var(--team-on-primary)] transition-colors hover:bg-[var(--team-primary-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--team-primary)]" href={`/equipos/${slug}/logros/nuevo`}>+ Crear logro</Link></header>
-      {logros === null && !error ? <LoadingState /> : error ? <div className="max-w-xl space-y-4"><ErrorMessage>{error instanceof ApiError && error.status === 401 ? "Necesitas iniciar sesión para continuar." : error instanceof ApiError && error.status === 403 ? "No perteneces a este equipo. Usa una invitación para unirte." : error instanceof ApiError && error.status === 404 ? "No encontramos este equipo o catálogo." : error.message}</ErrorMessage><Button variant="quiet" onClick={retry}>Reintentar</Button></div> : logros?.length === 0 ? <Empty title="Todavía no hay logros" action={<Link className="inline-flex rounded-xl bg-coral px-4 py-2.5 text-sm font-semibold text-white" href={`/equipos/${slug}/logros/nuevo`}>Crear el primer logro</Link>}>Crea el primero para empezar el catálogo del equipo.</Empty> : <>
-        <section aria-label="Buscar y filtrar logros" className="team-surface space-y-4 p-4 sm:p-5"><label htmlFor="logros-search" className="sr-only">Buscar por nombre, descripción o categoría</label><input id="logros-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar en la colección…" className="min-h-12 w-full rounded-xl border border-[var(--team-line)] bg-[var(--team-surface-low)] px-4 text-base text-[var(--team-text)] outline-none transition-shadow placeholder:text-[var(--team-muted)] focus-visible:ring-2 focus-visible:ring-[var(--team-primary)]" /><div className="flex gap-2 overflow-x-auto pb-1" aria-label="Filtrar por categoría">{categories.map((item) => <button type="button" key={item} aria-pressed={category === item} onClick={() => setCategory(item)} className={`min-h-10 shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--team-primary)] ${category === item ? "bg-[var(--team-primary)] text-[var(--team-on-primary)]" : "bg-[var(--team-surface-high)] text-[var(--team-muted)] hover:bg-[var(--team-surface-highest)]"}`}>{item}</button>)}</div></section>
-        <div className="flex items-center justify-between gap-4"><p className="font-mono text-xs uppercase tracking-[.16em] text-[var(--team-muted)]">{filtered.length} {filtered.length === 1 ? "logro" : "logros"}</p>{(query || category !== "Todas") && <button type="button" className="text-sm font-semibold text-[var(--team-primary-soft)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--team-primary)]" onClick={() => { setQuery(""); setCategory("Todas") }}>Limpiar filtros</button>}</div>
-        {filtered.length ? <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{filtered.map((logro) => <LogroCard key={logro.id} logro={logro} slug={slug} />)}</div> : <Empty title="No hay coincidencias">Prueba con otro término o limpia los filtros para ver toda la colección.</Empty>}
-      </>}
+    <div className="w-full px-[var(--lb-page-gutter)] py-[var(--lb-page-gutter)]">
+      <div className="grid gap-4 border-b border-[var(--team-line)] pb-4 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-end">
+        <PageHeader
+          title="Logros del equipo"
+          description="Explora los hitos que el equipo reconoce y consulta quiénes los han conseguido."
+          className="border-b-0 pb-0"
+        />
+        <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-stretch xl:justify-end">
+          {achievements && !error ? <CatalogMetrics metrics={metrics} /> : <CatalogMetricsSkeleton />}
+          <Link
+            href={`/equipos/${slug}/logros/nuevo`}
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-[var(--lb-radius-control)] bg-[var(--team-primary)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--lb-color-accent-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lb-color-focus)]"
+          >
+            <span aria-hidden="true">+</span> {actionLabel}
+          </Link>
+        </div>
+      </div>
+
+      {error ? (
+        <CatalogError error={error} onRetry={retry} />
+      ) : achievements === null ? (
+        <CatalogLoading />
+      ) : achievements.length === 0 ? (
+        <CatalogEmpty actionLabel={actionLabel} isTeamAdmin={isTeamAdmin} slug={slug} />
+      ) : (
+        <>
+          <CatalogFilters
+            categories={categories}
+            category={activeCategory}
+            query={query}
+            onCategoryChange={setCategory}
+            onQueryChange={setQuery}
+          />
+
+          <div className="mt-3 flex min-h-6 items-center justify-between gap-4 text-xs text-[var(--team-muted)]">
+            <p aria-live="polite">
+              <span className="font-[var(--lb-font-data)] tabular-nums text-[var(--team-text)]">{filteredAchievements.length}</span>{" "}
+              {filteredAchievements.length === 1 ? "logro" : "logros"}
+            </p>
+            {(query || activeCategory !== ALL_CATEGORIES) ? (
+              <button
+                type="button"
+                className="min-h-10 rounded-[var(--lb-radius-control)] px-2 font-semibold text-[var(--team-primary)] hover:text-[var(--team-text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lb-color-focus)]"
+                onClick={clearFilters}
+              >
+                Limpiar filtros
+              </button>
+            ) : null}
+          </div>
+
+          {filteredAchievements.length > 0 ? (
+            <div className="mt-2 grid grid-cols-1 gap-3 min-[32.5rem]:grid-cols-2 min-[56.25rem]:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[86.25rem]:grid-cols-6">
+              {filteredAchievements.map((achievement) => (
+                <LogroCard key={achievement.id} logro={achievement} slug={slug} />
+              ))}
+            </div>
+          ) : (
+            <CatalogNoResults onClear={clearFilters} />
+          )}
+        </>
+      )}
     </div>
   )
+}
+
+function CatalogMetrics({ metrics }: { metrics: CatalogMetric[] }) {
+  return (
+    <dl className="grid min-w-0 grid-cols-2 overflow-hidden rounded-[var(--lb-radius-panel)] border border-[var(--team-line)] bg-[var(--team-surface)] sm:grid-cols-4">
+      {metrics.map((metric) => (
+        <div key={metric.label} className="flex min-h-11 min-w-0 items-center gap-2 border-r border-b border-[var(--team-line)] px-2.5 py-2 odd:last:border-r-0 sm:min-w-28 sm:border-b-0 sm:last:border-r-0">
+          <MaterialIcon name={metric.icon} className="size-4 shrink-0 text-[var(--team-primary)]" />
+          <div className="flex min-w-0 flex-col">
+            <dt className="order-2 mt-1 truncate text-[0.625rem] uppercase leading-none tracking-[0.06em] text-[var(--team-muted)]" title={metric.label}>{metric.label}</dt>
+            <dd className="order-1 font-[var(--lb-font-data)] text-lg font-semibold leading-none tabular-nums text-[var(--team-text)]">{metric.value}</dd>
+          </div>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+function CatalogMetricsSkeleton() {
+  return (
+    <div aria-hidden="true" className="grid min-h-14 min-w-0 grid-cols-4 overflow-hidden rounded-[var(--lb-radius-panel)] border border-[var(--team-line)] bg-[var(--team-surface)] sm:min-w-[28rem]">
+      {Array.from({ length: 4 }, (_, index) => (
+        <div key={index} className="animate-pulse border-r border-[var(--team-line)] p-2 last:border-r-0">
+          <div className="h-4 w-8 rounded bg-[var(--team-surface-strong)]" />
+          <div className="mt-2 h-2 w-14 max-w-full rounded bg-[var(--team-surface-strong)]" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+type CatalogFiltersProps = {
+  categories: string[]
+  category: string
+  query: string
+  onCategoryChange: (category: string) => void
+  onQueryChange: (query: string) => void
+}
+
+function CatalogFilters({ categories, category, query, onCategoryChange, onQueryChange }: CatalogFiltersProps) {
+  return (
+    <TeamToolbar aria-label="Buscar y filtrar logros" className="mt-3 justify-between gap-3">
+      <div role="group" className="flex min-w-0 flex-1 gap-1.5 overflow-x-auto pb-1 sm:pb-0" aria-label="Filtrar por categoría">
+        <CategoryButton active={category === ALL_CATEGORIES} onClick={() => onCategoryChange(ALL_CATEGORIES)}>Todos</CategoryButton>
+        {categories.map((item) => (
+          <CategoryButton key={item} active={category === item} onClick={() => onCategoryChange(item)}>{item}</CategoryButton>
+        ))}
+      </div>
+      <label className="relative min-w-0 shrink-0 sm:w-64">
+        <span className="sr-only">Buscar por nombre, descripción o categoría</span>
+        <MaterialIcon name="track_changes" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--team-muted)]" />
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => onQueryChange(event.target.value)}
+          placeholder="Buscar logros…"
+          className="min-h-10 w-full rounded-[var(--lb-radius-control)] border border-[var(--team-line)] bg-[var(--team-surface-low)] py-2 pr-3 pl-9 text-sm text-[var(--team-text)] outline-none placeholder:text-[var(--team-muted)] focus-visible:border-[var(--lb-color-focus)] focus-visible:ring-1 focus-visible:ring-[var(--lb-color-focus)]"
+        />
+      </label>
+    </TeamToolbar>
+  )
+}
+
+function CategoryButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: ReactNode }) {
+  return (
+    <button
+      type="button"
+      aria-pressed={active}
+      onClick={onClick}
+      className={`min-h-10 shrink-0 rounded-[var(--lb-radius-control)] border px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lb-color-focus)] ${active ? "border-[var(--team-primary)] bg-[var(--team-primary)] text-white" : "border-[var(--team-line)] bg-[var(--team-surface-strong)] text-[var(--team-muted)] hover:border-[var(--team-outline-strong)] hover:text-[var(--team-text)]"}`}
+    >
+      {children}
+    </button>
+  )
+}
+
+function CatalogLoading() {
+  return (
+    <div role="status" aria-live="polite" className="mt-3">
+      <div className="h-14 animate-pulse rounded-[var(--lb-radius-panel)] border border-[var(--team-line)] bg-[var(--team-surface)]" />
+      <div className="mt-8 grid grid-cols-1 gap-3 min-[32.5rem]:grid-cols-2 min-[56.25rem]:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[86.25rem]:grid-cols-6">
+        {Array.from({ length: 12 }, (_, index) => (
+          <div key={index} aria-hidden="true" className="overflow-hidden rounded-[var(--lb-radius-panel)] border border-[var(--team-line)] bg-[var(--team-surface)]">
+            <div className="aspect-video animate-pulse bg-[var(--team-surface-strong)]" />
+            <div className="space-y-2 p-3">
+              <div className="h-2.5 w-1/2 animate-pulse rounded bg-[var(--team-surface-strong)]" />
+              <div className="h-5 w-4/5 animate-pulse rounded bg-[var(--team-surface-strong)]" />
+              <div className="h-8 animate-pulse rounded bg-[var(--team-surface-strong)]" />
+            </div>
+          </div>
+        ))}
+      </div>
+      <span className="sr-only">Cargando el catálogo del equipo…</span>
+    </div>
+  )
+}
+
+function CatalogEmpty({ actionLabel, isTeamAdmin, slug }: { actionLabel: string; isTeamAdmin: boolean; slug: string }) {
+  return (
+    <TeamSurface className="mt-4 grid min-h-64 place-items-center border-dashed text-center">
+      <div>
+        <span className="mx-auto grid size-12 place-items-center rounded-[var(--lb-radius-control)] bg-[var(--team-surface-strong)] text-[var(--team-primary)]" aria-hidden="true">
+          <MaterialIcon name="emoji_events" className="size-6" />
+        </span>
+        <h2 className="team-display mt-4 text-2xl font-extrabold text-[var(--team-text)]">Todavía no hay logros</h2>
+        <p className="mt-2 max-w-md text-sm leading-6 text-[var(--team-muted)]">
+          {isTeamAdmin ? "Crea el primer logro para empezar el catálogo de este equipo." : "Propón la primera idea para que el equipo pueda revisarla."}
+        </p>
+        <Link href={`/equipos/${slug}/logros/nuevo`} className="mt-5 inline-flex min-h-11 items-center rounded-[var(--lb-radius-control)] bg-[var(--team-primary)] px-4 py-2 text-sm font-semibold text-white">
+          {actionLabel}
+        </Link>
+      </div>
+    </TeamSurface>
+  )
+}
+
+function CatalogNoResults({ onClear }: { onClear: () => void }) {
+  return (
+    <TeamSurface className="mt-2 grid min-h-48 place-items-center border-dashed text-center">
+      <div>
+        <h2 className="team-display text-xl font-extrabold text-[var(--team-text)]">No hay coincidencias</h2>
+        <p className="mt-2 text-sm text-[var(--team-muted)]">Prueba otro término o vuelve a mostrar todas las categorías.</p>
+        <button type="button" onClick={onClear} className="mt-4 min-h-10 rounded-[var(--lb-radius-control)] border border-[var(--team-outline-strong)] px-4 py-2 text-sm font-semibold text-[var(--team-text)] hover:bg-[var(--team-surface-strong)]">
+          Limpiar filtros
+        </button>
+      </div>
+    </TeamSurface>
+  )
+}
+
+function CatalogError({ error, onRetry }: { error: ApiError; onRetry: () => void }) {
+  const isUnauthorized = error.status === 401
+  const isForbidden = error.status === 403
+  const isNotFound = error.status === 404
+  const title = isUnauthorized
+    ? "Tu sesión ha caducado"
+    : isForbidden
+      ? "No tienes acceso a este catálogo"
+      : isNotFound
+        ? "No encontramos este equipo"
+        : "No pudimos cargar el catálogo"
+  const description = isUnauthorized
+    ? "Inicia sesión de nuevo para continuar."
+    : isForbidden
+      ? "Vuelve a tus equipos para elegir una membresía disponible."
+      : isNotFound
+        ? "Comprueba el enlace o vuelve a tus equipos."
+        : "Revisa la conexión e inténtalo otra vez."
+
+  return (
+    <TeamSurface role="alert" className="mt-4 max-w-xl border-[var(--lb-color-danger)]">
+      <h2 className="team-display text-xl font-extrabold text-[var(--team-text)]">{title}</h2>
+      <p className="mt-2 text-sm leading-6 text-[var(--team-muted)]">{description}</p>
+      <div className="mt-5">
+        {isUnauthorized ? (
+          <CatalogStateLink href="/login">Iniciar sesión</CatalogStateLink>
+        ) : isForbidden || isNotFound ? (
+          <CatalogStateLink href="/equipos">Volver a mis equipos</CatalogStateLink>
+        ) : (
+          <button type="button" onClick={onRetry} className="min-h-11 rounded-[var(--lb-radius-control)] bg-[var(--team-primary)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--lb-color-accent-hover)]">
+            Reintentar
+          </button>
+        )}
+      </div>
+    </TeamSurface>
+  )
+}
+
+function CatalogStateLink({ href, children }: { href: string; children: ReactNode }) {
+  return <Link href={href} className="inline-flex min-h-11 items-center rounded-[var(--lb-radius-control)] bg-[var(--team-primary)] px-4 py-2 text-sm font-semibold text-white">{children}</Link>
 }

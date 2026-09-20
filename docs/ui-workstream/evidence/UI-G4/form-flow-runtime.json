@@ -1,0 +1,107 @@
+{
+  "capturedAt": "2026-09-20T14:59:54.844Z",
+  "names": {
+    "player": "QA-FORM-PROP-1789916392668",
+    "admin": "QA-FORM-LOGRO-1789916392668"
+  },
+  "player": {
+    "role": "PLAYER",
+    "name": "QA-FORM-PROP-1789916392668",
+    "empty": {
+      "errors": [
+        {
+          "id": "achievement-name-error",
+          "text": "Escribe un nombre para el logro."
+        },
+        {
+          "id": "achievement-description-error",
+          "text": "Describe la idea que quieres proponer."
+        },
+        {
+          "id": "criteria-error",
+          "text": "Añade al menos un criterio para enviar la propuesta."
+        }
+      ],
+      "url": "/equipos/halcones/logros/nuevo",
+      "postCount": 0
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/propuestas",
+        "payload": {
+          "nombre": "QA-FORM-PROP-1789916392668",
+          "descripcion": "Propuesta creada por QA mediante formulario real.",
+          "criterios": [
+            "Criterio QA verificable."
+          ]
+        }
+      }
+    ],
+    "responses": [
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/logros",
+        "status": 201
+      },
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/logros",
+        "status": 200
+      }
+    ],
+    "postCount": 1,
+    "redirect": "/equipos/halcones/solicitudes",
+    "expectedRedirect": "/equipos/halcones/solicitudes"
+  },
+  "admin": {
+    "role": "TEAM_ADMIN",
+    "name": "QA-FORM-LOGRO-1789916392668",
+    "empty": {
+      "errors": [
+        {
+          "id": "achievement-name-error",
+          "text": "Escribe un nombre para el logro."
+        },
+        {
+          "id": "achievement-points-error",
+          "text": "Indica cuántos puntos vale el logro."
+        }
+      ],
+      "url": "/equipos/halcones/logros/nuevo",
+      "postCount": 0
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/logros",
+        "payload": {
+          "nombre": "QA-FORM-LOGRO-1789916392668",
+          "puntos": 75,
+          "descripcion": "Logro creado por QA mediante formulario real.",
+          "categoria": "Equipo",
+          "criterios": [
+            "Criterio QA verificable."
+          ]
+        }
+      }
+    ],
+    "responses": [
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/logros",
+        "status": 201
+      },
+      {
+        "url": "http://127.0.0.1:3000/api/equipos/halcones/logros",
+        "status": 200
+      }
+    ],
+    "postCount": 1,
+    "redirect": "/equipos/halcones/logros",
+    "expectedRedirect": "/equipos/halcones/logros"
+  }
+}

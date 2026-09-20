@@ -1,0 +1,2341 @@
+{
+  "capturedAt": "2026-09-20T15:48:29.289Z",
+  "environment": {
+    "appOrigin": "http://127.0.0.1:3000",
+    "locale": "es-ES",
+    "timezone": "Europe/Madrid",
+    "fixedClock": "2026-09-20T12:00:00.000Z"
+  },
+  "captures": {
+    "playerDesktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 1024,
+        "mobile": false
+      },
+      "apiRequests": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/ranking"
+        }
+      ],
+      "apiResponses": [
+        {
+          "status": 200,
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "status": 200,
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/ranking"
+        }
+      ],
+      "networkFailures": [
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "consoleErrors": [],
+      "exceptions": [],
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1024
+        },
+        "document": {
+          "clientWidth": 1440,
+          "scrollWidth": 1440,
+          "clientHeight": 1024,
+          "scrollHeight": 1426
+        },
+        "shell": {
+          "sidebar": {
+            "x": 0,
+            "y": 0,
+            "width": 172,
+            "height": 1024,
+            "right": 172,
+            "bottom": 1024
+          },
+          "identity": {
+            "x": 172,
+            "y": 0,
+            "width": 1268,
+            "height": 129,
+            "right": 1440,
+            "bottom": 129
+          }
+        },
+        "layout": {
+          "rect": {
+            "x": 196.46875,
+            "y": 292.828125,
+            "width": 1219.0625,
+            "height": 1109.03125,
+            "right": 1415.53125,
+            "bottom": 1401.859375
+          },
+          "left": {
+            "x": 196.46875,
+            "y": 292.828125,
+            "width": 734.84375,
+            "height": 268,
+            "right": 931.3125,
+            "bottom": 560.828125
+          },
+          "right": {
+            "x": 945.703125,
+            "y": 292.828125,
+            "width": 469.828125,
+            "height": 268.25,
+            "right": 1415.53125,
+            "bottom": 561.078125
+          },
+          "leftPercent": 61,
+          "topBandHeight": 268.25
+        },
+        "podium": {
+          "domOrder": [
+            1,
+            2,
+            3
+          ],
+          "visualOrder": [
+            2,
+            1,
+            3
+          ],
+          "winnerHeightRatioPercent": 16.7,
+          "items": [
+            {
+              "position": 1,
+              "rect": {
+                "x": 448.40625,
+                "y": 337.828125,
+                "width": 230.953125,
+                "height": 210,
+                "right": 679.359375,
+                "bottom": 547.828125
+              }
+            },
+            {
+              "position": 2,
+              "rect": {
+                "x": 209.46875,
+                "y": 367.828125,
+                "width": 230.9375,
+                "height": 180,
+                "right": 440.40625,
+                "bottom": 547.828125
+              }
+            },
+            {
+              "position": 3,
+              "rect": {
+                "x": 687.359375,
+                "y": 367.828125,
+                "width": 230.953125,
+                "height": 180,
+                "right": 918.3125,
+                "bottom": 547.828125
+              }
+            }
+          ]
+        },
+        "table": {
+          "rows": [
+            {
+              "position": 1,
+              "name": "Ana Fernández",
+              "points": "790 pts",
+              "achievements": "7",
+              "height": 48
+            },
+            {
+              "position": 2,
+              "name": "Marcos del Río",
+              "points": "700 pts",
+              "achievements": "6",
+              "height": 48
+            },
+            {
+              "position": 3,
+              "name": "Laura Sánchez",
+              "points": "550 pts",
+              "achievements": "5",
+              "height": 48
+            },
+            {
+              "position": 4,
+              "name": "Pablo García",
+              "points": "520 pts",
+              "achievements": "5",
+              "height": 48
+            },
+            {
+              "position": 5,
+              "name": "María Pérez",
+              "points": "430 pts",
+              "achievements": "4",
+              "height": 48
+            },
+            {
+              "position": 6,
+              "name": "Carmen Martín",
+              "points": "430 pts",
+              "achievements": "4",
+              "height": 48
+            },
+            {
+              "position": 7,
+              "name": "Carlos Torres",
+              "points": "350 pts",
+              "achievements": "3",
+              "height": 48
+            },
+            {
+              "position": 8,
+              "name": "Álex Moreno de la Fuente",
+              "points": "230 pts",
+              "achievements": "3",
+              "height": 48
+            },
+            {
+              "position": 9,
+              "name": "Javier Loro",
+              "points": "180 pts",
+              "achievements": "2",
+              "height": 48
+            },
+            {
+              "position": 10,
+              "name": "Diego Ruiz",
+              "points": "100 pts",
+              "achievements": "1",
+              "height": 48
+            },
+            {
+              "position": 11,
+              "name": "Daniel Molina",
+              "points": "0 pts",
+              "achievements": "0",
+              "height": 48
+            },
+            {
+              "position": 12,
+              "name": "Elena Castro",
+              "points": "0 pts",
+              "achievements": "0",
+              "height": 48
+            }
+          ],
+          "rowCount": 12,
+          "zeroRows": 2,
+          "scrollerClientWidth": 733,
+          "scrollerScrollWidth": 733,
+          "internalHorizontalScroll": false
+        },
+        "latestStrip": {
+          "itemCount": 4,
+          "items": [
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Álex Moreno de la Fuente",
+              "date": "19 sept 2026",
+              "dateClientWidth": 97,
+              "dateScrollWidth": 97
+            },
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Vuelo en picado",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Carlos Torres",
+              "date": "19 sept 2026",
+              "dateClientWidth": 92,
+              "dateScrollWidth": 92
+            },
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Carmen Martín",
+              "date": "18 sept 2026",
+              "dateClientWidth": 97,
+              "dateScrollWidth": 97
+            },
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "María Pérez",
+              "date": "18 sept 2026",
+              "dateClientWidth": 97,
+              "dateScrollWidth": 97
+            }
+          ]
+        },
+        "statsItems": [
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 89,
+            "scrollHeight": 89,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Miembros",
+            "values": [
+              "12"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 89,
+            "scrollHeight": 89,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros en catálogo",
+            "values": [
+              "14"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 89,
+            "scrollHeight": 89,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Puntos acumulados",
+            "values": [
+              "4280"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 109,
+            "scrollHeight": 109,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros otorgados por miembro",
+            "values": [
+              "3,3",
+              "40 otorgamientos"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 109,
+            "scrollHeight": 109,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros distintos conseguidos",
+            "values": [
+              "7"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 109,
+            "scrollHeight": 109,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Participación",
+            "values": [
+              "83%",
+              "10 de 12 miembros"
+            ]
+          }
+        ],
+        "panels": [
+          {
+            "label": "ranking-podium-title",
+            "clientWidth": 733,
+            "scrollWidth": 733,
+            "clientHeight": 266,
+            "scrollHeight": 266,
+            "overflowX": "hidden",
+            "overflowY": "hidden"
+          },
+          {
+            "label": "ranking-stats-title",
+            "clientWidth": 468,
+            "scrollWidth": 468,
+            "clientHeight": 266,
+            "scrollHeight": 266,
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          {
+            "label": "ranking-table-title",
+            "clientWidth": 733,
+            "scrollWidth": 733,
+            "clientHeight": 665,
+            "scrollHeight": 665,
+            "overflowX": "hidden",
+            "overflowY": "hidden"
+          },
+          {
+            "label": "ranking-latest-title",
+            "clientWidth": 733,
+            "scrollWidth": 733,
+            "clientHeight": 143,
+            "scrollHeight": 143,
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        ],
+        "assertions": {
+          "topNames": true,
+          "totals": true,
+          "longNameAccessible": true,
+          "exclusionsAbsent": true,
+          "noGlobalOverflow": true
+        }
+      },
+      "rankingRequestCount": 1
+    },
+    "adminDesktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 1024,
+        "mobile": false
+      },
+      "apiRequests": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/ranking"
+        }
+      ],
+      "apiResponses": [
+        {
+          "status": 200,
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "status": 200,
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/ranking"
+        }
+      ],
+      "networkFailures": [
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "consoleErrors": [],
+      "exceptions": [],
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1024
+        },
+        "document": {
+          "clientWidth": 1440,
+          "scrollWidth": 1440,
+          "clientHeight": 1024,
+          "scrollHeight": 1426
+        },
+        "shell": {
+          "sidebar": {
+            "x": 0,
+            "y": 0,
+            "width": 172,
+            "height": 1024,
+            "right": 172,
+            "bottom": 1024
+          },
+          "identity": {
+            "x": 172,
+            "y": 0,
+            "width": 1268,
+            "height": 129,
+            "right": 1440,
+            "bottom": 129
+          }
+        },
+        "layout": {
+          "rect": {
+            "x": 196.46875,
+            "y": 292.828125,
+            "width": 1219.0625,
+            "height": 1109.03125,
+            "right": 1415.53125,
+            "bottom": 1401.859375
+          },
+          "left": {
+            "x": 196.46875,
+            "y": 292.828125,
+            "width": 734.84375,
+            "height": 268,
+            "right": 931.3125,
+            "bottom": 560.828125
+          },
+          "right": {
+            "x": 945.703125,
+            "y": 292.828125,
+            "width": 469.828125,
+            "height": 268.25,
+            "right": 1415.53125,
+            "bottom": 561.078125
+          },
+          "leftPercent": 61,
+          "topBandHeight": 268.25
+        },
+        "podium": {
+          "domOrder": [
+            1,
+            2,
+            3
+          ],
+          "visualOrder": [
+            2,
+            1,
+            3
+          ],
+          "winnerHeightRatioPercent": 16.7,
+          "items": [
+            {
+              "position": 1,
+              "rect": {
+                "x": 448.40625,
+                "y": 337.828125,
+                "width": 230.953125,
+                "height": 210,
+                "right": 679.359375,
+                "bottom": 547.828125
+              }
+            },
+            {
+              "position": 2,
+              "rect": {
+                "x": 209.46875,
+                "y": 367.828125,
+                "width": 230.9375,
+                "height": 180,
+                "right": 440.40625,
+                "bottom": 547.828125
+              }
+            },
+            {
+              "position": 3,
+              "rect": {
+                "x": 687.359375,
+                "y": 367.828125,
+                "width": 230.953125,
+                "height": 180,
+                "right": 918.3125,
+                "bottom": 547.828125
+              }
+            }
+          ]
+        },
+        "table": {
+          "rows": [
+            {
+              "position": 1,
+              "name": "Ana Fernández",
+              "points": "790 pts",
+              "achievements": "7",
+              "height": 48
+            },
+            {
+              "position": 2,
+              "name": "Marcos del Río",
+              "points": "700 pts",
+              "achievements": "6",
+              "height": 48
+            },
+            {
+              "position": 3,
+              "name": "Laura Sánchez",
+              "points": "550 pts",
+              "achievements": "5",
+              "height": 48
+            },
+            {
+              "position": 4,
+              "name": "Pablo García",
+              "points": "520 pts",
+              "achievements": "5",
+              "height": 48
+            },
+            {
+              "position": 5,
+              "name": "María Pérez",
+              "points": "430 pts",
+              "achievements": "4",
+              "height": 48
+            },
+            {
+              "position": 6,
+              "name": "Carmen Martín",
+              "points": "430 pts",
+              "achievements": "4",
+              "height": 48
+            },
+            {
+              "position": 7,
+              "name": "Carlos Torres",
+              "points": "350 pts",
+              "achievements": "3",
+              "height": 48
+            },
+            {
+              "position": 8,
+              "name": "Álex Moreno de la Fuente",
+              "points": "230 pts",
+              "achievements": "3",
+              "height": 48
+            },
+            {
+              "position": 9,
+              "name": "Javier Loro",
+              "points": "180 pts",
+              "achievements": "2",
+              "height": 48
+            },
+            {
+              "position": 10,
+              "name": "Diego Ruiz",
+              "points": "100 pts",
+              "achievements": "1",
+              "height": 48
+            },
+            {
+              "position": 11,
+              "name": "Daniel Molina",
+              "points": "0 pts",
+              "achievements": "0",
+              "height": 48
+            },
+            {
+              "position": 12,
+              "name": "Elena Castro",
+              "points": "0 pts",
+              "achievements": "0",
+              "height": 48
+            }
+          ],
+          "rowCount": 12,
+          "zeroRows": 2,
+          "scrollerClientWidth": 733,
+          "scrollerScrollWidth": 733,
+          "internalHorizontalScroll": false
+        },
+        "latestStrip": {
+          "itemCount": 4,
+          "items": [
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Álex Moreno de la Fuente",
+              "date": "19 sept 2026",
+              "dateClientWidth": 97,
+              "dateScrollWidth": 97
+            },
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Vuelo en picado",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Carlos Torres",
+              "date": "19 sept 2026",
+              "dateClientWidth": 92,
+              "dateScrollWidth": 92
+            },
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Carmen Martín",
+              "date": "18 sept 2026",
+              "dateClientWidth": 97,
+              "dateScrollWidth": 97
+            },
+            {
+              "clientWidth": 169,
+              "scrollWidth": 169,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "María Pérez",
+              "date": "18 sept 2026",
+              "dateClientWidth": 97,
+              "dateScrollWidth": 97
+            }
+          ]
+        },
+        "statsItems": [
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 89,
+            "scrollHeight": 89,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Miembros",
+            "values": [
+              "12"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 89,
+            "scrollHeight": 89,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros en catálogo",
+            "values": [
+              "14"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 89,
+            "scrollHeight": 89,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Puntos acumulados",
+            "values": [
+              "4280"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 109,
+            "scrollHeight": 109,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros otorgados por miembro",
+            "values": [
+              "3,3",
+              "40 otorgamientos"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 109,
+            "scrollHeight": 109,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros distintos conseguidos",
+            "values": [
+              "7"
+            ]
+          },
+          {
+            "clientWidth": 141,
+            "scrollWidth": 141,
+            "clientHeight": 109,
+            "scrollHeight": 109,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Participación",
+            "values": [
+              "83%",
+              "10 de 12 miembros"
+            ]
+          }
+        ],
+        "panels": [
+          {
+            "label": "ranking-podium-title",
+            "clientWidth": 733,
+            "scrollWidth": 733,
+            "clientHeight": 266,
+            "scrollHeight": 266,
+            "overflowX": "hidden",
+            "overflowY": "hidden"
+          },
+          {
+            "label": "ranking-stats-title",
+            "clientWidth": 468,
+            "scrollWidth": 468,
+            "clientHeight": 266,
+            "scrollHeight": 266,
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          {
+            "label": "ranking-table-title",
+            "clientWidth": 733,
+            "scrollWidth": 733,
+            "clientHeight": 665,
+            "scrollHeight": 665,
+            "overflowX": "hidden",
+            "overflowY": "hidden"
+          },
+          {
+            "label": "ranking-latest-title",
+            "clientWidth": 733,
+            "scrollWidth": 733,
+            "clientHeight": 143,
+            "scrollHeight": 143,
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        ],
+        "assertions": {
+          "topNames": true,
+          "totals": true,
+          "longNameAccessible": true,
+          "exclusionsAbsent": true,
+          "noGlobalOverflow": true
+        }
+      },
+      "rankingRequestCount": 1
+    },
+    "playerMobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "mobile": true
+      },
+      "apiRequests": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/ranking"
+        }
+      ],
+      "apiResponses": [
+        {
+          "status": 200,
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/contexto"
+        },
+        {
+          "status": 200,
+          "url": "http://127.0.0.1:3000/api/equipos/halcones/ranking"
+        }
+      ],
+      "networkFailures": [
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "consoleErrors": [],
+      "exceptions": [],
+      "metrics": {
+        "viewport": {
+          "width": 396,
+          "height": 857
+        },
+        "document": {
+          "clientWidth": 390,
+          "scrollWidth": 396,
+          "clientHeight": 844,
+          "scrollHeight": 2367
+        },
+        "shell": {
+          "sidebar": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 69,
+            "right": 390,
+            "bottom": 69
+          },
+          "identity": {
+            "x": 0,
+            "y": 69,
+            "width": 390,
+            "height": 129,
+            "right": 390,
+            "bottom": 198
+          }
+        },
+        "layout": {
+          "rect": {
+            "x": 16,
+            "y": 406.09375,
+            "width": 358,
+            "height": 1944.828125,
+            "right": 374,
+            "bottom": 2350.921875
+          },
+          "left": {
+            "x": 16,
+            "y": 406.09375,
+            "width": 380.21875,
+            "height": 378.78125,
+            "right": 396.21875,
+            "bottom": 784.875
+          },
+          "right": {
+            "x": 16,
+            "y": 794.875,
+            "width": 380.21875,
+            "height": 334,
+            "right": 396.21875,
+            "bottom": 1128.875
+          },
+          "leftPercent": 50,
+          "topBandHeight": 378.78125
+        },
+        "podium": {
+          "domOrder": [
+            1,
+            2,
+            3
+          ],
+          "visualOrder": [
+            1,
+            2,
+            3
+          ],
+          "winnerHeightRatioPercent": 0,
+          "items": [
+            {
+              "position": 1,
+              "rect": {
+                "x": 29,
+                "y": 451.09375,
+                "width": 354.21875,
+                "height": 101.59375,
+                "right": 383.21875,
+                "bottom": 552.6875
+              }
+            },
+            {
+              "position": 2,
+              "rect": {
+                "x": 29,
+                "y": 560.6875,
+                "width": 354.21875,
+                "height": 101.59375,
+                "right": 383.21875,
+                "bottom": 662.28125
+              }
+            },
+            {
+              "position": 3,
+              "rect": {
+                "x": 29,
+                "y": 670.28125,
+                "width": 354.21875,
+                "height": 101.59375,
+                "right": 383.21875,
+                "bottom": 771.875
+              }
+            }
+          ]
+        },
+        "table": {
+          "rows": [
+            {
+              "position": 1,
+              "name": "Ana Fernández",
+              "points": "790 pts",
+              "achievements": "7",
+              "height": 48
+            },
+            {
+              "position": 2,
+              "name": "Marcos del Río",
+              "points": "700 pts",
+              "achievements": "6",
+              "height": 48
+            },
+            {
+              "position": 3,
+              "name": "Laura Sánchez",
+              "points": "550 pts",
+              "achievements": "5",
+              "height": 48
+            },
+            {
+              "position": 4,
+              "name": "Pablo García",
+              "points": "520 pts",
+              "achievements": "5",
+              "height": 48
+            },
+            {
+              "position": 5,
+              "name": "María Pérez",
+              "points": "430 pts",
+              "achievements": "4",
+              "height": 48
+            },
+            {
+              "position": 6,
+              "name": "Carmen Martín",
+              "points": "430 pts",
+              "achievements": "4",
+              "height": 48
+            },
+            {
+              "position": 7,
+              "name": "Carlos Torres",
+              "points": "350 pts",
+              "achievements": "3",
+              "height": 48
+            },
+            {
+              "position": 8,
+              "name": "Álex Moreno de la Fuente",
+              "points": "230 pts",
+              "achievements": "3",
+              "height": 48
+            },
+            {
+              "position": 9,
+              "name": "Javier Loro",
+              "points": "180 pts",
+              "achievements": "2",
+              "height": 48
+            },
+            {
+              "position": 10,
+              "name": "Diego Ruiz",
+              "points": "100 pts",
+              "achievements": "1",
+              "height": 48
+            },
+            {
+              "position": 11,
+              "name": "Daniel Molina",
+              "points": "0 pts",
+              "achievements": "0",
+              "height": 48
+            },
+            {
+              "position": 12,
+              "name": "Elena Castro",
+              "points": "0 pts",
+              "achievements": "0",
+              "height": 48
+            }
+          ],
+          "rowCount": 12,
+          "zeroRows": 2,
+          "scrollerClientWidth": 378,
+          "scrollerScrollWidth": 704,
+          "internalHorizontalScroll": true
+        },
+        "latestStrip": {
+          "itemCount": 4,
+          "items": [
+            {
+              "clientWidth": 352,
+              "scrollWidth": 352,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Álex Moreno de la Fuente",
+              "date": "19 sept 2026",
+              "dateClientWidth": 134,
+              "dateScrollWidth": 134
+            },
+            {
+              "clientWidth": 352,
+              "scrollWidth": 352,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Vuelo en picado",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Carlos Torres",
+              "date": "19 sept 2026",
+              "dateClientWidth": 92,
+              "dateScrollWidth": 92
+            },
+            {
+              "clientWidth": 352,
+              "scrollWidth": 352,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "Carmen Martín",
+              "date": "18 sept 2026",
+              "dateClientWidth": 103,
+              "dateScrollWidth": 103
+            },
+            {
+              "clientWidth": 352,
+              "scrollWidth": 352,
+              "clientHeight": 85,
+              "scrollHeight": 85,
+              "descendantsBeyondRight": [],
+              "descendantsBeyondBottom": [],
+              "title": "Trabajo en equipo",
+              "titleClientHeight": 32,
+              "titleScrollHeight": 32,
+              "titleLineHeight": "16px",
+              "titleLineClamp": "2",
+              "member": "María Pérez",
+              "date": "18 sept 2026",
+              "dateClientWidth": 103,
+              "dateScrollWidth": 103
+            }
+          ]
+        },
+        "statsItems": [
+          {
+            "clientWidth": 171,
+            "scrollWidth": 171,
+            "clientHeight": 66,
+            "scrollHeight": 66,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Miembros",
+            "values": [
+              "12"
+            ]
+          },
+          {
+            "clientWidth": 171,
+            "scrollWidth": 171,
+            "clientHeight": 66,
+            "scrollHeight": 66,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros en catálogo",
+            "values": [
+              "14"
+            ]
+          },
+          {
+            "clientWidth": 171,
+            "scrollWidth": 171,
+            "clientHeight": 102,
+            "scrollHeight": 102,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Puntos acumulados",
+            "values": [
+              "4280"
+            ]
+          },
+          {
+            "clientWidth": 171,
+            "scrollWidth": 171,
+            "clientHeight": 102,
+            "scrollHeight": 102,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros otorgados por miembro",
+            "values": [
+              "3,3",
+              "40 otorgamientos"
+            ]
+          },
+          {
+            "clientWidth": 171,
+            "scrollWidth": 171,
+            "clientHeight": 86,
+            "scrollHeight": 86,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Logros distintos conseguidos",
+            "values": [
+              "7"
+            ]
+          },
+          {
+            "clientWidth": 171,
+            "scrollWidth": 171,
+            "clientHeight": 86,
+            "scrollHeight": 86,
+            "descendantsBeyondRight": [],
+            "descendantsBeyondBottom": [],
+            "label": "Participación",
+            "values": [
+              "83%",
+              "10 de 12 miembros"
+            ]
+          }
+        ],
+        "panels": [
+          {
+            "label": "ranking-podium-title",
+            "clientWidth": 378,
+            "scrollWidth": 378,
+            "clientHeight": 377,
+            "scrollHeight": 377,
+            "overflowX": "hidden",
+            "overflowY": "hidden"
+          },
+          {
+            "label": "ranking-stats-title",
+            "clientWidth": 378,
+            "scrollWidth": 378,
+            "clientHeight": 332,
+            "scrollHeight": 332,
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          {
+            "label": "ranking-table-title",
+            "clientWidth": 378,
+            "scrollWidth": 378,
+            "clientHeight": 665,
+            "scrollHeight": 665,
+            "overflowX": "hidden",
+            "overflowY": "hidden"
+          },
+          {
+            "label": "ranking-latest-title",
+            "clientWidth": 378,
+            "scrollWidth": 378,
+            "clientHeight": 428,
+            "scrollHeight": 428,
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        ],
+        "assertions": {
+          "topNames": true,
+          "totals": true,
+          "longNameAccessible": true,
+          "exclusionsAbsent": true,
+          "noGlobalOverflow": true
+        }
+      },
+      "rankingRequestCount": 1
+    }
+  },
+  "states": {},
+  "fixture": {
+    "players": [
+      {
+        "id": 3,
+        "displayName": "Ana Fernández",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-03T09:00:00.000Z",
+        "puntos": 790,
+        "logrosCount": 7,
+        "ultimoLogro": {
+          "id": 7,
+          "nombre": "Pase decisivo",
+          "fecha": "2026-09-16T18:00:00.000Z"
+        },
+        "position": 1
+      },
+      {
+        "id": 4,
+        "displayName": "Marcos del Río",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-04T09:00:00.000Z",
+        "puntos": 700,
+        "logrosCount": 6,
+        "ultimoLogro": {
+          "id": 6,
+          "nombre": "Racha impecable",
+          "fecha": "2026-09-17T12:00:00.000Z"
+        },
+        "position": 2
+      },
+      {
+        "id": 5,
+        "displayName": "Laura Sánchez",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-05T09:00:00.000Z",
+        "puntos": 550,
+        "logrosCount": 5,
+        "ultimoLogro": {
+          "id": 5,
+          "nombre": "Mentoría",
+          "fecha": "2026-09-17T17:00:00.000Z"
+        },
+        "position": 3
+      },
+      {
+        "id": 6,
+        "displayName": "Pablo García",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-06T09:00:00.000Z",
+        "puntos": 520,
+        "logrosCount": 5,
+        "ultimoLogro": {
+          "id": 7,
+          "nombre": "Pase decisivo",
+          "fecha": "2026-09-18T10:00:00.000Z"
+        },
+        "position": 4
+      },
+      {
+        "id": 7,
+        "displayName": "María Pérez",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-07T09:00:00.000Z",
+        "puntos": 430,
+        "logrosCount": 4,
+        "ultimoLogro": {
+          "id": 4,
+          "nombre": "Trabajo en equipo",
+          "fecha": "2026-09-18T14:00:00.000Z"
+        },
+        "position": 5
+      },
+      {
+        "id": 8,
+        "displayName": "Carmen Martín",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-08T09:00:00.000Z",
+        "puntos": 430,
+        "logrosCount": 4,
+        "ultimoLogro": {
+          "id": 4,
+          "nombre": "Trabajo en equipo",
+          "fecha": "2026-09-18T18:00:00.000Z"
+        },
+        "position": 6
+      },
+      {
+        "id": 9,
+        "displayName": "Carlos Torres",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-09T09:00:00.000Z",
+        "puntos": 350,
+        "logrosCount": 3,
+        "ultimoLogro": {
+          "id": 3,
+          "nombre": "Vuelo en picado",
+          "fecha": "2026-09-19T09:00:00.000Z"
+        },
+        "position": 7
+      },
+      {
+        "id": 10,
+        "displayName": "Álex Moreno de la Fuente",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-10T09:00:00.000Z",
+        "puntos": 230,
+        "logrosCount": 3,
+        "ultimoLogro": {
+          "id": 4,
+          "nombre": "Trabajo en equipo",
+          "fecha": "2026-09-19T12:00:00.000Z"
+        },
+        "position": 8
+      },
+      {
+        "id": 1,
+        "displayName": "Javier Loro",
+        "role": "TEAM_ADMIN",
+        "joinedAt": "2026-09-01T09:00:00.000Z",
+        "puntos": 180,
+        "logrosCount": 2,
+        "ultimoLogro": {
+          "id": 4,
+          "nombre": "Trabajo en equipo",
+          "fecha": "2026-09-16T10:00:00.000Z"
+        },
+        "position": 9
+      },
+      {
+        "id": 2,
+        "displayName": "Diego Ruiz",
+        "role": "TEAM_ADMIN",
+        "joinedAt": "2026-09-02T09:00:00.000Z",
+        "puntos": 100,
+        "logrosCount": 1,
+        "ultimoLogro": {
+          "id": 1,
+          "nombre": "Primer vuelo",
+          "fecha": "2026-09-16T11:00:00.000Z"
+        },
+        "position": 10
+      },
+      {
+        "id": 11,
+        "displayName": "Daniel Molina",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-11T09:00:00.000Z",
+        "puntos": 0,
+        "logrosCount": 0,
+        "ultimoLogro": null,
+        "position": 11
+      },
+      {
+        "id": 12,
+        "displayName": "Elena Castro",
+        "role": "PLAYER",
+        "joinedAt": "2026-09-12T09:00:00.000Z",
+        "puntos": 0,
+        "logrosCount": 0,
+        "ultimoLogro": null,
+        "position": 12
+      }
+    ],
+    "totals": {
+      "members": 12,
+      "catalog": 14,
+      "awards": 40,
+      "points": 4280,
+      "uniqueEarned": 7,
+      "participants": 10
+    }
+  },
+  "smoke768": {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "document": {
+      "clientWidth": 768,
+      "scrollWidth": 768,
+      "clientHeight": 1024,
+      "scrollHeight": 1887
+    },
+    "shell": {
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 172,
+        "height": 1024,
+        "right": 172,
+        "bottom": 1024
+      },
+      "identity": {
+        "x": 172,
+        "y": 0,
+        "width": 596,
+        "height": 129,
+        "right": 768,
+        "bottom": 129
+      }
+    },
+    "layout": {
+      "rect": {
+        "x": 188,
+        "y": 276.796875,
+        "width": 564,
+        "height": 1594,
+        "right": 752,
+        "bottom": 1870.796875
+      },
+      "left": {
+        "x": 188,
+        "y": 276.796875,
+        "width": 564,
+        "height": 268,
+        "right": 752,
+        "bottom": 544.796875
+      },
+      "right": {
+        "x": 188,
+        "y": 554.796875,
+        "width": 564,
+        "height": 238,
+        "right": 752,
+        "bottom": 792.796875
+      },
+      "leftPercent": 50,
+      "topBandHeight": 268
+    },
+    "podium": {
+      "domOrder": [
+        1,
+        2,
+        3
+      ],
+      "visualOrder": [
+        2,
+        1,
+        3
+      ],
+      "winnerHeightRatioPercent": 16.7,
+      "items": [
+        {
+          "position": 1,
+          "rect": {
+            "x": 383,
+            "y": 321.796875,
+            "width": 174,
+            "height": 210,
+            "right": 557,
+            "bottom": 531.796875
+          }
+        },
+        {
+          "position": 2,
+          "rect": {
+            "x": 201,
+            "y": 351.796875,
+            "width": 174,
+            "height": 180,
+            "right": 375,
+            "bottom": 531.796875
+          }
+        },
+        {
+          "position": 3,
+          "rect": {
+            "x": 565,
+            "y": 351.796875,
+            "width": 174,
+            "height": 180,
+            "right": 739,
+            "bottom": 531.796875
+          }
+        }
+      ]
+    },
+    "table": {
+      "rows": [
+        {
+          "position": 1,
+          "name": "Ana Fernández",
+          "points": "790 pts",
+          "achievements": "7",
+          "height": 48
+        },
+        {
+          "position": 2,
+          "name": "Marcos del Río",
+          "points": "700 pts",
+          "achievements": "6",
+          "height": 48
+        },
+        {
+          "position": 3,
+          "name": "Laura Sánchez",
+          "points": "550 pts",
+          "achievements": "5",
+          "height": 48
+        },
+        {
+          "position": 4,
+          "name": "Pablo García",
+          "points": "520 pts",
+          "achievements": "5",
+          "height": 48
+        },
+        {
+          "position": 5,
+          "name": "María Pérez",
+          "points": "430 pts",
+          "achievements": "4",
+          "height": 48
+        },
+        {
+          "position": 6,
+          "name": "Carmen Martín",
+          "points": "430 pts",
+          "achievements": "4",
+          "height": 48
+        },
+        {
+          "position": 7,
+          "name": "Carlos Torres",
+          "points": "350 pts",
+          "achievements": "3",
+          "height": 48
+        },
+        {
+          "position": 8,
+          "name": "Álex Moreno de la Fuente",
+          "points": "230 pts",
+          "achievements": "3",
+          "height": 48
+        },
+        {
+          "position": 9,
+          "name": "Javier Loro",
+          "points": "180 pts",
+          "achievements": "2",
+          "height": 48
+        },
+        {
+          "position": 10,
+          "name": "Diego Ruiz",
+          "points": "100 pts",
+          "achievements": "1",
+          "height": 48
+        },
+        {
+          "position": 11,
+          "name": "Daniel Molina",
+          "points": "0 pts",
+          "achievements": "0",
+          "height": 48
+        },
+        {
+          "position": 12,
+          "name": "Elena Castro",
+          "points": "0 pts",
+          "achievements": "0",
+          "height": 48
+        }
+      ],
+      "rowCount": 12,
+      "zeroRows": 2,
+      "scrollerClientWidth": 562,
+      "scrollerScrollWidth": 704,
+      "internalHorizontalScroll": true
+    },
+    "latestStrip": {
+      "itemCount": 4,
+      "items": [
+        {
+          "clientWidth": 263,
+          "scrollWidth": 263,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Trabajo en equipo",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "Álex Moreno de la Fuente",
+          "date": "19 sept 2026",
+          "dateClientWidth": 134,
+          "dateScrollWidth": 134
+        },
+        {
+          "clientWidth": 263,
+          "scrollWidth": 263,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Vuelo en picado",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "Carlos Torres",
+          "date": "19 sept 2026",
+          "dateClientWidth": 92,
+          "dateScrollWidth": 92
+        },
+        {
+          "clientWidth": 263,
+          "scrollWidth": 263,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Trabajo en equipo",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "Carmen Martín",
+          "date": "18 sept 2026",
+          "dateClientWidth": 103,
+          "dateScrollWidth": 103
+        },
+        {
+          "clientWidth": 263,
+          "scrollWidth": 263,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Trabajo en equipo",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "María Pérez",
+          "date": "18 sept 2026",
+          "dateClientWidth": 103,
+          "dateScrollWidth": 103
+        }
+      ]
+    },
+    "statsItems": [
+      {
+        "clientWidth": 172,
+        "scrollWidth": 172,
+        "clientHeight": 66,
+        "scrollHeight": 66,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Miembros",
+        "values": [
+          "12"
+        ]
+      },
+      {
+        "clientWidth": 172,
+        "scrollWidth": 172,
+        "clientHeight": 66,
+        "scrollHeight": 66,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Logros en catálogo",
+        "values": [
+          "14"
+        ]
+      },
+      {
+        "clientWidth": 172,
+        "scrollWidth": 172,
+        "clientHeight": 66,
+        "scrollHeight": 66,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Puntos acumulados",
+        "values": [
+          "4280"
+        ]
+      },
+      {
+        "clientWidth": 172,
+        "scrollWidth": 172,
+        "clientHeight": 102,
+        "scrollHeight": 102,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Logros otorgados por miembro",
+        "values": [
+          "3,3",
+          "40 otorgamientos"
+        ]
+      },
+      {
+        "clientWidth": 172,
+        "scrollWidth": 172,
+        "clientHeight": 102,
+        "scrollHeight": 102,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Logros distintos conseguidos",
+        "values": [
+          "7"
+        ]
+      },
+      {
+        "clientWidth": 172,
+        "scrollWidth": 172,
+        "clientHeight": 102,
+        "scrollHeight": 102,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Participación",
+        "values": [
+          "83%",
+          "10 de 12 miembros"
+        ]
+      }
+    ],
+    "panels": [
+      {
+        "label": "ranking-podium-title",
+        "clientWidth": 562,
+        "scrollWidth": 562,
+        "clientHeight": 266,
+        "scrollHeight": 266,
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      {
+        "label": "ranking-stats-title",
+        "clientWidth": 562,
+        "scrollWidth": 562,
+        "clientHeight": 236,
+        "scrollHeight": 236,
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      {
+        "label": "ranking-table-title",
+        "clientWidth": 562,
+        "scrollWidth": 562,
+        "clientHeight": 665,
+        "scrollHeight": 665,
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      {
+        "label": "ranking-latest-title",
+        "clientWidth": 562,
+        "scrollWidth": 562,
+        "clientHeight": 238,
+        "scrollHeight": 238,
+        "overflowX": "visible",
+        "overflowY": "visible"
+      }
+    ],
+    "assertions": {
+      "topNames": true,
+      "totals": true,
+      "longNameAccessible": true,
+      "exclusionsAbsent": true,
+      "noGlobalOverflow": true
+    }
+  },
+  "smoke1024": {
+    "viewport": {
+      "width": 1024,
+      "height": 1024
+    },
+    "document": {
+      "clientWidth": 1024,
+      "scrollWidth": 1024,
+      "clientHeight": 1024,
+      "scrollHeight": 1938
+    },
+    "shell": {
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 172,
+        "height": 1024,
+        "right": 172,
+        "bottom": 1024
+      },
+      "identity": {
+        "x": 172,
+        "y": 0,
+        "width": 852,
+        "height": 129,
+        "right": 1024,
+        "bottom": 129
+      }
+    },
+    "layout": {
+      "rect": {
+        "x": 189.40625,
+        "y": 278.203125,
+        "width": 817.1875,
+        "height": 1642.234375,
+        "right": 1006.59375,
+        "bottom": 1920.4375
+      },
+      "left": {
+        "x": 189.40625,
+        "y": 278.203125,
+        "width": 817.1875,
+        "height": 268,
+        "right": 1006.59375,
+        "bottom": 546.203125
+      },
+      "right": {
+        "x": 189.40625,
+        "y": 556.4375,
+        "width": 817.1875,
+        "height": 222,
+        "right": 1006.59375,
+        "bottom": 778.4375
+      },
+      "leftPercent": 50,
+      "topBandHeight": 268
+    },
+    "podium": {
+      "domOrder": [
+        1,
+        2,
+        3
+      ],
+      "visualOrder": [
+        2,
+        1,
+        3
+      ],
+      "winnerHeightRatioPercent": 16.7,
+      "items": [
+        {
+          "position": 1,
+          "rect": {
+            "x": 468.796875,
+            "y": 323.203125,
+            "width": 258.390625,
+            "height": 210,
+            "right": 727.1875,
+            "bottom": 533.203125
+          }
+        },
+        {
+          "position": 2,
+          "rect": {
+            "x": 202.40625,
+            "y": 353.203125,
+            "width": 258.390625,
+            "height": 180,
+            "right": 460.796875,
+            "bottom": 533.203125
+          }
+        },
+        {
+          "position": 3,
+          "rect": {
+            "x": 735.1875,
+            "y": 353.203125,
+            "width": 258.40625,
+            "height": 180,
+            "right": 993.59375,
+            "bottom": 533.203125
+          }
+        }
+      ]
+    },
+    "table": {
+      "rows": [
+        {
+          "position": 1,
+          "name": "Ana Fernández",
+          "points": "790 pts",
+          "achievements": "7",
+          "height": 48
+        },
+        {
+          "position": 2,
+          "name": "Marcos del Río",
+          "points": "700 pts",
+          "achievements": "6",
+          "height": 48
+        },
+        {
+          "position": 3,
+          "name": "Laura Sánchez",
+          "points": "550 pts",
+          "achievements": "5",
+          "height": 48
+        },
+        {
+          "position": 4,
+          "name": "Pablo García",
+          "points": "520 pts",
+          "achievements": "5",
+          "height": 48
+        },
+        {
+          "position": 5,
+          "name": "María Pérez",
+          "points": "430 pts",
+          "achievements": "4",
+          "height": 48
+        },
+        {
+          "position": 6,
+          "name": "Carmen Martín",
+          "points": "430 pts",
+          "achievements": "4",
+          "height": 48
+        },
+        {
+          "position": 7,
+          "name": "Carlos Torres",
+          "points": "350 pts",
+          "achievements": "3",
+          "height": 48
+        },
+        {
+          "position": 8,
+          "name": "Álex Moreno de la Fuente",
+          "points": "230 pts",
+          "achievements": "3",
+          "height": 48
+        },
+        {
+          "position": 9,
+          "name": "Javier Loro",
+          "points": "180 pts",
+          "achievements": "2",
+          "height": 48
+        },
+        {
+          "position": 10,
+          "name": "Diego Ruiz",
+          "points": "100 pts",
+          "achievements": "1",
+          "height": 48
+        },
+        {
+          "position": 11,
+          "name": "Daniel Molina",
+          "points": "0 pts",
+          "achievements": "0",
+          "height": 48
+        },
+        {
+          "position": 12,
+          "name": "Elena Castro",
+          "points": "0 pts",
+          "achievements": "0",
+          "height": 48
+        }
+      ],
+      "rowCount": 12,
+      "zeroRows": 2,
+      "scrollerClientWidth": 815,
+      "scrollerScrollWidth": 815,
+      "internalHorizontalScroll": false
+    },
+    "latestStrip": {
+      "itemCount": 4,
+      "items": [
+        {
+          "clientWidth": 390,
+          "scrollWidth": 390,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Trabajo en equipo",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "Álex Moreno de la Fuente",
+          "date": "19 sept 2026",
+          "dateClientWidth": 134,
+          "dateScrollWidth": 134
+        },
+        {
+          "clientWidth": 390,
+          "scrollWidth": 390,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Vuelo en picado",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "Carlos Torres",
+          "date": "19 sept 2026",
+          "dateClientWidth": 92,
+          "dateScrollWidth": 92
+        },
+        {
+          "clientWidth": 390,
+          "scrollWidth": 390,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Trabajo en equipo",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "Carmen Martín",
+          "date": "18 sept 2026",
+          "dateClientWidth": 103,
+          "dateScrollWidth": 103
+        },
+        {
+          "clientWidth": 390,
+          "scrollWidth": 390,
+          "clientHeight": 85,
+          "scrollHeight": 85,
+          "descendantsBeyondRight": [],
+          "descendantsBeyondBottom": [],
+          "title": "Trabajo en equipo",
+          "titleClientHeight": 32,
+          "titleScrollHeight": 32,
+          "titleLineHeight": "16px",
+          "titleLineClamp": "2",
+          "member": "María Pérez",
+          "date": "18 sept 2026",
+          "dateClientWidth": 103,
+          "dateScrollWidth": 103
+        }
+      ]
+    },
+    "statsItems": [
+      {
+        "clientWidth": 256,
+        "scrollWidth": 256,
+        "clientHeight": 66,
+        "scrollHeight": 66,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Miembros",
+        "values": [
+          "12"
+        ]
+      },
+      {
+        "clientWidth": 256,
+        "scrollWidth": 256,
+        "clientHeight": 66,
+        "scrollHeight": 66,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Logros en catálogo",
+        "values": [
+          "14"
+        ]
+      },
+      {
+        "clientWidth": 256,
+        "scrollWidth": 256,
+        "clientHeight": 66,
+        "scrollHeight": 66,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Puntos acumulados",
+        "values": [
+          "4280"
+        ]
+      },
+      {
+        "clientWidth": 256,
+        "scrollWidth": 256,
+        "clientHeight": 86,
+        "scrollHeight": 86,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Logros otorgados por miembro",
+        "values": [
+          "3,3",
+          "40 otorgamientos"
+        ]
+      },
+      {
+        "clientWidth": 256,
+        "scrollWidth": 256,
+        "clientHeight": 86,
+        "scrollHeight": 86,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Logros distintos conseguidos",
+        "values": [
+          "7"
+        ]
+      },
+      {
+        "clientWidth": 256,
+        "scrollWidth": 256,
+        "clientHeight": 86,
+        "scrollHeight": 86,
+        "descendantsBeyondRight": [],
+        "descendantsBeyondBottom": [],
+        "label": "Participación",
+        "values": [
+          "83%",
+          "10 de 12 miembros"
+        ]
+      }
+    ],
+    "panels": [
+      {
+        "label": "ranking-podium-title",
+        "clientWidth": 815,
+        "scrollWidth": 815,
+        "clientHeight": 266,
+        "scrollHeight": 266,
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      {
+        "label": "ranking-stats-title",
+        "clientWidth": 815,
+        "scrollWidth": 815,
+        "clientHeight": 220,
+        "scrollHeight": 220,
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      {
+        "label": "ranking-table-title",
+        "clientWidth": 815,
+        "scrollWidth": 815,
+        "clientHeight": 665,
+        "scrollHeight": 665,
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      {
+        "label": "ranking-latest-title",
+        "clientWidth": 815,
+        "scrollWidth": 815,
+        "clientHeight": 238,
+        "scrollHeight": 238,
+        "overflowX": "visible",
+        "overflowY": "visible"
+      }
+    ],
+    "assertions": {
+      "topNames": true,
+      "totals": true,
+      "longNameAccessible": true,
+      "exclusionsAbsent": true,
+      "noGlobalOverflow": true
+    }
+  }
+}

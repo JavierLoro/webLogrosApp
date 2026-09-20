@@ -1,0 +1,786 @@
+{
+  "clock": "2026-09-20T12:00:00Z",
+  "captures": [
+    {
+      "key": "catalog-player",
+      "role": "PLAYER",
+      "path": "/equipos/halcones/logros",
+      "metrics": {
+        "overflow": false,
+        "h1": {
+          "size": 43.2,
+          "rect": {
+            "x": 196.46875,
+            "y": 157.46875,
+            "width": 575.5625,
+            "height": 45.359375,
+            "right": 772.03125,
+            "bottom": 202.828125
+          }
+        },
+        "cards": [
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 406.828125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 389.640625,
+              "bottom": 672.734375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 401.640625,
+              "y": 406.828125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 594.8125,
+              "bottom": 672.734375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 606.8125,
+              "y": 406.828125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 799.984375,
+              "bottom": 672.734375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 811.984375,
+              "y": 406.828125,
+              "width": 193.1875,
+              "height": 265.90625,
+              "right": 1005.171875,
+              "bottom": 672.734375
+            },
+            "scrollY": 0,
+            "titleY": 20,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1017.171875,
+              "y": 406.828125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1210.34375,
+              "bottom": 672.734375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1222.34375,
+              "y": 406.828125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1415.515625,
+              "bottom": 672.734375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 684.734375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 389.640625,
+              "bottom": 950.640625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 401.640625,
+              "y": 684.734375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 594.8125,
+              "bottom": 950.640625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 606.8125,
+              "y": 684.734375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 799.984375,
+              "bottom": 950.640625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 811.984375,
+              "y": 684.734375,
+              "width": 193.1875,
+              "height": 265.90625,
+              "right": 1005.171875,
+              "bottom": 950.640625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1017.171875,
+              "y": 684.734375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1210.34375,
+              "bottom": 950.640625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1222.34375,
+              "y": 684.734375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1415.515625,
+              "bottom": 950.640625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 962.640625,
+              "width": 193.171875,
+              "height": 246.71875,
+              "right": 389.640625,
+              "bottom": 1209.359375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 401.640625,
+              "y": 962.640625,
+              "width": 193.171875,
+              "height": 246.71875,
+              "right": 594.8125,
+              "bottom": 1209.359375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          }
+        ],
+        "grid": {
+          "columns": "193.172px 193.172px 193.172px 193.188px 193.172px 193.172px"
+        },
+        "formRatio": null,
+        "bands": []
+      },
+      "errors": {
+        "console": 0,
+        "http": 0,
+        "network": 0
+      },
+      "artifact": "catalog-player-iteration-1-1440x1024.png"
+    },
+    {
+      "key": "catalog-admin",
+      "role": "TEAM_ADMIN",
+      "path": "/equipos/halcones/logros",
+      "metrics": {
+        "overflow": false,
+        "h1": {
+          "size": 43.2,
+          "rect": {
+            "x": 196.46875,
+            "y": 157.46875,
+            "width": 584.609375,
+            "height": 45.359375,
+            "right": 781.078125,
+            "bottom": 202.828125
+          }
+        },
+        "cards": [
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 384.328125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 389.640625,
+              "bottom": 650.234375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 401.640625,
+              "y": 384.328125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 594.8125,
+              "bottom": 650.234375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 606.8125,
+              "y": 384.328125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 799.984375,
+              "bottom": 650.234375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 811.984375,
+              "y": 384.328125,
+              "width": 193.1875,
+              "height": 265.90625,
+              "right": 1005.171875,
+              "bottom": 650.234375
+            },
+            "scrollY": 0,
+            "titleY": 20,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1017.171875,
+              "y": 384.328125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1210.34375,
+              "bottom": 650.234375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1222.34375,
+              "y": 384.328125,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1415.515625,
+              "bottom": 650.234375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 662.234375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 389.640625,
+              "bottom": 928.140625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 401.640625,
+              "y": 662.234375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 594.8125,
+              "bottom": 928.140625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 606.8125,
+              "y": 662.234375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 799.984375,
+              "bottom": 928.140625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 811.984375,
+              "y": 662.234375,
+              "width": 193.1875,
+              "height": 265.90625,
+              "right": 1005.171875,
+              "bottom": 928.140625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1017.171875,
+              "y": 662.234375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1210.34375,
+              "bottom": 928.140625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 1222.34375,
+              "y": 662.234375,
+              "width": 193.171875,
+              "height": 265.90625,
+              "right": 1415.515625,
+              "bottom": 928.140625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 940.140625,
+              "width": 193.171875,
+              "height": 246.71875,
+              "right": 389.640625,
+              "bottom": 1186.859375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 401.640625,
+              "y": 940.140625,
+              "width": 193.171875,
+              "height": 246.71875,
+              "right": 594.8125,
+              "bottom": 1186.859375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          }
+        ],
+        "grid": {
+          "columns": "193.172px 193.172px 193.172px 193.188px 193.172px 193.172px"
+        },
+        "formRatio": null,
+        "bands": []
+      },
+      "errors": {
+        "console": 0,
+        "http": 0,
+        "network": 0
+      },
+      "artifact": "catalog-admin-iteration-1-1440x1024.png"
+    },
+    {
+      "key": "form-player",
+      "role": "PLAYER",
+      "path": "/equipos/halcones/logros/nuevo",
+      "metrics": {
+        "overflow": false,
+        "h1": {
+          "size": 43.2,
+          "rect": {
+            "x": 196.46875,
+            "y": 181.46875,
+            "width": 584.609375,
+            "height": 45.359375,
+            "right": 781.078125,
+            "bottom": 226.828125
+          }
+        },
+        "cards": [],
+        "grid": null,
+        "formRatio": 0.7040779267944693,
+        "bands": []
+      },
+      "errors": {
+        "console": 0,
+        "http": 0,
+        "network": 0
+      },
+      "artifact": "form-player-iteration-1-1440x1024.png"
+    },
+    {
+      "key": "form-admin",
+      "role": "TEAM_ADMIN",
+      "path": "/equipos/halcones/logros/nuevo",
+      "metrics": {
+        "overflow": false,
+        "h1": {
+          "size": 43.2,
+          "rect": {
+            "x": 196.46875,
+            "y": 181.46875,
+            "width": 502.5,
+            "height": 45.359375,
+            "right": 698.96875,
+            "bottom": 226.828125
+          }
+        },
+        "cards": [],
+        "grid": null,
+        "formRatio": 0.7040779267944693,
+        "bands": []
+      },
+      "errors": {
+        "console": 0,
+        "http": 0,
+        "network": 0
+      },
+      "artifact": "form-admin-iteration-1-1440x1024.png"
+    },
+    {
+      "key": "catalog-mobile",
+      "role": "PLAYER",
+      "path": "/equipos/halcones/logros",
+      "metrics": {
+        "overflow": false,
+        "h1": {
+          "size": 36,
+          "rect": {
+            "x": 16,
+            "y": 218,
+            "width": 358,
+            "height": 75.59375,
+            "right": 374,
+            "bottom": 293.59375
+          }
+        },
+        "cards": [
+          {
+            "rect": {
+              "x": 16,
+              "y": 721.59375,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 1061.03125
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 1073.03125,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 1412.46875
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 1424.46875,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 1763.90625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 1775.90625,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 2115.34375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 2127.34375,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 2466.78125
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 2478.78125,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 2818.21875
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 2830.21875,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 3169.65625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 3181.65625,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 3521.09375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 3533.09375,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 3872.53125
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 3884.53125,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 4223.96875
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 4235.96875,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 4575.40625
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 4587.40625,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 4926.84375
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 4938.84375,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 5278.28125
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          },
+          {
+            "rect": {
+              "x": 16,
+              "y": 5290.28125,
+              "width": 358,
+              "height": 339.4375,
+              "right": 374,
+              "bottom": 5629.71875
+            },
+            "scrollY": 0,
+            "titleY": 0,
+            "footerY": 0
+          }
+        ],
+        "grid": {
+          "columns": "358px"
+        },
+        "formRatio": null,
+        "bands": []
+      },
+      "errors": {
+        "console": 0,
+        "http": 0,
+        "network": 0
+      },
+      "artifact": "catalog-player-iteration-1-390x844.png"
+    },
+    {
+      "key": "form-mobile",
+      "role": "PLAYER",
+      "path": "/equipos/halcones/logros/nuevo",
+      "metrics": {
+        "overflow": false,
+        "h1": {
+          "size": 36,
+          "rect": {
+            "x": 16,
+            "y": 242,
+            "width": 358,
+            "height": 37.796875,
+            "right": 374,
+            "bottom": 279.796875
+          }
+        },
+        "cards": [],
+        "grid": null,
+        "formRatio": 0.5,
+        "bands": []
+      },
+      "errors": {
+        "console": 0,
+        "http": 0,
+        "network": 0
+      },
+      "artifact": "form-player-iteration-1-390x844.png"
+    },
+    {
+      "key": "dashboard-regression",
+      "role": "PLAYER",
+      "path": "/equipos/halcones",
+      "metrics": {
+        "overflow": false,
+        "h1": {
+          "size": 16,
+          "rect": {
+            "x": 195.46875,
+            "y": 152.46875,
+            "width": 1,
+            "height": 1,
+            "right": 196.46875,
+            "bottom": 153.46875
+          }
+        },
+        "cards": [],
+        "grid": null,
+        "formRatio": null,
+        "bands": [
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 153.46875,
+              "width": 1219.0625,
+              "height": 328,
+              "right": 1415.53125,
+              "bottom": 481.46875
+            },
+            "columns": "452.297px 392.797px 345.188px"
+          },
+          {
+            "rect": {
+              "x": 196.46875,
+              "y": 495.859375,
+              "width": 1219.0625,
+              "height": 296,
+              "right": 1415.53125,
+              "bottom": 791.859375
+            },
+            "columns": "452.297px 321.375px 416.609px"
+          }
+        ]
+      },
+      "errors": {
+        "console": 0,
+        "http": 0,
+        "network": 0
+      },
+      "artifact": "dashboard-regression-iteration-1-1440x1024.png"
+    }
+  ]
+}
