@@ -11,6 +11,7 @@ next_action: SOLO al reanudar, trabajar en C:\Users\javie\Proyectos\webLogrosApp
 ## Decisiones vigentes
 
 - Por petición del usuario, la siguiente continuación se ejecutará en Windows local, no CT112. Ver LOCAL_WINDOWS.md. La preparación del entorno y entrega Git no reanudan las tareas visuales. Las referencias históricas a transferencias/PID de CT112 no son instrucciones actuales.
+- Entrega Windows verificada el 2026-09-20: PR #8 integrada y descargada en la carpeta principal; PostgreSQL aislado healthy, frontend localhost:3000, logins PLAYER/TEAM_ADMIN y lecturas reales PASS, lint PASS. Configuración, supervisión y reinicio en LOCAL_WINDOWS.md. UI-G6-T03 permanece sin ejecutar.
 - El usuario pidió parar al terminar UI-G6-T02. Tarea cerrada; UI-G6-T03 queda READY sin ejecutar. No continuar hasta nueva petición de reanudación. No se apagan los servicios de revisión por esta pausa.
 - El usuario usa un único prompt de entrada; la sesión raíz actúa como Coordinator adaptativo.
 - El Coordinator selecciona automáticamente frontend_worker, backend_worker, qa_capture o visual_critic según TASKS/PLAN.
