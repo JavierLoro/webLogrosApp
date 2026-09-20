@@ -7,8 +7,8 @@
 - El TEAM_ADMIN aprueba su incorporación al catálogo o rechaza con motivo. Conserva la creación directa actual.
 - Proponer no concede el logro ni puntos. Primero se aprueba e incorpora al catálogo; después el jugador puede solicitar su obtención desde el detalle. No hay casilla de obtención en la propuesta ni solicitud automática.
 - Una propuesta rechazada no genera un logro de catálogo ni una solicitud activa de obtención.
-- La UI distingue «Proponer logro», «Solicitar obtención» y las dos colas de revisión. Se mantienen nuevo y solicitudes personales; la revisión se divide en admin/solicitudes y admin/propuestas, con detalles [id].
-- No se cambia aún código, esquema ni API. El soporte de imágenes y el diseño de persistencia se concretarán al implementar.
+- La UI distingue «Proponer logro», «Solicitar obtención» y las dos colas de revisión. Se mantienen nuevo y solicitudes personales; la revisión se divide en admin/solicitudes y admin/propuestas, con detalles [id]. Los detalles personales usan `/solicitudes/[id]` para obtención y `/solicitudes/propuestas/[id]` para propuestas.
+- Las rutas frontend personales quedan preparadas. No se cambia aún el esquema ni la API; el detalle de propuestas seguirá sin datos reales hasta implementar su backend. El soporte de imágenes y el diseño de persistencia se concretarán al implementar.
 
 Motivo: permitir que todos aporten ideas manteniendo el control del catálogo del equipo y evitando confundir autoría con haber conseguido un logro. Ver Architecture.md y Phase 7.7 del Roadmap.
 

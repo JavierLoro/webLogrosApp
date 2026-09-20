@@ -9,7 +9,7 @@ export function TeamNav({ slug, teamName }: { slug: string; teamName: string }) 
   const basePath = `/equipos/${slug}`
   const home = pathname === basePath
   const logros = pathname === `${basePath}/logros` || pathname.startsWith(`${basePath}/logros/`)
-  const solicitudes = pathname === `${basePath}/solicitudes`
+  const solicitudes = pathname === `${basePath}/solicitudes` || pathname.startsWith(`${basePath}/solicitudes/`)
 
   const itemClass = (active: boolean) => [
     "flex min-h-11 items-center gap-3 px-4 py-3 text-sm font-semibold tracking-wide",

@@ -12,7 +12,7 @@ Revisión: 2026-09-17.
 
 ## Cobertura
 
-28 archivos de imagen inventariados, incluidas versiones históricas; referencias vigentes revisadas visualmente: las 17 rutas activas tienen referencia de escritorio parcial y 1 ruta está aplazada (landing). Se han incorporado las 9 imágenes nuevas con los nombres y carpetas acordados. Por decisión del usuario, la landing queda fuera del alcance actual: no se modifica ni se piden referencias hasta que indique retomarla. Ninguna ruta se declara completa: faltan variantes móviles y estados. Las 18 rutas tienen un archivo page.tsx en src/app; esto no implica que todas sus funciones estén implementadas.
+29 archivos de imagen inventariados, incluidas versiones históricas. Las 19 rutas frontend activas tienen referencia de escritorio y la landing está aplazada. Por decisión del usuario, la landing queda fuera del alcance actual: no se modifica ni se piden referencias hasta que indique retomarla. Ninguna ruta se declara completa: faltan variantes móviles y estados. Hay 20 archivos `page.tsx` en `src/app`, contando la landing; esto no implica que todas sus funciones estén implementadas.
 
 | Ruta | Referencia | Observación |
 | --- | --- | --- |
@@ -29,7 +29,9 @@ Revisión: 2026-09-17.
 | `/equipos/[slug]/ranking` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/ranking/README.md) | Referencia futura conservada; tener imagen no confirma funcionalidad implementada. |
 | `/equipos/[slug]/jugadores` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/jugadores/README.md) | Plantilla, búsqueda y filtros de rol disponibles. |
 | `/equipos/[slug]/jugadores/[id]` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/jugadores/[id]/README.md) | Resumen de perfil disponible; otras pestañas y edición pendientes. |
-| `/equipos/[slug]/solicitudes` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/solicitudes/README.md) | Lista del jugador con pendientes, aprobadas y rechazadas disponible; faltan formulario y detalle. |
+| `/equipos/[slug]/solicitudes` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/solicitudes/README.md) | Historial conjunto de solicitudes de obtención y propuestas. |
+| `/equipos/[slug]/solicitudes/[id]` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/solicitudes/[id]/README.md) | Detalle de obtención desde la perspectiva del jugador. |
+| `/equipos/[slug]/solicitudes/propuestas/[id]` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/solicitudes/propuestas/[id]/README.md) | Detalle de una propuesta propia. |
 | `/equipos/[slug]/admin` | [Disponible, parcial](ReferenciasPaginas/equipos/[slug]/admin/README.md) | Disponibles vista general, invitaciones, solicitudes, jugadores y gestión de logros. Organizadas en siete subrutas previstas; ver índice administrativo. |
 | `/comunidad` | [Disponible, parcial](ReferenciasPaginas/comunidad/README.md) | Referencia futura; falta variante de lista. |
 | `/comunidad/[id]` | [Disponible, parcial](ReferenciasPaginas/comunidad/[id]/README.md) | Detalle, criterios, origen e incorporación futura disponibles. |
@@ -52,7 +54,7 @@ Referencias recibidas y verificadas para el nuevo flujo:
 Las pantallas principales de las 17 rutas activas ya tienen referencia de escritorio. La landing continúa aplazada.
 
 1. Corregir catálogo (creación directa solo administrativa). El formulario de propuesta no requiere cambios por el flujo de obtención. Edición con datos existentes ya recibida.
-2. Detalle de solicitud del jugador. El formulario de motivos/evidencia para obtener un logro existente es solo una opción futura; el flujo actual solicita desde el detalle con un botón. No confundirlo con el nuevo formulario de propuesta.
+2. El formulario de motivos/evidencia para obtener un logro existente es solo una opción futura; el flujo actual solicita desde el detalle con un botón. No confundirlo con el formulario de propuesta.
 3. Detalles administrativos de obtención y propuesta recibidos; no pedirlos otra vez.
 4. Confirmaciones y resultados de acciones administrativas.
 5. Variantes móviles y estados compartidos loading/error/empty/401/403/404 donde correspondan.
@@ -99,16 +101,16 @@ Vigentes: catálogo v2, administración general v2, solicitudes personales v3, s
 
 Correcciones: catálogo de jugador no debe ofrecer creación directa; propuesta aprobada debe indicar incorporación al catálogo, no una incorporación aplazada. «En revisión» y «Sugerir cambios» quedan como ideas visuales pendientes de decisión. En propuestas internas usar «miembros del equipo», evitando confundirlas con comunidad cross-team.
 
-No se requiere crear tres pantallas nuevas independientes: las variantes y tablas recibidas cubren los apartados propuestos. Permanece pendiente el detalle de solicitud de obtención, variantes móviles y estados generales; revisión de propuesta ya recibida. La landing sigue aplazada.
+Los detalles personales de solicitud de obtención y propuesta ya tienen referencia propia y rutas separadas. Permanecen pendientes las variantes móviles y los estados generales. La landing sigue aplazada.
 
 ## Navegación administrativa reorganizada
 
-Las 18 rutas originales se amplían con 7 subrutas previstas de administración: 25 rutas en el mapa objetivo, 24 activas en este trabajo y la landing aplazada. Las 7 nuevas aún no existen en src/app. Las referencias de las 7 subrutas administrativas están disponibles, incluido el detalle de solicitud de obtención.
+Las 18 rutas originales se amplían con 7 subrutas previstas de administración y 2 detalles personales: 27 rutas en el mapa objetivo, 26 activas en este trabajo y la landing aplazada. Los 2 detalles personales ya existen en `src/app`; las 7 subrutas administrativas aún no. Sus referencias están disponibles.
 
 Ver [índice de administración](ReferenciasPaginas/equipos/[slug]/admin/README.md). La raíz contiene el resumen; invitaciones, jugadores, logros, solicitudes y propuestas tienen carpeta propia. Solicitudes y propuestas disponen de [id] para sus detalles. El resto de las rutas y la superadministración global mantienen su ubicación. Las versiones históricas se conservan junto a su vista, sin duplicar imágenes.
 
 ## Pendientes tras la última comprobación
 
-Todas las pantallas principales del equipo y los detalles administrativos tienen referencia de escritorio. Detalle de mi propuesta del jugador recibido. No se localiza archivo del detalle personal de solicitud de obtención; confirmar guardado antes de pedir regenerarlo. Puede adaptarse del administrativo al implementar.
+Todas las pantallas principales del equipo, los detalles personales y los detalles administrativos tienen referencia de escritorio. El detalle de obtención del jugador y el detalle de su propuesta están separados en sus rutas correspondientes.
 
 No se requieren referencias de estados vacíos ni correcciones menores; se resolverán al montar las pantallas. Landing aplazada. Vistas futuras opcionales: áreas secundarias de superadministración y pestañas secundarias del perfil. Las variantes móviles pueden resolverse con criterios responsive o una referencia representativa; no exigir una imagen por ruta.

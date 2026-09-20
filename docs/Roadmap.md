@@ -119,6 +119,7 @@ Decisión de producto del 2026-09-17. Amplía Phase 7.6; sus tareas completadas 
 - [ ] Mantener equipo y autor desde el envío; estados pendiente, aprobada y rechazada con motivo. Solo la aprobación incorpora el logro al catálogo; mantener creación directa administrativa.
 - [ ] Flujo secuencial: aprobar propuesta e incorporar al catálogo; después permitir al jugador solicitar la obtención desde el detalle. Sin solicitud simultánea, automática ni puntos por proponer.
 - [ ] Adaptar `/equipos/[slug]/logros/nuevo` al rol; separar propuestas y solicitudes de obtención en el historial personal y panel admin.
+- [x] Preparar las rutas frontend de detalle personal `/equipos/[slug]/solicitudes/[id]` y `/equipos/[slug]/solicitudes/propuestas/[id]`; la segunda queda pendiente de datos hasta implementar el backend de propuestas.
 - [ ] Dividir el panel administrativo en resumen y subrutas invitaciones, jugadores, logros, solicitudes y propuestas; detalles solicitudes/[id] y propuestas/[id]. Mantener navegación compartida, enlaces directos, estados por área y permisos contextuales. Referencias ya reorganizadas; páginas aún pendientes.
 - [ ] Definir persistencia y API; verificar aislamiento entre equipos, permisos, rechazo y aprobaciones repetidas sin duplicar logros ni asignaciones.
 - [ ] Completar referencias de propuesta, revisión y estados; documentar implementación y conceptos en `apuntes.md` cuando se construya.

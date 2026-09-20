@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useParams } from "next/navigation"
 import { apiFetch, ApiError } from "@/lib/api"
 import { Empty } from "@/app/components/ui/Empty"
@@ -28,9 +29,9 @@ export default function SolicitudesPage() {
       {requests === null && !error ? <p className="mt-8" role="status">Cargando solicitudes…</p> : null}
       {requests?.length === 0 ? <div className="mt-8"><Empty title="Todavía no has solicitado logros">Entra en el catálogo y abre el logro que quieras reclamar.</Empty></div> : null}
       <div className="mt-8 space-y-4">
-        {requests?.map((request) => <article key={request.id} className="rounded-2xl border border-ink/10 bg-white p-5">
+        {requests?.map((request) => <Link key={request.id} href={`/equipos/${slug}/solicitudes/${request.id}`} className="block rounded-2xl border border-ink/10 bg-white p-5 transition-colors hover:border-coral focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral">
           <div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="font-display text-xl font-bold">{request.logro.nombre}</h2><p className="mt-1 text-sm text-ink-soft">{request.logro.puntos} puntos · {new Date(request.createdAt).toLocaleDateString()}</p></div><Status tone={request.status === "ACCEPTED" ? "mint" : request.status === "REJECTED" ? "coral" : "gold"}>{request.status === "ACCEPTED" ? "Aprobada" : request.status === "REJECTED" ? "Rechazada" : "Pendiente"}</Status></div>
-        </article>)}
+        </Link>)}
       </div>
     </main>
   )

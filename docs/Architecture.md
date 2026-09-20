@@ -74,6 +74,9 @@ ESPACIO DE EQUIPO (tenant) — /equipos/[teamSlug]/
 /equipos/[slug]/jugadores/[id]   Perfil de jugador (sus logros, puntos)
 /equipos/[slug]/solicitudes      PLAYER: mis solicitudes de logro (estado)
                                  previsto: también mis propuestas de nuevos logros
+/equipos/[slug]/solicitudes/[id] Detalle personal de una solicitud de obtención
+/equipos/[slug]/solicitudes/propuestas/[id]
+                                 Detalle personal de una propuesta de nuevo logro
 
 COMUNIDAD (cross-team, requiere sesión)
 /comunidad                       Galería de logros publicados por equipos
