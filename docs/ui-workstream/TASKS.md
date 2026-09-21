@@ -58,7 +58,30 @@ Leyenda: TODO · READY · IN_PROGRESS · BLOCKED · DONE
 
 ## Regla de iteración visual
 
-Screenshot → critic → fix se repite dentro de la misma tarea de convergencia hasta cumplir el gate. Registrar iteración y deltas en `STATUS.md`.
+### Ampliación explícita: acceso público
+
+| ID | Estado | Rol principal | Dependencias | Entregable |
+| --- | --- | --- | --- | --- |
+| UI-A1-T01 | DONE | Coordinator / Frontend Worker | G2 gate | Análisis detallado de login/registro y contrato reusable |
+| UI-A1-T02 | DONE | Frontend Worker | A1-T01 | Layout/formulario compartido y adaptación de ambas rutas |
+| UI-A1-T03 | DONE | QA Capture | A1-T02 | Capturas desktop/móvil y pruebas funcionales |
+| UI-A1-T04 | IN_PROGRESS | Coordinator | A1-T03 | Comparación visual directa, correcciones y gate |
+
+G6 sigue pausado en UI-G6-T03. A1 no autoriza avanzar G6-G9 ni Auth Hardening.
+
+### Ampliación explícita: resto de onboarding
+
+| ID | Estado | Rol principal | Dependencias | Entregable |
+| --- | --- | --- | --- | --- |
+| UI-A2-T01 | DONE | Frontend Worker | Petición explícita, A1 componentes | Análisis y gaps backend |
+| UI-A2-T02 | DONE | Frontend Worker | A2-T01 | Mis equipos con estados reales |
+| UI-A2-T03 | DONE | Frontend Worker | A2-T02 | Unirse, solicitar acceso y éxito |
+| UI-A2-T04 | IN_PROGRESS | QA Capture | A2-T03 | Capturas/pruebas, regresión auth |
+| UI-A2-T05 | TODO | Coordinator | A2-T04 | Comparación visual directa, correcciones y gate |
+
+A1-T04 sigue pendiente de gate; el cambio de foco fue pedido por el usuario, no equivale a su cierre.
+
+Por override del usuario (2026-09-21), el Coordinator asume todas las comparaciones visuales pendientes sin delegar en visual_critic. Screenshot → comparación directa → fix se repite hasta cumplir el gate. Registrar iteración y deltas en `STATUS.md`; los roles históricos de tareas cerradas no cambian.
 
 ## Regla de cambio compartido
 

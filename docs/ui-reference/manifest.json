@@ -19,6 +19,36 @@
   },
   "references": [
     {
+      "id": "teams-join-request-onboarding",
+      "routes": ["/equipos", "/unirse", "/solicitar-acceso"],
+      "role": "PUBLIC_OR_AUTHENTICATED",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/_compartidas/acceso-onboarding-desktop-v1.png",
+      "status": "available",
+      "state": "list-form-success",
+      "ignoredRegions": ["decorative-media", "team-logo", "player-avatar"],
+      "notes": [
+        "Explicit UI-A2 scope: panels 3–6. Existing routes and successful request state only.",
+        "User override: full-screen forms, mobile logo and form only; no decorative side panel on mobile.",
+        "Missing APIs/data must show local errors and be documented for later backend work. No backend changes or permanent fabricated data.",
+        "Preserve current payloads and permissions; do not implement seasons, team types or notification promises only because they appear in the mockup."
+      ]
+    },
+    {
+      "id": "auth-login-register-desktop",
+      "routes": ["/login", "/register"],
+      "role": "PUBLIC",
+      "reference": "apps/frontend/LockerBoard-marca/ReferenciasPaginas/_compartidas/acceso-onboarding-desktop-v1.png",
+      "status": "available",
+      "state": "form",
+      "ignoredRegions": ["decorative-media"],
+      "notes": [
+        "UI-A1 explicit scope addition 2026-09-20. Panels 1 and 2 only; board headings and other onboarding screens are not app chrome.",
+        "User override: full-viewport split layout, no centered outer card, outer gutters, rounded frame or frame shadow. Constrain only inner form width.",
+        "Preserve current email/password contract. No OAuth, recovery, remember-me, unpersisted name or nonexistent legal links.",
+        "Use shared split layout and geometric media placeholder; G6 remains paused."
+      ]
+    },
+    {
       "id": "dashboard-desktop",
       "route": "/equipos/halcones",
       "role": "PLAYER",

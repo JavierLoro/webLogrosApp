@@ -6,7 +6,7 @@
 - referencias canónicas versionadas en `apps/frontend/LockerBoard-marca/ReferenciasPaginas/`;
 - datos deterministas para screenshots reproducibles;
 - shell común antes de pantallas independientes;
-- Critic != Implementer;
+- Override del usuario (2026-09-21): comparación visual directa por Coordinator, sin agente visual_critic. Sustituye las menciones a crítica independiente en este plan; conserva evidencia, iteraciones y criterios de gate.
 - Astra Low por defecto;
 - backend mínimo: solo lo necesario para representar correctamente las pantallas y los flujos ya acordados;
 - sin assets reales en esta primera pasada;
@@ -212,6 +212,26 @@ Reglas:
 - no mezclar propuestas internas con comunidad cross-team.
 
 Gate: navegación coherente, acciones actuales preservadas y subrutas sin P0/P1 materiales.
+
+## UI-A1 — Acceso público (ampliación explícita 2026-09-20)
+
+Petición del usuario: revisar y trasladar login/registro de `_compartidas/acceso-onboarding-desktop-v1.png`, reutilizando el patrón formulario/lateral. No reanuda G6 ni el roadmap global.
+
+Ajuste explícito posterior del usuario (2026-09-20): composición a pantalla completa, no tarjeta encajonada. Eliminar límite exterior centrado, márgenes, borde/radio/sombra del frame. Desktop dividido lateral/formulario; ancho interno del formulario limitado por legibilidad. Móvil apilado full-width y altura natural. Esta decisión prevalece sobre el frame de la lámina; no evaluar su ausencia como discrepancia.
+
+Ajuste móvil confirmado por usuario: por debajo de 768 px ocultar completamente el lateral decorativo y mostrar únicamente el formulario con logo arriba. Desktop conserva su composición 50/50. El Coordinator ejecuta este cambio responsive acotado; la aprobación visual final sigue siendo independiente.
+
+Rutas: `/login`, `/register`. Dependencias: G2 gate (satisfecho), contratos actuales de autenticación. Layout reutilizable aislado, campos y password toggle compartidos; conservar POST, almacenamiento de sesión y redirects actuales. Confirmación de contraseña local permitida; no añadir nombre sin persistencia ni OAuth, recuperación, recordar sesión, textos legales/enlaces inexistentes. Sin backend/schema/seed ni Auth Hardening. Placeholder lateral conserva proporción; no integrar fotografía. Header público puede ocultarse únicamente en estas dos rutas, sin tocar TeamShell/tokens.
+
+Secuencia: análisis → implementación → captura/QA → crítica independiente → corrección/gate. Gate: ambas rutas desktop/móvil, sin overflow, formularios y navegación funcionales, lint/build, cero P0/P1 materiales. Documentar diferencias funcionales y media excluida; conservar G6-T03 como punto pausado. Al cerrar A1, parar; no continuar G6 automáticamente. Incluir estas rutas en futura regresión G9.
+
+## UI-A2 — Resto de acceso/onboarding (petición explícita)
+
+Referencia: paneles 3–6 de `_compartidas/acceso-onboarding-desktop-v1.png`. Rutas existentes `/equipos`, `/unirse`, `/solicitar-acceso` y su estado de éxito, sin nueva ruta de éxito obligatoria. Usuario autorizó continuar este conjunto y posponer cualquier backend faltante: usar APIs actuales, errores locales claros para apartados sin datos/soporte, documentar gaps en `evidence/UI-A2/BACKEND-GAPS.md`. No backend, schema, seed, datos inventados, endpoints especulativos ni éxito simulado en producto.
+
+Reutilizar AuthLayout/AuthFields con fullscreen desktop y móvil solo logo/formulario. Se permite extensión compatible del componente (textarea/posición lateral de éxito) y ocultar Header global en formularios nuevos; `/equipos` usa cabecera propia con marca y acciones de sesión actuales, sin tocar tenant shell ni landing. Mantener preview/join, validación/payload de solicitud y éxito solo tras respuesta satisfactoria. No prometer email si no está soportado. Tipo de equipo/temporada del mockup no se convierten en dominio aprobado automáticamente.
+
+Secuencia: análisis/contratos frontend → Mis equipos → formularios/éxito → QA/capturas → crítica independiente/correcciones. Gate: desktop/móvil sin P0/P1 materiales, estados loading/error/empty diferenciados, navegación existente, lint/build, backend gaps documentados. El gate A1-T04 permanece pendiente (no se marca aprobado por cambio de foco solicitado); incluir regresión de auth al final por componentes compartidos. No continuar G6-G9 ni roadmap global automáticamente.
 
 ## UI-G9 — Consistency Pass
 

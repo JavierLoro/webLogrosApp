@@ -3,10 +3,12 @@
 //    en un Server Component (que corre en el servidor).
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Link from "next/link"
 // 📚 useRouter (de next/navigation): permite navegar por código desde un Client Component.
 import { useRouter } from "next/navigation"
+import { AuthError, AuthField, AuthFormHeader, AuthSubmitButton, PasswordField } from "@/app/components/auth/AuthFields"
+import { AuthLayout } from "@/app/components/auth/AuthLayout"
 import { apiFetch, ApiError } from "@/lib/api"
 import type { LoginResponse } from "@/types/api"
 
@@ -18,10 +20,14 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [submitting, setSubmitting] = useState(false)
+  const submittingRef = useRef(false)
 
   async function handleSubmit(e: React.FormEvent) {
     // 📚 preventDefault evita que el form recargue la página (comportamiento HTML por defecto).
     e.preventDefault()
+    if (submittingRef.current) return
+
+    submittingRef.current = true
     setError("")
     setSubmitting(true)
 
@@ -38,55 +44,53 @@ export default function LoginPage() {
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "No se pudo conectar con el servidor")
     } finally {
+      submittingRef.current = false
       setSubmitting(false)
     }
   }
 
   return (
-    <main className="portal-shell">
-      <div className="portal-grid">
-        <div>
-          <p className="portal-kicker">Acceso de miembros · 01</p>
-          <h1 className="portal-title">Vuelve a tu equipo.</h1>
-          <p className="portal-copy">Inicia sesión para abrir las salas a las que perteneces y consultar sus catálogos de logros.</p>
-          <div className="portal-notes"><span className="portal-note">una cuenta</span><span className="portal-note">todas tus salas</span></div>
-        </div>
-        <section className="portal-panel" aria-labelledby="login-heading">
-          <h2 id="login-heading" className="portal-panel-heading">Iniciar sesión</h2>
-          <p className="portal-panel-subtitle">Usa el email y la contraseña con los que te registraste.</p>
+    <AuthLayout
+      ariaLabelledBy="login-heading"
+      asideTitle={<>Mismo deporte.<br />Más logros.</>}
+      asideCopy="Tu equipo, sus hitos y todo lo que habéis conseguido juntos."
+      footer={<p>¿Aún no tienes cuenta? <Link href="/register" className="font-semibold text-[var(--lb-color-accent-hover)] underline decoration-transparent underline-offset-4 hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lb-color-focus)]">Regístrate</Link></p>}
+    >
+      <AuthFormHeader id="login-heading" title="Bienvenido de nuevo" subtitle="Entra en tu equipo y sigue sumando." />
 
-      <form onSubmit={handleSubmit}>
-        <label className="portal-field"><span>Email</span>
-          <input
+      <form onSubmit={handleSubmit} aria-busy={submitting}>
+        <AuthField
+            id="login-email"
+            name="email"
+            label="Email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="portal-input"
+            placeholder="tu@email.com"
+            autoComplete="email"
+            inputMode="email"
+            aria-describedby={error ? "login-error" : undefined}
+            disabled={submitting}
             required
-          /></label>
+          />
 
-        <label className="portal-field"><span>Contraseña</span>
-          <input
-            type="password"
+        <PasswordField
+            id="login-password"
+            name="password"
+            label="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="portal-input"
+            placeholder="Tu contraseña"
+            autoComplete="current-password"
+            aria-describedby={error ? "login-error" : undefined}
+            disabled={submitting}
             required
-          /></label>
+          />
 
-        {error && <p role="alert" className="portal-error">{error}</p>}
+        {error ? <AuthError id="login-error">{error}</AuthError> : null}
 
-        <button
-          type="submit"
-          className="portal-submit"
-          disabled={submitting}
-        >
-          {submitting ? "Entrando…" : "Ver mis equipos"}
-        </button>
+        <AuthSubmitButton submitting={submitting} idleLabel="Entrar" busyLabel="Entrando…" />
       </form>
-          <p className="portal-foot">¿Primera vez aquí? <Link href="/register">Crea tu cuenta</Link></p>
-        </section>
-      </div>
-    </main>
+    </AuthLayout>
   )
 }

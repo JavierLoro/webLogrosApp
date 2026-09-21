@@ -1,14 +1,23 @@
 # UI Workstream Status
 
-workstream: PAUSED
+workstream: IN_PROGRESS
 orchestration: ADAPTIVE_ROUTER_READY
-current_phase: UI-G6
-current_task: UI-G6-T03
-current_iteration: 0
-last_completed: UI-G6-T02 — implementación de jugadores y validaciones completadas; parada solicitada por el usuario
-next_action: SOLO al reanudar, trabajar en C:\Users\javie\Proyectos\webLogrosApp en Windows; leer LOCAL_WINDOWS.md y ejecutar su preflight. Ejecutar UI-G6-T03 sobre localhost:3000: leer UI-G6-T02-IMPLEMENTATION.md y análisis, capturar PLAYER/TEAM_ADMIN 1440 y PLAYER 390; después crítica independiente. No ejecutar mientras permanezca pausado.
+current_phase: UI-A2
+current_task: UI-A2-T04
+current_iteration: 1
+last_completed: UI-A2-T03 — Unirse/solicitud/éxito implementados; contratos preservados, lint/TypeScript/build PASS
+next_action: Revisar COMPARISON-COORDINATOR-1.md: ajustes de geometría/jerarquía implementados y capturados, ESLint/TypeScript PASS. Completar QA pendiente de BROWSER-QA.md (éxito real/preview válido/estados alternativos) y convergencia tipográfica antes de cerrar A2. Coordinator compara directamente, sin visual_critic. No forzar éxito ni inventar datos. A1 gate final pendiente. Windows local; no reanudar G6-G9 ni implementar backend.
+paused_mainline_task: UI-G6-T03
 
 ## Decisiones vigentes
+
+- 2026-09-21 — Refinamiento solicitado de superficies de Mis equipos: CSS reutilizable local mate, textura tenue, bordes direccionales y hover sin salto. Implementación frontend_worker y revisión directa Coordinator desktop/móvil registradas en `evidence/UI-A2/SURFACE-REFINEMENT.md`; no cambia current_task ni cierra gate. Sin backend ni cambios de tokens compartidos.
+
+- 2026-09-21 — Override explícito del usuario: no volver a delegar en visual_critic; el Coordinator realiza directamente la comparación referencia/capturas y registra hallazgos y veredicto. El agente visual_critic_g3 fue interrumpido. Esta decisión sustituye la exigencia previa de crítico independiente; no elimina QA, evidencia visual ni criterios del gate. Próxima acción visual: comparación directa por Coordinator, sin esperar ni relanzar al crítico.
+
+- Usuario pidió continuar resto de lámina onboarding y documentar soporte backend faltante para más adelante. Ampliación UI-A2 explícita; solo frontend, datos reales disponibles y errores honestos. A1 fullscreen confirmado y móvil sin decoración, pero su gate independiente final sigue pendiente.
+
+- 2026-09-20: ampliación explícita UI-A1 para login/registro desde referencia de acceso/onboarding; usuario confirmó continuar con convenciones actuales (Tailwind, sin migración). Análisis A1-T01 revisado; A1-T02 en curso. La línea G6 sigue pausada; no continuar jugadores automáticamente. Solo frontend y Header público limitado a ambas rutas; no backend/Auth Hardening ni fotografía. Consultar UI-A1 en PLAN/TASKS.
 
 - Por petición del usuario, la siguiente continuación se ejecutará en Windows local, no CT112. Ver LOCAL_WINDOWS.md. La preparación del entorno y entrega Git no reanudan las tareas visuales. Las referencias históricas a transferencias/PID de CT112 no son instrucciones actuales.
 - Entrega Windows verificada el 2026-09-20: PR #8 integrada y descargada en la carpeta principal; PostgreSQL aislado healthy, frontend localhost:3000, logins PLAYER/TEAM_ADMIN y lecturas reales PASS, lint PASS. Configuración, supervisión y reinicio en LOCAL_WINDOWS.md. UI-G6-T03 permanece sin ejecutar.

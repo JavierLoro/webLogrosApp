@@ -127,6 +127,10 @@ Cuando la tarea afecte al frontend visual, navegación tenant, fixtures usados p
 
 Fuente operativa: `docs/ui-workstream/README.md`.
 
+### Pendientes de backend detectados durante el rediseño
+
+Consultar y mantener [BACKEND-GAPS.md](docs/ui-workstream/evidence/UI-A2/BACKEND-GAPS.md) para los datos y capacidades faltantes de acceso/onboarding (equipos, invitaciones y solicitudes). Distingue requisitos aprobados, decisiones pendientes y comportamiento provisional del frontend. Registrar allí los nuevos hallazgos de este alcance y consultarlo antes de planificar su implementación backend. Su registro no autoriza cambios de backend, schema o APIs durante el rediseño: requieren una tarea y alcance explícitamente aprobados. No sustituir datos ausentes por valores ficticios.
+
 ---
 
 ## Descripción del proyecto

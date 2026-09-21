@@ -41,10 +41,9 @@ export default function Header() {
     () => false,
   )
 
-  // El shell de un equipo tiene su propia navegación contextual. La ruta
-  // /equipos sigue mostrando este header para que la lista de equipos conserve
-  // la navegación global.
-  if (pathname.startsWith("/equipos/") && pathname !== "/equipos") {
+  // El selector de equipos y cada tenant tienen navegación propia; el header
+  // global se mantiene en las demás superficies hasta que adopten su reemplazo.
+  if (pathname === "/login" || pathname === "/register" || pathname === "/equipos" || pathname === "/unirse" || pathname === "/solicitar-acceso" || pathname.startsWith("/equipos/")) {
     return null
   }
 

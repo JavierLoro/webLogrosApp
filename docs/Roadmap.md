@@ -128,6 +128,8 @@ Decisión de producto del 2026-09-17. Amplía Phase 7.6; sus tareas completadas 
 
 ## UI Workstream V2 – Visual convergence (ACTIVE)
 
+Pendientes de backend detectados en acceso/onboarding: [BACKEND-GAPS.md](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md). Consultar este registro al planificar futuras tareas de backend: incluye estadísticas y deporte de equipos, identidad global, seguimiento de solicitudes y notificaciones, distinguiendo datos faltantes de decisiones aún pendientes. El documento no marca estas capacidades como implementadas ni autoriza adelantarlas dentro del workstream visual; su ejecución requiere alcance explícito.
+
 > Workstream de entrega paralelo al itinerario pedagógico. La fuente operativa está en [ui-workstream/README.md](ui-workstream/README.md), con estado reanudable en [ui-workstream/STATUS.md](ui-workstream/STATUS.md).
 >
 > Las imágenes canónicas ya están inventariadas bajo `apps/frontend/LockerBoard-marca/ReferenciasPaginas/`. Son autoridad visual, mientras que Architecture/Roadmap siguen siendo autoridad funcional.
