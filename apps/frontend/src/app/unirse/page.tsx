@@ -7,7 +7,7 @@ import { AuthError, AuthField, AuthFormHeader, AuthSubmitButton } from "@/app/co
 import { AuthLayout } from "@/app/components/auth/AuthLayout"
 import { OnboardingSessionActions } from "@/app/components/onboarding/OnboardingHeader"
 import { ApiError, apiFetch } from "@/lib/api"
-import type { TeamSummary } from "@/types/api"
+import type { TeamMembershipSummary } from "@/types/api"
 
 type InvitationPreview = {
   team: {
@@ -131,7 +131,7 @@ function JoinTeamContent() {
     setErrorStatus(null)
 
     try {
-      const result = await apiFetch<{ team: TeamSummary }>("/api/invitaciones/join", {
+      const result = await apiFetch<{ team: Omit<TeamMembershipSummary, "role">; role: TeamMembershipSummary["role"] }>("/api/invitaciones/join", {
         method: "POST",
         auth: true,
         body: JSON.stringify({ token: cleanToken }),

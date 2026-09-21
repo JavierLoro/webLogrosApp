@@ -2080,3 +2080,15 @@ Hay 6 propuestas (2 por estado), con fechas fijas, motivos para rechazadas y ví
 aprobadas. Ana tiene ejemplos de los tres estados. Siguen siendo 40 asignaciones y 8 solicitudes:
 ninguna nace de aprobar propuestas. Repetir el seed reutiliza los vínculos existentes y no elimina
 filas ajenas; la prueba sobre PostgreSQL desechable corresponde a UI-G1-T05.
+
+## Estadísticas agregadas de Mis equipos — issue #10
+
+`GET /api/equipos/mis-equipos` incluye los conteos que necesita cada tarjeta dentro de la misma
+lectura de membresías. Prisma traduce `_count` a agregaciones en PostgreSQL: así no se descargan
+las colecciones completas y se evita el patrón N+1 de consultar logros y jugadores por separado
+para cada equipo.
+
+`achievements` cuenta todos los logros del catálogo. `players` aplica un filtro al conteo de
+membresías y solo incluye el rol `PLAYER`; `TEAM_ADMIN` queda fuera porque el modelo actual permite
+un solo rol por membresía. La posible convivencia de ambos roles se trata en la issue #16 y no
+cambia retroactivamente el significado de esta respuesta.

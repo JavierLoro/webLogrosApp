@@ -31,8 +31,20 @@ function TeamCard({ team }: { team: TeamSummary }) {
       <h2 className="mt-4 break-words [font-family:var(--lb-font-display)] text-3xl font-bold leading-tight tracking-[-0.025em] text-[var(--lb-color-text-primary)]" title={team.nombre}>{team.nombre}</h2>
       <p className="mt-1 text-xs leading-5 text-[var(--lb-color-text-secondary)]">Deporte no disponible</p>
       <div className="mt-4 border-t border-[var(--lb-color-border)] pt-4">
-        <p className="text-sm font-semibold text-[var(--lb-color-text-secondary)]">Estadísticas no disponibles</p>
-        <p className="mt-1 text-xs leading-5 text-[var(--lb-color-text-tertiary)]">Esta lista todavía no incluye la actividad del equipo.</p>
+        {team.stats ? (
+          <dl className="flex gap-8">
+            <div className="flex flex-col-reverse gap-1">
+              <dt className="text-xs text-[var(--lb-color-text-secondary)]">Logros</dt>
+              <dd className="[font-family:var(--lb-font-data)] text-xl">{team.stats.achievements}</dd>
+            </div>
+            <div className="flex flex-col-reverse gap-1">
+              <dt className="text-xs text-[var(--lb-color-text-secondary)]">Jugadores</dt>
+              <dd className="[font-family:var(--lb-font-data)] text-xl">{team.stats.players}</dd>
+            </div>
+          </dl>
+        ) : (
+          <p className="text-sm text-[var(--lb-color-text-secondary)]">Estadísticas no disponibles</p>
+        )}
       </div>
       <span className="mt-auto self-end pt-4 text-[var(--lb-color-accent-hover)] transition-transform group-hover:translate-x-1" aria-hidden="true">
         <MaterialIcon name="arrow_forward" className="size-5" />

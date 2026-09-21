@@ -16,7 +16,7 @@ Al resolver una issue, actualizar **en el mismo cambio** tanto su apartado de es
 
 | Apartado | Issue | Estado | Alcance |
 | --- | --- | --- | --- |
-| 1. Estadísticas | [#10](https://github.com/JavierLoro/webLogrosApp/issues/10) | PENDIENTE | Decidir métricas y contrato agregado |
+| 1. Estadísticas | [#10](https://github.com/JavierLoro/webLogrosApp/issues/10) | COMPLETADO | PR #26; logros y jugadores reales |
 | 2. Temporada | [#11](https://github.com/JavierLoro/webLogrosApp/issues/11) | PENDIENTE DE DECISIÓN | No es requisito aprobado |
 | 3. Deporte | [#12](https://github.com/JavierLoro/webLogrosApp/issues/12) | PENDIENTE | Presentación solicitada; diseño backend pendiente |
 | 4. Identidad global | [#13](https://github.com/JavierLoro/webLogrosApp/issues/13) | PENDIENTE DE DECISIÓN | Perfil y contrato por acordar |
@@ -36,9 +36,42 @@ Estas issues registran backlog, no autorizan implementación ni amplían UI-A2. 
 
 ## 1. Estadísticas de las cards de equipo
 
-`TeamSummary` solo contiene `slug`, `nombre` y `role`. No ofrece número de logros, miembros ni actividad. UI-A2 mostrará **Estadísticas no disponibles** dentro de cada card, sin ceros falsos y sin lanzar una petición por equipo.
 
-Si producto decide mostrar métricas en el futuro, deberá acordarse un contrato agregado para la lista de equipos. La forma y el endpoint quedan pendientes de diseño backend; no se inventan en este workstream.
+
+### Decisión funcional
+
+- **Logros** cuenta todos los logros del catálogo del equipo.
+- **Jugadores** cuenta exclusivamente las membresías con rol `PLAYER`.
+- Una membresía `TEAM_ADMIN` no cuenta como jugador con el modelo actual. La propuesta para
+  permitir ambos roles se sigue separadamente en [#16](https://github.com/JavierLoro/webLogrosApp/issues/16).
+- No se incorporan temporadas ni otras métricas no respaldadas por el dominio actual.
+
+### Contrato agregado
+
+`GET /api/equipos/mis-equipos` añade a cada resumen:
+
+```ts
+stats: {
+  achievements: number
+  players: number
+}
+```
+
+Los valores proceden de conteos reales de PostgreSQL dentro de la consulta que carga las
+membresías del usuario. No se realiza una petición adicional por equipo.
+
+### Estado de cierre
+
+Validación local realizada sobre la base aislada `weblogros_ui_windows` y el fixture determinista:
+
+- compilación TypeScript del backend: PASS;
+- lint y build de producción del frontend: PASS;
+- consulta real de Halcones: `achievements: 14`, `players: 10` (sus dos `TEAM_ADMIN` no cuentan);
+- `git diff --check`: PASS.
+
+Resolución implementada en el [commit `aa571ae`](https://github.com/JavierLoro/webLogrosApp/commit/aa571ae).
+
+Integración local: se conserva TeamsOverview y el rediseño de onboarding; métricas incorporadas sin volver a la presentación antigua.
 
 ## 2. Temporada
 
