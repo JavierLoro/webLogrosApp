@@ -5,7 +5,7 @@ peticiones N+1, datos inventados ni ceros decorativos.
 
 | Issue | Pantalla | Gap | Estado | Evidencia |
 | --- | --- | --- | --- | --- |
-| [#10](https://github.com/JavierLoro/webLogrosApp/issues/10) | `/equipos` | Estadísticas agregadas de las tarjetas de equipo | EN CURSO | Implementación local; pendiente de validación y enlace a PR/commit |
+| [#10](https://github.com/JavierLoro/webLogrosApp/issues/10) | `/equipos` | Estadísticas agregadas de las tarjetas de equipo | COMPLETADO | Validación local PASS; [commit `aa571ae`](https://github.com/JavierLoro/webLogrosApp/commit/aa571ae) |
 
 ## #10 — Estadísticas de las tarjetas de Mis equipos
 
@@ -40,5 +40,4 @@ Validación local realizada sobre la base aislada `weblogros_ui_windows` y el fi
 - consulta real de Halcones: `achievements: 14`, `players: 10` (sus dos `TEAM_ADMIN` no cuentan);
 - `git diff --check`: PASS.
 
-La fila se marcará `COMPLETADO` cuando exista el enlace a la PR o al commit de resolución, como
-exige la issue.
+Resolución implementada en el [commit `aa571ae`](https://github.com/JavierLoro/webLogrosApp/commit/aa571ae).
