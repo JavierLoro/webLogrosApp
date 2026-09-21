@@ -141,10 +141,32 @@ router.get("/solicitudes", authMiddleware, requireSuperAdmin, async (_req, res) 
 router.get("/mis-equipos", authMiddleware, async (req, res) => {
   const memberships = await prisma.teamMembership.findMany({
     where: { userId: req.userId },
-    include: { team: { select: { slug: true, nombre: true } } },
+    include: {
+      team: {
+        select: {
+          slug: true,
+          nombre: true,
+          // 📚 `_count` hace la agregación en PostgreSQL: obtenemos ambas estadísticas
+          //    con la lista de equipos, sin descargar relaciones ni lanzar una consulta por tarjeta.
+          _count: {
+            select: {
+              logros: true,
+              miembros: { where: { role: "PLAYER" } },
+            },
+          },
+        },
+      },
+    },
     orderBy: { joinedAt: "asc" },
   })
-  res.json(memberships.map(({ role, team }) => ({ ...team, role })))
+  res.json(memberships.map(({ role, team: { _count, ...team } }) => ({
+    ...team,
+    role,
+    stats: {
+      achievements: _count.logros,
+      players: _count.miembros,
+    },
+  })))
 })
 
 async function requireAdminTeam(slug: string, userId: number) {
