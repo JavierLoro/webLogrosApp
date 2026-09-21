@@ -22,17 +22,24 @@ export interface ApiErrorBody {
 
 export interface LoginResponse {
   token: string
-  teams: TeamSummary[]
+  teams: TeamMembershipSummary[]
   isSuperAdmin: boolean
 }
 
-export interface TeamSummary {
+export interface TeamMembershipSummary {
   slug: string
   nombre: string
   role: "TEAM_ADMIN" | "PLAYER"
 }
 
-export type TeamRole = TeamSummary["role"]
+export interface TeamSummary extends TeamMembershipSummary {
+  stats: {
+    achievements: number
+    players: number
+  }
+}
+
+export type TeamRole = TeamMembershipSummary["role"]
 
 export interface TeamContext {
   team: {

@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
 import { apiFetch, ApiError } from "@/lib/api"
-import type { TeamSummary } from "@/types/api"
+import type { TeamMembershipSummary } from "@/types/api"
 
 type Preview = { team: { slug: string; nombre: string }; expiresAt: string; remainingUses: number }
 
@@ -56,7 +56,7 @@ function JoinTeamContent() {
     setJoining(true)
     setError("")
     try {
-      const result = await apiFetch<{ team: TeamSummary }>("/api/invitaciones/join", {
+      const result = await apiFetch<{ team: Omit<TeamMembershipSummary, "role">; role: TeamMembershipSummary["role"] }>("/api/invitaciones/join", {
         method: "POST",
         auth: true,
         body: JSON.stringify({ token: token.trim() }),
