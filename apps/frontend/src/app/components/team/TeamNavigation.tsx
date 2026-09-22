@@ -1,11 +1,15 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
+import compactLogo from "../../../../LockerBoard-marca/otros/brand/logo/lockerboard-logo-compact-color-on-dark.svg"
+import horizontalLogo from "../../../../LockerBoard-marca/otros/brand/logo/lockerboard-logo-horizontal-color-on-dark.svg"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 import { TeamIdentity } from "./TeamIdentity"
 import MaterialIcon, { type MaterialIconName } from "@/app/components/ui/icons/MaterialIcon"
 import type { TeamRole } from "@/types/api"
+import { logoutAuthSession } from "@/lib/authSession"
 
 type NavigationItem = {
   label: string
@@ -45,12 +49,13 @@ export function TeamNavigation({ slug, teamName, role, loading = false }: TeamNa
       : "text-[var(--team-muted)] hover:bg-[var(--team-surface-low)] hover:text-[var(--team-text)]",
   ].join(" ")
 
-  function handleLogout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("teams")
-    localStorage.removeItem("isSuperAdmin")
-    window.dispatchEvent(new Event("auth-change"))
-    router.push("/login")
+  async function handleLogout() {
+    try {
+      await logoutAuthSession()
+      router.push("/login")
+    } catch {
+      // Permanecemos en la pantalla si el servidor no confirmó el cierre.
+    }
   }
 
   return (
@@ -61,17 +66,11 @@ export function TeamNavigation({ slug, teamName, role, loading = false }: TeamNa
           className="flex min-w-0 items-center gap-3 rounded-[var(--lb-radius-control)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lb-color-focus)] md:w-full md:flex-col md:justify-center md:gap-2 md:text-center"
           aria-label={`${teamName}, dashboard`}
         >
-          <span className="grid size-10 shrink-0 place-items-center rounded-[var(--lb-radius-control)] bg-[var(--team-primary)] text-white md:size-11" aria-hidden="true">
-            <MaterialIcon name="track_changes" className="size-6 md:size-7" />
-          </span>
           <span className="min-w-0 md:hidden">
-            <span className="team-display block text-base font-black leading-none text-[var(--team-text)]">LockerBoard</span>
+            <Image src={horizontalLogo} alt="LockerBoard" width={180} height={48} className="h-auto w-[180px]" />
             <span className="mt-1 block truncate text-xs text-[var(--team-muted)]">{teamName}</span>
           </span>
-          <span className="hidden max-w-full text-center md:block">
-            <span className="team-display block max-w-full text-base font-black leading-none tracking-[-0.035em] text-[var(--team-text)]">LockerBoard</span>
-            <span className="mt-1.5 block max-w-full font-mono text-[0.5rem] uppercase leading-none tracking-[0.1em] text-[var(--team-muted)]">El equipo, unido</span>
-          </span>
+          <Image src={compactLogo} alt="LockerBoard" width={136} height={100} className="hidden h-auto w-[136px] max-w-full md:block" />
         </Link>
 
         <button

@@ -36,7 +36,6 @@ export default function LoginPage() {
         method: "POST",
         body: JSON.stringify({ email, password }),
       })
-      localStorage.setItem("token", data.token)
       localStorage.setItem("teams", JSON.stringify(data.teams))
       localStorage.setItem("isSuperAdmin", JSON.stringify(data.isSuperAdmin))
       window.dispatchEvent(new Event("auth-change"))

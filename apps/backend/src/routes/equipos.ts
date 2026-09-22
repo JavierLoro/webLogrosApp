@@ -9,6 +9,8 @@ import { AppError } from "../errors/AppError"
 import { publicName, readCatalog, readTeam } from "../lib/teamRead"
 import { rejectAchievementRequestSchema, requestStatusSchema } from "../schemas/achievementRequests"
 import propuestasRouter from "./propuestas"
+import seasonsRouter from "./seasons"
+import { awardSeasonId } from "../lib/seasonContext"
 
 // 📚 ROUTER SCOPED POR EQUIPO. Se monta en server.ts como app.use("/equipos/:slug", router),
 //    así que aquí las rutas son relativas: "/logros" = "/equipos/:slug/logros".
@@ -30,32 +32,33 @@ function parsePositiveId(value: string | string[]) {
 //    Traduce :slug → req.team (o lanza 404). Puesto aquí una vez, no hay que repetirlo por ruta.
 //    Es lo que garantiza que req.team exista en los handlers y justifica el "!" de req.team!.id.
 router.use(resolveTeam)
+router.use(seasonsRouter)
 router.use(propuestasRouter)
 
 // 📚 Contexto fiable del shell sin cambiar JWT ni confiar en un nombre derivado del slug.
 router.get("/contexto", authMiddleware, requireTeamMember, async (req, res) => {
-  const user = await prisma.user.findUniqueOrThrow({ where: { id: req.userId }, select: { id: true, displayName: true } })
-  res.json({ team: req.team, me: { id: user.id, displayName: publicName(user), role: req.teamMembership!.role } })
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: req.userId }, select: { id: true, firstName: true, lastName: true } })
+  res.json({ team: req.team, me: { id: user.id, displayName: publicName({ displayName: req.teamMembership!.displayName, user }), role: req.teamMembership!.role } })
 })
 
 // 📚 Ambas vistas comparten el mismo orden y la misma definición de puntos.
 router.get("/jugadores", authMiddleware, requireTeamMember, async (req, res) => {
-  res.json((await readTeam(req.team!.id)).players)
+  res.json((await readTeam(req.team!.id))!.players)
 })
 router.get("/ranking", authMiddleware, requireTeamMember, async (req, res) => {
-  const { players, totals } = await readTeam(req.team!.id)
-  res.json({ players, totals })
+  const { season, players, totals } = (await readTeam(req.team!.id))!
+  res.json({ season, players, totals })
 })
 
 // 📚 El feed solo representa otorgamientos persistidos; no inventa retos, niveles ni actividad social.
 router.get("/dashboard", authMiddleware, requireTeamMember, async (req, res) => {
-  const { players, totals, catalog, awards, holderCounts } = await readTeam(req.team!.id)
+  const { season, players, totals, catalog, awards, holderCounts } = (await readTeam(req.team!.id))!
   const counted = catalog.map(logro => ({ ...logro, holdersCount: holderCounts.get(logro.id) ?? 0 }))
   const earned = counted.filter(logro => logro.holdersCount > 0)
   const me = players.find(player => player.id === req.userId)!
   const users = new Map(players.map(player => [player.id, { id: player.id, displayName: player.displayName }]))
   const logros = new Map(catalog.map(logro => [logro.id, logro]))
-  res.json({ totals, me: { puntos: me.puntos, logrosCount: me.logrosCount, position: me.position },
+  res.json({ season, totals, me: { puntos: me.puntos, logrosCount: me.logrosCount, position: me.position },
     topPlayers: players.slice(0, 3), recentAchievements: counted.slice(0, 3),
     recentAwards: awards.slice(0, 6).map(award => ({ id: award.id, fecha: award.fecha, user: users.get(award.userId), logro: logros.get(award.logroId) })),
     mostEarned: [...earned].sort((a, b) => b.holdersCount - a.holdersCount || a.id - b.id)[0] ?? null,
@@ -82,10 +85,12 @@ router.post("/admin/solicitudes/:id/aceptar", authMiddleware, requireTeamAdmin, 
     })
     if (updated.count !== 1) throw new AppError(409, "La solicitud ya fue procesada")
 
-    await tx.userLogro.upsert({
-      where: { userId_logroId: { userId: pending.userId, logroId: pending.logroId } },
-      update: {},
-      create: { userId: pending.userId, logroId: pending.logroId },
+    const existing = await tx.userLogro.findFirst({
+      where: { userId: pending.userId, logroId: pending.logroId, seasonId: pending.seasonId },
+    })
+    if (existing) throw new AppError(409, "El jugador ya tiene este logro en este periodo")
+    await tx.userLogro.create({
+      data: { userId: pending.userId, logroId: pending.logroId, seasonId: pending.seasonId },
     })
     return tx.solicitudLogro.findUniqueOrThrow({ where: { id } })
   })
@@ -138,18 +143,20 @@ router.post("/logros/:id/solicitudes", authMiddleware, requireTeamMember, async 
   const logro = await prisma.logro.findFirst({ where: { id: logroId, teamId: req.team!.id } })
   if (!logro) throw new AppError(404, "Logro no encontrado")
 
-  const alreadyEarned = await prisma.userLogro.findUnique({
-    where: { userId_logroId: { userId: req.userId!, logroId } },
+  const seasonId = await awardSeasonId(prisma, req.team!.id, logro.scope)
+
+  const alreadyEarned = await prisma.userLogro.findFirst({
+    where: { userId: req.userId!, logroId, seasonId },
   })
   if (alreadyEarned) throw new AppError(409, "Ya tienes este logro")
 
   const pending = await prisma.solicitudLogro.findFirst({
-    where: { userId: req.userId, logroId, status: "PENDING" },
+    where: { userId: req.userId, logroId, seasonId, status: "PENDING" },
   })
   if (pending) throw new AppError(409, "Ya tienes una solicitud pendiente para este logro")
 
   const solicitud = await prisma.solicitudLogro.create({
-    data: { userId: req.userId!, logroId },
+    data: { userId: req.userId!, logroId, seasonId },
   })
   res.status(201).json(solicitud)
 })
@@ -174,22 +181,26 @@ router.get("/admin/solicitudes", authMiddleware, requireTeamAdmin, async (req, r
   const solicitudes = await prisma.solicitudLogro.findMany({
     where: { ...(parsed.data === "all" ? {} : { status: parsed.data }), logro: { teamId: req.team!.id } },
     include: {
-      user: { select: { id: true, email: true, displayName: true } },
+      user: { select: { id: true, email: true, firstName: true, lastName: true, memberships: { where: { teamId: req.team!.id }, select: { displayName: true }, take: 1 } } },
       logro: true,
     },
     orderBy: [{ createdAt: "asc" }, { id: "asc" }],
   })
-  res.json(solicitudes)
+  res.json(solicitudes.map(({ user, ...solicitud }) => ({
+    ...solicitud,
+    user: { id: user.id, email: user.email, displayName: publicName({ displayName: user.memberships[0]?.displayName ?? null, user }) },
+  })))
 })
 
 // 📚 El ID no basta: cruzarlo con el tenant evita revelar solicitudes de otro equipo.
 router.get("/admin/solicitudes/:id", authMiddleware, requireTeamAdmin, async (req, res) => {
   const solicitud = await prisma.solicitudLogro.findFirst({
     where: { id: parsePositiveId(req.params.id), logro: { teamId: req.team!.id } },
-    include: { logro: true, user: { select: { id: true, email: true, displayName: true } } },
+    include: { logro: true, user: { select: { id: true, email: true, firstName: true, lastName: true, memberships: { where: { teamId: req.team!.id }, select: { displayName: true }, take: 1 } } } },
   })
   if (!solicitud) throw new AppError(404, "Solicitud no encontrada")
-  res.json(solicitud)
+  const { user, ...data } = solicitud
+  res.json({ ...data, user: { id: user.id, email: user.email, displayName: publicName({ displayName: user.memberships[0]?.displayName ?? null, user }) } })
 })
 
 // 📚 Esta lista devuelve solo identidad y rol de miembros del tenant; nunca expone hashes
@@ -197,10 +208,10 @@ router.get("/admin/solicitudes/:id", authMiddleware, requireTeamAdmin, async (re
 router.get("/admin/miembros", authMiddleware, requireTeamAdmin, async (req, res) => {
   const memberships = await prisma.teamMembership.findMany({
     where: { teamId: req.team!.id },
-    select: { role: true, joinedAt: true, user: { select: { id: true, email: true, displayName: true } } },
+    select: { displayName: true, role: true, joinedAt: true, user: { select: { id: true, email: true, firstName: true, lastName: true } } },
     orderBy: [{ joinedAt: "asc" }, { id: "asc" }],
   })
-  res.json(memberships.map(({ role, joinedAt, user }) => ({ ...user, displayName: publicName(user), role, joinedAt })))
+  res.json(memberships.map(({ displayName, role, joinedAt, user }) => ({ ...user, displayName: publicName({ displayName, user }), role, joinedAt })))
 })
 
 // 📚 La asignación directa valida ambos IDs y vuelve a comprobar en BD que usuario y logro
@@ -214,22 +225,23 @@ router.post("/admin/asignaciones", authMiddleware, requireTeamAdmin, async (req,
   ])
   if (!membership || !logro) throw new AppError(404, "Jugador o logro no encontrado en este equipo")
 
-  const existing = await prisma.userLogro.findUnique({ where: { userId_logroId: { userId, logroId } } })
+  const seasonId = await awardSeasonId(prisma, req.team!.id, logro.scope)
+  const existing = await prisma.userLogro.findFirst({ where: { userId, logroId, seasonId } })
   if (existing) throw new AppError(409, "Este jugador ya tiene el logro")
-  res.status(201).json(await prisma.userLogro.create({ data: { userId, logroId } }))
+  res.status(201).json(await prisma.userLogro.create({ data: { userId, logroId, seasonId } }))
 })
 
 
 // 📚 POST (escritura): cadena authMiddleware → validate → handler. Orden intencionado: primero auth
 //    (sin token, 401 y no gastamos esfuerzo), luego validar el body, y solo entonces crear.
 router.post("/logros", authMiddleware, requireTeamAdmin, validate(crearLogroSchema), async (req, res) => {
-  const { nombre, puntos, descripcion, categoria, criterios } = req.body
+  const { nombre, puntos, descripcion, categoria, criterios, scope } = req.body
 
   // 📚 teamId NO viene del body: lo dicta el :slug de la URL (ya resuelto en req.team). Que el
   //    cliente eligiera el equipo sería un fallo de seguridad. Añadir teamId aquí es además lo que
   //    arregla el "Property 'team' is missing" que rompía el build tras la migración multi-tenant.
   const nuevoLogro = await prisma.logro.create({
-    data: { nombre, puntos, descripcion, categoria, criterios, teamId: req.team!.id }
+    data: { nombre, puntos, descripcion, categoria, criterios, scope, teamId: req.team!.id }
   })
 
   res.status(201).json(nuevoLogro)

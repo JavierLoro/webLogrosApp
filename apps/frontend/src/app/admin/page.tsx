@@ -21,8 +21,8 @@ export default function AdminPage() {
     let active = true
 
     Promise.all([
-      apiFetch<TeamRequest[]>("/api/equipos/solicitudes", { auth: true }),
-      apiFetch<PlatformTeam[]>("/api/equipos", { auth: true }),
+      apiFetch<TeamRequest[]>("/api/equipos/solicitudes"),
+      apiFetch<PlatformTeam[]>("/api/equipos"),
     ])
       .then(([requestData, teamData]) => {
         if (!active) return
@@ -62,12 +62,11 @@ export default function AdminPage() {
     try {
       await apiFetch(`/api/equipos/solicitudes/${request.id}/${action}`, {
         method: "POST",
-        auth: true,
       })
       setRequests((current) => current?.filter((item) => item.id !== request.id) ?? [])
       if (accepted) {
         try {
-          setTeams(await apiFetch<PlatformTeam[]>("/api/equipos", { auth: true }))
+          setTeams(await apiFetch<PlatformTeam[]>("/api/equipos"))
         } catch {
           setError("El equipo se creó, pero no se pudo actualizar la lista de equipos.")
         }

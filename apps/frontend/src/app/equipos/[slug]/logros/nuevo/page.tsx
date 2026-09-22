@@ -94,7 +94,6 @@ export default function NuevoLogroPage() {
     try {
       await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/${prepared.endpoint}`, {
         method: "POST",
-        auth: true,
         body: JSON.stringify(prepared.body),
       })
       router.push(`/equipos/${slug}/${prepared.redirect}`)

@@ -11,6 +11,14 @@ paused_mainline_task: UI-G6-T03
 
 ## Decisiones vigentes
 
+- 2026-09-22 — Phase 7.5 Auth Hardening completada y verificada manualmente: login con cookie HttpOnly, persistencia tras recarga, acceso protegido y logout PASS. Frontend sin `localStorage` para JWT, Bearer ni `auth: true`; TypeScript, lint y build backend PASS. No cambia `current_task`: continúa UI-A2-T04.
+
+- 2026-09-21 — Petición explícita: «Tu resumen» pasa a «Mi progreso personal», con anillo de conseguidos/catálogo (Ana7/14=50%), leyenda conseguidos/pendientes, puntos y posición secundarios. No introduce progreso parcial ni secretos. Enlace «Ver logros» al catálogo existente sin prometer filtro personal. Implementación directa sin subagentes por instrucción vigente; ESLint dirigido/TypeScript PASS, revisión desktop1536 y móvil390 sin overflow del panel. No constituye aprobación independiente1:1 ni cierre de gates. Se mantienen pendientes A1/A2 y pausa G6.
+
+- 2026-09-21 — Refinamiento puntual solicitado de participación del dashboard: título sin icono/divisor, porcentaje ampliado, explicación lateral adaptable, barra32px con36 segmentos y pendientes visibles, métricas inferiores más legibles. ESLint/TypeScript PASS; Coordinator verificó desktop/móvil y corrigió un solape inicial. Evidencia: `evidence/UI-G3/progress-audit-2026-09-21/REFINEMENT.md`. No cambia current_task ni cierra gates; sin backend/tokens/shell.
+
+- 2026-09-21 — Ampliación explícita de identidad: `User.firstName`/`lastName` son identidad global y `TeamMembership.displayName` es alias contextual. Registro actualizado; migración aditiva conserva `User.displayName` como legado y hace backfill de membresías. Edición de perfil #27, edición/permisos del alias #28 y avatar/uploads #23 quedan pendientes. No cambia `current_task`: UI-A2-T04 continúa con su QA visual/funcional pendiente.
+
 - 2026-09-21 — Refinamiento solicitado de superficies de Mis equipos: CSS reutilizable local mate, textura tenue, bordes direccionales y hover sin salto. Implementación frontend_worker y revisión directa Coordinator desktop/móvil registradas en `evidence/UI-A2/SURFACE-REFINEMENT.md`; no cambia current_task ni cierra gate. Sin backend ni cambios de tokens compartidos.
 
 - 2026-09-21 — Override explícito del usuario: no volver a delegar en visual_critic; el Coordinator realiza directamente la comparación referencia/capturas y registra hallazgos y veredicto. El agente visual_critic_g3 fue interrumpido. Esta decisión sustituye la exigencia previa de crítico independiente; no elimina QA, evidencia visual ni criterios del gate. Próxima acción visual: comparación directa por Coordinator, sin esperar ni relanzar al crítico.
@@ -46,6 +54,8 @@ paused_mainline_task: UI-G6-T03
 
 ## Estado conocido del repositorio
 
+- Identidad separada en dos niveles: nombre/apellidos globales en `User` y alias opcional en `TeamMembership`; resolución tenant alias → nombre completo → fallback. Registro frontend/backend adaptado. El avatar no está implementado.
+
 - Fixture objetivo: 2 equipos; Halcones con 12 miembros, 14 logros, 40 asignaciones, 8 solicitudes, 6 propuestas y 6 invitaciones.
 - `User.displayName`, criterios y fechas de alta de logros ya forman parte del contrato de datos.
 - El dominio de propuestas distingue envío, incorporación al catálogo y obtención del logro.
@@ -61,6 +71,8 @@ paused_mainline_task: UI-G6-T03
 El frontend administrativo V1 aún rechaza solicitudes sin enviar `reason`; se adaptará en UI-G8 antes del gate funcional correspondiente. No hay bloqueo para UI-G6. La sesión temporal sirve dashboard, catálogo, formularios y ranking aprobados en `http://100.65.11.85:3000`; sus handles están registrados a continuación.
 
 ## Última validación
+
+- Slice de identidad 2026-09-21: QA independiente PASS para `prisma validate/generate`, build backend, `seed:check`, lint/TypeScript/build frontend y `git diff --check`. La migración 14/14 se aplicó después únicamente a `127.0.0.1:55437/weblogros_ui`; login Ana/PLAYER y contexto Halcones PASS (`Ana Fernández`, 2 equipos), sin P2022. No hubo seed, reset ni screenshots; #13/#20 quedan abiertas hasta integrar y enlazar commit/PR. Esta validación no cierra UI-A1/UI-A2 ni cambia `current_task`.
 
 - Estado vigente: gates UI-G0 a UI-G5 cerrados; UI-G6-T01/T02 DONE y UI-G6-T03 READY. Workstream pausado por petición del usuario. Jugadores implementado con lint/build/checks dirigidos PASS; captura, pruebas de navegador y gate visual UI-G6 pendientes. Evidencia: `evidence/UI-G6/UI-G6-T02-IMPLEMENTATION.md`.
 - Pendiente explícito para UI-G9: ejecutar variantes HTTP 401/403/404 del ranking; loading, 500/retry, empty y 1–2 miembros ya tienen evidencia funcional. No confundir inspección de código con prueba runtime.

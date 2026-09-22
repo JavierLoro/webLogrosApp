@@ -15,6 +15,50 @@ administradores generan invitaciones con token aleatorio, caducidad y límite de
 se almacena como hash y se puede consumir desde un enlace (`/unirse?token=...`) o introduciéndolo
 manualmente; ambos caminos llaman a la misma operación de unión.
 
+### Identidad global y alias por equipo
+
+`User` conserva la identidad global de la persona: nombre (`firstName`), apellidos (`lastName`),
+email y credenciales. `lastName` es un único texto y admite uno o varios apellidos sin imponer un
+modelo cultural concreto. `TeamMembership.displayName` conserva el alias opcional dentro de cada
+equipo, porque una misma persona puede presentarse de forma distinta en equipos diferentes.
+
+Las lecturas tenant resuelven el nombre visible en este orden: alias de la membresía, nombre y
+apellidos globales, y finalmente `Miembro {id}` para datos históricos incompletos. El antiguo
+`User.displayName` se mantiene de forma transitoria para migración/compatibilidad, pero deja de ser
+la fuente canónica. La edición posterior del perfil global se sigue en la issue #27 y la edición y
+permisos del alias en la #28.
+
+La foto de perfil será global y pertenecerá a `User`, pero no se guarda todavía: avatar, uploads y
+storage se diseñarán conjuntamente en la issue #23 y Phase 10. Mientras tanto, la interfaz usa
+iniciales/placeholders; no acepta URLs arbitrarias ni inventa una ruta de archivo.
+
+### Temporadas y alcance de los logros
+
+Cada `Season` pertenece a un `Team` y recorre el ciclo `PLANNED → ACTIVE → CLOSED`. Solo puede
+haber una temporada activa por equipo; PostgreSQL protege esta regla con un índice único parcial.
+Activar una temporada cierra la activa anterior dentro de la misma transacción. Una temporada
+cerrada conserva sus concesiones y puede consultarse históricamente, pero no puede reactivarse.
+
+`Logro.scope` separa dos comportamientos sin duplicar el catálogo:
+
+- `PERMANENT`: una persona solo puede obtenerlo una vez y su concesión tiene `seasonId = NULL`.
+- `SEASONAL`: puede obtenerlo una vez por temporada; solicitarlo o asignarlo exige una temporada
+  activa y guarda su identificador tanto en `SolicitudLogro` como en `UserLogro`.
+
+Guardar `seasonId` en la solicitud congela el contexto en el momento de reclamar el logro. Si el
+administrador la revisa después de cerrar la temporada, la aprobación sigue perteneciendo a la
+edición correcta. El ranking actual suma concesiones permanentes y las de la temporada activa; el
+ranking histórico usa la temporada solicitada más las permanentes. Los datos de otras temporadas
+no se eliminan ni se mezclan.
+
+Rutas tenant-scoped nuevas:
+
+- `GET /equipos/:slug/temporadas`
+- `GET /equipos/:slug/temporadas/:id/ranking`
+- `POST /equipos/:slug/admin/temporadas`
+- `POST /equipos/:slug/admin/temporadas/:id/activar`
+- `POST /equipos/:slug/admin/temporadas/:id/cerrar`
+
 ### Roles
 | Rol | Quién | Qué puede hacer |
 |-----|-------|-----------------|

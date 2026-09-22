@@ -133,7 +133,6 @@ function JoinTeamContent() {
     try {
       const result = await apiFetch<{ team: Omit<TeamMembershipSummary, "role">; role: TeamMembershipSummary["role"] }>("/api/invitaciones/join", {
         method: "POST",
-        auth: true,
         body: JSON.stringify({ token: cleanToken }),
       })
       router.push(`/equipos/${result.team.slug}`)

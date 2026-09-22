@@ -13,7 +13,10 @@ model User {
   id                 Int              @id @default(autoincrement())
   // 📚 @unique: no puede haber dos usuarios con el mismo email (lo aprovechamos en register).
   email              String           @unique
-  // 📚 Nullable conserva cuentas anteriores sin inventar su identidad; el fixture sí aporta nombres.
+  // 📚 Estos campos son nullable para migrar cuentas antiguas sin inventar datos; el registro
+  //    nuevo sí los exige en el borde HTTP. displayName queda temporalmente como legado.
+  firstName          String?
+  lastName           String?
   displayName        String?
   // 📚 Guardamos el HASH de bcrypt, nunca la contraseña en claro (ver routes/auth.ts).
   password           String
@@ -42,6 +45,31 @@ model Team {
   miembros    TeamMembership[]
   invitations TeamInvitation[]
   propuestas  PropuestaLogro[]
+  seasons     Season[]
+}
+
+enum SeasonStatus {
+  PLANNED
+  ACTIVE
+  CLOSED
+}
+
+// 📚 Season pertenece al tenant: conserva el periodo y su estado aunque otra temporada
+// 📚 pase a ser la activa, de modo que rankings y concesiones antiguas sigan siendo auditables.
+model Season {
+  id        Int              @id @default(autoincrement())
+  teamId    Int
+  name      String
+  startsAt  DateTime
+  endsAt    DateTime
+  status    SeasonStatus     @default(PLANNED)
+  createdAt DateTime         @default(now())
+  team      Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  awards    UserLogro[]
+  requests  SolicitudLogro[]
+
+  @@unique([teamId, name])
+  @@index([teamId, status])
 }
 
 enum TeamRole {
@@ -86,13 +114,16 @@ model TeamRequest {
 // 📚 La membresía convierte la relación User↔Team en N:N: el rol vive aquí porque puede
 //    cambiar según el equipo y la clave compuesta evita duplicar una pertenencia.
 model TeamMembership {
-  id       Int      @id @default(autoincrement())
-  userId   Int
-  teamId   Int
-  role     TeamRole @default(PLAYER)
-  joinedAt DateTime @default(now())
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  team     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  teamId      Int
+  role        TeamRole @default(PLAYER)
+  // 📚 El alias pertenece a la relación persona-equipo: una misma cuenta puede mostrarse
+  //    de forma distinta en cada tenant sin duplicar su identidad global.
+  displayName String?
+  joinedAt    DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team        Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   @@unique([userId, teamId])
   @@index([teamId])
@@ -133,6 +164,9 @@ model Logro {
   descripcion String?
   categoria   String?
   icono       String? // emoji, p.ej. "🏆"
+  // 📚 El alcance pertenece a la definición del logro: PERMANENT se obtiene una vez;
+  // 📚 SEASONAL puede volver a obtenerse en cada temporada sin duplicar el catálogo.
+  scope       AchievementScope @default(PERMANENT)
   // 📚 teamId = la CLAVE FORÁNEA real (columna en la BD). Sin ? → OBLIGATORIA: no hay logros
   //    huérfanos, todo logro pertenece a un equipo (regla de la multi-tenancy).
   teamId      Int
@@ -142,6 +176,11 @@ model Logro {
   obtenidos   UserLogro[]
   solicitudes SolicitudLogro[]
   propuesta   PropuestaLogro?
+}
+
+enum AchievementScope {
+  PERMANENT
+  SEASONAL
 }
 
 enum PropuestaLogroStatus {
@@ -175,30 +214,37 @@ model PropuestaLogro {
 // 📚 No duplicamos teamId: el tenant se obtiene mediante logro.teamId, evitando que una
 //    solicitud pueda declarar un equipo distinto del propietario real del logro.
 model SolicitudLogro {
-  id         Int                  @id @default(autoincrement())
-  userId     Int
-  logroId    Int
-  status     SolicitudLogroStatus @default(PENDING)
-  createdAt  DateTime             @default(now())
-  reviewedAt DateTime?
+  id              Int                  @id @default(autoincrement())
+  userId          Int
+  logroId         Int
+  seasonId        Int?
+  status          SolicitudLogroStatus @default(PENDING)
+  createdAt       DateTime             @default(now())
+  reviewedAt      DateTime?
   // 📚 Nullable conserva resoluciones antiguas sin inventar motivos; los rechazos nuevos lo exigen.
   rejectionReason String?
-  user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  logro      Logro                @relation(fields: [logroId], references: [id], onDelete: Cascade)
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logro           Logro                @relation(fields: [logroId], references: [id], onDelete: Cascade)
+  season          Season?              @relation(fields: [seasonId], references: [id], onDelete: Restrict)
 
   // 📚 No usamos @@unique([userId, logroId]): tras un rechazo se puede volver a solicitar;
   //    los índices aceleran la bandeja del jugador y la cola administrativa por estado.
   @@index([userId, createdAt])
   @@index([status, createdAt])
+  @@index([seasonId])
 }
 
 model UserLogro {
-  id      Int      @id @default(autoincrement())
-  userId  Int
-  logroId Int
-  fecha   DateTime @default(now())
-  user    User     @relation(fields: [userId], references: [id])
-  logro   Logro    @relation(fields: [logroId], references: [id])
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  logroId  Int
+  seasonId Int?
+  fecha    DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  logro    Logro    @relation(fields: [logroId], references: [id])
+  season   Season?  @relation(fields: [seasonId], references: [id], onDelete: Restrict)
 
-  @@unique([userId, logroId]) // un usuario no puede ganar el mismo logro dos veces
+  // 📚 La unicidad depende de si seasonId es NULL; PostgreSQL la aplica con dos índices
+  // 📚 parciales definidos en la migración, algo que Prisma Schema aún no puede expresar.
+  @@index([seasonId])
 }

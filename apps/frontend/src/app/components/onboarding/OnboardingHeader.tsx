@@ -3,7 +3,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { useSyncExternalStore } from "react"
+import { useAuthSession } from "@/hooks/useAuthSession"
+import { logoutAuthSession } from "@/lib/authSession"
 import lockerboardLogo from "../../../../LockerBoard-marca/otros/brand/logo/lockerboard-logo-horizontal-color-on-dark.svg"
 import lockerboardSymbol from "../../../../LockerBoard-marca/otros/brand/symbol/lockerboard-symbol-color-on-dark.svg"
 
@@ -25,15 +26,17 @@ export function OnboardingHeader() {
 export function OnboardingSessionActions({ includeJoin = false }: { includeJoin?: boolean }) {
   const pathname = usePathname()
   const router = useRouter()
-  const loggedIn = useStoredBoolean("token", (value) => Boolean(value))
-  const isSuperAdmin = useStoredBoolean("isSuperAdmin", (value) => value === "true")
+  const { session } = useAuthSession()
+  const loggedIn = session !== null
+  const isSuperAdmin = session?.isSuperAdmin ?? false
 
-  function logout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("teams")
-    localStorage.removeItem("isSuperAdmin")
-    window.dispatchEvent(new Event("auth-change"))
-    router.push("/login")
+  async function logout() {
+    try {
+      await logoutAuthSession()
+      router.push("/login")
+    } catch {
+      // Permanecemos en la pantalla si el servidor no confirmó el cierre.
+    }
   }
 
   return (
@@ -67,20 +70,5 @@ function HeaderLink({ href, current, children }: { href: string; current: boolea
     >
       {children}
     </Link>
-  )
-}
-
-function useStoredBoolean(key: string, read: (value: string | null) => boolean) {
-  return useSyncExternalStore(
-    (onChange) => {
-      window.addEventListener("storage", onChange)
-      window.addEventListener("auth-change", onChange)
-      return () => {
-        window.removeEventListener("storage", onChange)
-        window.removeEventListener("auth-change", onChange)
-      }
-    },
-    () => read(localStorage.getItem(key)),
-    () => false,
   )
 }

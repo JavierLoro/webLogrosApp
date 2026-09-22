@@ -5,6 +5,10 @@ import { z } from "zod"
 //    (tipo + formato + longitud), no solo presencia. z.object descarta claves extra por
 //    defecto (mata el mass assignment). Al fallar, .parse() lanza un ZodError.
 export const registerSchema = z.object({
+    // 📚 trim elimina espacios accidentales antes de persistir; los límites evitan tanto
+    //    nombres vacíos como entradas desproporcionadas en una ruta pública.
+    firstName: z.string().trim().min(1).max(80),
+    lastName: z.string().trim().min(1).max(120),
     // 📚 z.email() (v4): string con formato de email (atrapa 12345 y "noesunemail"). En Zod 4
     //    los formatos son top-level; el antiguo z.string().email() está deprecado.
     email: z.email(),

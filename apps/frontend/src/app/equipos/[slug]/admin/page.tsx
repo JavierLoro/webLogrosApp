@@ -24,10 +24,10 @@ export default function TeamAdminPage() {
   const load = useCallback(async () => {
     const base = `/api/equipos/${encodeURIComponent(slug)}`
     return Promise.all([
-      apiFetch<Invitation[]>(`${base}/invitaciones`, { auth: true }),
-      apiFetch<AchievementRequest[]>(`${base}/admin/solicitudes`, { auth: true }),
-      apiFetch<TeamMember[]>(`${base}/admin/miembros`, { auth: true }),
-      apiFetch<Logro[]>(`${base}/logros`, { auth: true }),
+      apiFetch<Invitation[]>(`${base}/invitaciones`),
+      apiFetch<AchievementRequest[]>(`${base}/admin/solicitudes`),
+      apiFetch<TeamMember[]>(`${base}/admin/miembros`),
+      apiFetch<Logro[]>(`${base}/logros`),
     ])
   }, [slug])
 
@@ -44,7 +44,7 @@ export default function TeamAdminPage() {
   async function review(id: number, action: "aceptar" | "rechazar") {
     setError("")
     try {
-      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/admin/solicitudes/${id}/${action}`, { method: "POST", auth: true })
+      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/admin/solicitudes/${id}/${action}`, { method: "POST" })
       setNotice(action === "aceptar" ? "Logro otorgado." : "Solicitud rechazada.")
       applyData(await load())
     } catch (cause) { setError(cause instanceof ApiError ? cause.message : "No se pudo revisar la solicitud") }
@@ -53,7 +53,7 @@ export default function TeamAdminPage() {
   async function assignDirectly() {
     setError("")
     try {
-      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/admin/asignaciones`, { method: "POST", auth: true, body: JSON.stringify({ userId: Number(userId), logroId: Number(logroId) }) })
+      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/admin/asignaciones`, { method: "POST", body: JSON.stringify({ userId: Number(userId), logroId: Number(logroId) }) })
       setNotice("Logro asignado directamente."); setUserId(""); setLogroId("")
     } catch (cause) { setError(cause instanceof ApiError ? cause.message : "No se pudo asignar el logro") }
   }
@@ -61,7 +61,7 @@ export default function TeamAdminPage() {
   async function createInvitation() {
     setError("")
     try {
-      const result = await apiFetch<{ token: string }>(`/api/equipos/${encodeURIComponent(slug)}/invitaciones`, { method: "POST", auth: true, body: JSON.stringify({ expiresInDays: 7, maxUses: 10 }) })
+      const result = await apiFetch<{ token: string }>(`/api/equipos/${encodeURIComponent(slug)}/invitaciones`, { method: "POST", body: JSON.stringify({ expiresInDays: 7, maxUses: 10 }) })
       setLink(`${window.location.origin}/unirse?token=${result.token}`); setNotice("Invitación creada."); applyData(await load())
     } catch (cause) { setError(cause instanceof ApiError ? cause.message : "No se pudo crear la invitación") }
   }

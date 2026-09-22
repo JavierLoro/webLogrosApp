@@ -41,7 +41,6 @@ export default function TeamDashboardPage() {
     const controller = new AbortController()
 
     apiFetch<TeamDashboard>(`/api/equipos/${encodeURIComponent(slug)}/dashboard`, {
-      auth: true,
       signal: controller.signal,
     })
       .then((data) => setDashboardState({ slug, value: data }))
@@ -94,7 +93,7 @@ function DashboardContent({ dashboard, slug }: { dashboard: TeamDashboard; slug:
         data-dashboard-band="details"
       >
         <RecentAchievementsPanel achievements={dashboard.recentAchievements} slug={slug} className="min-h-72 md:col-span-2 xl:col-span-1 xl:h-[18.5rem] xl:min-h-0" />
-        <PersonalSummaryPanel summary={dashboard.me} className="min-h-72 xl:h-[18.5rem] xl:min-h-0" />
+        <PersonalSummaryPanel summary={dashboard.me} catalogCount={dashboard.totals.catalog} slug={slug} className="min-h-72 xl:h-[18.5rem] xl:min-h-0" />
         <TopPlayersPanel players={dashboard.topPlayers} slug={slug} className="min-h-72 xl:h-[18.5rem] xl:min-h-0" />
       </div>
     </>

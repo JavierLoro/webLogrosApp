@@ -1,5 +1,23 @@
 # Technical Decisions
 
+## Identidad global y alias contextual (2026-09-21)
+
+**Acordado e implementado en su primer slice.** Nombre y apellidos describen a la persona y viven
+en `User`; el nombre mostrado dentro de un equipo es contextual y vive como `displayName` opcional
+en `TeamMembership`. Un único `lastName` admite uno o varios apellidos sin forzar una estructura
+cultural concreta.
+
+- Prioridad de presentación tenant: alias de membresía → nombre completo global → `Miembro {id}`.
+- `User.displayName` queda temporalmente como campo legado para migración y compatibilidad; no es
+  la fuente canónica nueva y se retirará solo cuando no queden consumidores.
+- El alias no necesita ser único dentro de un equipo en esta primera versión.
+- La edición del perfil global queda en #27; la edición/autorización del alias, en #28.
+- El avatar será global (`User`), pero no se añade un campo sin flujo real. Uploads, storage,
+  validación, reemplazo y borrado se resolverán juntos en #23/Phase 10.
+
+Motivo: la persona mantiene una identidad estable entre equipos, mientras que el alias y el rol
+dependen de cada membresía. La migración aditiva evita romper cuentas y contratos existentes.
+
 ## Propuestas de nuevos logros por cualquier miembro (2026-09-17)
 
 **Acordado; pendiente de implementación.** Cualquier miembro puede proponer un logro para su equipo con nombre, descripción, criterios e imagen. La propuesta conserva equipo y autor desde el envío; no es un logro sin equipo ni una publicación comunitaria.

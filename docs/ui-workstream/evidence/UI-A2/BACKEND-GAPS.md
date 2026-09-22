@@ -1,13 +1,13 @@
-# Acceso y onboarding — Registro unificado de pendientes
+# Frontend deseado — Registro unificado de pendientes
 
-Registro unificado de gaps backend, decisiones de producto, assets/frontend y QA detectados durante acceso/onboarding (UI-A1/UI-A2). Se conserva la ruta histórica BACKEND-GAPS.md, aunque no todos los puntos sean backend. Incluye referencias a trabajo separado del roadmap, no todo el roadmap como cola de ejecución. No propone endpoints como hechos ni autoriza implementación.
+Registro unificado de gaps backend, decisiones de producto, assets/frontend y QA detectados durante acceso/onboarding (UI-A1/UI-A2) y refinamientos del dashboard. Se conserva la ruta histórica BACKEND-GAPS.md, aunque no todos los puntos sean backend. Incluye referencias a trabajo separado del roadmap, no todo el roadmap como cola de ejecución. No propone endpoints como hechos ni autoriza implementación.
 
 ## Seguimiento en GitHub
 
 Etiquetas de clasificación (no equivalen a aprobación ni estado de ejecución):
 
-- `gap`: falta de datos o soporte para el frontend deseado — #10, #12, #13 y #22. Las decisiones pendientes de cada issue siguen vigentes.
-- `funcionalidad deseada`: ampliación futura — #11, #14, #15, #17, #18, #19, #20, #21, #23 y #24.
+- `gap`: falta de datos o soporte para el frontend deseado — #10, #12, #13 y #22.
+- `funcionalidad deseada`: ampliación futura — #11, #14, #15, #17, #18, #19, #20, #21, #23, #24, #27, #28, #29, #30 y #31.
 - `qa`: pruebas y convergencia visual, no nueva funcionalidad — #25.
 
 Al incorporar nuevos puntos o cambiar su alcance, mantener coherentes las etiquetas y este registro.
@@ -19,18 +19,23 @@ Al resolver una issue, actualizar **en el mismo cambio** tanto su apartado de es
 | 1. Estadísticas | [#10](https://github.com/JavierLoro/webLogrosApp/issues/10) | COMPLETADO | PR #26; logros y jugadores reales |
 | 2. Temporada | [#11](https://github.com/JavierLoro/webLogrosApp/issues/11) | PENDIENTE DE DECISIÓN | No es requisito aprobado |
 | 3. Deporte | [#12](https://github.com/JavierLoro/webLogrosApp/issues/12) | PENDIENTE | Presentación solicitada; diseño backend pendiente |
-| 4. Identidad global | [#13](https://github.com/JavierLoro/webLogrosApp/issues/13) | PENDIENTE DE DECISIÓN | Perfil y contrato por acordar |
+| 4. Identidad global | [#13](https://github.com/JavierLoro/webLogrosApp/issues/13) | IMPLEMENTADO LOCAL — pendiente integración | Nombre/apellidos globales y alias tenant; edición separada en #27/#28 |
 | 5. Seguimiento de solicitudes | [#14](https://github.com/JavierLoro/webLogrosApp/issues/14) | PENDIENTE DE DECISIÓN | Producto, permisos y lectura por acordar |
 | 6. Email y plazos | [#15](https://github.com/JavierLoro/webLogrosApp/issues/15) | PENDIENTE DE DECISIÓN | Sin garantías ni promesas actuales |
 | 7. Recuperación de contraseña | [#17](https://github.com/JavierLoro/webLogrosApp/issues/17) | PENDIENTE DE DEFINICIÓN | Producto/backend |
 | 8. Recordar sesión | [#18](https://github.com/JavierLoro/webLogrosApp/issues/18) | PENDIENTE DE DEFINICIÓN | Producto/backend |
 | 9. Acceso con Google y GitHub | [#19](https://github.com/JavierLoro/webLogrosApp/issues/19) | PENDIENTE DE DEFINICIÓN | Producto/backend |
-| 10. Nombre en el registro | [#20](https://github.com/JavierLoro/webLogrosApp/issues/20) | PENDIENTE DE DEFINICIÓN | Producto/backend |
+| 10. Nombre en el registro | [#20](https://github.com/JavierLoro/webLogrosApp/issues/20) | IMPLEMENTADO LOCAL — pendiente integración | Registro persiste nombre y apellidos globales |
 | 11. Términos y privacidad en acceso | [#21](https://github.com/JavierLoro/webLogrosApp/issues/21) | PENDIENTE DE DEFINICIÓN | Producto/contenido/frontend |
 | 12. Logos de equipo PNG transparentes | [#22](https://github.com/JavierLoro/webLogrosApp/issues/22) | PENDIENTE — visual acordado | Assets/frontend y contrato por definir |
 | 13. Imágenes reales, avatares y uploads | [#23](https://github.com/JavierLoro/webLogrosApp/issues/23) | PENDIENTE DE DEFINICIÓN | Assets/backend/frontend |
 | 14. Auth Hardening con cookies HttpOnly | [#24](https://github.com/JavierLoro/webLogrosApp/issues/24) | PENDIENTE — roadmap separado | Backend/frontend — roadmap separado |
 | 15. Cerrar QA y convergencia visual de acceso y onboarding | [#25](https://github.com/JavierLoro/webLogrosApp/issues/25) | EN CURSO — gate pendiente | Frontend/QA — no gap backend |
+| 16. Perfil global editable | [#27](https://github.com/JavierLoro/webLogrosApp/issues/27) | PENDIENTE | Consulta/edición autenticada y formulario |
+| 17. Alias editable por equipo | [#28](https://github.com/JavierLoro/webLogrosApp/issues/28) | PENDIENTE DE DECISIÓN | Permisos y edición tenant-scoped |
+| 18. Logros secretos | [#29](https://github.com/JavierLoro/webLogrosApp/issues/29) | PENDIENTE DE DEFINICIÓN | Visibilidad, permisos y desbloqueo |
+| 19. Progreso parcial por jugador | [#30](https://github.com/JavierLoro/webLogrosApp/issues/30) | PENDIENTE DE DEFINICIÓN | Avance persistente, validación y obtención |
+| 20. Etiquetas personalizables de jugadores | [#31](https://github.com/JavierLoro/webLogrosApp/issues/31) | PENDIENTE DE DEFINICIÓN | Catálogo por equipo y concesión por TEAM_ADMIN |
 
 Estas issues registran backlog, no autorizan implementación ni amplían UI-A2. El archivo debe publicarse junto con los cambios locales pendientes para que esté disponible también desde GitHub.
 
@@ -85,9 +90,22 @@ Pendiente backend para una tarea futura: definir y exponer el deporte en la lect
 
 ## 4. Identidad global de la persona
 
-La cabecera dibujada incluye avatar, nombre y dropdown. En frontend, la sesión global solo conserva token, equipos y flag de superadmin; no hay un contrato global de perfil usado por estas rutas. UI-A2 mantiene acciones reales de sesión pero no inventa identidad.
+Decisión e implementación del primer slice (2026-09-21): la identidad real pertenece a `User`
+mediante `firstName` y `lastName`; el alias opcional dentro de un equipo pertenece a
+`TeamMembership.displayName`. Las lecturas tenant resuelven alias del equipo, después nombre global
+y finalmente `Miembro {id}`. `User.displayName` se conserva solo como campo legado durante la
+transición y una migración aditiva copia sus valores existentes a las membresías.
 
-Si se desea esa identidad, producto/backend deberán definir qué perfil global se expone y cómo se obtiene. No se fija un endpoint en este documento.
+El registro captura nombre y apellidos y no expone el hash. El perfil global consultable/editable
+queda separado en #27 y la edición/autorización del alias en #28. El avatar global continúa en #23;
+no se añadió una URL o ruta de archivo sin flujo real de storage.
+
+Validación del bloque: `prisma generate`, `prisma validate`, build TypeScript backend,
+`npm run seed:check`, lint/TypeScript/build frontend y `git diff --check` correctos. La migración no
+se aplicó a una base compartida: se desplegó únicamente sobre la base local aislada
+`127.0.0.1:55437/weblogros_ui`. `migrate deploy` aplicó la migración 14/14 y el login real de
+Ana/PLAYER más `/equipos/halcones/contexto` pasaron, devolviendo `Ana Fernández` y dos equipos sin
+P2022. No se ejecutó seed ni reset. #13 y #20 permanecen abiertas hasta disponer de commit/PR enlazable.
 
 ## 5. Seguimiento persistente de la solicitud
 
@@ -129,9 +147,12 @@ Origen: [Análisis UI-A1](../UI-A1/ANALYSIS.md). La tabla conserva el estado; re
 
 Categoría: **Producto/backend**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/20.
 
-Decidir captura y persistencia del nombre desde registro y su relación con displayName existente; no asumir que falta un campo en todo el dominio. El contrato de registro actual solo recibe email y password.
+Completado en el primer slice de identidad: el registro recibe, valida, recorta y persiste
+`firstName` y `lastName`, además de email y contraseña. Se usa un único `lastName` para admitir uno
+o varios apellidos. El nombre contextual deja de confundirse con estos datos y vive en la membresía.
 
-Origen: [Análisis UI-A1](../UI-A1/ANALYSIS.md). La tabla conserva el estado; registrar aquí resolución y evidencia al cerrar.
+Origen: [Análisis UI-A1](../UI-A1/ANALYSIS.md). Validaciones compartidas con el apartado 4; la
+edición posterior queda en #27.
 
 ## 11. Términos y privacidad en acceso
 
@@ -173,7 +194,48 @@ Seguir tareas existentes UI-A1-T04 y UI-A2-T04/T05, no crear una fase paralela. 
 
 Origen: UI-A1 y UI-A2/BROWSER-QA.md; UI-A2/COMPARISON-COORDINATOR-1.md. La tabla conserva el estado; registrar aquí resolución y evidencia al cerrar.
 
-## Soporte suficiente existente
+## 16. Perfil global editable
+
+Categoría: **Producto/backend/frontend**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/27.
+
+Pendiente: lectura autenticada del perfil propio, edición validada de nombre y apellidos y su
+formulario. No incluye cambio de email, contraseña ni avatar.
+
+## 17. Alias editable por equipo
+
+Categoría: **Producto/backend/frontend**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/28.
+
+Pendiente: decidir si el alias puede cambiarlo el propio miembro, el `TEAM_ADMIN` o ambos;
+implementar después una escritura tenant-scoped con aislamiento y autorización contextual. El alias
+no requiere unicidad en la decisión vigente.
+
+## 18. Logros secretos
+
+Categoría: **Producto/backend/frontend — funcionalidad deseada**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/29.
+
+Detectado el 2026-09-21 al revisar «Mi progreso personal». `Logro` no dispone de visibilidad secreta ni reglas de revelado. Definir qué información se oculta, quién puede verla, cuándo se desbloquea y cómo afecta a catálogo, detalle y agregados. Evitar filtraciones mediante APIs, búsquedas o conteos. Decidir si los secretos forman parte del denominador de progreso y su relación con los estados de obtención.
+
+Provisional: el frontend no muestra un conteo de secretos inventado. Registro solicitado, no autorización para implementar. Al resolver, actualizar apartado y tabla a COMPLETADO con PR/commit y validaciones, y sincronizar Roadmap.
+
+## 19. Progreso parcial de logros por jugador
+
+Categoría: **Producto/backend/frontend — funcionalidad deseada**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/30.
+
+Detectado el 2026-09-21: `criterios` contiene texto y `UserLogro` registra obtención final, pero no existe avance persistente por jugador (p. ej. 2 de 3). Definir objetivo/avance o checklist, permisos para registrar y validar, correcciones, cambios de criterios y transición a obtención sin duplicar concesiones. Probar estados sin iniciar/parcial/completado, concurrencia y aislamiento tenant.
+
+No confundir una solicitud PENDING con un logro en progreso. Actualmente «Pendientes» en el panel personal significa catálogo menos conseguidos, no logros empezados; preferir «Sin conseguir» al refinar ese texto. No usar estados ficticios para rellenar el gráfico. Al resolver, actualizar apartado y tabla a COMPLETADO con PR/commit y validaciones, y sincronizar Roadmap.
+
+## 20. Etiquetas personalizables de jugadores
+
+Categoría: **Producto/backend/frontend — funcionalidad deseada**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/31.
+
+Solicitado el 2026-09-21 durante la revisión del ranking: etiquetas personalizables que el administrador del equipo puede conceder a jugadores. Catálogo y asignaciones scoped al equipo; no son roles, permisos ni logros, ni modifican puntuaciones o posiciones.
+
+Definir nombre/descripción, opciones visuales (colores/iconos), límites, visibilidad, gestión del catálogo, asignación/retirada y comportamiento al editar o eliminar etiquetas. Acordar multiplicidad, orden e historial/caducidad antes de implementarlos. Decidir su presentación en ranking, jugadores y perfil. No incluye uploads implícitos.
+
+Validar autorización contextual de TEAM_ADMIN, duplicados y aislamiento entre equipos. Al resolver, actualizar este apartado y su fila a COMPLETADO con PR/commit y validaciones, y sincronizar Roadmap en el mismo cambio. Backlog futuro, sin implementación autorizada en el workstream actual.
+
+## Soporte suficiente de acceso y onboarding (existente)
 
 - Preview de invitación: equipo, caducidad y usos restantes.
 - Unión: operación autenticada y equipo resultante.

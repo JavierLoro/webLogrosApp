@@ -35,7 +35,7 @@ export function TeamShell({ children, slug }: TeamShellProps) {
   useEffect(() => {
     const controller = new AbortController()
 
-    apiFetch<TeamContext>(`/api/equipos/${encodeURIComponent(slug)}/contexto`, { auth: true, signal: controller.signal })
+    apiFetch<TeamContext>(`/api/equipos/${encodeURIComponent(slug)}/contexto`, { signal: controller.signal })
       .then((value) => setState({ status: "ready", slug, value }))
       .catch((cause: unknown) => {
         if (cause instanceof DOMException && cause.name === "AbortError") return

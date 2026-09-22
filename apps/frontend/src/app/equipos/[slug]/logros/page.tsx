@@ -46,7 +46,6 @@ export default function LogrosPage() {
     const controller = new AbortController()
 
     apiFetch<CatalogAchievement[]>(`/api/equipos/${encodeURIComponent(slug)}/logros`, {
-      auth: true,
       signal: controller.signal,
     })
       .then((value) => {

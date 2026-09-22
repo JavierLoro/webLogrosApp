@@ -16,7 +16,7 @@ export default function TeamsPage() {
   useEffect(() => {
     const controller = new AbortController()
 
-    apiFetch<TeamSummary[]>("/api/equipos/mis-equipos", { auth: true, signal: controller.signal })
+    apiFetch<TeamSummary[]>("/api/equipos/mis-equipos", { signal: controller.signal })
       .then((result) => {
         setTeams(result)
         setError(null)

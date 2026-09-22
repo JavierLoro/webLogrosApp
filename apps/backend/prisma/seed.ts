@@ -52,15 +52,18 @@ const teams: TeamSeed[] = [
 const users = [
   // 📚 isSuperAdmin modela un permiso global independiente de TeamRole: esta cuenta puede
   //    administrar la plataforma y, a la vez, ser TEAM_ADMIN dentro de Halcones.
-  { email: "test@halcones.com", displayName: "Javier Loro", teamSlug: "halcones", isSuperAdmin: true, role: "TEAM_ADMIN" as const },
-  { email: "diego@halcones.test", displayName: "Diego Ruiz", teamSlug: "halcones", isSuperAdmin: false, role: "TEAM_ADMIN" as const },
+  { email: "test@halcones.com", firstName: "Javier", lastName: "Loro", displayName: "Javier Loro", teamSlug: "halcones", isSuperAdmin: true, role: "TEAM_ADMIN" as const },
+  { email: "diego@halcones.test", firstName: "Diego", lastName: "Ruiz", displayName: "Diego Ruiz", teamSlug: "halcones", isSuperAdmin: false, role: "TEAM_ADMIN" as const },
   ...[
     ["ana", "Ana Fernández"], ["marcos", "Marcos del Río"], ["laura", "Laura Sánchez"],
     ["pablo", "Pablo García"], ["maria", "María Pérez"], ["carmen", "Carmen Martín"],
     ["carlos", "Carlos Torres"], ["alex", "Álex Moreno de la Fuente"],
     ["daniel", "Daniel Molina"], ["elena", "Elena Castro"],
-  ].map(([name, displayName]) => ({ email: `${name}@halcones.test`, displayName, teamSlug: "halcones", isSuperAdmin: false, role: "PLAYER" as const })),
-  { email: "lucia@lobos.test", displayName: "Lucía Fernández", teamSlug: "lobos", isSuperAdmin: false, role: "PLAYER" as const },
+  ].map(([name, displayName]) => {
+    const [firstName, ...lastNameParts] = displayName.split(" ")
+    return { email: `${name}@halcones.test`, firstName, lastName: lastNameParts.join(" "), displayName, teamSlug: "halcones", isSuperAdmin: false, role: "PLAYER" as const }
+  }),
+  { email: "lucia@lobos.test", firstName: "Lucía", lastName: "Fernández", displayName: "Lucía Fernández", teamSlug: "lobos", isSuperAdmin: false, role: "PLAYER" as const },
 ]
 
 // 📚 Índices de un catálogo fijo, no aleatoriedad: 40 relaciones con dos miembros a cero.
@@ -164,13 +167,15 @@ async function main() {
       //    indicado en esta ejecución, sin revelar ese valor en la salida del comando.
       const user = await tx.user.upsert({
         where: { email: userSeed.email },
-        update: { password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, displayName: userSeed.displayName },
-        create: { email: userSeed.email, password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, displayName: userSeed.displayName },
+        // 📚 User conserva la identidad real; displayName solo se mantiene como legado durante
+        //    la transición y ya no participa en la resolución de nombres tenant.
+        update: { password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, firstName: userSeed.firstName, lastName: userSeed.lastName, displayName: userSeed.displayName },
+        create: { email: userSeed.email, password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, firstName: userSeed.firstName, lastName: userSeed.lastName, displayName: userSeed.displayName },
       })
       await tx.teamMembership.upsert({
         where: { userId_teamId: { userId: user.id, teamId } },
-        update: { role: userSeed.role, joinedAt: fixtureDate(1 + index) },
-        create: { userId: user.id, teamId, role: userSeed.role, joinedAt: fixtureDate(1 + index) },
+        update: { role: userSeed.role, displayName: userSeed.displayName, joinedAt: fixtureDate(1 + index) },
+        create: { userId: user.id, teamId, role: userSeed.role, displayName: userSeed.displayName, joinedAt: fixtureDate(1 + index) },
       })
       userIds.set(userSeed.email, user.id)
     }
@@ -180,8 +185,9 @@ async function main() {
     const secondTeamId = teamIds.get("lobos")!
     await tx.teamMembership.upsert({
       where: { userId_teamId: { userId: sharedUserId, teamId: secondTeamId } },
-      update: { role: "PLAYER", joinedAt: fixtureDate(14) },
-      create: { userId: sharedUserId, teamId: secondTeamId, role: "PLAYER", joinedAt: fixtureDate(14) },
+      // 📚 Un alias diferente prueba que la presentación depende de la membresía, no de User.
+      update: { role: "PLAYER", displayName: "Ana de Halcones", joinedAt: fixtureDate(14) },
+      create: { userId: sharedUserId, teamId: secondTeamId, role: "PLAYER", displayName: "Ana de Halcones", joinedAt: fixtureDate(14) },
     })
 
     for (const [index, assignment] of assignments.entries()) {
@@ -189,13 +195,12 @@ async function main() {
       const logroId = logroIds.get(`${assignment.teamSlug}:${assignment.logro}`)
       if (!userId || !logroId) throw new Error("Asignación de seed con referencias incompletas.")
 
-      // 📚 La clave @@unique([userId, logroId]) permite un upsert idempotente: una persona no
-      //    recibe dos veces el mismo logro aunque el seed se ejecute repetidamente.
-      await tx.userLogro.upsert({
-        where: { userId_logroId: { userId, logroId } },
-        update: { fecha: fixtureDate(16 + Math.floor(index / 12), 9 + index % 12) },
-        create: { userId, logroId, fecha: fixtureDate(16 + Math.floor(index / 12), 9 + index % 12) },
-      })
+      // 📚 El fixture actual declara concesiones permanentes (seasonId NULL). Como la unicidad
+      // 📚 condicional vive en SQL, buscamos la fila antes de actualizarla o crearla.
+      const existingAward = await tx.userLogro.findFirst({ where: { userId, logroId, seasonId: null } })
+      const awardData = { userId, logroId, seasonId: null, fecha: fixtureDate(16 + Math.floor(index / 12), 9 + index % 12) }
+      if (existingAward) await tx.userLogro.update({ where: { id: existingAward.id }, data: awardData })
+      else await tx.userLogro.create({ data: awardData })
     }
 
     for (const [index, request] of requests.entries()) {

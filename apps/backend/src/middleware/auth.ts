@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
 // 📚 JWT_SECRET validado en config/env (fail-fast), no process.env["JWT_SECRET"]!
 import { JWT_SECRET } from "../config/env"
+import { AUTH_COOKIE } from "../lib/authCookie"
 
 const SECRET = JWT_SECRET
 
@@ -10,11 +11,13 @@ const SECRET = JWT_SECRET
 //    o dejarla pasar llamando a next(). Aquí: verifica el JWT y, si es válido, inyecta
 //    el userId en req para que la ruta sepa quién es el usuario.
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  // 📚 Convención "Authorization: Bearer <token>". split(" ")[1] toma la parte del token.
-  const header = req.headers["authorization"]  // "Bearer <token>"
-  const token = header?.split(" ")[1]
+  // 📚 cookieParser ya convirtió la cabecera Cookie en req.cookies. Reutilizar
+  // 📚 AUTH_COOKIE evita que login y autenticación discrepen sobre el nombre.
+  const token = req.cookies?.[AUTH_COOKIE]
 
-  if (!token) {
+  // 📚 Las cookies son entrada externa: narrowing con typeof garantiza que jwt.verify
+  // 📚 reciba un string y rechaza tanto la ausencia como cualquier forma inesperada.
+  if (typeof token !== "string") {
     // 📚 401 Unauthorized: falta credencial. return corta el middleware sin llamar next().
     res.status(401).json({ error: "Token requerido" })
     return

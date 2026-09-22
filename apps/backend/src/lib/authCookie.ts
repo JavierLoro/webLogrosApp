@@ -14,13 +14,14 @@ const authCookieOptions: CookieOptions = {
 // 📚 Centralizamos la política de la cookie para que las rutas entreguen el JWT sin
 // 📚 exponerlo a JavaScript ni repetir opciones de seguridad que podrían divergir.
 export function setAuthCookie(res: Response, token: string): void {
-
     res.cookie(AUTH_COOKIE, token, {
         ...authCookieOptions,
         maxAge: timeToExpire
     })
 }
 
-function clearAuthCookie(res: Response): void {
+// 📚 Logout reutiliza el nombre y las opciones comunes para expirar exactamente
+// 📚 la misma cookie que creó el login, especialmente su `path`.
+export function clearAuthCookie(res: Response): void {
     res.clearCookie(AUTH_COOKIE, authCookieOptions)
 }

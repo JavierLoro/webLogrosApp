@@ -1,11 +1,12 @@
-// 📚 Client Component: la cabecera cambia según haya sesión, y eso solo se sabe leyendo
-//    localStorage (existe únicamente en el navegador).
+// 📚 Client Component: la cabecera consulta al servidor porque una cookie HttpOnly no
+// 📚 puede leerse desde JavaScript.
 "use client"
 
-import { useSyncExternalStore } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
+import { useAuthSession } from "@/hooks/useAuthSession"
+import { logoutAuthSession } from "@/lib/authSession"
 import lockerboardLogo from "../../../LockerBoard-marca/otros/brand/logo/lockerboard-logo-horizontal-color-on-dark.svg"
 import lockerboardSymbol from "../../../LockerBoard-marca/otros/brand/symbol/lockerboard-symbol-color-on-dark.svg"
 
@@ -16,30 +17,9 @@ export default function Header() {
   // All public surfaces now share the carbon navigation; tenant routes still
   // return null below and render their own contextual rail.
   const interior = true
-  const logueado = useSyncExternalStore(
-    (onChange) => {
-      window.addEventListener("storage", onChange)
-      window.addEventListener("auth-change", onChange)
-      return () => {
-        window.removeEventListener("storage", onChange)
-        window.removeEventListener("auth-change", onChange)
-      }
-    },
-    () => Boolean(localStorage.getItem("token")),
-    () => false,
-  )
-  const isSuperAdmin = useSyncExternalStore(
-    (onChange) => {
-      window.addEventListener("storage", onChange)
-      window.addEventListener("auth-change", onChange)
-      return () => {
-        window.removeEventListener("storage", onChange)
-        window.removeEventListener("auth-change", onChange)
-      }
-    },
-    () => localStorage.getItem("isSuperAdmin") === "true",
-    () => false,
-  )
+  const { session } = useAuthSession()
+  const logueado = session !== null
+  const isSuperAdmin = session?.isSuperAdmin ?? false
 
   // El selector de equipos y cada tenant tienen navegación propia; el header
   // global se mantiene en las demás superficies hasta que adopten su reemplazo.
@@ -47,14 +27,13 @@ export default function Header() {
     return null
   }
 
-  // 📚 Logout = borrar el token del navegador y volver a login. No hay estado en el servidor
-  //    que limpiar: la "sesión" vive en el JWT guardado en el cliente.
-  function handleLogout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("teams")
-    localStorage.removeItem("isSuperAdmin")
-    window.dispatchEvent(new Event("auth-change"))
-    router.push("/login")
+  async function handleLogout() {
+    try {
+      await logoutAuthSession()
+      router.push("/login")
+    } catch {
+      // La navegación se conserva si el servidor no confirmó que la cookie fue expirada.
+    }
   }
 
   return (

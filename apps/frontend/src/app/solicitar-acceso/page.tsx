@@ -29,7 +29,6 @@ export default function SolicitarAccesoPage() {
     try {
       await apiFetch("/api/equipos/solicitudes", {
         method: "POST",
-        auth: true,
         body: JSON.stringify({ teamName, officialEmail, message }),
       })
       setSent(true)

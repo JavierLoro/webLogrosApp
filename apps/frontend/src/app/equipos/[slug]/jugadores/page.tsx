@@ -35,7 +35,6 @@ export default function JugadoresPage() {
     const controller = new AbortController()
 
     apiFetch<DashboardPlayer[]>(`/api/equipos/${encodeURIComponent(slug)}/jugadores`, {
-      auth: true,
       signal: controller.signal,
     })
       .then((value) => {

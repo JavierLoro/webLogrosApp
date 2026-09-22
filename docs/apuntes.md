@@ -1906,7 +1906,7 @@ El seed es **idempotente**, es decir, se puede repetir sin multiplicar el conten
 - Cada usuario declara también `isSuperAdmin`; el `upsert` mantiene ese permiso global
   sincronizado sin mezclarlo con su rol contextual dentro de un equipo.
 - Cada logro se busca por nombre dentro de su equipo y después se actualiza o crea.
-- `UserLogro` usa su clave compuesta `userId_logroId` para evitar asignaciones duplicadas.
+- `UserLogro` usa índices únicos parciales para evitar duplicados permanentes y por temporada.
 - Todo se ejecuta en una transacción; un error revierte el conjunto completo.
 
 Esto permite refrescar nombres, descripciones, iconos y contraseñas de prueba conservando
@@ -2092,3 +2092,131 @@ para cada equipo.
 membresías y solo incluye el rol `PLAYER`; `TEAM_ADMIN` queda fuera porque el modelo actual permite
 un solo rol por membresía. La posible convivencia de ambos roles se trata en la issue #16 y no
 cambia retroactivamente el significado de esta respuesta.
+## Identidad global y nombre contextual por equipo
+
+Una cuenta y una membresía responden a preguntas distintas:
+
+- `User.firstName` y `User.lastName` describen quién es la persona en toda la plataforma.
+- `TeamMembership.displayName` describe cómo quiere mostrarse dentro de un equipo concreto.
+- `User.displayName` se conserva temporalmente como campo legado para permitir una transición segura,
+  pero las lecturas tenant nuevas ya no lo usan.
+
+La regla de presentación está centralizada en `publicName`:
+
+```text
+alias de TeamMembership
+        ↓ si falta o está vacío
+firstName + lastName de User
+        ↓ si ambos faltan
+Miembro {id}
+```
+
+Centralizar esta regla evita que ranking, jugadores, contexto y paneles administrativos resuelvan
+la misma persona de forma diferente. También protege el aislamiento multi-tenant: cada consulta
+selecciona la membresía del equipo resuelto por la URL, por lo que nunca toma el alias de otro equipo.
+
+### Migración aditiva y compatibilidad
+
+Los tres campos nuevos son nullable en PostgreSQL. Esto no significa que el registro nuevo acepte
+nombres vacíos: Zod exige y recorta `firstName` y `lastName` en el borde HTTP. La nulabilidad sirve
+para que las cuentas ya existentes puedan migrarse sin inventar su identidad real.
+
+La migración copia el antiguo `User.displayName` a todas sus membresías existentes usando un
+`UPDATE ... FROM`. `NULLIF(BTRIM(...), '')` convierte valores vacíos en `NULL`. El backfill es seguro
+al repetirse conceptualmente porque solo escribe membresías cuyo alias aún es `NULL`; después de
+aplicarlo, el alias contextual pasa a ser la fuente principal.
+
+El seed guarda nombre y apellidos globales y alias por membresía. Ana pertenece a dos equipos con
+un alias distinto en el segundo, un fixture deliberado para detectar lecturas que ignoren el tenant.
+
+### Contrato de registro actualizado
+
+`POST /auth/register` recibe ahora:
+
+```json
+{
+  "firstName": "Ana",
+  "lastName": "Fernández López",
+  "email": "ana@example.com",
+  "password": "secreto"
+}
+```
+
+Se usa un único campo `lastName` porque apellidos compuestos o múltiples no necesitan una semántica
+separada en este producto. El avatar y la subida de archivos quedan fuera de este bloque: requieren
+validación binaria, almacenamiento persistente y ciclo de reemplazo/borrado propios.
+
+## Temporadas — catálogo reutilizable e historial por periodo
+
+Un `Logro` responde «qué se puede conseguir»; un `UserLogro` responde «quién lo consiguió, cuándo y
+en qué edición». Por eso la temporada no es un array dentro del logro. Cada concesión es un evento
+independiente con su propia fecha, usuario y `seasonId`, y PostgreSQL puede relacionarlo, indexarlo y
+validarlo mediante claves foráneas.
+
+`AchievementScope` hace explícita la política del catálogo:
+
+- `PERMANENT` usa `seasonId = NULL` y solo admite una concesión por usuario y logro.
+- `SEASONAL` exige la temporada activa y admite una concesión por usuario, logro y temporada.
+
+Una clave única compuesta normal no basta porque SQL trata los valores `NULL` como distintos. La
+migración crea dos **índices únicos parciales**, cada uno aplicado solo a las filas que le interesan:
+
+```sql
+UNIQUE (userId, logroId) WHERE seasonId IS NULL
+UNIQUE (userId, logroId, seasonId) WHERE seasonId IS NOT NULL
+```
+
+Prisma conoce las columnas y relaciones, pero no puede declarar esos predicados `WHERE` en
+`schema.prisma`; por eso los índices viven en `migration.sql` y las rutas usan `findFirst` en lugar
+del antiguo selector generado `userId_logroId`.
+
+### Ciclo de vida y transacciones
+
+Una temporada nace `PLANNED`, puede pasar a `ACTIVE` y termina `CLOSED`. Separar creación y
+activación permite preparar fechas sin cambiar el ranking. La activación cierra la temporada activa
+anterior y activa la elegida dentro de una transacción: ambas escrituras se confirman o se revierten
+juntas. Un índice parcial adicional garantiza en la base que un equipo nunca termine con dos
+temporadas activas, incluso ante peticiones concurrentes.
+
+El helper `awardSeasonId` centraliza la regla de escritura. Devuelve `null` para logros permanentes;
+para los estacionales busca la temporada activa del mismo equipo y responde `409 Conflict` si no
+existe. Solicitar, aprobar y asignar directamente reutilizan este significado.
+
+`SolicitudLogro.seasonId` captura la temporada al crear la solicitud, no al aprobarla. Esta decisión
+evita que una revisión tardía conceda el logro en una edición distinta. El ranking corriente suma
+siempre los permanentes y, cuando existe, los estacionales de la temporada activa. Consultar un
+histórico cambia esa temporada seleccionada, pero conserva los permanentes como base acumulada.
+
+La migración es aditiva para los datos existentes: `Logro.scope` nace con default `PERMANENT` y los
+`seasonId` nuevos son nullable. Así las concesiones actuales continúan representando logros
+permanentes sin fabricar temporadas históricas que el sistema no conoce.
+
+## Cookies HttpOnly y ciclo de sesión
+
+El JWT sigue siendo la credencial firmada, pero ya no se entrega dentro del JSON ni se guarda en
+`localStorage`. `POST /auth/login` lo envía mediante `Set-Cookie` con `httpOnly`, por lo que el
+navegador puede transportarlo pero JavaScript no puede leerlo. Esto reduce el riesgo de robo del
+token mediante XSS; no sustituye la validación del JWT ni el resto de defensas del navegador.
+
+`cookie-parser` se monta antes de las rutas y transforma la cabecera `Cookie` en `req.cookies`.
+Después, `authMiddleware` obtiene `auth_token`, comprueba que sea texto, verifica firma y caducidad
+con `jwt.verify` e inyecta `req.userId`. El nombre y las opciones de la cookie viven juntos en
+`lib/authCookie.ts` para que login, autenticación y logout no diverjan.
+
+En desarrollo, frontend y backend usan puertos diferentes. El backend autoriza el origen exacto y
+`Access-Control-Allow-Credentials: true`; el wrapper `apiFetch` usa `credentials: "include"`. Ambas
+partes son necesarias para que el navegador acepte y envíe cookies en peticiones cross-origin. No
+se usa `Access-Control-Allow-Origin: *`, incompatible con credenciales.
+
+`GET /auth/session` está protegido por `authMiddleware`, pero vuelve a consultar la base de datos:
+el JWT identifica al usuario, mientras que membresías, roles y `isSuperAdmin` pueden haber cambiado.
+Así la interfaz recibe estado actual sin leer la cookie.
+
+`POST /auth/logout` no está protegido deliberadamente. Cerrar sesión debe ser idempotente incluso
+si la cookie falta, expiró o contiene un JWT inválido. `clearCookie` reutiliza nombre y `path` para
+expirar exactamente la cookie creada por login y responde `204 No Content`.
+
+La comprobación manual del 22/09/2026 confirmó el ciclo completo en navegador: el login crea la
+cookie, una recarga conserva la sesión, las rutas protegidas aceptan la credencial y logout la
+elimina sin errores. Esta prueba complementa build/lint porque valida el comportamiento real del
+navegador con `Set-Cookie`, CORS y `credentials: "include"`.

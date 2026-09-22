@@ -97,10 +97,12 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx →
 ## Phase 7.5 – Auth Hardening
 > **Concepto nuevo:** seguridad del navegador, XSS, cookies HttpOnly vs localStorage
 
-- [ ] Migrar JWT de `localStorage` a **cookie HttpOnly** — `localStorage` es accesible desde JS (XSS puede robar el token); una cookie HttpOnly no lo es
-- [ ] Actualizar `authMiddleware` para leer el JWT desde la cookie en lugar del header `Authorization`
-- [ ] Actualizar el frontend para no gestionar el token manualmente (la cookie se envía automáticamente)
-- [ ] `apuntes.md`: sección "Cookies HttpOnly vs localStorage"
+- [x] Migrar la entrega del JWT a **cookie HttpOnly** — `localStorage` es accesible desde JS (XSS puede robar el token); una cookie HttpOnly no lo es
+- [x] Actualizar `authMiddleware` para leer el JWT desde la cookie en lugar del header `Authorization`
+- [x] Añadir `GET /auth/session` y `POST /auth/logout` como contrato servidor de sesión y cierre idempotente.
+- [x] Actualizar el frontend para no gestionar el token manualmente (la cookie se envía automáticamente)
+- [x] `apuntes.md`: sección "Cookies HttpOnly vs localStorage"
+- [x] QA manual en navegador: login, persistencia tras recarga, acceso protegido y logout correctos (2026-09-22).
 
 ## Phase 7.6 – Solicitudes y paneles admin
 > **Concepto nuevo:** flujos de aprobación (máquina de estados simple), layouts anidados y route groups en Next.js
@@ -124,6 +126,33 @@ Decisión de producto del 2026-09-17. Amplía Phase 7.6; sus tareas completadas 
 - [ ] Dividir el panel administrativo en resumen y subrutas invitaciones, jugadores, logros, solicitudes y propuestas; detalles solicitudes/[id] y propuestas/[id]. Mantener navegación compartida, enlaces directos, estados por área y permisos contextuales. Referencias ya reorganizadas; páginas aún pendientes.
 - [ ] Definir persistencia y API; verificar aislamiento entre equipos, permisos, rechazo y aprobaciones repetidas sin duplicar logros ni asignaciones.
 - [ ] Completar referencias de propuesta, revisión y estados; documentar implementación y conceptos en `apuntes.md` cuando se construya.
+
+## Phase 7.8 – Identidad global y alias contextual
+
+> **Concepto nuevo:** separar los datos propios de la persona de los datos que dependen de su pertenencia a un tenant.
+
+- [x] Definir nombre y apellidos globales en `User`; `lastName` admite uno o varios apellidos.
+- [x] Capturar nombre y apellidos al registrar una cuenta.
+- [x] Mover el nombre visible contextual a `TeamMembership.displayName`, con migración aditiva y transición del antiguo `User.displayName`.
+- [x] Resolver lecturas tenant con prioridad alias del equipo → nombre global → fallback estable.
+- [ ] Perfil global consultable/editable y formulario correspondiente — issue #27.
+- [ ] Edición tenant-scoped del alias y decisión de permisos PLAYER/TEAM_ADMIN — issue #28.
+- [ ] Retirar `User.displayName` cuando no queden consumidores ni datos dependientes del campo legado.
+- [ ] Avatar global, validación de imágenes, almacenamiento y reemplazo seguro — issue #23, coordinado con Phase 10.
+
+## Phase 7.9 – Temporadas por equipo
+
+> **Concepto nuevo:** separar la definición reutilizable de un logro del periodo concreto en el que una persona lo obtiene.
+
+- [x] Modelar temporadas tenant-scoped con estados `PLANNED`, `ACTIVE` y `CLOSED`; máximo una activa por equipo.
+- [x] Configurar cada logro como `PERMANENT` o `SEASONAL`, manteniendo `PERMANENT` como valor compatible.
+- [x] Guardar el contexto nullable de temporada en solicitudes y concesiones, sin arrays de IDs.
+- [x] Aplicar unicidad distinta para concesiones permanentes y para cada temporada mediante índices parciales.
+- [x] Adaptar solicitudes, aprobación y asignación directa al alcance del logro y a la temporada activa.
+- [x] Adaptar dashboard, catálogo, jugadores y ranking al contexto actual y exponer ranking histórico por temporada.
+- [x] Añadir API tenant-scoped para listar, crear, activar y cerrar temporadas.
+- [ ] Diseñar e implementar la administración visual de temporadas y el selector de históricos en frontend.
+- [ ] Ejecutar la migración y pruebas HTTP sobre PostgreSQL local cuando el servicio esté disponible.
 
 
 ## UI Workstream V2 – Visual convergence (ACTIVE)
@@ -185,6 +214,7 @@ Pendientes de backend detectados en acceso/onboarding: [BACKEND-GAPS.md](ui-work
 - [ ] Backend: endpoint `POST /logros/:id/imagen` con `multer`
 - [ ] Nginx sirve `/uploads/` directamente sin pasar por Node.js
 - [ ] Frontend: preview de imagen antes de subir, fallback al emoji si no hay imagen
+- [ ] Ampliar el diseño de storage para avatar global de `User`: validación de tipo/tamaño, nombre controlado, reemplazo/borrado y fallback — issue #23
 - [ ] `apuntes.md`: sección "File uploads — multer y assets estáticos"
 
 ## Phase 11 – Testing
@@ -194,6 +224,16 @@ Pendientes de backend detectados en acceso/onboarding: [BACKEND-GAPS.md](ui-work
 - [ ] Frontend: React Testing Library para componentes clave (ranking, login form)
 - [ ] GitHub Actions: los tests corren **antes** del build de imágenes — si fallan, no se publica a GHCR (CI como gate real, no solo como build)
 - [ ] `apuntes.md`: sección "Testing — Vitest y Supertest"
+
+## Backlog de producto detectado en el dashboard — sin fase asignada
+
+Registro solicitado el 2026-09-21. No autoriza implementación ni amplía el UI Visual Convergence Workstream. Detalle y estado centralizados en [BACKEND-GAPS.md](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md), apartados 18–19.
+
+- [ ] [Logros secretos: visibilidad y desbloqueo por jugador (#29)](https://github.com/JavierLoro/webLogrosApp/issues/29): definir ocultación, permisos, revelado y efecto sobre métricas antes de implementar.
+- [ ] [Progreso parcial de logros por jugador (#30)](https://github.com/JavierLoro/webLogrosApp/issues/30): definir avance, validación y obtención; no confundir con solicitudes pendientes.
+- [ ] [Etiquetas personalizables de jugadores (#31)](https://github.com/JavierLoro/webLogrosApp/issues/31): catálogo por equipo y concesión por TEAM_ADMIN; definir personalización, visibilidad y retirada. No otorgan permisos ni puntos. Detalle en BACKEND-GAPS.md, apartado 20.
+
+Al resolver cada issue, marcar COMPLETADO su apartado y fila de BACKEND-GAPS.md con PR/commit y validaciones, y actualizar esta lista en el mismo cambio.
 
 ## Phase 12 – Real-Time con WebSockets
 > **Concepto nuevo:** conexiones persistentes, event-driven, WebSockets vs HTTP polling

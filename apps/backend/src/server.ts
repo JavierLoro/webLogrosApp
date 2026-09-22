@@ -11,6 +11,7 @@ import teamsRouter from "./routes/teams"
 import invitationsRouter from "./routes/invitations"
 import { errorHandler } from "./middleware/errorHandler"
 import prisma from "./lib/prisma"
+import cookieParser from "cookie-parser"
 
 const app = express()
 // 📚 trust proxy = 1: detrás de nginx TODAS las peticiones llegan con la IP interna del proxy.
@@ -30,10 +31,13 @@ const PORT: number = 3001
 //    esto deja de ser necesario.
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+  // 📚 Las cookies cross-origin requieren permiso explícito y un origen concreto;
+  // 📚 el navegador rechaza combinar credenciales con Access-Control-Allow-Origin: *.
+  res.header("Access-Control-Allow-Credentials", "true")
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-  // 📚 Preflight: antes de un POST con JSON/Authorization, el navegador manda un OPTIONS
-  //    "de sondeo". Respondemos 200 sin pasar a las rutas.
+  // 📚 Preflight: antes de ciertas peticiones cross-origin el navegador manda un OPTIONS
+  // 📚 para comprobar también la política de credenciales. Respondemos antes de las rutas.
   if (req.method === "OPTIONS") {
     res.sendStatus(200)
     return
@@ -43,6 +47,9 @@ app.use((req, res, next) => {
 // 📚 express.json(): middleware que parsea el body JSON y lo deja en req.body. Sin esto,
 //    req.body sería undefined. Va antes de las rutas que lo necesitan.
 app.use(express.json())
+// 📚 cookieParser transforma la cabecera Cookie en req.cookies. Debe ejecutarse antes
+// 📚 de los routers para que authMiddleware pueda leer la cookie HttpOnly de sesión.
+app.use(cookieParser())
 
 app.get("/health", async(_req, res) => {
   try {

@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { Anton, Oswald } from "next/font/google"
+import participationOverlay from "../../../../LockerBoard-marca/otros/overlays/lockerboard-kinetic-overlay-2560x1440.png"
 import { AchievementMedia } from "@/app/components/team/AchievementMedia"
 import { PlayerAvatar } from "@/app/components/team/PlayerAvatar"
 import { SectionHeader } from "@/app/components/team/SectionHeader"
@@ -10,7 +12,13 @@ const numberFormatter = new Intl.NumberFormat("es-ES")
 const decimalFormatter = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 1, minimumFractionDigits: 1 })
 const dateFormatter = new Intl.DateTimeFormat("es-ES", { day: "2-digit", month: "short", timeZone: "Europe/Madrid" })
 const relativeFormatter = new Intl.RelativeTimeFormat("es-ES", { numeric: "always" })
-const PARTICIPATION_SEGMENTS = 20
+const PARTICIPATION_SEGMENTS = 36
+const participationDisplay = Anton({ subsets: ["latin"], weight: "400", display: "swap" })
+const participationHeading = Oswald({ subsets: ["latin"], weight: ["500", "600"], display: "swap" })
+
+function DashboardTitle({ children }: { children: string }) {
+  return <span className={`${participationHeading.className} text-base font-semibold uppercase leading-[1.15]`}>{children}</span>
+}
 
 const podiumPlateClasses = [
   "border-[#a17c2f] bg-[#b99345] text-[#071014]",
@@ -48,24 +56,35 @@ export function TeamParticipationPanel({ totals, className = "" }: PanelProps & 
   const summary = [
     { label: "En catálogo", value: totals.catalog },
     { label: "Otorgados", value: totals.awards },
-    { label: "Conseguidos", value: totals.uniqueEarned },
+    { label: "Logros distintos", value: totals.uniqueEarned },
     { label: "Puntos", value: totals.points },
   ]
 
   return (
-    <TeamSurface className={`flex h-full min-w-0 flex-col overflow-hidden ${className}`.trim()}>
-      <SectionHeader title="Participación del equipo" icon={<MaterialIcon name="groups" className="size-5" />} />
-      <div className="mt-3 flex flex-1 flex-col justify-between">
-        <div>
-          <p className="font-[var(--lb-font-data)] text-[clamp(4.5rem,7vw,6rem)] font-semibold leading-[0.85] tracking-[-0.075em] tabular-nums text-[var(--team-text)]">
-            {participation}%
-          </p>
-          <p className="mt-2 max-w-[34ch] text-sm leading-5 text-[var(--team-muted)]">
+    <TeamSurface className={`relative isolate flex h-full min-w-0 flex-col overflow-hidden ${className}`.trim()}>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-right opacity-25"
+        style={{ backgroundImage: `url(${participationOverlay.src})` }}
+      />
+      <header className="min-w-0">
+        <h2 className={`${participationHeading.className} text-base font-semibold uppercase leading-[1.15] text-[var(--team-text)]`}>
+          <span className="text-[var(--team-primary)]">Participación</span> del equipo
+        </h2>
+      </header>
+      <div className="mt-3 flex flex-1 flex-col gap-1">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-3">
+          <div className="w-[15.75rem] max-w-full shrink-0">
+            <p className={`${participationDisplay.className} w-max origin-left ${participation === 100 ? "scale-x-[0.85]" : ""} text-[6.5rem] sm:text-[7.5rem] font-normal leading-[0.95] tracking-[-0.025em] tabular-nums text-[var(--team-text)]`}>
+              {participation}<span className={`${participationHeading.className} inline-block w-[0.48em] align-baseline font-medium tracking-normal`}><span className="inline-block origin-left scale-x-[0.65]">%</span></span>
+            </p>
+          </div>
+          <p className="min-w-32 flex-1 text-sm leading-5 text-[var(--team-muted)]">
             {totals.participants} de {totals.members} miembros han conseguido al menos un logro.
           </p>
         </div>
 
-        <div className="mt-3">
+        <div className="flex flex-1 flex-col">
           <div
             role="meter"
             aria-label="Participación de miembros con al menos un logro"
@@ -73,27 +92,27 @@ export function TeamParticipationPanel({ totals, className = "" }: PanelProps & 
             aria-valuemax={100}
             aria-valuenow={participation}
             aria-valuetext={`${totals.participants} de ${totals.members} miembros`}
-            className="h-3 overflow-hidden rounded-[var(--lb-radius-status)]"
+            className="h-8 w-[94%]"
           >
-            <span aria-hidden="true" className="flex h-full gap-1">
+            <span aria-hidden="true" className="flex h-full items-stretch gap-[3px]">
               {Array.from({ length: PARTICIPATION_SEGMENTS }, (_, index) => (
                 <span
                   key={index}
-                  className={`h-full min-w-0 flex-1 -skew-x-12 rounded-[1px] ${index < activeSegments ? "bg-[var(--team-primary)]" : "bg-[var(--team-surface-strong)]"}`}
+                  className={`h-full min-w-0 flex-1 rounded-[2px] ${index < activeSegments ? "bg-[var(--team-primary)]" : "bg-[color:color-mix(in_srgb,var(--team-text)_14%,var(--team-surface))]"}`}
                 />
               ))}
             </span>
           </div>
-          <dl className="mt-4 grid grid-cols-2 border-t border-[var(--team-line)] sm:grid-cols-4">
+          <dl className="mt-auto grid grid-cols-2 pt-4 sm:grid-cols-4">
             {summary.map((item, index) => (
               <div
                 key={item.label}
-                className={`flex min-w-0 flex-col px-3 py-3 first:pl-0 sm:border-r sm:border-[var(--team-line)] sm:last:border-r-0 ${index === 2 ? "sm:pl-3" : ""}`.trim()}
+                className={`flex min-w-0 flex-col py-1 sm:border-r sm:border-[var(--team-line)] sm:last:border-r-0 ${index === 0 ? "pr-3 pl-0" : index === 2 ? "pr-3 pl-0 sm:pl-3" : "px-3"}`.trim()}
               >
-                <dt className="order-2 mt-1.5 text-[0.6875rem] font-semibold uppercase leading-4 tracking-[0.08em] text-[var(--team-muted)]">
+                <dt className="order-2 mt-1.5 text-xs font-medium leading-4 text-[var(--team-muted)]">
                   {item.label}
                 </dt>
-                <dd className="order-1 font-[var(--lb-font-data)] text-xl font-semibold leading-none tabular-nums text-[var(--team-text)]">
+                <dd className={`${participationHeading.className} order-1 text-[1.75rem] font-medium leading-none tracking-[-0.02em] tabular-nums text-[var(--team-text)]`}>
                   {formatNumber(item.value)}
                 </dd>
               </div>
@@ -123,7 +142,7 @@ export function TeamStatsPanel({ dashboard, className = "" }: PanelProps & { das
 
   return (
     <TeamSurface className={`flex h-full min-w-0 flex-col ${className}`.trim()}>
-      <SectionHeader title="Estadísticas del equipo" />
+      <SectionHeader title={<DashboardTitle>Estadísticas del equipo</DashboardTitle>} className="border-b-0!" />
       <dl className="mt-3 grid grid-cols-2 gap-2">
         {metrics.map((metric) => (
           <div key={metric.label} className="flex min-w-0 items-center gap-2.5 rounded-[var(--lb-radius-control)] border border-[var(--team-line)] bg-[var(--team-surface-low)] p-2.5">
@@ -171,7 +190,7 @@ export function RecentAwardsPanel({ awards, className = "" }: PanelProps & { awa
 
   return (
     <TeamSurface className={`flex h-full min-w-0 flex-col ${className}`.trim()}>
-      <SectionHeader title="Actividad reciente" />
+      <SectionHeader title={<DashboardTitle>Actividad reciente</DashboardTitle>} className="border-b-0!" />
       {visibleAwards.length > 0 ? (
         <ul className="mt-1">
           {visibleAwards.map((award) => (
@@ -208,7 +227,7 @@ export function RecentAchievementsPanel({ achievements, slug, className = "" }: 
 
   return (
     <TeamSurface className={`flex h-full min-w-0 flex-col ${className}`.trim()}>
-      <SectionHeader title="Últimos logros añadidos" action={action} />
+      <SectionHeader title={<DashboardTitle>Últimos logros añadidos</DashboardTitle>} action={action} className="border-b-0! [&>div:last-child]:-my-3" />
       {achievements.length > 0 ? (
         <div className="mt-2 grid flex-1 gap-2 sm:grid-cols-3">
           {achievements.slice(0, 3).map((achievement) => (
@@ -235,24 +254,39 @@ export function RecentAchievementsPanel({ achievements, slug, className = "" }: 
   )
 }
 
-export function PersonalSummaryPanel({ summary, className = "" }: PanelProps & { summary: TeamDashboard["me"] }) {
+export function PersonalSummaryPanel({ summary, catalogCount, slug, className = "" }: PanelProps & { summary: TeamDashboard["me"]; catalogCount: number; slug: string }) {
+  const percentage = catalogCount > 0 ? Math.min(100, Math.round(summary.logrosCount / catalogCount * 100)) : 0
+  const remaining = Math.max(0, catalogCount - summary.logrosCount)
+  const action = (
+    <Link href={`/equipos/${slug}/logros`} className="inline-flex min-h-11 items-center gap-1 rounded-[var(--lb-radius-control)] px-1 text-xs text-[var(--team-primary)] hover:text-[var(--team-text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lb-color-focus)]">
+      Ver logros <MaterialIcon name="arrow_forward" className="size-4" />
+    </Link>
+  )
+
   return (
     <TeamSurface className={`flex h-full min-w-0 flex-col ${className}`.trim()}>
-      <SectionHeader title="Tu resumen" icon={<MaterialIcon name="sports_score" className="size-5" />} />
-      <div className="mt-4 flex flex-1 flex-col justify-between">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--team-muted)]">Posición en el equipo</p>
-          <p className="mt-1 font-[var(--lb-font-data)] text-6xl font-semibold leading-none tabular-nums text-[var(--team-primary)]">#{summary.position}</p>
+      <SectionHeader title={<DashboardTitle>Mi progreso personal</DashboardTitle>} action={action} className="border-b-0! [&>div:last-child]:-my-3" />
+      <div className="flex flex-1 flex-col justify-center gap-5">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+          <div className="relative size-[7.5rem] shrink-0" role="meter" aria-label="Logros personales conseguidos del catálogo" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percentage} aria-valuetext={catalogCount > 0 ? `${summary.logrosCount} de ${catalogCount} logros conseguidos` : "Sin logros en el catálogo"}>
+            <svg viewBox="0 0 120 120" className="size-full -rotate-90" aria-hidden="true">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" strokeWidth="10" className="text-[#26343a]" />
+              {percentage > 0 && <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" strokeWidth="10" strokeLinecap="round" pathLength="100" strokeDasharray={`${percentage} 100`} className="text-[#58b83d]" />}
+            </svg>
+            <span className={`${participationHeading.className} absolute inset-0 grid place-items-center text-[2rem] font-semibold tabular-nums`} aria-hidden="true">{catalogCount > 0 ? `${percentage}%` : "—"}</span>
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className={`${participationHeading.className} text-xl font-medium tabular-nums`}>{summary.logrosCount} / {catalogCount}</p>
+            <p className="mt-1 text-xs text-[var(--team-muted)]">{catalogCount > 0 ? "logros conseguidos" : "Sin logros en el catálogo"}</p>
+            <dl className="mt-4 space-y-2 text-xs">
+              <div className="flex items-center gap-2"><span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-[#58b83d]" /><dd className="font-semibold tabular-nums text-[#74ce59]">{summary.logrosCount}</dd><dt>Conseguidos</dt></div>
+              <div className="flex items-center gap-2"><span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-[#65747c]" /><dd className="font-semibold tabular-nums text-[var(--team-muted)]">{remaining}</dd><dt>Pendientes</dt></div>
+            </dl>
+          </div>
         </div>
-        <dl className="mt-5 grid grid-cols-2 border-t border-[var(--team-line)]">
-          <div className="border-r border-[var(--team-line)] py-4 pr-3">
-            <dt className="text-xs text-[var(--team-muted)]">Puntos</dt>
-            <dd className="mt-1 font-[var(--lb-font-data)] text-2xl font-semibold tabular-nums text-[var(--team-text)]">{formatNumber(summary.puntos)}</dd>
-          </div>
-          <div className="py-4 pl-3">
-            <dt className="text-xs text-[var(--team-muted)]">Logros</dt>
-            <dd className="mt-1 font-[var(--lb-font-data)] text-2xl font-semibold tabular-nums text-[var(--team-text)]">{formatNumber(summary.logrosCount)}</dd>
-          </div>
+        <dl className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-[var(--team-muted)]">
+          <div className="flex items-baseline gap-1.5"><dt>Puntos</dt><dd className={`${participationHeading.className} text-lg font-medium tabular-nums text-[var(--team-text)]`}>{formatNumber(summary.puntos)}</dd></div>
+          <div className="flex items-baseline gap-1.5"><dt>Posición</dt><dd className={`${participationHeading.className} text-lg font-medium tabular-nums text-[var(--team-text)]`}>#{summary.position}</dd></div>
         </dl>
       </div>
     </TeamSurface>
@@ -271,7 +305,7 @@ export function TopPlayersPanel({ players, slug, className = "" }: PanelProps & 
 
   return (
     <TeamSurface className={`flex h-full min-w-0 flex-col ${className}`.trim()}>
-      <SectionHeader title="Top 3 jugadores" action={action} />
+      <SectionHeader title={<DashboardTitle>Top 3 jugadores</DashboardTitle>} action={action} className="border-b-0! [&>div:last-child]:-my-3" />
       {players.length > 0 ? (
         <ol className="mt-1">
           {players.slice(0, 3).map((player, index) => (

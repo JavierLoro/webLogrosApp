@@ -19,10 +19,7 @@ export default function LogroDetallePage({ params }: { params: Promise<{ slug: s
   useEffect(() => {
     let active = true
 
-    apiFetch<Logro>(
-      `/api/equipos/${encodeURIComponent(slug)}/logros/${encodeURIComponent(id)}`,
-      { auth: true },
-    )
+    apiFetch<Logro>(`/api/equipos/${encodeURIComponent(slug)}/logros/${encodeURIComponent(id)}`)
       .then((data) => {
         if (active) setLogro(data)
       })
@@ -46,7 +43,7 @@ export default function LogroDetallePage({ params }: { params: Promise<{ slug: s
     setRequesting(true)
     setNotice("")
     try {
-      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/logros/${encodeURIComponent(id)}/solicitudes`, { method: "POST", auth: true })
+      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/logros/${encodeURIComponent(id)}/solicitudes`, { method: "POST" })
       setNotice("Solicitud enviada. El administrador del equipo podrá revisarla.")
     } catch (cause) {
       setNotice(cause instanceof ApiError ? cause.message : "No se pudo enviar la solicitud.")

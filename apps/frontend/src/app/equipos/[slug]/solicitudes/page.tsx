@@ -14,7 +14,7 @@ export default function SolicitudesPage() {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    apiFetch<AchievementRequest[]>(`/api/equipos/${encodeURIComponent(slug)}/solicitudes`, { auth: true })
+    apiFetch<AchievementRequest[]>(`/api/equipos/${encodeURIComponent(slug)}/solicitudes`)
       .then(setRequests)
       .catch((cause) => setError(cause instanceof ApiError ? cause.message : "No se pudieron cargar tus solicitudes"))
   }, [slug])

@@ -11,6 +11,8 @@ import type { RegisterResponse } from "@/types/api"
 
 export default function RegisterPage() {
   const router = useRouter()
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -35,7 +37,7 @@ export default function RegisterPage() {
     try {
       await apiFetch<RegisterResponse>("/api/auth/register", {
         method: "POST",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ firstName, lastName, email, password }),
       })
       router.push("/login")
     } catch (err) {
@@ -56,6 +58,34 @@ export default function RegisterPage() {
       <AuthFormHeader id="register-heading" title="Crea tu cuenta" subtitle="Empieza a formar parte de LockerBoard." />
 
       <form onSubmit={handleSubmit} aria-busy={submitting}>
+        <AuthField
+            id="register-first-name"
+            name="firstName"
+            label="Nombre"
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="Tu nombre"
+            autoComplete="given-name"
+            aria-describedby={error ? "register-error" : undefined}
+            disabled={submitting}
+            required
+          />
+
+        <AuthField
+            id="register-last-name"
+            name="lastName"
+            label="Apellidos"
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Tus apellidos"
+            autoComplete="family-name"
+            aria-describedby={error ? "register-error" : undefined}
+            disabled={submitting}
+            required
+          />
+
         <AuthField
             id="register-email"
             name="email"

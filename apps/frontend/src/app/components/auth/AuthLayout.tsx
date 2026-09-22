@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import type { ReactNode } from "react"
 import lockerboardLogo from "../../../../LockerBoard-marca/otros/brand/logo/lockerboard-logo-horizontal-color-on-dark.svg"
 
@@ -36,12 +37,14 @@ export function AuthLayout({ children, asideTitle, asideCopy, footer, actions, a
           <div aria-hidden="true" className="absolute -top-[18%] left-[64%] -z-10 h-[145%] w-[17%] -skew-x-12 bg-[var(--lb-color-accent)]/14" />
           <div aria-hidden="true" className="absolute -right-12 -bottom-20 -z-10 size-64 rounded-full border border-white/8 shadow-[0_0_0_2.5rem_rgba(237,7,25,0.04),0_0_0_5rem_rgba(255,255,255,0.018)] md:size-80" />
 
+          <Link href="/" aria-label="LockerBoard — Ir al inicio" className="block w-fit rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lb-color-accent)]">
           <Image
             src={lockerboardLogo}
             alt="LockerBoard"
             priority
             className="h-auto w-[10.5rem] sm:w-[12rem]"
           />
+          </Link>
 
           <div className={lowerAside ? "mt-auto mb-[clamp(2.5rem,7vh,6rem)] max-w-[32rem]" : "mt-8 max-w-[24rem] md:mt-24 lg:mt-28"}>
             <p className={lowerAside ? "max-w-[15ch] [font-family:var(--lb-font-display)] text-[clamp(2.25rem,3.5vw,3.25rem)] font-bold leading-[0.98] tracking-[-0.04em] text-[var(--lb-color-text-primary)] uppercase" : "max-w-[10ch] [font-family:var(--lb-font-display)] text-[clamp(2.25rem,7vw,4.5rem)] font-black leading-[0.94] tracking-[-0.055em] text-[var(--lb-color-text-primary)] uppercase md:text-[clamp(3rem,5vw,4.5rem)]"}>
@@ -59,12 +62,14 @@ export function AuthLayout({ children, asideTitle, asideCopy, footer, actions, a
         <section className={`relative flex min-h-dvh min-w-0 flex-col justify-center bg-[linear-gradient(145deg,var(--lb-color-surface-base),var(--lb-color-bg-shell))] px-6 py-10 sm:px-10 sm:py-12 md:px-[clamp(3rem,7vw,8rem)] md:py-[clamp(3rem,7vh,6rem)] ${contentOrder}`}>
           {actions ? <div className="absolute top-3 right-4 z-10 sm:top-5 sm:right-6 md:top-7 md:right-8">{actions}</div> : null}
           <div className="mx-auto w-full max-w-[27rem]">
+            <Link href="/" aria-label="LockerBoard — Ir al inicio" className="mb-10 block w-fit rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lb-color-accent)] md:hidden">
             <Image
               src={lockerboardLogo}
               alt="LockerBoard"
               priority
-              className={`mb-10 h-auto w-[10.5rem] md:hidden ${actions ? "max-w-[8.5rem]" : ""}`}
+              className={`h-auto w-[10.5rem] ${actions ? "max-w-[8.5rem]" : ""}`}
             />
+            </Link>
             {children}
             {footer ? <div className="mt-8 text-center text-sm text-[var(--lb-color-text-secondary)]">{footer}</div> : null}
           </div>

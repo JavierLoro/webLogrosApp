@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+export const achievementScopeSchema = z.enum(["PERMANENT", "SEASONAL"])
+
 // 📚 Límites de texto y cantidad acotan el payload; trim impide criterios vacíos visualmente.
 export const criteriosSchema = z.array(z.string().trim().min(1).max(300)).max(10)
 
@@ -14,4 +16,7 @@ export const crearLogroSchema = z.object({
     categoria: z.string().trim().min(1).max(80).optional(),
     // 📚 Default vacío mantiene compatible la creación anterior con solo nombre y puntos.
     criterios: criteriosSchema.default([]),
-})
+    // 📚 El default conserva el contrato anterior: si el cliente no conoce temporadas,
+    // 📚 el logro sigue comportándose como uno que solo se obtiene una vez.
+    scope: achievementScopeSchema.default("PERMANENT"),
+}).strict()

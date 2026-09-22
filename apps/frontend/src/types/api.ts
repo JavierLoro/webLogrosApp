@@ -21,7 +21,6 @@ export interface ApiErrorBody {
 }
 
 export interface LoginResponse {
-  token: string
   teams: TeamMembershipSummary[]
   isSuperAdmin: boolean
 }
@@ -137,6 +136,8 @@ export interface TeamRequest {
 
 export interface RegisterResponse {
   id: number
+  firstName: string
+  lastName: string
   email: string
 }
 

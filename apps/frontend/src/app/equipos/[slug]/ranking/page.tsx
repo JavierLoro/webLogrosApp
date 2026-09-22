@@ -33,7 +33,6 @@ export default function RankingPage() {
     const controller = new AbortController()
 
     apiFetch<TeamRanking>(`/api/equipos/${encodeURIComponent(slug)}/ranking`, {
-      auth: true,
       signal: controller.signal,
     })
       .then((value) => {
