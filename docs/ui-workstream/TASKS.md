@@ -83,6 +83,14 @@ A1-T04 sigue pendiente de gate; el cambio de foco fue pedido por el usuario, no 
 
 Por override del usuario (2026-09-21), el Coordinator asume todas las comparaciones visuales pendientes sin delegar en visual_critic. Screenshot → comparación directa → fix se repite hasta cumplir el gate. Registrar iteración y deltas en `STATUS.md`; los roles históricos de tareas cerradas no cambian.
 
+## Ejecución vinculada: progreso y secretos (#30 + #29)
+
+Petición explícita 2026-09-22; alcance y evidencia en [issue-30/PLAN.md](../issue-30/PLAN.md). No sustituye el estado de A1/A2 ni reanuda G6–G9.
+
+| ID | Estado | Rol principal | Dependencias | Entregable |
+| --- | --- | --- | --- | --- |
+| ISSUE-30-29 | DONE | Coordinator + Backend/Frontend/QA | Reglas y tres decisiones confirmadas | Migración, avance atómico, censura y UI; 103 HTTP, 7 unitarias, builds/lint y revisión visual PASS. [Evidencia](../issue-30/RESULT.md); entrega local, sin despliegue/cierre remoto |
+
 ## Regla de cambio compartido
 
 Después de UI-G2-T05, un Screen Worker no puede editar tokens, TeamShell, TeamNavigation ni primitivas compartidas para resolver un problema local. Debe registrar el bloqueo y devolver el cambio al Coordinator.

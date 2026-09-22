@@ -229,8 +229,8 @@ Pendientes de backend detectados en acceso/onboarding: [BACKEND-GAPS.md](ui-work
 
 Registro solicitado el 2026-09-21. No autoriza implementación ni amplía el UI Visual Convergence Workstream. Detalle y estado centralizados en [BACKEND-GAPS.md](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md), apartados 18–19.
 
-- [ ] [Logros secretos: visibilidad y desbloqueo por jugador (#29)](https://github.com/JavierLoro/webLogrosApp/issues/29): definir ocultación, permisos, revelado y efecto sobre métricas antes de implementar.
-- [ ] [Progreso parcial de logros por jugador (#30)](https://github.com/JavierLoro/webLogrosApp/issues/30): definir avance, validación y obtención; no confundir con solicitudes pendientes.
+- [x] [Logros secretos: visibilidad y desbloqueo por equipo (#29)](https://github.com/JavierLoro/webLogrosApp/issues/29): COMPLETADO LOCALMENTE junto con #30; censura de servidor, revelado histórico global y exclusión del denominador personal. [Entrega y validaciones](issue-30/RESULT.md); cierre remoto pendiente de publicación.
+- [x] [Progreso parcial de logros por jugador (#30)](https://github.com/JavierLoro/webLogrosApp/issues/30): COMPLETADO LOCALMENTE; contador entero por persona/temporada, deltas atómicos, objetivo obligatorio y cierre tras concesión manual. UI, 103 HTTP, 7 unitarias y capturas PASS. [Entrega y validaciones](issue-30/RESULT.md). Publicación/cierre remoto conjunto con #29 pendientes.
 - [ ] [Etiquetas personalizables de jugadores (#31)](https://github.com/JavierLoro/webLogrosApp/issues/31): catálogo por equipo y concesión por TEAM_ADMIN; definir personalización, visibilidad y retirada. No otorgan permisos ni puntos. Detalle en BACKEND-GAPS.md, apartado 20.
 
 Al resolver cada issue, marcar COMPLETADO su apartado y fila de BACKEND-GAPS.md con PR/commit y validaciones, y actualizar esta lista en el mismo cambio.

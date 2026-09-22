@@ -11,6 +11,8 @@ paused_mainline_task: UI-G6-T03
 
 ## Decisiones vigentes
 
+- 2026-09-22 — #30 + #29 COMPLETADAS LOCALMENTE: progreso entero, objetivo obligatorio antes de conceder y contador cerrado tras concesión; secretos censurados y revelado histórico global. Migración16/16 aplicada en base Windows de revisión; builds/lint/TypeScript, 7 unitarias, 103 peticiones HTTP y flujo navegador PASS. 26 capturas y comparación directa Coordinator PASS para el alcance añadido. Fixtures existentes conservados; [entrega y evidencia](../issue-30/RESULT.md). No desplegado ni cerrado remotamente; no cierra gates anteriores ni reanuda G6–G9. `current_task` permanece UI-A2-T04.
+
 - 2026-09-22 — Phase 7.5 Auth Hardening completada y verificada manualmente: login con cookie HttpOnly, persistencia tras recarga, acceso protegido y logout PASS. Frontend sin `localStorage` para JWT, Bearer ni `auth: true`; TypeScript, lint y build backend PASS. No cambia `current_task`: continúa UI-A2-T04.
 
 - 2026-09-21 — Petición explícita: «Tu resumen» pasa a «Mi progreso personal», con anillo de conseguidos/catálogo (Ana7/14=50%), leyenda conseguidos/pendientes, puntos y posición secundarios. No introduce progreso parcial ni secretos. Enlace «Ver logros» al catálogo existente sin prometer filtro personal. Implementación directa sin subagentes por instrucción vigente; ESLint dirigido/TypeScript PASS, revisión desktop1536 y móvil390 sin overflow del panel. No constituye aprobación independiente1:1 ni cierre de gates. Se mantienen pendientes A1/A2 y pausa G6.

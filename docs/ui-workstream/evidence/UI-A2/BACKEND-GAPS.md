@@ -33,8 +33,8 @@ Al resolver una issue, actualizar **en el mismo cambio** tanto su apartado de es
 | 15. Cerrar QA y convergencia visual de acceso y onboarding | [#25](https://github.com/JavierLoro/webLogrosApp/issues/25) | EN CURSO — gate pendiente | Frontend/QA — no gap backend |
 | 16. Perfil global editable | [#27](https://github.com/JavierLoro/webLogrosApp/issues/27) | PENDIENTE | Consulta/edición autenticada y formulario |
 | 17. Alias editable por equipo | [#28](https://github.com/JavierLoro/webLogrosApp/issues/28) | PENDIENTE DE DECISIÓN | Permisos y edición tenant-scoped |
-| 18. Logros secretos | [#29](https://github.com/JavierLoro/webLogrosApp/issues/29) | PENDIENTE DE DEFINICIÓN | Visibilidad, permisos y desbloqueo |
-| 19. Progreso parcial por jugador | [#30](https://github.com/JavierLoro/webLogrosApp/issues/30) | PENDIENTE DE DEFINICIÓN | Avance persistente, validación y obtención |
+| 18. Logros secretos | [#29](https://github.com/JavierLoro/webLogrosApp/issues/29) | COMPLETADO LOCALMENTE | Censura y revelado global; entrega conjunta #30, [evidencia](../../../issue-30/RESULT.md) |
+| 19. Progreso parcial por jugador | [#30](https://github.com/JavierLoro/webLogrosApp/issues/30) | COMPLETADO LOCALMENTE | Contador entero atómico, objetivo obligatorio y cierre tras concesión; [evidencia](../../../issue-30/RESULT.md) |
 | 20. Etiquetas personalizables de jugadores | [#31](https://github.com/JavierLoro/webLogrosApp/issues/31) | PENDIENTE DE DEFINICIÓN | Catálogo por equipo y concesión por TEAM_ADMIN |
 
 Estas issues registran backlog, no autorizan implementación ni amplían UI-A2. El archivo debe publicarse junto con los cambios locales pendientes para que esté disponible también desde GitHub.
@@ -211,19 +211,19 @@ no requiere unicidad en la decisión vigente.
 
 ## 18. Logros secretos
 
+**2026-09-22 — COMPLETADO LOCALMENTE.** Propiedad editable por TEAM_ADMIN; censura en backend hasta la primera concesión histórica del equipo; revelado global que sobrevive a temporadas; progreso parcial no revela y secretos ocultos fuera del denominador personal. Incluye textos duplicados de solicitudes/propuestas, catálogo, detalle y agregados. Entrega conjunta con #30.
+
 Categoría: **Producto/backend/frontend — funcionalidad deseada**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/29.
 
-Detectado el 2026-09-21 al revisar «Mi progreso personal». `Logro` no dispone de visibilidad secreta ni reglas de revelado. Definir qué información se oculta, quién puede verla, cuándo se desbloquea y cómo afecta a catálogo, detalle y agregados. Evitar filtraciones mediante APIs, búsquedas o conteos. Decidir si los secretos forman parte del denominador de progreso y su relación con los estados de obtención.
-
-Provisional: el frontend no muestra un conteo de secretos inventado. Registro solicitado, no autorización para implementar. Al resolver, actualizar apartado y tabla a COMPLETADO con PR/commit y validaciones, y sincronizar Roadmap.
+[Entrega, versión y validaciones](../../../issue-30/RESULT.md): migración local16/16, builds/lint, 7 unitarias, 103 HTTP, flujo navegador y 26 capturas PASS. Publicación, despliegue y cierre remoto no realizados. El diagnóstico original del 21/09 queda resuelto en este alcance.
 
 ## 19. Progreso parcial de logros por jugador
 
+**2026-09-22 — COMPLETADO LOCALMENTE.** Tipo STANDARD/PROGRESSIVE independiente de secreto/alcance, objetivo en Logro, avance por persona/contexto estacional y deltas atómicos limitados. TEAM_ADMIN registra/corrige; alcanzar objetivo no crea UserLogro. Contadores enteros, objetivo obligatorio antes de conceder y contador cerrado tras concesión según confirmación del usuario. UI y pruebas conjuntas con #29 incluidas.
+
 Categoría: **Producto/backend/frontend — funcionalidad deseada**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/30.
 
-Detectado el 2026-09-21: `criterios` contiene texto y `UserLogro` registra obtención final, pero no existe avance persistente por jugador (p. ej. 2 de 3). Definir objetivo/avance o checklist, permisos para registrar y validar, correcciones, cambios de criterios y transición a obtención sin duplicar concesiones. Probar estados sin iniciar/parcial/completado, concurrencia y aislamiento tenant.
-
-No confundir una solicitud PENDING con un logro en progreso. Actualmente «Pendientes» en el panel personal significa catálogo menos conseguidos, no logros empezados; preferir «Sin conseguir» al refinar ese texto. No usar estados ficticios para rellenar el gráfico. Al resolver, actualizar apartado y tabla a COMPLETADO con PR/commit y validaciones, y sincronizar Roadmap.
+Estados derivados distinguen sin empezar, en progreso, objetivo alcanzado pendiente de concesión y conseguido. Una solicitud PENDING no cuenta como avance. Validada también la aprobación histórica en la temporada guardada en la solicitud. [Entrega, versión y validaciones](../../../issue-30/RESULT.md); publicación/cierre remoto conjunto pendientes. No se implementa edición de tipo/objetivo después de crear.
 
 ## 20. Etiquetas personalizables de jugadores
 

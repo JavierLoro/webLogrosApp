@@ -1,5 +1,7 @@
 # Entrega #30 y #29 — progreso individual y secretos
 
+Versión de implementación: commit local `e50e2e3` en `main` (`git show e50e2e3`). No publicado.
+
 ## Resultado
 
 Implementación conjunta con objetivo obligatorio, contadores enteros y contador cerrado tras
@@ -27,6 +29,13 @@ concesión, según confirmación del usuario. La concesión permanece manual y s
   concesión, cierre y revelado PASS. Detalle y artefactos en [qa/RESULT.md](qa/RESULT.md).
 - Limpieza por IDs exclusivos de QA PASS. Halcones/Lobos conservan 19 logros, 42 concesiones,
   14 membresías, 8 solicitudes y 6 propuestas; base original de 2 equipos y 13 usuarios.
+
+Reproducción unitaria desde `apps/backend`:
+
+```powershell
+node -r ts-node/register src/lib/achievementProgressState.test.ts
+node -r ts-node/register src/schemas/logros.test.ts
+```
 
 ## Revisión visual y límites
 
