@@ -1,0 +1,867 @@
+[
+  {
+    "check": "real browser create/integer validation/double submit/progress/grant/freeze/visibility/member reveal",
+    "result": "PASS",
+    "route": "/equipos/qa30-1790085148618-main/logros/64",
+    "fixture": {
+      "teamId": 13,
+      "playerId": 30,
+      "logroId": 64
+    },
+    "createPosts": 1
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros",
+    "role": "player",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Logros del equipo",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "Logros del equipo"
+    },
+    "progressGeometry": [
+      {
+        "text": "Conseguido3/3",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "En progreso4/10",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido10/10",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido2/2",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "En progreso9/10",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Objetivo alcanzado · pendiente de concesión2147483647/2147483647",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido20/20",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido20/20",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-1440-catalog.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/63",
+    "role": "player",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA browser partial",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "QA browser partial"
+    },
+    "progressGeometry": [
+      {
+        "text": "En progreso4/10",
+        "clientWidth": 662,
+        "scrollWidth": 662,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-1440-partial.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/56",
+    "role": "player",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA progressive",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "QA progressive"
+    },
+    "progressGeometry": [
+      {
+        "text": "Conseguido20/20",
+        "clientWidth": 662,
+        "scrollWidth": 662,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-1440-awarded.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/62",
+    "role": "player",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Logro secreto",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "Logro secreto"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-1440-hidden.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main",
+    "role": "player",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Dashboard de QA30 main",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "Dashboard de QA30 main"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-1440-dashboard.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros",
+    "role": "player",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Logros del equipo",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Logros del equipo"
+    },
+    "progressGeometry": [
+      {
+        "text": "Conseguido3/3",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "En progreso4/10",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido10/10",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido2/2",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "En progreso9/10",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Objetivo alcanzado · pendiente de concesión2147483647/2147483647",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido20/20",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Conseguido20/20",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-390-catalog.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/63",
+    "role": "player",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA browser partial",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "QA browser partial"
+    },
+    "progressGeometry": [
+      {
+        "text": "En progreso4/10",
+        "clientWidth": 284,
+        "scrollWidth": 284,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-390-partial.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/56",
+    "role": "player",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA progressive",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "QA progressive"
+    },
+    "progressGeometry": [
+      {
+        "text": "Conseguido20/20",
+        "clientWidth": 284,
+        "scrollWidth": 284,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-390-awarded.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/62",
+    "role": "player",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Logro secreto",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Logro secreto"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-390-hidden.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main",
+    "role": "player",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Dashboard de QA30 main",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Dashboard de QA30 main"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\player-390-dashboard.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros",
+    "role": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Logros del equipo",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "Logros del equipo"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/3",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/2",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/2147483647",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/20",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/20",
+        "clientWidth": 167,
+        "scrollWidth": 167,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-1440-catalog.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/63",
+    "role": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA browser partial",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "QA browser partial"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 662,
+        "scrollWidth": 662,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-1440-partial.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/56",
+    "role": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA progressive",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "QA progressive"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/20",
+        "clientWidth": 662,
+        "scrollWidth": 662,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-1440-awarded.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/62",
+    "role": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA browser hidden",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "QA browser hidden"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 662,
+        "scrollWidth": 662,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-1440-hidden.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main",
+    "role": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Dashboard de QA30 main",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "Dashboard de QA30 main"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-1440-dashboard.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/nuevo",
+    "role": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Crear logro",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "Crear logro"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-1440-create.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/admin",
+    "role": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Administración del equipo",
+    "geometry": {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": "Administración del equipo"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-1440-admin.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros",
+    "role": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Logros del equipo",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Logros del equipo"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/3",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/2",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/2147483647",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/20",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      },
+      {
+        "text": "Sin empezar0/20",
+        "clientWidth": 332,
+        "scrollWidth": 332,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-390-catalog.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/63",
+    "role": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA browser partial",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "QA browser partial"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 284,
+        "scrollWidth": 284,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-390-partial.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/56",
+    "role": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA progressive",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "QA progressive"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/20",
+        "clientWidth": 284,
+        "scrollWidth": 284,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-390-awarded.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/62",
+    "role": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "QA browser hidden",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "QA browser hidden"
+    },
+    "progressGeometry": [
+      {
+        "text": "Sin empezar0/10",
+        "clientWidth": 284,
+        "scrollWidth": 284,
+        "overflowingNumbers": []
+      }
+    ],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-390-hidden.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main",
+    "role": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Dashboard de QA30 main",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Dashboard de QA30 main"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-390-dashboard.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/logros/nuevo",
+    "role": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Crear logro",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Crear logro"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-390-create.png"
+  },
+  {
+    "route": "/equipos/qa30-1790085148618-main/admin",
+    "role": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": {
+      "teamId": 13,
+      "slug": "qa30-1790085148618-main",
+      "partialId": 63,
+      "hiddenId": 62
+    },
+    "expectedHeading": "Administración del equipo",
+    "geometry": {
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Administración del equipo"
+    },
+    "progressGeometry": [],
+    "overflow": false,
+    "errors": [],
+    "artifact": "C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\screenshots\\admin-390-admin.png"
+  }
+]

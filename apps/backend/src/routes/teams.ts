@@ -7,6 +7,7 @@ import { decryptInvitationToken, encryptInvitationToken, hashInvitationToken } f
 import { validate } from "../middleware/validate"
 import { crearTeamRequestSchema } from "../schemas/teamRequests"
 import { requireSuperAdmin } from "../middleware/requireSuperAdmin"
+import { visibleAchievementWhere } from "../lib/achievementVisibility"
 
 const router = express.Router()
 
@@ -150,7 +151,7 @@ router.get("/mis-equipos", authMiddleware, async (req, res) => {
           //    con la lista de equipos, sin descargar relaciones ni lanzar una consulta por tarjeta.
           _count: {
             select: {
-              logros: true,
+              logros: { where: visibleAchievementWhere },
               miembros: { where: { role: "PLAYER" } },
             },
           },

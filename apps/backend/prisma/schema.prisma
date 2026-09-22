@@ -29,6 +29,7 @@ model User {
   teamRequests       TeamRequest[]
   solicitudesLogro   SolicitudLogro[]
   propuestasLogro    PropuestaLogro[]
+  achievementProgress AchievementProgress[]
 }
 
 // 📚 Team = el "tenant" (inquilino) de la multi-tenancy. Todo cuelga de un equipo.
@@ -67,6 +68,7 @@ model Season {
   team      Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
   awards    UserLogro[]
   requests  SolicitudLogro[]
+  progress  AchievementProgress[]
 
   @@unique([teamId, name])
   @@index([teamId, status])
@@ -167,6 +169,10 @@ model Logro {
   // 📚 El alcance pertenece a la definición del logro: PERMANENT se obtiene una vez;
   // 📚 SEASONAL puede volver a obtenerse en cada temporada sin duplicar el catálogo.
   scope       AchievementScope @default(PERMANENT)
+  // 📚 Tipo, visibilidad y alcance son dimensiones independientes; el default conserva el catálogo antiguo.
+  kind        AchievementKind  @default(STANDARD)
+  isSecret    Boolean          @default(false)
+  targetValue Int?
   // 📚 teamId = la CLAVE FORÁNEA real (columna en la BD). Sin ? → OBLIGATORIA: no hay logros
   //    huérfanos, todo logro pertenece a un equipo (regla de la multi-tenancy).
   teamId      Int
@@ -176,11 +182,35 @@ model Logro {
   obtenidos   UserLogro[]
   solicitudes SolicitudLogro[]
   propuesta   PropuestaLogro?
+  progress    AchievementProgress[]
 }
 
 enum AchievementScope {
   PERMANENT
   SEASONAL
+}
+
+enum AchievementKind {
+  STANDARD
+  PROGRESSIVE
+}
+
+// 📚 El contador pertenece al jugador y al periodo, nunca a la definición ni a la concesión.
+// 📚 Los índices parciales de la migración impiden duplicados también cuando seasonId es NULL.
+model AchievementProgress {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  logroId      Int
+  seasonId     Int?
+  currentValue Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logro        Logro    @relation(fields: [logroId], references: [id], onDelete: Cascade)
+  season       Season?  @relation(fields: [seasonId], references: [id], onDelete: Restrict)
+
+  @@index([logroId])
+  @@index([seasonId])
 }
 
 enum PropuestaLogroStatus {

@@ -1,0 +1,776 @@
+{
+  "run": "qa30-1790084910518",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-22T13:48:32.938Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso?userId=20",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/configuracion",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/29/configuracion",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-other/logros/29",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "check": "authorization, tenant isolation and immutable kind",
+      "result": "PASS"
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/solicitudes",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/solicitudes/11/aceptar",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/27/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "concurrent increments are atomic and do not grant",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/30/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/30/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/30/progreso",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/31/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/31/progreso",
+      "expected": [
+        200,
+        409
+      ],
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": [
+        201,
+        409
+      ],
+      "actual": 409
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/31/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/32/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": [
+        201,
+        409
+      ],
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": [
+        201,
+        409
+      ],
+      "actual": 409
+    },
+    {
+      "check": "grant and correction serialize; concurrent grants stay unique",
+      "result": "PASS"
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros?search=SECRET-qa30-1790084910518",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/dashboard",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/ranking",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/jugadores",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/solicitudes",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/propuestas",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/propuestas/8",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/mis-equipos",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/29/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/29",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/dashboard",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/27/configuracion",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/27",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/27",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/27/configuracion",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/27",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "hidden achievement redacted across catalog/detail/history/aggregates",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/33/progreso",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/33/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/33",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/33/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/temporadas/4/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/33/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/33",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/33/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/33/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/admin/asignaciones",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa30-1790084910518-main/logros/28/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "season progress isolated; permanent progress retained",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa30-1790084910518-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa30-1790084910518-main/logros/35/progreso",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "result": "FAIL",
+      "error": "browserType.launch: Executable doesn't exist at C:\\Users\\javie\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1234\\chrome-headless-shell-win64\\chrome-headless-shell.exe\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝",
+      "stack": "browserType.launch: Executable doesn't exist at C:\\Users\\javie\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1234\\chrome-headless-shell-win64\\chrome-headless-shell.exe\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝\n    at capture (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\capture.cjs:12:34)\n    at async main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\issue-30\\qa\\http.cjs:176:39)"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        7,
+        8
+      ],
+      "userIds": [
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

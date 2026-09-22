@@ -64,7 +64,7 @@ export default function LogrosPage() {
   }, [requestVersion, slug])
 
   const categories = useMemo(
-    () => Array.from(new Set((achievements ?? []).map((item) => item.categoria?.trim()).filter((item): item is string => Boolean(item)))).sort((a, b) => a.localeCompare(b, "es")),
+    () => Array.from(new Set((achievements ?? []).flatMap((item) => item.isHidden ? [] : [item.categoria?.trim()]).filter((item): item is string => Boolean(item)))).sort((a, b) => a.localeCompare(b, "es")),
     [achievements],
   )
   const activeCategory = category === ALL_CATEGORIES || categories.includes(category) ? category : ALL_CATEGORIES
@@ -73,6 +73,7 @@ export default function LogrosPage() {
     const normalizedQuery = query.trim().toLocaleLowerCase("es-ES")
 
     return (achievements ?? []).filter((achievement) => {
+      if (achievement.isHidden) return activeCategory === ALL_CATEGORIES && (!normalizedQuery || "logro secreto".includes(normalizedQuery))
       const searchable = `${achievement.nombre} ${achievement.descripcion ?? ""} ${achievement.categoria ?? ""}`.toLocaleLowerCase("es-ES")
       const matchesQuery = normalizedQuery.length === 0 || searchable.includes(normalizedQuery)
       const matchesCategory = activeCategory === ALL_CATEGORIES || achievement.categoria?.trim() === activeCategory
@@ -84,8 +85,8 @@ export default function LogrosPage() {
     const items = achievements ?? []
     return [
       { label: "Total", value: items.length, icon: "emoji_events" },
-      { label: "Mis logros", value: items.filter((item) => item.earnedByMe).length, icon: "check" },
-      { label: "Concesiones", value: items.reduce((sum, item) => sum + item.holdersCount, 0), icon: "groups" },
+      { label: "Mis logros", value: items.filter((item) => !item.isHidden && item.earnedByMe).length, icon: "check" },
+      { label: "En progreso", value: items.filter((item) => !item.isHidden && item.progress?.status === "IN_PROGRESS").length, icon: "track_changes" },
       { label: "Categorías", value: categories.length, icon: "flag" },
     ]
   }, [achievements, categories.length])

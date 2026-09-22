@@ -4,13 +4,16 @@ import { resolveTeam } from "../middleware/resolveTeam"
 import { authMiddleware } from "../middleware/auth"
 import { requireTeamAdmin, requireTeamMember } from "../middleware/teamAccess"
 import { validate } from "../middleware/validate"
-import { crearLogroSchema } from "../schemas/logros"
+import { crearLogroSchema, achievementConfigurationSchema } from "../schemas/logros"
 import { AppError } from "../errors/AppError"
 import { publicName, readCatalog, readTeam } from "../lib/teamRead"
 import { rejectAchievementRequestSchema, requestStatusSchema } from "../schemas/achievementRequests"
 import propuestasRouter from "./propuestas"
 import seasonsRouter from "./seasons"
+import progressRouter from "./progress"
 import { awardSeasonId } from "../lib/seasonContext"
+import { isAchievementHidden, presentAchievement, revealedAchievementIds } from "../lib/achievementVisibility"
+import { grantAchievement } from "../lib/achievementProgress"
 
 // 📚 ROUTER SCOPED POR EQUIPO. Se monta en server.ts como app.use("/equipos/:slug", router),
 //    así que aquí las rutas son relativas: "/logros" = "/equipos/:slug/logros".
@@ -34,6 +37,7 @@ function parsePositiveId(value: string | string[]) {
 router.use(resolveTeam)
 router.use(seasonsRouter)
 router.use(propuestasRouter)
+router.use(progressRouter)
 
 // 📚 Contexto fiable del shell sin cambiar JWT ni confiar en un nombre derivado del slug.
 router.get("/contexto", authMiddleware, requireTeamMember, async (req, res) => {
@@ -53,12 +57,22 @@ router.get("/ranking", authMiddleware, requireTeamMember, async (req, res) => {
 // 📚 El feed solo representa otorgamientos persistidos; no inventa retos, niveles ni actividad social.
 router.get("/dashboard", authMiddleware, requireTeamMember, async (req, res) => {
   const { season, players, totals, catalog, awards, holderCounts } = (await readTeam(req.team!.id))!
+  // 📚 El panel personal usa la visibilidad de jugador incluso para un administrador:
+  // 📚 conocer un secreto para gestionarlo no lo añade a su denominador de progreso.
+  const personalCatalog = (await readCatalog(req.team!.id, req.userId!)).filter(logro => !logro.isHidden)
+  const progressCounts = { notStarted: 0, inProgress: 0, eligible: 0, awarded: 0 }
+  for (const logro of personalCatalog) {
+    if (logro.earnedByMe) progressCounts.awarded++
+    else if (logro.progress?.status === "ELIGIBLE") progressCounts.eligible++
+    else if (logro.progress?.status === "IN_PROGRESS") progressCounts.inProgress++
+    else progressCounts.notStarted++
+  }
   const counted = catalog.map(logro => ({ ...logro, holdersCount: holderCounts.get(logro.id) ?? 0 }))
   const earned = counted.filter(logro => logro.holdersCount > 0)
   const me = players.find(player => player.id === req.userId)!
   const users = new Map(players.map(player => [player.id, { id: player.id, displayName: player.displayName }]))
   const logros = new Map(catalog.map(logro => [logro.id, logro]))
-  res.json({ season, totals, me: { puntos: me.puntos, logrosCount: me.logrosCount, position: me.position },
+  res.json({ season, totals, me: { puntos: me.puntos, logrosCount: me.logrosCount, position: me.position, visibleCatalog: personalCatalog.length, progressCounts },
     topPlayers: players.slice(0, 3), recentAchievements: counted.slice(0, 3),
     recentAwards: awards.slice(0, 6).map(award => ({ id: award.id, fecha: award.fecha, user: users.get(award.userId), logro: logros.get(award.logroId) })),
     mostEarned: [...earned].sort((a, b) => b.holdersCount - a.holdersCount || a.id - b.id)[0] ?? null,
@@ -85,13 +99,7 @@ router.post("/admin/solicitudes/:id/aceptar", authMiddleware, requireTeamAdmin, 
     })
     if (updated.count !== 1) throw new AppError(409, "La solicitud ya fue procesada")
 
-    const existing = await tx.userLogro.findFirst({
-      where: { userId: pending.userId, logroId: pending.logroId, seasonId: pending.seasonId },
-    })
-    if (existing) throw new AppError(409, "El jugador ya tiene este logro en este periodo")
-    await tx.userLogro.create({
-      data: { userId: pending.userId, logroId: pending.logroId, seasonId: pending.seasonId },
-    })
+    await grantAchievement(tx, req.team!.id, pending.logroId, pending.userId, pending.seasonId)
     return tx.solicitudLogro.findUniqueOrThrow({ where: { id } })
   })
   res.json(solicitud)
@@ -117,7 +125,7 @@ router.get("/logros", authMiddleware, requireTeamMember, async (req, res) => {
     //    (o ya lanzó 404 y no llegamos aquí). TS lo ve como Team|undefined por el "?" del .d.ts; el
     //    "!" cierra el hueco entre lo que sabemos y lo que el compilador puede probar. Distinto del
     //    "!" que quitamos de JWT_SECRET, que tapaba un fallo real.
-    const logros = await readCatalog(req.team!.id, req.userId!)
+    const logros = await readCatalog(req.team!.id, req.userId!, undefined, req.teamMembership!.role === "TEAM_ADMIN")
     res.json(logros)
 })
 
@@ -127,7 +135,7 @@ router.get("/logros/:id", authMiddleware, requireTeamMember, async (req, res) =>
     // 📚 El helper conserva id Y teamId en la consulta al enriquecer el catálogo.
     // 📚 El teamId en el where es un CANDADO anti-fuga: sin él, /equipos/lobos/logros/1 devolvería
     //    un logro de Halcones. Con él, un logro de otro equipo cae al 404 de abajo (verificado).
-    const [logro] = await readCatalog(req.team!.id, req.userId!, id)
+    const [logro] = await readCatalog(req.team!.id, req.userId!, id, req.teamMembership!.role === "TEAM_ADMIN")
 
     if (!logro) {
         res.status(404).json({ error: "Logro no encontrado" })
@@ -136,12 +144,25 @@ router.get("/logros/:id", authMiddleware, requireTeamMember, async (req, res) =>
     res.json(logro)
 })
 
+// 📚 Solo la configuración de secreto cambia en V1: no reinterpretamos avances guardados
+// 📚 alterando tipo/objetivo; el filtro tenant sigue siendo obligatorio también al escribir.
+router.patch("/logros/:id/configuracion", authMiddleware, requireTeamAdmin, validate(achievementConfigurationSchema), async (req, res) => {
+  const id = parsePositiveId(req.params.id)
+  const updated = await prisma.logro.updateMany({ where: { id, teamId: req.team!.id }, data: { isSecret: req.body.isSecret } })
+  if (updated.count !== 1) throw new AppError(404, "Logro no encontrado")
+  res.json((await readCatalog(req.team!.id, req.userId!, id, true))[0])
+})
+
 // 📚 El servidor toma userId del JWT y teamId del logro ya scoped; el cliente solo elige
 //    qué logro reclama, por lo que no puede crear solicitudes en nombre de otra persona o tenant.
 router.post("/logros/:id/solicitudes", authMiddleware, requireTeamMember, async (req, res) => {
   const logroId = parsePositiveId(req.params.id)
   const logro = await prisma.logro.findFirst({ where: { id: logroId, teamId: req.team!.id } })
   if (!logro) throw new AppError(404, "Logro no encontrado")
+
+  if (isAchievementHidden(logro, await revealedAchievementIds(req.team!.id), req.teamMembership!.role === "TEAM_ADMIN")) {
+    throw new AppError(409, "Este logro todavía es secreto")
+  }
 
   const seasonId = await awardSeasonId(prisma, req.team!.id, logro.scope)
 
@@ -169,7 +190,13 @@ router.get("/solicitudes", authMiddleware, requireTeamMember, async (req, res) =
     include: { logro: true },
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
   })
-  res.json(solicitudes)
+  const revealed = await revealedAchievementIds(req.team!.id)
+  const admin = req.teamMembership!.role === "TEAM_ADMIN"
+  res.json(solicitudes.map(row => ({ ...row,
+    // 📚 El motivo libre podría citar criterios: se censura junto con la definición oculta.
+    rejectionReason: isAchievementHidden(row.logro, revealed, admin) ? null : row.rejectionReason,
+    logro: presentAchievement(row.logro, revealed, admin),
+  })))
 })
 
 // 📚 La cola administrativa usa el mismo candado de tenant, pero incluye el usuario y el
@@ -225,23 +252,24 @@ router.post("/admin/asignaciones", authMiddleware, requireTeamAdmin, async (req,
   ])
   if (!membership || !logro) throw new AppError(404, "Jugador o logro no encontrado en este equipo")
 
-  const seasonId = await awardSeasonId(prisma, req.team!.id, logro.scope)
-  const existing = await prisma.userLogro.findFirst({ where: { userId, logroId, seasonId } })
-  if (existing) throw new AppError(409, "Este jugador ya tiene el logro")
-  res.status(201).json(await prisma.userLogro.create({ data: { userId, logroId, seasonId } }))
+  const award = await prisma.$transaction(async tx => {
+    const seasonId = await awardSeasonId(tx, req.team!.id, logro.scope)
+    return grantAchievement(tx, req.team!.id, logroId, userId, seasonId)
+  })
+  res.status(201).json(award)
 })
 
 
 // 📚 POST (escritura): cadena authMiddleware → validate → handler. Orden intencionado: primero auth
 //    (sin token, 401 y no gastamos esfuerzo), luego validar el body, y solo entonces crear.
 router.post("/logros", authMiddleware, requireTeamAdmin, validate(crearLogroSchema), async (req, res) => {
-  const { nombre, puntos, descripcion, categoria, criterios, scope } = req.body
+  const { nombre, puntos, descripcion, categoria, criterios, scope, kind, targetValue, isSecret } = req.body
 
   // 📚 teamId NO viene del body: lo dicta el :slug de la URL (ya resuelto en req.team). Que el
   //    cliente eligiera el equipo sería un fallo de seguridad. Añadir teamId aquí es además lo que
   //    arregla el "Property 'team' is missing" que rompía el build tras la migración multi-tenant.
   const nuevoLogro = await prisma.logro.create({
-    data: { nombre, puntos, descripcion, categoria, criterios, scope, teamId: req.team!.id }
+    data: { nombre, puntos, descripcion, categoria, criterios, scope, kind, targetValue, isSecret, teamId: req.team!.id }
   })
 
   res.status(201).json(nuevoLogro)

@@ -7,6 +7,7 @@ import { AppError } from "../errors/AppError"
 import { crearPropuestaSchema, aceptarPropuestaSchema } from "../schemas/propuestas"
 import { rejectAchievementRequestSchema, requestStatusSchema } from "../schemas/achievementRequests"
 import { publicName } from "../lib/teamRead"
+import { hiddenAchievement, isAchievementHidden, presentAchievement, revealedAchievementIds } from "../lib/achievementVisibility"
 
 // 📚 El router padre ya resuelve el tenant; mergeParams conserva slug sin volver a buscarlo.
 const router = express.Router({ mergeParams: true })
@@ -34,14 +35,25 @@ router.post("/propuestas", authMiddleware, requireTeamMember, validate(crearProp
 })
 
 router.get("/propuestas", authMiddleware, requireTeamMember, async (req, res) => {
-  res.json(await prisma.propuestaLogro.findMany({ where: { teamId: req.team!.id, userId: req.userId }, include: { logro: true }, orderBy: [{ createdAt: "desc" }, { id: "desc" }] }))
+  const rows = await prisma.propuestaLogro.findMany({ where: { teamId: req.team!.id, userId: req.userId }, include: { logro: true }, orderBy: [{ createdAt: "desc" }, { id: "desc" }] })
+  const revealed = await revealedAchievementIds(req.team!.id)
+  res.json(rows.map(row => presentProposal(row, revealed, req.teamMembership!.role === "TEAM_ADMIN")))
 })
+
+// 📚 La propuesta conserva una copia del texto: censurar solo su relación logro dejaría
+// 📚 escapar nombre y criterios por ese duplicado cuando el administrador lo convierte en secreto.
+function presentProposal<T extends { id: number; logro: import("@prisma/client").Logro | null }>(row: T, revealed: Set<number>, admin: boolean) {
+  if (row.logro && isAchievementHidden(row.logro, revealed, admin)) {
+    return { id: row.id, isHidden: true, logro: hiddenAchievement(row.logro.id) }
+  }
+  return { ...row, logro: row.logro ? presentAchievement(row.logro, revealed, admin) : null }
+}
 
 // 📚 El detalle personal devuelve 404 también para otro autor: no revela su propuesta.
 router.get("/propuestas/:id", authMiddleware, requireTeamMember, async (req, res) => {
   const proposal = await prisma.propuestaLogro.findFirst({ where: { id: proposalId(req.params.id), teamId: req.team!.id, userId: req.userId }, include: { logro: true } })
   if (!proposal) throw new AppError(404, "Propuesta no encontrada")
-  res.json(proposal)
+  res.json(presentProposal(proposal, await revealedAchievementIds(req.team!.id), req.teamMembership!.role === "TEAM_ADMIN"))
 })
 
 router.get("/admin/propuestas", authMiddleware, requireTeamAdmin, async (req, res) => {
@@ -67,7 +79,7 @@ router.post("/admin/propuestas/:id/aceptar", authMiddleware, requireTeamAdmin, v
     // 📚 Compare-and-set bloquea la doble aprobación concurrente antes de crear el catálogo.
     const claimed = await tx.propuestaLogro.updateMany({ where: { id, teamId: req.team!.id, status: "PENDING" }, data: { status: "ACCEPTED", reviewedAt: new Date(), rejectionReason: null } })
     if (claimed.count !== 1) throw new AppError(409, "La propuesta ya fue procesada")
-    const logro = await tx.logro.create({ data: { teamId: pending.teamId, nombre: pending.nombre, descripcion: pending.descripcion, criterios: pending.criterios, puntos: req.body.puntos, categoria: req.body.categoria, scope: req.body.scope } })
+    const logro = await tx.logro.create({ data: { teamId: pending.teamId, nombre: pending.nombre, descripcion: pending.descripcion, criterios: pending.criterios, puntos: req.body.puntos, categoria: req.body.categoria, scope: req.body.scope, kind: req.body.kind, targetValue: req.body.targetValue, isSecret: req.body.isSecret } })
     // 📚 No se escribe UserLogro ni SolicitudLogro: la autoría no equivale a haber obtenido el logro.
     return tx.propuestaLogro.update({ where: { id }, data: { logroId: logro.id }, include: adminInclude(req.team!.id) })
   })

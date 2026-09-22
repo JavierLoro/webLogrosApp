@@ -59,6 +59,41 @@ Rutas tenant-scoped nuevas:
 - `POST /equipos/:slug/admin/temporadas/:id/activar`
 - `POST /equipos/:slug/admin/temporadas/:id/cerrar`
 
+### Progreso individual y secretos (#30 + #29)
+
+El tipo (`STANDARD` o `PROGRESSIVE`), la propiedad de secreto (`isSecret`) y el alcance
+(`PERMANENT` o `SEASONAL`) son dimensiones independientes. Un objetivo cuantitativo pertenece a
+la definición del logro; el contador pertenece a la persona y, para los estacionales, a una
+temporada. `UserLogro` conserva exclusivamente la concesión final.
+
+TEAM_ADMIN registra y corrige el avance mediante deltas. La suma y sus límites se aplican de
+forma atómica en PostgreSQL para evitar que dos peticiones sobrescriban sus resultados. Llegar
+al objetivo produce elegibilidad; el administrador confirma después la concesión. Una solicitud
+pendiente no implica avance. La edición de tipo/objetivo no se incorpora en esta V1.
+
+Decisiones confirmadas: contador y objetivo enteros, objetivo obligatorio antes de conceder y
+contador cerrado tras la concesión. El rechazo se aplica tanto a asignación directa como a
+aprobación de solicitudes, y el backend rechaza correcciones posteriores a la concesión.
+
+Los secretos sin concesiones históricas se devuelven censurados a los miembros. El administrador
+puede consultar su definición y cambiar la propiedad de secreto. La primera concesión revela el
+logro a todo el equipo, incluso después de cambiar de temporada. El progreso parcial no revela
+secretos y los secretos ocultos no forman parte del denominador de progreso personal. La política
+se aplica también a datos copiados en solicitudes/propuestas, búsquedas y agregados.
+
+Contratos nuevos tenant-scoped:
+
+- `GET /equipos/:slug/logros/:id/progreso`: avance propio; TEAM_ADMIN puede elegir `?userId=`.
+- `PATCH /equipos/:slug/logros/:id/progreso`: TEAM_ADMIN envía `{userId, delta}` entero.
+- `PATCH /equipos/:slug/logros/:id/configuracion`: TEAM_ADMIN cambia `{isSecret}`.
+
+Catálogo/detalle distinguen un DTO oculto `{id, isSecret: true, isHidden: true}` de la definición
+visible con `kind`, `targetValue`, `scope`, `isSecret`, `isRevealed`, `progressAvailable` y
+`progress`. Este último contiene `currentValue`, `targetValue`, `seasonId` y estado derivado:
+`NOT_STARTED`, `IN_PROGRESS`, `ELIGIBLE` o `AWARDED`. El estándar no lleva contador.
+
+La entrega y su validación se siguen en [issue-30/PLAN.md](issue-30/PLAN.md).
+
 ### Roles
 | Rol | Quién | Qué puede hacer |
 |-----|-------|-----------------|

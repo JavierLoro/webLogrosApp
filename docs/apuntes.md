@@ -2220,3 +2220,40 @@ La comprobación manual del 22/09/2026 confirmó el ciclo completo en navegador:
 cookie, una recarga conserva la sesión, las rutas protegidas aceptan la credencial y logout la
 elimina sin errores. Esta prueba complementa build/lint porque valida el comportamiento real del
 navegador con `Set-Cookie`, CORS y `credentials: "include"`.
+
+## Progreso y secretos — separar definición, avance y concesión
+
+Bloque #30/#29 implementado y validado localmente (22/09/2026); evidencia en `docs/issue-30/`.
+
+Un logro describe una meta compartida, pero cada persona puede llevar un avance diferente.
+Por eso el objetivo pertenece a `Logro` y el contador a `AchievementProgress`. `UserLogro` mantiene
+su significado anterior: la concesión confirmada. Esta separación evita que una solicitud
+pendiente o alcanzar un contador otorguen puntos sin la revisión acordada.
+
+Tipo, secreto y temporada son propiedades independientes. Tres columnas permiten combinarlas
+sin crear un enum distinto para cada combinación posible. Los registros antiguos reciben
+valores conservadores: estándar, sin secreto y sin objetivo cuantitativo.
+
+Una actualización atómica calcula y guarda el contador en una única operación de base de datos.
+Leer 2, sumar 1 en JavaScript y escribir 3 desde dos peticiones simultáneas perdería uno de los
+incrementos. La suma en PostgreSQL sobre la fila bloqueada conserva ambos; aplicar allí los
+límites mantiene el contador entre cero y su objetivo también con concurrencia.
+
+La visibilidad es una regla del servidor. Ocultar un título con CSS dejaría el contenido completo
+en la respuesta de red. La representación censurada utiliza una lista de campos permitidos:
+identificador y marca de secreto bloqueado. Así tampoco se filtran campos futuros por un spread
+accidental. Deben revisarse los textos copiados en propuestas y resoluciones, además del catálogo.
+
+El revelado consulta concesiones históricas del logro, sin limitarse a la temporada activa. De
+ese modo empezar una temporada nueva reinicia el contexto de avance estacional, pero no vuelve
+a esconder un secreto ya descubierto. El contador parcial nunca sustituye a esa concesión.
+
+Las reglas confirmadas usan enteros, exigen llegar al objetivo antes de conceder y cierran el
+contador cuando existe la concesión. La comprobación y la escritura deben compartir una
+transacción: comprobar el objetivo fuera de ella permitiría que otra petición redujera el valor
+justo antes de conceder. Un bloqueo transaccional por el par logro/persona hace que una operación
+espere a la otra; la segunda vuelve a consultar el estado confirmado por la primera.
+
+El incremento es un comando, no una sustitución del valor. Repetir `delta: 1` suma otra unidad,
+por lo que la interfaz impide el doble envío y no reintenta automáticamente una escritura tras
+un error de red. Primero vuelve a consultar el contador real para saber qué terminó persistido.

@@ -29,7 +29,7 @@ export default function SolicitudesPage() {
       {requests?.length === 0 ? <div className="mt-8"><Empty title="Todavía no has solicitado logros">Entra en el catálogo y abre el logro que quieras reclamar.</Empty></div> : null}
       <div className="mt-8 space-y-4">
         {requests?.map((request) => <article key={request.id} className="rounded-2xl border border-ink/10 bg-white p-5">
-          <div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="font-display text-xl font-bold">{request.logro.nombre}</h2><p className="mt-1 text-sm text-ink-soft">{request.logro.puntos} puntos · {new Date(request.createdAt).toLocaleDateString()}</p></div><Status tone={request.status === "ACCEPTED" ? "mint" : request.status === "REJECTED" ? "coral" : "gold"}>{request.status === "ACCEPTED" ? "Aprobada" : request.status === "REJECTED" ? "Rechazada" : "Pendiente"}</Status></div>
+          <div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="font-display text-xl font-bold">{"isHidden" in request.logro ? "Logro secreto" : request.logro.nombre}</h2><p className="mt-1 text-sm text-ink-soft">{"isHidden" in request.logro ? "Detalles ocultos" : `${request.logro.puntos} puntos`} · {new Date(request.createdAt).toLocaleDateString()}</p></div><Status tone={request.status === "ACCEPTED" ? "mint" : request.status === "REJECTED" ? "coral" : "gold"}>{request.status === "ACCEPTED" ? "Aprobada" : request.status === "REJECTED" ? "Rechazada" : "Pendiente"}</Status></div>
         </article>)}
       </div>
     </div>

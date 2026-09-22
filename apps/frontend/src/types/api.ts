@@ -10,10 +10,33 @@ export interface Logro {
   teamId: number
 }
 
-export interface CatalogAchievement extends Logro {
+export interface AchievementProgress {
+  currentValue: number
+  targetValue: number
+  status: "NOT_STARTED" | "IN_PROGRESS" | "ELIGIBLE" | "AWARDED"
+  seasonId: number | null
+}
+
+export interface HiddenAchievement {
+  id: number
+  isSecret: true
+  isHidden: true
+}
+
+export interface VisibleAchievement extends Logro {
+  isHidden: false
+  isSecret: boolean
+  isRevealed: boolean
+  kind: "STANDARD" | "PROGRESSIVE"
+  scope: "PERMANENT" | "SEASONAL"
+  targetValue: number | null
+  progress: AchievementProgress | null
+  progressAvailable: boolean
   holdersCount: number
   earnedByMe: boolean
 }
+
+export type CatalogAchievement = HiddenAchievement | VisibleAchievement
 
 export interface ApiErrorBody {
   error?: string
@@ -96,7 +119,10 @@ export interface DashboardAward {
 
 export interface TeamDashboard {
   totals: DashboardTotals
-  me: Pick<DashboardPlayer, "puntos" | "logrosCount" | "position">
+  me: Pick<DashboardPlayer, "puntos" | "logrosCount" | "position"> & {
+    visibleCatalog: number
+    progressCounts: { notStarted: number; inProgress: number; eligible: number; awarded: number }
+  }
   topPlayers: DashboardPlayer[]
   recentAchievements: DashboardAchievement[]
   recentAwards: DashboardAward[]
@@ -146,7 +172,7 @@ export interface AchievementRequest {
   status: "PENDING" | "ACCEPTED" | "REJECTED"
   createdAt: string
   reviewedAt: string | null
-  logro: Logro
+  logro: Logro | HiddenAchievement
   user?: { id: number; email: string }
 }
 

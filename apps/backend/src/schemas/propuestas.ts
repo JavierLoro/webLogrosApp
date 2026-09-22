@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { achievementScopeSchema, criteriosSchema } from "./logros"
+import { achievementScopeSchema, criteriosSchema, achievementDefinitionFields, validAchievementTarget } from "./logros"
 
 // 📚 strict rechaza campos que intentarían imponer autor, tenant, estado o concesión desde el cliente.
 export const crearPropuestaSchema = z.object({
@@ -13,4 +13,5 @@ export const aceptarPropuestaSchema = z.object({
   puntos: z.number().int().min(0).max(2147483647),
   categoria: z.string().trim().min(1).max(80).optional(),
   scope: achievementScopeSchema.default("PERMANENT"),
-}).strict()
+  ...achievementDefinitionFields,
+}).strict().refine(validAchievementTarget, { path: ["targetValue"], message: "Solo los logros progresivos requieren un objetivo positivo" })

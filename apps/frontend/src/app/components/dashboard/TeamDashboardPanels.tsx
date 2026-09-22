@@ -255,6 +255,7 @@ export function RecentAchievementsPanel({ achievements, slug, className = "" }: 
 }
 
 export function PersonalSummaryPanel({ summary, catalogCount, slug, className = "" }: PanelProps & { summary: TeamDashboard["me"]; catalogCount: number; slug: string }) {
+  catalogCount = summary.visibleCatalog ?? catalogCount
   const percentage = catalogCount > 0 ? Math.min(100, Math.round(summary.logrosCount / catalogCount * 100)) : 0
   const remaining = Math.max(0, catalogCount - summary.logrosCount)
   const action = (
@@ -280,7 +281,11 @@ export function PersonalSummaryPanel({ summary, catalogCount, slug, className = 
             <p className="mt-1 text-xs text-[var(--team-muted)]">{catalogCount > 0 ? "logros conseguidos" : "Sin logros en el catálogo"}</p>
             <dl className="mt-4 space-y-2 text-xs">
               <div className="flex items-center gap-2"><span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-[#58b83d]" /><dd className="font-semibold tabular-nums text-[#74ce59]">{summary.logrosCount}</dd><dt>Conseguidos</dt></div>
-              <div className="flex items-center gap-2"><span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-[#65747c]" /><dd className="font-semibold tabular-nums text-[var(--team-muted)]">{remaining}</dd><dt>Pendientes</dt></div>
+              {summary.progressCounts ? <>
+                <div className="flex items-center gap-2"><dd className="font-semibold tabular-nums text-[var(--team-muted)]">{summary.progressCounts.notStarted}</dd><dt>Sin empezar</dt></div>
+                <div className="flex items-center gap-2"><dd className="font-semibold tabular-nums text-[var(--lb-color-warning)]">{summary.progressCounts.inProgress}</dd><dt>En progreso</dt></div>
+                <div className="flex items-center gap-2"><dd className="font-semibold tabular-nums text-[var(--team-primary)]">{summary.progressCounts.eligible}</dd><dt>Pendientes de concesión</dt></div>
+              </> : <div className="flex items-center gap-2"><span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-[#65747c]" /><dd className="font-semibold tabular-nums text-[var(--team-muted)]">{remaining}</dd><dt>Pendientes</dt></div>}
             </dl>
           </div>
         </div>

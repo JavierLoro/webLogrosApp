@@ -1,5 +1,7 @@
 import prisma from "./prisma"
 import { currentAwardsWhere } from "./seasonContext"
+import { presentAchievement, revealedAchievementIds, visibleAchievementWhere } from "./achievementVisibility"
+import { progressDTO } from "./achievementProgressState"
 
 type TenantIdentity = {
   displayName: string | null
@@ -21,12 +23,15 @@ export async function readTeam(teamId: number, requestedSeasonId?: number) {
     : await prisma.season.findFirst({ where: { id: requestedSeasonId, teamId } })
   if (requestedSeasonId !== undefined && !season) return null
 
-  const [memberships, catalog, awards] = await Promise.all([
+  const [memberships, catalog, rawAwards] = await Promise.all([
     prisma.teamMembership.findMany({ where: { teamId }, select: { displayName: true, role: true, joinedAt: true, user: { select: { id: true, firstName: true, lastName: true } } } }),
-    prisma.logro.findMany({ where: { teamId }, orderBy: [{ createdAt: "desc" }, { id: "desc" }] }),
+    prisma.logro.findMany({ where: { teamId, ...visibleAchievementWhere }, orderBy: [{ createdAt: "desc" }, { id: "desc" }] }),
     prisma.userLogro.findMany({ where: { ...currentAwardsWhere(teamId, season?.id ?? null), user: { memberships: { some: { teamId } } } }, select: { id: true, userId: true, logroId: true, seasonId: true, fecha: true }, orderBy: [{ fecha: "desc" }, { id: "desc" }] }),
   ])
   const byAchievement = new Map(catalog.map(logro => [logro.id, logro]))
+  // 📚 Si se concede el primer secreto entre consultas paralelas, su definición puede no
+  // 📚 estar aún en este snapshot. Se mostrará en la próxima lectura, sin fallar ni filtrar texto.
+  const awards = rawAwards.filter(award => byAchievement.has(award.logroId))
   const byUser = new Map<number, typeof awards>()
   const holderCounts = new Map<number, number>()
   for (const award of awards) {
@@ -51,13 +56,23 @@ export async function readTeam(teamId: number, requestedSeasonId?: number) {
 }
 
 // 📚 Añadimos metadatos sin cambiar las propiedades que ya consumía el catálogo.
-export async function readCatalog(teamId: number, userId: number, id?: number) {
+export async function readCatalog(teamId: number, userId: number, id?: number, admin = false) {
   const season = await prisma.season.findFirst({ where: { teamId, status: "ACTIVE" } })
-  const [rows, awards] = await Promise.all([
+  const [rows, awards, revealed, progresses] = await Promise.all([
     prisma.logro.findMany({ where: { teamId, ...(id === undefined ? {} : { id }) }, orderBy: [{ createdAt: "desc" }, { id: "desc" }] }),
     prisma.userLogro.findMany({ where: { ...currentAwardsWhere(teamId, season?.id ?? null), user: { memberships: { some: { teamId } } } }, select: { userId: true, logroId: true } }),
+    revealedAchievementIds(teamId),
+    prisma.achievementProgress.findMany({ where: { userId, ...currentAwardsWhere(teamId, season?.id ?? null) } }),
   ])
   const holders = new Map<number, number>()
   for (const award of awards) holders.set(award.logroId, (holders.get(award.logroId) ?? 0) + 1)
-  return rows.map(logro => ({ ...logro, holdersCount: holders.get(logro.id) ?? 0, earnedByMe: awards.some(award => award.logroId === logro.id && award.userId === userId) }))
+  const progressByAchievement = new Map(progresses.map(row => [row.logroId, row]))
+  const earnedIds = new Set(awards.filter(award => award.userId === userId).map(award => award.logroId))
+  return rows.map(logro => presentAchievement({ ...logro,
+    holdersCount: holders.get(logro.id) ?? 0, earnedByMe: earnedIds.has(logro.id),
+    progressAvailable: logro.scope === "PERMANENT" || season !== null,
+    progress: logro.kind === "PROGRESSIVE" && logro.targetValue !== null
+      ? progressDTO(Number(progressByAchievement.get(logro.id)?.currentValue ?? 0), Number(logro.targetValue), logro.scope === "PERMANENT" ? null : season?.id ?? null, earnedIds.has(logro.id))
+      : null,
+  }, revealed, admin))
 }

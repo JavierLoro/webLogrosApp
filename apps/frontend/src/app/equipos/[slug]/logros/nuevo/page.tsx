@@ -33,11 +33,16 @@ export default function NuevoLogroPage() {
   const [descripcion, setDescripcion] = useState("")
   const [puntos, setPuntos] = useState("")
   const [categoria, setCategoria] = useState("")
+  const [kind, setKind] = useState<"STANDARD" | "PROGRESSIVE">("STANDARD")
+  const [scope, setScope] = useState<"PERMANENT" | "SEASONAL">("PERMANENT")
+  const [targetValue, setTargetValue] = useState("")
+  const [isSecret, setIsSecret] = useState(false)
   const [criteria, setCriteria] = useState<CriterionRow[]>([{ id: 1, value: "" }])
   const [fieldErrors, setFieldErrors] = useState<AchievementFormErrors>({})
   const [submitError, setSubmitError] = useState("")
   const [saving, setSaving] = useState(false)
   const nextCriterionId = useRef(2)
+  const submissionPending = useRef(false)
   const actionNoun = isTeamAdmin ? "Crear logro" : "Proponer logro"
   const submitLabel = isTeamAdmin ? "Crear logro" : "Enviar propuesta"
 
@@ -71,13 +76,14 @@ export default function NuevoLogroPage() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (saving) return
+    if (submissionPending.current) return
 
     const prepared = prepareAchievementSubmission(role, {
       nombre,
       descripcion,
       puntos,
       categoria,
+      kind, scope, targetValue, isSecret,
       criterios: criteria.map((criterion) => criterion.value),
     })
 
@@ -90,6 +96,7 @@ export default function NuevoLogroPage() {
     setFieldErrors({})
     setSubmitError("")
     setSaving(true)
+    submissionPending.current = true
 
     try {
       await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/${prepared.endpoint}`, {
@@ -100,6 +107,7 @@ export default function NuevoLogroPage() {
     } catch (cause: unknown) {
       setSubmitError(submissionErrorMessage(cause, isTeamAdmin))
     } finally {
+      submissionPending.current = false
       setSaving(false)
     }
   }
@@ -184,6 +192,7 @@ export default function NuevoLogroPage() {
 
                 <div className="space-y-5">
                   {isTeamAdmin ? (
+                    <>
                     <AdminMetadata
                       puntos={puntos}
                       categoria={categoria}
@@ -197,6 +206,14 @@ export default function NuevoLogroPage() {
                         clearFieldError("categoria")
                       }}
                     />
+                    <div className="space-y-4">
+                      <label className="block text-sm font-semibold text-[var(--team-text)]">Tipo de logro<select className={`mt-2 ${fieldClass}`} value={kind} onChange={(event) => setKind(event.target.value as typeof kind)}><option value="STANDARD">Estándar</option><option value="PROGRESSIVE">Progresivo</option></select></label>
+                      {kind === "PROGRESSIVE" ? <div><label className="block text-sm font-semibold text-[var(--team-text)]" htmlFor="achievement-target">Objetivo</label><input id="achievement-target" type="number" min="1" max="2147483647" step="1" value={targetValue} onChange={(event) => { setTargetValue(event.target.value); clearFieldError("targetValue") }} aria-invalid={Boolean(fieldErrors.targetValue)} aria-describedby={fieldErrors.targetValue ? "achievement-target-error" : "achievement-target-help"} className={`mt-2 ${fieldClass}`} /><p id="achievement-target-help" className="mt-1 text-xs leading-5 text-[var(--team-muted)]">Alcanzarlo deja el logro pendiente de concesión manual.</p>{fieldErrors.targetValue ? <FieldError id="achievement-target-error">{fieldErrors.targetValue}</FieldError> : null}</div> : null}
+                      <label className="block text-sm font-semibold text-[var(--team-text)]">Ámbito<select className={`mt-2 ${fieldClass}`} value={scope} onChange={(event) => setScope(event.target.value as typeof scope)}><option value="PERMANENT">Permanente</option><option value="SEASONAL">Por temporada</option></select></label>
+                      <p className="text-xs leading-5 text-[var(--team-muted)]">Los logros por temporada necesitan una temporada activa para registrar progreso o concederse.</p>
+                      <label className="flex items-start gap-3 text-sm text-[var(--team-text)]"><input type="checkbox" checked={isSecret} onChange={(event) => setIsSecret(event.target.checked)} className="mt-1 size-4 accent-[var(--team-primary)]" /><span>Logro secreto<span className="mt-1 block text-xs leading-5 text-[var(--team-muted)]">Solo la administración verá sus detalles hasta que alguien del equipo lo consiga. Entonces se revelará para todos.</span></span></label>
+                    </div>
+                    </>
                   ) : criteriaEditor}
                 </div>
               </div>

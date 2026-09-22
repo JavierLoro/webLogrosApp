@@ -6,9 +6,13 @@ export type AchievementFormValues = {
   puntos: string
   categoria: string
   criterios: string[]
+  kind?: "STANDARD" | "PROGRESSIVE"
+  targetValue?: string
+  scope?: "PERMANENT" | "SEASONAL"
+  isSecret?: boolean
 }
 
-export type AchievementFormErrors = Partial<Record<"nombre" | "descripcion" | "puntos" | "categoria" | "criterios", string>>
+export type AchievementFormErrors = Partial<Record<"nombre" | "descripcion" | "puntos" | "categoria" | "criterios" | "targetValue", string>>
 
 type ProposalBody = {
   nombre: string
@@ -17,6 +21,10 @@ type ProposalBody = {
 }
 
 type AchievementBody = {
+  kind: "STANDARD" | "PROGRESSIVE"
+  targetValue: number | null
+  scope: "PERMANENT" | "SEASONAL"
+  isSecret: boolean
   nombre: string
   puntos: number
   descripcion?: string
@@ -48,9 +56,10 @@ export function prepareAchievementSubmission(role: AchievementFormRole, values: 
   else if (role === "PLAYER" && criterios.length === 0) errors.criterios = "Añade al menos un criterio para enviar la propuesta."
 
   if (role === "TEAM_ADMIN") {
+    if (values.kind === "PROGRESSIVE" && (!values.targetValue?.trim() || !Number.isInteger(Number(values.targetValue)) || Number(values.targetValue) <= 0 || Number(values.targetValue) > 2147483647)) errors.targetValue = "Indica un objetivo entero entre 1 y 2.147.483.647."
     const puntos = Number(puntosText)
     if (!puntosText) errors.puntos = "Indica cuántos puntos vale el logro."
-    else if (!Number.isInteger(puntos) || puntos < 0) errors.puntos = "Los puntos deben ser un entero mayor o igual que 0."
+    else if (!Number.isInteger(puntos) || puntos < 0 || puntos > 2147483647) errors.puntos = "Los puntos deben ser un entero entre 0 y 2.147.483.647."
     if (categoria.length > 80) errors.categoria = "La categoría no puede superar 80 caracteres."
   }
 
@@ -71,6 +80,10 @@ export function prepareAchievementSubmission(role: AchievementFormRole, values: 
     endpoint: "logros",
     redirect: "logros",
     body: {
+      kind: values.kind ?? "STANDARD",
+      targetValue: values.kind === "PROGRESSIVE" ? Number(values.targetValue) : null,
+      scope: values.scope ?? "PERMANENT",
+      isSecret: values.isSecret ?? false,
       nombre,
       puntos,
       ...(descripcion ? { descripcion } : {}),

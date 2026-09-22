@@ -2,8 +2,15 @@ import Link from "next/link"
 import { AchievementMedia } from "@/app/components/team/AchievementMedia"
 import MaterialIcon from "@/app/components/ui/icons/MaterialIcon"
 import type { CatalogAchievement } from "@/types/api"
+import { AchievementProgressDisplay } from "./AchievementProgressDisplay"
 
 export function LogroCard({ logro, slug }: { logro: CatalogAchievement; slug: string }) {
+  if (logro.isHidden) return (
+    <article className="flex min-w-0 flex-col overflow-hidden rounded-[var(--lb-radius-panel)] border border-[var(--team-line)] bg-[var(--team-surface)]">
+      <div className="grid aspect-video place-items-center border-b border-[var(--team-line)] bg-[var(--team-surface-low)] text-4xl text-[var(--team-muted)]" aria-hidden="true">?</div>
+      <div className="p-3"><h2 className="team-display text-[var(--lb-text-card-title)] font-extrabold text-[var(--team-text)]">Logro secreto</h2><p className="mt-2 text-xs leading-5 text-[var(--team-muted)]">Sus detalles se revelarán cuando alguien del equipo lo consiga.</p></div>
+    </article>
+  )
   const category = logro.categoria?.trim() || "Sin categoría"
 
   return (
@@ -32,6 +39,8 @@ export function LogroCard({ logro, slug }: { logro: CatalogAchievement; slug: st
           </p>
 
           <div className="mt-auto min-w-0 border-t border-[var(--team-line)] pt-2.5">
+            {logro.isSecret ? <p className="mb-2 text-xs text-[var(--team-muted)]">Secreto · {logro.isRevealed ? "Revelado" : "Visible para administración"}</p> : null}
+            {logro.kind === "PROGRESSIVE" ? <AchievementProgressDisplay progress={logro.progress} available={logro.progressAvailable} /> : null}
             <p className="truncate text-[0.625rem] font-semibold uppercase leading-4 tracking-[0.06em] text-[var(--team-muted)]" title={category}>
               {category}
             </p>
