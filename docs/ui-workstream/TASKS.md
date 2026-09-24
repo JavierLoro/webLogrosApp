@@ -1,8 +1,12 @@
 # UI Workstream Tasks
 
-Leyenda: TODO · READY · IN_PROGRESS · BLOCKED · DONE
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
 
-Conciliación documental 2026-09-22: G0–G5 cerrados; G6-T01/T02 implementados y continuación pausada en G6-T03; A1-T04 en curso y foco actual A2-T04. No se cambia ningún estado de tarea ni se cierra un gate con esta actualización. Auth Hardening se completó fuera de A1/A2; identidad y temporadas se siguen en Roadmap/BACKEND-GAPS con sus validaciones y pendientes propios.
+**Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación.
+
+Leyenda: TODO · READY · IN_PROGRESS · BLOCKED · APLAZADA · DESCARTADA · DONE
+
+Reordenación 2026-09-24: G0–G5 cerrados y G6 COMPLETADA PROVISIONALMENTE por decisión del usuario; T03–T05 descartadas por ahora, sin QA ni gate visual PASS. A1-T04 y A2-T04/T05 aplazadas hasta completar estructura G6–G8 y nuevas pestañas/controles acordados de perfil, temporadas y media; se cierran antes de G9. Se conserva toda implementación y evidencia previa. No se ejecutan tareas ni se cierra ningún gate.
 
 | ID | Estado | Rol principal | Dependencias | Entregable |
 | --- | --- | --- | --- | --- |
@@ -37,23 +41,23 @@ Conciliación documental 2026-09-22: G0–G5 cerrados; G6-T01/T02 implementados 
 | UI-G5-T05 | DONE | Screen Worker | T04 | Correcciones hasta gate |
 | UI-G6-T01 | DONE | Screen Worker | G2 gate,G1 API | Análisis jugadores |
 | UI-G6-T02 | DONE | Screen Worker | T01 | Implementación jugadores |
-| UI-G6-T03 | READY | QA Worker | T02 | Screenshot determinista |
-| UI-G6-T04 | TODO | Visual Critic | T03 | Delta report |
-| UI-G6-T05 | TODO | Screen Worker | T04 | Correcciones hasta gate |
-| UI-G7-T01 | TODO | Screen Worker | G2 gate,G1 proposals | Análisis solicitudes/propuestas |
-| UI-G7-T02 | TODO | Screen Worker | T01 | Página principal |
-| UI-G7-T03 | TODO | Screen Worker | T01 | Detalles según navegación aprobada |
-| UI-G7-T04 | TODO | QA + Critic | T02,T03 | Screenshot + delta report |
-| UI-G7-T05 | TODO | Screen Worker | T04 | Correcciones hasta gate |
-| UI-G8-T01 | TODO | Shell/Admin Worker | G2 gate | Navegación admin + breadcrumbs |
-| UI-G8-T02 | TODO | Admin Screen Worker | T01 | Resumen admin |
-| UI-G8-T03 | TODO | Admin Screen Worker | T01 | Invitaciones |
-| UI-G8-T04 | TODO | Admin Screen Worker | T01 | Jugadores |
-| UI-G8-T05 | TODO | Admin Screen Worker | T01,entrega #30/#29 | Rediseñar logros/asignación integrando tipo, objetivo, alcance, secreto y controles de progreso/concesión existentes |
-| UI-G8-T06 | TODO | Admin Screen Worker | T01,G1 API,entrega #30/#29 | Solicitudes + detalle: elegibilidad, objetivo obligatorio y temporada original de la solicitud |
-| UI-G8-T07 | TODO | Admin Screen Worker | T01,G1 proposals,entrega #30/#29 | Propuestas + detalle: definir tipo/objetivo/alcance/secreto al incorporar al catálogo, sin conceder |
-| UI-G8-T08 | TODO | QA Capture + Coordinator | T02-T07 | Regresión admin: estados reales, secretos, límites, cierre tras concesión y temporadas; comparación directa Coordinator |
-| UI-G9-T01 | TODO | Visual Critic | G3-G8 gates | Cross-screen audit |
+| UI-G6-T03 | DESCARTADA | QA Worker | T02 | Screenshot determinista |
+| UI-G6-T04 | DESCARTADA | Visual Critic | T03 | Delta report |
+| UI-G6-T05 | DESCARTADA | Screen Worker | T04 | Correcciones hasta gate |
+| UI-G7-T01 | DONE | Screen Worker | G2 gate,G1 proposals | Análisis solicitudes/propuestas |
+| UI-G7-T02 | DONE | Screen Worker | T01 | Página principal |
+| UI-G7-T03 | DONE | Screen Worker | T01 | Detalles según navegación aprobada |
+| UI-G7-T04 | DONE | QA + Coordinator | T02,T03 | Screenshot + delta report |
+| UI-G7-T05 | DONE | Screen Worker | T04 | Correcciones hasta gate |
+| UI-G8-T01 | DONE | Shell/Admin Worker | G2 gate | Navegación admin + breadcrumbs |
+| UI-G8-T02 | DONE | Admin Screen Worker | T01 | Resumen admin |
+| UI-G8-T03 | DONE | Admin Screen Worker | T01 | Invitaciones |
+| UI-G8-T04 | DONE | Admin Screen Worker | T01 | Jugadores |
+| UI-G8-T05 | DONE | Admin Screen Worker | T01,entrega #30/#29 | Rediseñar logros/asignación integrando tipo, objetivo, alcance, secreto y controles de progreso/concesión existentes |
+| UI-G8-T06 | DONE | Admin Screen Worker | T01,G1 API,entrega #30/#29 | Solicitudes + detalle: elegibilidad, objetivo obligatorio y temporada original de la solicitud |
+| UI-G8-T07 | DONE | Admin Screen Worker | T01,G1 proposals,entrega #30/#29 | Propuestas + detalle: definir tipo/objetivo/alcance/secreto al incorporar al catálogo, sin conceder |
+| UI-G8-T08 | DONE | QA Capture + Coordinator | T02-T07 | Regresión admin: estados reales, secretos, límites, cierre tras concesión y temporadas; comparación directa Coordinator |
+| UI-G9-T01 | TODO | Visual Critic | G3-G8 gates,A1 gate,A2 gate | Cross-screen audit |
 | UI-G9-T02 | TODO | Frontend Worker | T01 | Responsive base |
 | UI-G9-T03 | TODO | QA Worker | T02 | Regression capture |
 | UI-G9-T04 | TODO | Coordinator + Critic | T03 | Gate final |
@@ -67,9 +71,9 @@ Conciliación documental 2026-09-22: G0–G5 cerrados; G6-T01/T02 implementados 
 | UI-A1-T01 | DONE | Coordinator / Frontend Worker | G2 gate | Análisis detallado de login/registro y contrato reusable |
 | UI-A1-T02 | DONE | Frontend Worker | A1-T01 | Layout/formulario compartido y adaptación de ambas rutas |
 | UI-A1-T03 | DONE | QA Capture | A1-T02 | Capturas desktop/móvil y pruebas funcionales |
-| UI-A1-T04 | IN_PROGRESS | Coordinator | A1-T03 | Comparación visual directa, correcciones y gate |
+| UI-A1-T04 | APLAZADA | Coordinator | A1-T03, estructura completa | Comparación visual directa, correcciones y gate |
 
-G6 sigue pausado en UI-G6-T03. A1 no autoriza avanzar G6-G9. Auth Hardening se completó como trabajo separado el 2026-09-22; no es una tarea pendiente de A1 ni cierra su gate.
+G6 completada provisionalmente por decisión del usuario (2026-09-24); T03–T05 descartadas por ahora, no ejecutadas ni aprobadas visualmente. No reabrir automáticamente; G9 conserva su regresión general. A1 no autoriza avanzar G7–G9. Auth Hardening se completó como trabajo separado el 2026-09-22; no es una tarea pendiente de A1 ni cierra su gate.
 
 ### Ampliación explícita: resto de onboarding
 
@@ -78,8 +82,8 @@ G6 sigue pausado en UI-G6-T03. A1 no autoriza avanzar G6-G9. Auth Hardening se c
 | UI-A2-T01 | DONE | Frontend Worker | Petición explícita, A1 componentes | Análisis y gaps backend |
 | UI-A2-T02 | DONE | Frontend Worker | A2-T01 | Mis equipos con estados reales |
 | UI-A2-T03 | DONE | Frontend Worker | A2-T02 | Unirse, solicitar acceso y éxito |
-| UI-A2-T04 | IN_PROGRESS | QA Capture | A2-T03 | Capturas/pruebas, regresión auth |
-| UI-A2-T05 | TODO | Coordinator | A2-T04 | Comparación visual directa, correcciones y gate |
+| UI-A2-T04 | APLAZADA | QA Capture | A2-T03, estructura completa | Capturas/pruebas, regresión auth |
+| UI-A2-T05 | APLAZADA | Coordinator | A2-T04 | Comparación visual directa, correcciones y gate |
 
 A1-T04 sigue pendiente de gate; el cambio de foco fue pedido por el usuario, no equivale a su cierre.
 
@@ -104,15 +108,15 @@ Por override del usuario (2026-09-21), el Coordinator asume todas las comparacio
 
 **Gate de integración:** T07.01 define nuevas pestañas/controles y la excepción de imágenes reales por pantalla/tipo. T08.01 verifica el logro completo antes de ampliar a logos. Banners/fotografía y media de propuestas siguen excluidos. Perfil/alias #27/#28 y temporadas #11 conservan su propio alcance.
 
-**Estado operativo preservado:** current_task UI-A2-T04, gate A1 pendiente y línea G6–G9 pausada en UI-G6-T03. No se ha implementado media, arrancado contenedores ni ejecutado pruebas de aplicación por preparar este plan. Los roles indican responsabilidad futura; no agentes lanzados ni permiso para ejecutar.
+**Estado operativo vigente:** A1/A2 aplazados hasta completar la estructura y antes de G9; G6 completada provisionalmente; G7/G8 cerrados localmente; ver [entrega](../phase-7.7/RESULT.md). G9 sin iniciar. Siguiente tarea de diseño prevista: MEDIA-10A-T02.01, sin iniciar. No se ha implementado media, arrancado contenedores ni ejecutado pruebas de aplicación por preparar este plan. Los roles indican responsabilidad futura; no agentes lanzados ni permiso para ejecutar.
 
 ## Ejecución vinculada: progreso y secretos (#30 + #29)
 
-### Continuación visual pendiente en tareas existentes
+### Integración visual entregada en tareas existentes
 
-#30/#29 ya incluyen frontend funcional; UI-G8-T05/T06/T07 integrarán esos controles en las
-subrutas administrativas definitivas. UI-G8-T08 verificará su conservación junto con catálogo,
-detalle y dashboard; no reimplementará el backend ni reabrirá las dos issues por este rediseño.
+#30/#29 ya incluyen frontend funcional; UI-G8-T05/T06/T07 integran esos controles en las
+subrutas administrativas definitivas. UI-G8-T08 verifica los recorridos afectados junto con la evidencia previa de catálogo,
+detalle y dashboard; no reimplementa el backend ni reabre las dos issues por este rediseño.
 Contrato y criterios: [PLAN, UI-G8](PLAN.md#ui-g8--team-admin).
 
 La administración visual de temporadas y el selector de históricos se mantienen en
@@ -138,3 +142,15 @@ Los roles de esta tabla se resuelven mediante `docs/ui-workstream/roles/README.m
 Los workers no actualizan por defecto `TASKS.md`, `STATUS.md` ni `PLAN.md`. Devuelven evidencia al Coordinator, que verifica el gate, marca DONE y mueve `current_task`.
 
 Los roles combinados como `QA + Critic` o `Visual Critic + Shell Worker` indican un encadenamiento de especialistas, no que una misma sesión deba implementar y aprobar su propio trabajo.
+
+## Cierre local G7/G8 — 2026-09-24
+
+G7-T01–T05 y G8-T01–T08 DONE en el alcance sin imágenes. [Resultado](../phase-7.7/RESULT.md), [QA](../phase-7.7/qa/QA.md) y [comparación/gate Coordinator](../phase-7.7/COMPARISON-COORDINATOR.md). Sin avance automático a G9; imágenes, temporadas, roles y ciclo de vida mantienen tareas separadas.
+
+## Trabajo funcional separado — Perfil y alias 7.8
+
+Autorizado el 2026-09-24. #27/#28 DONE LOCAL: [resultado y pruebas](../phase-7.8/RESULT.md). No añade tareas a G7/G8 ni reanuda A1/A2/G9; permisos de edición exclusivamente propios.
+
+## Trabajo funcional separado — Limpieza 7.8 y temporadas 7.9
+
+Autorizado el 2026-09-24. DONE LOCAL: retirada segura de User.displayName, administración de temporadas y ranking histórico de #11. [Entrega y pruebas](../phase-7.9/RESULT.md), [gate visual Coordinator](../phase-7.9/COMPARISON-COORDINATOR.md). Backend, frontend y QA con ownership separado; evidencia verificada por Coordinator. Sin reanudar otros gates.

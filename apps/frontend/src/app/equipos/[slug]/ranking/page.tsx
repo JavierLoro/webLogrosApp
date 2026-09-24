@@ -9,15 +9,15 @@ import { TeamSurface } from "@/app/components/team/TeamPrimitives"
 import MaterialIcon from "@/app/components/ui/icons/MaterialIcon"
 import { Skeleton } from "@/app/components/ui/Skeleton"
 import { ApiError, apiFetch } from "@/lib/api"
-import type { TeamRanking } from "@/types/api"
+import type { Season, TeamRanking } from "@/types/api"
 
 type RankingDataState = {
-  slug: string
+  key: string
   value: TeamRanking
 }
 
 type RankingErrorState = {
-  slug: string
+  key: string
   value: ApiError
 }
 
@@ -26,29 +26,46 @@ export default function RankingPage() {
   const [dataState, setDataState] = useState<RankingDataState | null>(null)
   const [errorState, setErrorState] = useState<RankingErrorState | null>(null)
   const [requestVersion, setRequestVersion] = useState(0)
-  const ranking = dataState?.slug === slug ? dataState.value : null
-  const error = errorState?.slug === slug ? errorState.value : null
+  const [selection, setSelection] = useState({ slug, id: "current" })
+  const selected = selection.slug === slug ? selection.id : "current"
+  const key = `${slug}:${selected}:${requestVersion}`
+  const [seasonsState, setSeasonsState] = useState<{ slug: string; data?: Season[]; error?: ApiError } | null>(null)
+  const seasons = seasonsState?.slug === slug ? seasonsState : null
+  const ranking = dataState?.key === key ? dataState.value : null
+  const error = errorState?.key === key ? errorState.value : null
 
   useEffect(() => {
     const controller = new AbortController()
 
-    apiFetch<TeamRanking>(`/api/equipos/${encodeURIComponent(slug)}/ranking`, {
+    const base = `/api/equipos/${encodeURIComponent(slug)}`
+    apiFetch<TeamRanking>(selected === "current" ? `${base}/ranking` : `${base}/temporadas/${selected}/ranking`, {
       signal: controller.signal,
     })
       .then((value) => {
-        setDataState({ slug, value })
+        if (controller.signal.aborted) return
+        setDataState({ key, value })
         setErrorState(null)
       })
       .catch((cause: unknown) => {
-        if (cause instanceof DOMException && cause.name === "AbortError") return
+        if (controller.signal.aborted) return
         setErrorState({
-          slug,
+          key,
           value: cause instanceof ApiError ? cause : new ApiError("No se pudo cargar el ranking", 500),
         })
       })
 
     return () => controller.abort()
-  }, [requestVersion, slug])
+  }, [key, selected, slug])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    apiFetch<Season[]>(`/api/equipos/${encodeURIComponent(slug)}/temporadas`, { signal: controller.signal })
+      .then(data => { if (!controller.signal.aborted) setSeasonsState({ slug, data }) })
+      .catch((cause: unknown) => {
+        if (!controller.signal.aborted) setSeasonsState({ slug, error: cause instanceof ApiError ? cause : new ApiError("No se pudieron cargar las temporadas", 500) })
+      })
+    return () => controller.abort()
+  }, [slug, requestVersion])
 
   function retry() {
     setDataState(null)
@@ -63,6 +80,20 @@ export default function RankingPage() {
         description="La constancia también puntúa. Consulta las posiciones y estadísticas acumuladas del equipo."
       />
 
+      <TeamSurface className="mb-5 mt-4">
+        <div className="flex min-w-0 flex-wrap items-end gap-4">
+          <label htmlFor="ranking-season" className="grid min-w-0 max-w-full gap-2 text-sm font-semibold">Temporada
+            <select id="ranking-season" className="min-h-11 min-w-0 max-w-full rounded-md border border-[var(--team-line)] bg-[var(--team-surface-low)] px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2" value={selected} onChange={event => setSelection({ slug, id: event.target.value })}>
+              <option value="current">Actual</option>
+              {seasons?.data?.filter(season => season.status !== "PLANNED").map(season => <option key={season.id} value={String(season.id)}>{season.name} · {season.status === "ACTIVE" ? "Activa" : "Cerrada"}</option>)}
+            </select>
+          </label>
+          <p className="min-w-0 flex-1 basis-64 [overflow-wrap:anywhere] text-sm leading-6 text-[var(--team-muted)]">{ranking ? ranking.season ? `Incluye los logros permanentes y los estacionales de ${ranking.season.name}.` : "No hay temporada activa: se muestran solo los logros permanentes." : "Cada periodo suma los logros permanentes y los estacionales de la temporada seleccionada."} Las concesiones permanentes y las aprobaciones posteriores pueden actualizar estos resultados.</p>
+        </div>
+        {ranking?.season && <p className="mt-3 min-w-0 [overflow-wrap:anywhere] text-sm font-semibold">{ranking.season.name} · {ranking.season.status === "ACTIVE" ? "Activa" : ranking.season.status === "CLOSED" ? "Cerrada" : "Planificada"}</p>}
+        {!seasons && <p role="status" className="mt-3 text-sm">Cargando temporadas…</p>}
+        {seasons?.error && <div role="alert" className="mt-3 text-sm"><p>{seasons.error.message}</p>{seasons.error.status === 401 ? <Link href="/login" className="underline">Iniciar sesión</Link> : <button type="button" className="min-h-11 underline" onClick={retry}>Reintentar temporadas</button>}</div>}
+      </TeamSurface>
       {error ? (
         <RankingError error={error} onRetry={retry} />
       ) : ranking === null ? (

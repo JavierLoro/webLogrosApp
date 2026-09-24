@@ -1,10 +1,14 @@
 # UI Visual Convergence Plan
 
-## Estado de ejecución — 2026-09-22
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
 
-Este archivo conserva dependencias y alcance; los estados de tarea están en [TASKS](TASKS.md) y el punto de continuación en [STATUS](STATUS.md). G0–G5 tienen gates cerrados. G6 tiene implementación terminada y continuación pausada en T03; A1/A2 están en revisión, con foco en A2-T04. G7–G9 no se han iniciado.
+**Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación.
 
-Auth Hardening e identidad se implementaron posteriormente como trabajos separados. Temporadas tiene migración aplicada localmente y cobertura de integración con progreso/secretos; administración visual, selector histórico y QA restante de #11 pendientes. #30/#29 ya incluyen frontend funcional, cuya integración en el rediseño administrativo se sigue en UI-G8. Las exclusiones de estas funciones en la primera pasada no significan que sigan ausentes del repositorio. Consultar [Roadmap](../Roadmap.md) y [BACKEND-GAPS](evidence/UI-A2/BACKEND-GAPS.md); esta actualización no reanuda fases ni cierra gates.
+## Estado de ejecución — 2026-09-24
+
+Este archivo conserva dependencias y alcance; los estados de tarea están en [TASKS](TASKS.md) y el punto de continuación en [STATUS](STATUS.md). G0–G5 tienen gates cerrados. G6 tiene implementación terminada y cierre provisional por decisión del usuario, con T03–T05 descartadas por ahora y sin gate visual PASS; A1/A2 están aplazados hasta completar la estructura G6–G8 y las nuevas pestañas/controles acordados de perfil, temporadas y media, antes de G9. G7/G8 cerrados localmente en el alcance sin imágenes; G9 no se ha iniciado.
+
+Auth Hardening e identidad se implementaron posteriormente como trabajos separados. Temporadas tiene migración e integración con progreso/secretos; administración visual, selector histórico y QA de #11 completados localmente en [7.9](../phase-7.9/RESULT.md). #30/#29 ya incluyen frontend funcional, cuya integración en el rediseño administrativo se sigue en UI-G8. Las exclusiones de estas funciones en la primera pasada no significan que sigan ausentes del repositorio. Consultar [Roadmap](../Roadmap.md) y [BACKEND-GAPS](evidence/UI-A2/BACKEND-GAPS.md); esta actualización no reanuda fases ni cierra gates.
 
 ## Principios
 
@@ -165,6 +169,8 @@ Gate: jerarquía top 3, filas y stats sin P0/P1 materiales.
 
 ## UI-G6 — Players
 
+**COMPLETADA PROVISIONALMENTE — 2026-09-24:** el usuario descarta por ahora T03/T04/T05. Se conserva la implementación; las capturas, QA, comparación y correcciones descritas debajo no se ejecutan ni se consideran aprobadas. Excepción al gate G6 para la planificación: no bloquea el avance posterior ni se reabre automáticamente. G9 conserva su regresión general; no equivale a acreditar el gate visual original.
+
 Ruta: `/equipos/[slug]/jugadores`
 
 - conectar miembros reales;
@@ -216,7 +222,7 @@ actual hasta disponer de un reemplazo funcional. No se crea otra issue para dupl
 La gestión visual de temporadas y selección de históricos siguen en **#11 / Phase 7.9**; su
 navegación debe concretarse allí y coordinarse con el shell administrativo cuando corresponda.
 No se considera entregada por haber añadido el campo de alcance al formulario de logros.
-T05–T08 permanecen TODO; A2 sigue como foco y G6–G9 continúan pausados.
+T05–T08 DONE localmente según [resultado y evidencia](../phase-7.7/RESULT.md); A1/A2 quedan aplazados hasta completar la estructura; G6 está completada provisionalmente por decisión del usuario.
 
 ### Rutas y secuencia existentes
 
@@ -252,6 +258,8 @@ Gate: navegación coherente, acciones actuales preservadas y subrutas sin P0/P1 
 
 ## UI-A1 — Acceso público (ampliación explícita 2026-09-20)
 
+**Reprogramación 2026-09-24:** QA/cierre pendientes aplazados hasta completar estructura G6–G8 y nuevas pestañas/controles acordados de perfil, temporadas y media. Conservar implementación/evidencia; retomar antes de UI-G9, sin ampliar el alcance funcional.
+
 Petición del usuario: revisar y trasladar login/registro de `_compartidas/acceso-onboarding-desktop-v1.png`, reutilizando el patrón formulario/lateral. No reanuda G6 ni el roadmap global.
 
 Ajuste explícito posterior del usuario (2026-09-20): composición a pantalla completa, no tarjeta encajonada. Eliminar límite exterior centrado, márgenes, borde/radio/sombra del frame. Desktop dividido lateral/formulario; ancho interno del formulario limitado por legibilidad. Móvil apilado full-width y altura natural. Esta decisión prevalece sobre el frame de la lámina; no evaluar su ausencia como discrepancia.
@@ -260,9 +268,11 @@ Ajuste móvil confirmado por usuario: por debajo de 768 px ocultar completamente
 
 Rutas: `/login`, `/register`. Dependencias: G2 gate (satisfecho), contratos actuales de autenticación. Layout reutilizable aislado, campos y password toggle compartidos; conservar POST, almacenamiento de sesión y redirects actuales. Confirmación de contraseña local permitida; OAuth, recuperación, recordar sesión y textos legales/enlaces inexistentes siguen excluidos. La ampliación explícita del usuario del 2026-09-21 añadió persistencia real de nombre/apellidos y el registro los captura; ver Phase 7.8, #13 y #20. No ejecutar Auth Hardening dentro de A1. Placeholder lateral conserva proporción; no integrar fotografía. Header público puede ocultarse únicamente en estas dos rutas, sin tocar TeamShell/tokens.
 
-Secuencia: análisis → implementación → captura/QA → crítica independiente → corrección/gate. Gate: ambas rutas desktop/móvil, sin overflow, formularios y navegación funcionales, lint/build, cero P0/P1 materiales. Documentar diferencias funcionales y media excluida; conservar G6-T03 como punto pausado. Al cerrar A1, parar; no continuar G6 automáticamente. Incluir estas rutas en futura regresión G9.
+Secuencia: análisis → implementación → captura/QA → crítica independiente → corrección/gate. Gate: ambas rutas desktop/móvil, sin overflow, formularios y navegación funcionales, lint/build, cero P0/P1 materiales. Documentar diferencias funcionales y media excluida; G6-T03 queda descartada por la decisión posterior del 2026-09-24. Al cerrar A1, parar; no continuar G6 automáticamente. Incluir estas rutas en futura regresión G9.
 
 ## UI-A2 — Resto de acceso/onboarding (petición explícita)
+
+**Reprogramación 2026-09-24:** QA/cierre pendientes aplazados hasta completar estructura G6–G8 y nuevas pestañas/controles acordados de perfil, temporadas y media. Conservar implementación/evidencia; retomar antes de UI-G9, sin ampliar el alcance funcional.
 
 Referencia: paneles 3–6 de `_compartidas/acceso-onboarding-desktop-v1.png`. Rutas existentes `/equipos`, `/unirse`, `/solicitar-acceso` y su estado de éxito, sin nueva ruta de éxito obligatoria. Usuario autorizó continuar este conjunto y posponer cualquier backend faltante: usar APIs actuales, errores locales claros para apartados sin datos/soporte, documentar gaps en `evidence/UI-A2/BACKEND-GAPS.md`. No backend, schema, seed, datos inventados, endpoints especulativos ni éxito simulado en producto.
 
@@ -271,6 +281,8 @@ Reutilizar AuthLayout/AuthFields con fullscreen desktop y móvil solo logo/formu
 Secuencia: análisis/contratos frontend → Mis equipos → formularios/éxito → QA/capturas → crítica independiente/correcciones. Gate: desktop/móvil sin P0/P1 materiales, estados loading/error/empty diferenciados, navegación existente, lint/build, backend gaps documentados. El gate A1-T04 permanece pendiente (no se marca aprobado por cambio de foco solicitado); incluir regresión de auth al final por componentes compartidos. No continuar G6-G9 ni roadmap global automáticamente.
 
 ## UI-G9 — Consistency Pass
+
+Dependencias de entrada: gates G3–G8 (G6 exceptuado por cierre provisional del usuario) y cierre A1/A2 tras completar la estructura. El aplazamiento de acceso/onboarding no elimina sus pruebas ni gates.
 
 ### UI-G9-T01 — Cross-screen audit
 Revisar spacing, headers, surfaces, typography, navigation y states entre todas las rutas.
@@ -308,3 +320,8 @@ Planificación consolidada el 2026-09-24: [Phase 7.10 — tareas de imágenes y 
 - pestañas secundarias de perfil;
 - ampliaciones de superadministración;
 - features futuras dibujadas pero no aprobadas.
+
+
+## Entrega funcional posterior — temporadas 7.9
+
+2026-09-24: `/equipos/[slug]/admin/temporadas`, navegación administrativa y selector en ranking entregados y validados en [7.9](../phase-7.9/RESULT.md). Las menciones anteriores a gestión pendiente describen el alcance original de G8; no reabren esa entrega ni la convergencia global. Limpieza legacy7.8 aplicada, media7.10 pendiente.

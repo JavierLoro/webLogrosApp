@@ -130,7 +130,17 @@ export interface TeamDashboard {
   rarestEarned: DashboardAchievement | null
 }
 
+export interface Season {
+  id: number
+  teamId: number
+  name: string
+  startsAt: string
+  endsAt: string
+  status: "PLANNED" | "ACTIVE" | "CLOSED"
+}
+
 export interface TeamRanking {
+  season: Season | null
   players: DashboardPlayer[]
   totals: DashboardTotals
 }

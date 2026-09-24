@@ -1,0 +1,88 @@
+{
+  "run": "qa77-1790248742991",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-24T11:19:21.749Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa77-1790248742991-main/propuestas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa77-1790248742991-main/propuestas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790248742991-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        27,
+        28
+      ],
+      "userIds": [
+        49,
+        50,
+        51
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

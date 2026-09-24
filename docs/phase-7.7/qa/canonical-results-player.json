@@ -1,0 +1,333 @@
+[
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=propuesta&detalle=5",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-propuesta-detalle-5-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Detalle de mi propuesta",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI PROPUESTA\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nSIEMPRE DISPONIBLES\n\nReconocer la disponibilidad de los miembros para ayudar.\n\nCriterios propuestos\n1\n\nResponder siempre a cualquier petición del equipo.\n\nDatos del envío\nFecha de envío\n16 sept 2026\nReferencia\n#5\nEstado de la propuesta\n×\nRechazada\n\nEl equipo ha revisado y rechazado este envío.\n\nMotivo del rechazo\n\nEl criterio exige disponibilidad ilimitada; necesitamos un objetivo acotado.\n\nHistorial\nEnviada\n16 sept 2026\nRechazada\n18 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=propuesta&detalle=3",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-propuesta-detalle-3-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Detalle de mi propuesta",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI PROPUESTA\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nENCUENTRO DE APRENDIZAJE\n\nPreparar una sesión breve para compartir una técnica útil.\n\nCriterios propuestos\n1\n\nPreparar un ejemplo práctico.\n\n2\n\nCompartir la sesión con el equipo.\n\nDatos del envío\nFecha de envío\n16 sept 2026\nReferencia\n#3\nEstado de la propuesta\n!\nPendiente\n\nPendiente de revisión por el equipo de administración.\n\nHistorial\nEnviada\n16 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=propuesta&detalle=1",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-propuesta-detalle-1-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Detalle de mi propuesta",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI PROPUESTA\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nORGANIZACIÓN COMPARTIDA\n\nReconoce a quien organiza un encuentro y coordina al equipo.\n\nCriterios propuestos\n1\n\nAcordar fecha y lugar con el equipo.\n\n2\n\nComunicar la planificación a todos los miembros.\n\nDatos del envío\nFecha de envío\n16 sept 2026\nReferencia\n#1\nEstado de la propuesta\n✓\nAñadida al catálogo\n\nTu propuesta se ha incorporado al catálogo. Esto no concede el logro ni suma puntos; puedes solicitar su obtención desde el catálogo.\n\nVer logro →\nHistorial\nEnviada\n16 sept 2026\nAñadida al catálogo\n18 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=solicitud&detalle=5",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-solicitud-detalle-5-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Detalle de mi solicitud",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI SOLICITUD\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nUNA VICTORIA COMPARTIDA\n\nCompletar una tarea exigente con ayuda de varias personas del equipo.\n\n160 puntos · Equipo\n\nCriterios de obtención\n1\n\nCompletar una tarea exigente con ayuda de varias personas del equipo.\n\n2\n\nConfirmar el resultado con un administrador del equipo.\n\nDatos del envío\nFecha de envío\n14 sept 2026\nReferencia\n#5\nContexto de la solicitud\nLogro permanente\nEstado de la solicitud\n!\nPendiente\n\nPendiente de revisión por el equipo de administración.\n\nVer logro →\nHistorial\nEnviada\n14 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=propuesta&detalle=5",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-propuesta-detalle-5-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Detalle de mi propuesta",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI PROPUESTA\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nSIEMPRE DISPONIBLES\n\nReconocer la disponibilidad de los miembros para ayudar.\n\nCriterios propuestos\n1\n\nResponder siempre a cualquier petición del equipo.\n\nDatos del envío\nFecha de envío\n16 sept 2026\nReferencia\n#5\nEstado de la propuesta\n×\nRechazada\n\nEl equipo ha revisado y rechazado este envío.\n\nMotivo del rechazo\n\nEl criterio exige disponibilidad ilimitada; necesitamos un objetivo acotado.\n\nHistorial\nEnviada\n16 sept 2026\nRechazada\n18 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=propuesta&detalle=3",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-propuesta-detalle-3-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Detalle de mi propuesta",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI PROPUESTA\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nENCUENTRO DE APRENDIZAJE\n\nPreparar una sesión breve para compartir una técnica útil.\n\nCriterios propuestos\n1\n\nPreparar un ejemplo práctico.\n\n2\n\nCompartir la sesión con el equipo.\n\nDatos del envío\nFecha de envío\n16 sept 2026\nReferencia\n#3\nEstado de la propuesta\n!\nPendiente\n\nPendiente de revisión por el equipo de administración.\n\nHistorial\nEnviada\n16 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=propuesta&detalle=1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-propuesta-detalle-1-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Detalle de mi propuesta",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI PROPUESTA\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nORGANIZACIÓN COMPARTIDA\n\nReconoce a quien organiza un encuentro y coordina al equipo.\n\nCriterios propuestos\n1\n\nAcordar fecha y lugar con el equipo.\n\n2\n\nComunicar la planificación a todos los miembros.\n\nDatos del envío\nFecha de envío\n16 sept 2026\nReferencia\n#1\nEstado de la propuesta\n✓\nAñadida al catálogo\n\nTu propuesta se ha incorporado al catálogo. Esto no concede el logro ni suma puntos; puedes solicitar su obtención desde el catálogo.\n\nVer logro →\nHistorial\nEnviada\n16 sept 2026\nAñadida al catálogo\n18 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes?tipo=solicitud&detalle=5",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-tipo-solicitud-detalle-5-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Detalle de mi solicitud",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\n/\nDetalle\nDETALLE DE MI SOLICITUD\n\nConsulta los datos enviados y el resultado de la revisión.\n\n← Volver al historial\nUNA VICTORIA COMPARTIDA\n\nCompletar una tarea exigente con ayuda de varias personas del equipo.\n\n160 puntos · Equipo\n\nCriterios de obtención\n1\n\nCompletar una tarea exigente con ayuda de varias personas del equipo.\n\n2\n\nConfirmar el resultado con un administrador del equipo.\n\nDatos del envío\nFecha de envío\n14 sept 2026\nReferencia\n#5\nContexto de la solicitud\nLogro permanente\nEstado de la solicitud\n!\nPendiente\n\nPendiente de revisión por el equipo de administración.\n\nVer logro →\nHistorial\nEnviada\n14 sept 2026"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Mis solicitudes",
+    "overflowElements": [],
+    "text": "Halcones\n/\nMis solicitudes\nMIS SOLICITUDES\n\nTus solicitudes de obtención y tus propuestas de nuevos logros, en un mismo lugar.\n\nPendientes\n2\nAprobadas\n2\nRechazadas\n2\nSolicitudes de obtención\n3\nPropuestas enviadas\n3\nSolicitudes (3)\nMis propuestas (3)\nBuscar en el historial\nFiltrar por estado\nTodos los estados\nPendientes\nAprobadas\nRechazadas\nOrdenar por fecha\nMás recientes\nMás antiguas\nMIS SOLICITUDES DE OBTENCIÓN\n\nLogros del catálogo cuya obtención has solicitado.\n\nSolicitar logro existente\nLogro\tPuntos\tFecha de envío\tEstado\tRevisión\t\nAcciones\n\n\nUna victoria compartida\n\nCompletar una tarea exigente con ayuda de varias personas del equipo.\n\n\t160\t14 sept 2026\t\n!\nPendiente\t\n—\n\tVer solicitud\n\nAprender y volver a intentarlo\n\nAplicar una corrección acordada tras revisar una dificultad juntos.\n\n\t110\t14 sept 2026\t\n×\nRechazada\t\n15 sept 2026\n\tVer solicitud\n\nPase decisivo\n\nFacilitar una acción que permita cerrar el objetivo común.\n\n\t90\t14 sept 2026\t\n✓\nAprobada\t\n15 sept 2026\n\tVer solicitud\nMIS PROPUESTAS DE NUEVOS LOGROS\n\nIdeas que has enviado para ampliar el catálogo del equipo.\n\n+ Proponer nuevo logro\nPropuesta\tFecha de envío\tEstado\tResultado\t\nAcciones\n\n\nSiempre disponibles\n\nReconocer la disp"
+  },
+  {
+    "role": "player",
+    "identity": "ana@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "solicitudes",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/player-solicitudes-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Mis solicitudes",
+    "overflowElements": [
+      {
+        "tag": "TABLE",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "THEAD",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "TH",
+        "cls": "",
+        "right": 478.125
+      },
+      {
+        "tag": "TH",
+        "cls": "",
+        "right": 593.125
+      },
+      {
+        "tag": "TH",
+        "cls": "",
+        "right": 733.125
+      },
+      {
+        "tag": "TH",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 745.125
+      },
+      {
+        "tag": "TBODY",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "TD",
+        "cls": "requests_nowrap__xQaqI",
+        "right": 478.125
+      },
+      {
+        "tag": "TD",
+        "cls": "",
+        "right": 593.125
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-warning)_35%,transparent)] bg-[var(--lb-color-warning-surface)] text-[var(--lb-color-warning)]",
+        "right": 574.234375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 500.578125
+      },
+      {
+        "tag": "TD",
+        "cls": "requests_result__AsYTl",
+        "right": 733.125
+      },
+      {
+        "tag": "SPAN",
+        "cls": "requests_resultSummary__wY1yI",
+        "right": 723.125
+      },
+      {
+        "tag": "TD",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "A",
+        "cls": "requests_button__KVphG",
+        "right": 855.625
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "TD",
+        "cls": "requests_nowrap__xQaqI",
+        "right": 478.125
+      },
+      {
+        "tag": "TD",
+        "cls": "",
+        "right": 593.125
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-danger)_35%,transparent)] bg-[var(--lb-color-danger-surface)] text-[var(--lb-color-danger)]",
+        "right": 583.125
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 504.578125
+      },
+      {
+        "tag": "TD",
+        "cls": "requests_result__AsYTl",
+        "right": 733.125
+      },
+      {
+        "tag": "SPAN",
+        "cls": "requests_resultSummary__wY1yI",
+        "right": 723.125
+      },
+      {
+        "tag": "TD",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "A",
+        "cls": "requests_button__KVphG",
+        "right": 855.625
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 865.625
+      },
+      {
+        "tag": "TD",
+        "cls": "requests_nowrap__xQaqI",
+        "right": 478.125
+      },
+      {
+        "tag": "TD",
+        "cls": "",
+        "right": 593.125
+      }
+    ],
+    "text": "Halcones\n/\nMis solicitudes\nMIS SOLICITUDES\n\nTus solicitudes de obtención y tus propuestas de nuevos logros, en un mismo lugar.\n\nPendientes\n2\nAprobadas\n2\nRechazadas\n2\nSolicitudes de obtención\n3\nPropuestas enviadas\n3\nSolicitudes (3)\nMis propuestas (3)\nBuscar en el historial\nFiltrar por estado\nTodos los estados\nPendientes\nAprobadas\nRechazadas\nOrdenar por fecha\nMás recientes\nMás antiguas\nMIS SOLICITUDES DE OBTENCIÓN\n\nLogros del catálogo cuya obtención has solicitado.\n\nSolicitar logro existente\nLogro\tPuntos\tFecha de envío\tEstado\tRevisión\t\nAcciones\n\n\nUna victoria compartida\n\nCompletar una tarea exigente con ayuda de varias personas del equipo.\n\n\t160\t14 sept 2026\t\n!\nPendiente\t\n—\n\tVer solicitud\n\nAprender y volver a intentarlo\n\nAplicar una corrección acordada tras revisar una dificultad juntos.\n\n\t110\t14 sept 2026\t\n×\nRechazada\t\n15 sept 2026\n\tVer solicitud\n\nPase decisivo\n\nFacilitar una acción que permita cerrar el objetivo común.\n\n\t90\t14 sept 2026\t\n✓\nAprobada\t\n15 sept 2026\n\tVer solicitud\nMIS PROPUESTAS DE NUEVOS LOGROS\n\nIdeas que has enviado para ampliar el catálogo del equipo.\n\n+ Proponer nuevo logro\nPropuesta\tFecha de envío\tEstado\tResultado\t\nAcciones\n\n\nSiempre disponibles\n\nReconocer la disp"
+  }
+]

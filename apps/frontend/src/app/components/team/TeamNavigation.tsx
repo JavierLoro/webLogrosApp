@@ -114,6 +114,10 @@ export function TeamNavigation({ slug, teamName, role, loading = false }: TeamNa
 
         <div className="mt-auto grid gap-3 border-t border-[var(--team-line)] px-3 py-3 md:py-4">
           <TeamIdentity teamName={teamName} slug={slug} loading={loading} compact />
+          <Link href="/perfil" className={itemClass(false)} onClick={() => setIsOpen(false)}>
+            <MaterialIcon name="settings" className="size-5 shrink-0" />
+            <span>Mi perfil</span>
+          </Link>
           <Link href="/equipos" className={itemClass(false)} onClick={() => setIsOpen(false)}>
             <MaterialIcon name="swap_horiz" className="size-5 shrink-0" />
             <span>Cambiar equipo</span>

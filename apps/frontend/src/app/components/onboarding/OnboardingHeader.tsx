@@ -40,9 +40,10 @@ export function OnboardingSessionActions({ includeJoin = false }: { includeJoin?
   }
 
   return (
-    <nav aria-label="Acciones de la cuenta" className="flex min-w-0 items-center justify-end gap-1 sm:gap-2">
+    <nav aria-label="Acciones de la cuenta" className="flex min-w-0 flex-wrap items-center justify-end gap-1 sm:gap-2">
       {loggedIn ? (
         <>
+          <HeaderLink href="/perfil" current={pathname === "/perfil"}>Mi perfil</HeaderLink>
           {isSuperAdmin ? <HeaderLink href="/admin" current={pathname === "/admin"}>Admin</HeaderLink> : null}
           {!includeJoin ? <HeaderLink href="/equipos" current={pathname === "/equipos"}>Mis equipos</HeaderLink> : null}
           {includeJoin ? <HeaderLink href="/unirse" current={pathname === "/unirse"}>Unirse</HeaderLink> : null}

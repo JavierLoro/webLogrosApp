@@ -1,0 +1,79 @@
+{
+  "run": "qa79-1790269517053",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-24T17:05:53.510Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269517053-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "result": "FAIL",
+      "error": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#ranking-season')\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"ranking-season\" class=\"min-h-11 min-w-0 max-w-full rounded-md border border-[var(--team-line)] bg-[var(--team-surface-low)] px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - did not find some options\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+      "stack": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#ranking-season')\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"ranking-season\" class=\"min-h-11 min-w-0 max-w-full rounded-md border border-[var(--team-line)] bg-[var(--team-surface-low)] px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - did not find some options\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at module.exports (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\extra.cjs:3:135)\n    at async main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\http.cjs:72:34)"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        45,
+        46
+      ],
+      "userIds": [
+        80,
+        81,
+        82
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

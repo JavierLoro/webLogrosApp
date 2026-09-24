@@ -1,0 +1,86 @@
+{
+  "run": "qa79-1790269401840",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-24T17:03:41.427Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269401840-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269401840-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "result": "FAIL",
+      "error": "Expected values to be strictly equal:\n\n654 !== 390\n",
+      "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n654 !== 390\n\n    at module.exports (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\browser.cjs:15:247)\n    at async main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\http.cjs:72:41)"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        43,
+        44
+      ],
+      "userIds": [
+        77,
+        78,
+        79
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

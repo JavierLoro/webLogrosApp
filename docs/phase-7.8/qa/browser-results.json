@@ -1,0 +1,108 @@
+{
+  "run": "qa78-1790260173743",
+  "results": [
+    {
+      "check": "Profile and alias A save once; unsaved alias B draft preserved and not persisted",
+      "result": "PASS"
+    },
+    {
+      "check": "Remove alias falls back to saved global name on tenant navigation",
+      "result": "PASS"
+    },
+    {
+      "check": "Profile links available from Mis equipos and tenant mobile navigation",
+      "result": "PASS"
+    },
+    {
+      "check": "Save500 preserves draft; explicit retry succeeds",
+      "result": "PASS"
+    },
+    {
+      "check": "TEAM_ADMIN can edit own global name",
+      "result": "PASS"
+    },
+    {
+      "check": "No memberships state",
+      "result": "PASS"
+    },
+    {
+      "check": "Anonymous401 with login link",
+      "result": "PASS"
+    }
+  ],
+  "captures": [
+    {
+      "role": "PLAYER",
+      "fixture": "qa78-1790260173743",
+      "route": "/perfil",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "path": "docs/phase-7.8/qa/screenshots/player-profile-1440.png",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "role": "PLAYER",
+      "fixture": "qa78-1790260173743",
+      "route": "/perfil",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/phase-7.8/qa/screenshots/player-profile-390.png",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "role": "TEAM_ADMIN",
+      "fixture": "qa78-1790260173743",
+      "route": "/perfil",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "path": "docs/phase-7.8/qa/screenshots/admin-profile-1440.png",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "role": "TEAM_ADMIN",
+      "fixture": "qa78-1790260173743",
+      "route": "/perfil",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/phase-7.8/qa/screenshots/admin-profile-390.png",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "role": "NO_MEMBERSHIP",
+      "fixture": "qa78-1790260173743",
+      "route": "/perfil",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "path": "docs/phase-7.8/qa/screenshots/no-teams-1440.png",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "role": "ANONYMOUS",
+      "fixture": "qa78-1790260173743",
+      "route": "/perfil",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "path": "docs/phase-7.8/qa/screenshots/anonymous-1440.png",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "errors": []
+}

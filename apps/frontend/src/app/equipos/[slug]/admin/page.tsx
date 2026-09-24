@@ -1,77 +1,136 @@
-"use client"
+"use client";
+import Link from "next/link";
+import { KpiItem, KpiStrip, TeamSurface } from "@/app/components/team/TeamPrimitives";
 
-import { useCallback, useEffect, useState } from "react"
-import { useParams } from "next/navigation"
-import { apiFetch, ApiError } from "@/lib/api"
-import { Button } from "@/app/components/ui/Button"
-import { Empty } from "@/app/components/ui/Empty"
-import type { AchievementRequest, Logro, TeamMember } from "@/types/api"
+import {
+  Heading,
+  ReadState,
+  useAdminPaths,
+  useAdminRead,
+  quiet,
+  invitationStatus,
+  date,
+  type AdminRequest,
+  type AdminProposal,
+  type Invitation,
+  type Member,
+} from "./AdminUI";
 
-type Invitation = { id: number; token: string | null; expiresAt: string; revokedAt: string | null; maxUses: number; uses: number }
+import type { CatalogAchievement } from "@/types/api";
 
-export default function TeamAdminPage() {
-  const { slug } = useParams<{ slug: string }>()
-  const [invitations, setInvitations] = useState<Invitation[]>([])
-  const [requests, setRequests] = useState<AchievementRequest[]>([])
-  const [members, setMembers] = useState<TeamMember[]>([])
-  const [achievements, setAchievements] = useState<Logro[]>([])
-  const [userId, setUserId] = useState("")
-  const [logroId, setLogroId] = useState("")
-  const [link, setLink] = useState("")
-  const [error, setError] = useState("")
-  const [notice, setNotice] = useState("")
+export default function AdminOverview() {
+  const {
+    base,
+    api
+  } = useAdminPaths();
 
-  const load = useCallback(async () => {
-    const base = `/api/equipos/${encodeURIComponent(slug)}`
-    return Promise.all([
-      apiFetch<Invitation[]>(`${base}/invitaciones`),
-      apiFetch<AchievementRequest[]>(`${base}/admin/solicitudes`),
-      apiFetch<TeamMember[]>(`${base}/admin/miembros`),
-      apiFetch<Logro[]>(`${base}/logros`),
-    ])
-  }, [slug])
+  const members = useAdminRead<Member[]>(api + "/admin/miembros");
+  const invitations = useAdminRead<Invitation[]>(api + "/invitaciones");
+  const requests = useAdminRead<AdminRequest[]>(api + "/admin/solicitudes?status=all");
+  const proposals = useAdminRead<AdminProposal[]>(api + "/admin/propuestas?status=all");
+  const catalog = useAdminRead<CatalogAchievement[]>(api + "/logros");
+  const sources = [members, invitations, requests, proposals, catalog];
 
-  const applyData = useCallback(([invitationData, requestData, memberData, achievementData]: Awaited<ReturnType<typeof load>>) => {
-    setInvitations(invitationData); setRequests(requestData); setMembers(memberData); setAchievements(achievementData)
-  }, [])
+  if (sources.some(s => !s.data))
+    return <ReadState error={sources.find(s => s.error)?.error} reload={() => sources.forEach(s => s.reload())} />;
 
-  useEffect(() => {
-    let active = true
-    load().then((data) => { if (active) applyData(data) }).catch((cause) => { if (active) setError(cause instanceof ApiError ? cause.message : "No se pudo cargar el panel") })
-    return () => { active = false }
-  }, [applyData, load])
+  const pendingRequests = requests.data!.filter(r => r.status === "PENDING");
+  const pendingProposals = proposals.data!.filter(r => r.status === "PENDING");
 
-  async function review(id: number, action: "aceptar" | "rechazar") {
-    setError("")
-    try {
-      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/admin/solicitudes/${id}/${action}`, { method: "POST" })
-      setNotice(action === "aceptar" ? "Logro otorgado." : "Solicitud rechazada.")
-      applyData(await load())
-    } catch (cause) { setError(cause instanceof ApiError ? cause.message : "No se pudo revisar la solicitud") }
-  }
+  return (
+    <>
+      <Heading title="Administración del equipo">Controla el acceso, revisa solicitudes y gestiona el catálogo.</Heading>
+      <KpiStrip className="[&_dd]:text-3xl mb-5">
+        <KpiItem label="Miembros del equipo" value={members.data!.length} />
+        <KpiItem
+          label="Invitaciones activas"
+          value={invitations.data!.filter(i => invitationStatus(i) === "Activa").length} />
+        <KpiItem label="Solicitudes pendientes" value={pendingRequests.length} />
+        <KpiItem label="Propuestas pendientes" value={pendingProposals.length} />
+        <KpiItem label="Logros en catálogo" value={catalog.data!.length} />
+      </KpiStrip>
+      <div className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-5">
+        <TeamSurface className="min-w-0 !p-4">
+          <h2 className="team-display text-xl font-bold uppercase">Invitaciones</h2>
+          <p className="my-3 text-sm text-[var(--team-muted)]">Crea enlaces para incorporar nuevos jugadores.</p>
+          <Link className={quiet + " w-full"} href={base + "/admin/invitaciones"}>Crear invitación →</Link>
+          <h3 className="mt-5 text-sm font-semibold">Últimas invitaciones</h3>
+          <div className="divide-y divide-[var(--team-line)]">{invitations.data!.slice(-3).reverse().map(i => <div key={i.id} className="py-3 text-sm">
+              <strong>Invitación #{i.id}</strong>
+              <p className="mt-1 text-xs text-[var(--team-muted)]">{i.uses}/{i.maxUses}{" "}usos · {invitationStatus(i)}</p>
+            </div>)}</div>
+          {!invitations.data!.length ? <p className="mt-4 text-sm text-[var(--team-muted)]">Todavía no hay invitaciones.</p> : null}
+        </TeamSurface>
+        {[{
+          title: "Solicitudes de logros",
+          path: "solicitudes",
 
-  async function assignDirectly() {
-    setError("")
-    try {
-      await apiFetch(`/api/equipos/${encodeURIComponent(slug)}/admin/asignaciones`, { method: "POST", body: JSON.stringify({ userId: Number(userId), logroId: Number(logroId) }) })
-      setNotice("Logro asignado directamente."); setUserId(""); setLogroId("")
-    } catch (cause) { setError(cause instanceof ApiError ? cause.message : "No se pudo asignar el logro") }
-  }
+          rows: pendingRequests.map(r => ({
+            id: r.id,
+            name: r.logro.nombre,
+            author: r.user.displayName
+          }))
+        }, {
+          title: "Propuestas de nuevos logros",
+          path: "propuestas",
 
-  async function createInvitation() {
-    setError("")
-    try {
-      const result = await apiFetch<{ token: string }>(`/api/equipos/${encodeURIComponent(slug)}/invitaciones`, { method: "POST", body: JSON.stringify({ expiresInDays: 7, maxUses: 10 }) })
-      setLink(`${window.location.origin}/unirse?token=${result.token}`); setNotice("Invitación creada."); applyData(await load())
-    } catch (cause) { setError(cause instanceof ApiError ? cause.message : "No se pudo crear la invitación") }
-  }
-
-  return <div className="mx-auto max-w-4xl px-5 py-12">
-    <p className="font-mono text-xs uppercase tracking-widest text-coral">TEAM_ADMIN</p><h1 className="mt-3 font-display text-4xl font-bold">Administración del equipo</h1><p className="mt-3 text-ink-soft">Revisa solicitudes, asigna logros y gestiona el acceso.</p>
-    {error ? <p role="alert" className="mt-6 rounded-xl bg-[#fff0ed] p-4 text-coral-dark">{error}</p> : null}{notice ? <p role="status" className="mt-6 rounded-xl bg-mint p-4 text-ink">{notice}</p> : null}
-    <section className="mt-8 rounded-2xl border border-ink/10 bg-white p-6"><h2 className="font-display text-2xl font-semibold">Solicitudes pendientes</h2><div className="mt-5 space-y-4">{requests.map((request) => <article key={request.id} className="rounded-xl border border-ink/10 p-4"><h3 className="font-display text-lg font-bold">{"isHidden" in request.logro ? "Logro secreto" : request.logro.nombre}</h3><p className="mt-1 text-sm text-ink-soft">{request.user?.email} · {"isHidden" in request.logro ? "Detalles ocultos" : `${request.logro.puntos} puntos`}</p><div className="mt-4 flex gap-3"><Button onClick={() => review(request.id, "aceptar")}>Aceptar</Button><Button variant="danger" onClick={() => review(request.id, "rechazar")}>Rechazar</Button></div></article>)}{requests.length === 0 ? <Empty title="No hay solicitudes pendientes" /> : null}</div></section>
-    <section className="mt-8 rounded-2xl border border-ink/10 bg-white p-6"><h2 className="font-display text-2xl font-semibold">Asignar un logro</h2><div className="mt-5 grid gap-4 sm:grid-cols-2"><label className="text-sm font-semibold">Jugador<select value={userId} onChange={(event) => setUserId(event.target.value)} className="mt-2 block w-full rounded-md border border-ink/20 bg-paper px-3 py-2"><option value="">Selecciona un jugador</option>{members.map((member) => <option key={member.id} value={member.id}>{member.email}</option>)}</select></label><label className="text-sm font-semibold">Logro<select value={logroId} onChange={(event) => setLogroId(event.target.value)} className="mt-2 block w-full rounded-md border border-ink/20 bg-paper px-3 py-2"><option value="">Selecciona un logro</option>{achievements.map((achievement) => <option key={achievement.id} value={achievement.id}>{achievement.nombre}</option>)}</select></label></div><Button className="mt-5" disabled={!userId || !logroId} onClick={assignDirectly}>Asignar logro</Button></section>
-    <section className="mt-8 rounded-2xl border border-ink/10 bg-white p-6"><h2 className="font-display text-2xl font-semibold">Invitar personas</h2><p className="mt-2 text-sm text-ink-soft">Genera un enlace válido durante siete días y con diez usos.</p><Button className="mt-5" onClick={createInvitation}>Crear enlace de invitación</Button>{link ? <div className="mt-5"><label className="text-sm font-semibold" htmlFor="invite-link">Enlace para compartir</label><input id="invite-link" readOnly value={link} className="mt-2 w-full rounded-md border border-ink/20 bg-paper px-3 py-2" onFocus={(event) => event.currentTarget.select()} /></div> : null}</section>
-    <section className="mt-8 rounded-2xl border border-ink/10 bg-white p-6"><h2 className="font-display text-2xl font-semibold">Invitaciones creadas</h2><div className="mt-5 space-y-4">{invitations.map((invitation) => { const invitationLink = invitation.token ? `${window.location.origin}/unirse?token=${invitation.token}` : ""; const unavailable = Boolean(invitation.revokedAt) || new Date(invitation.expiresAt) <= new Date() || invitation.uses >= invitation.maxUses; return <article key={invitation.id} className="rounded-xl border border-ink/10 p-4"><p className="text-sm text-ink-soft">{invitation.uses}/{invitation.maxUses} usos · caduca {new Date(invitation.expiresAt).toLocaleDateString()}</p>{invitationLink ? <><input aria-label="Enlace de invitación" readOnly value={invitationLink} className="mt-3 w-full rounded-md border border-ink/20 bg-paper px-3 py-2" onFocus={(event) => event.currentTarget.select()} /><Button variant="quiet" className="mt-3" disabled={unavailable} onClick={() => navigator.clipboard.writeText(invitationLink)}>Copiar enlace</Button></> : <p className="mt-3 text-sm text-ink-soft">Esta invitación antigua no puede recuperarse; crea una nueva.</p>}</article> })}{invitations.length === 0 ? <p className="text-sm text-ink-soft">Todavía no hay invitaciones.</p> : null}</div></section>
-  </div>
+          rows: pendingProposals.map(r => ({
+            id: r.id,
+            name: r.nombre,
+            author: r.user.displayName
+          }))
+        }].map(group => <TeamSurface className="min-w-0 !p-4" key={group.path}>
+          <h2 className="team-display text-xl font-bold uppercase">{group.title}</h2>
+          <p className="my-3 text-sm text-[var(--team-muted)]">{group.rows.length}{" "}pendientes de revisión</p>
+          <Link className={quiet + " w-full"} href={base + "/admin/" + group.path}>Ver todas →</Link>
+          <h3 className="mt-5 text-sm font-semibold">Pendientes más antiguas</h3>
+          <div className="divide-y divide-[var(--team-line)]">{group.rows.slice(0, 3).map(row => <Link
+              className="block py-3 text-sm hover:underline"
+              key={row.id}
+              href={base + "/admin/" + group.path + "/" + row.id}>
+              <strong className="block break-words">{row.name}</strong>
+              <span className="mt-1 block text-xs text-[var(--team-muted)]">{row.author}</span>
+            </Link>)}</div>
+          {!group.rows.length ? <p className="mt-4 text-sm text-[var(--team-muted)]">No hay pendientes.</p> : null}
+        </TeamSurface>)}
+        <TeamSurface className="min-w-0 !p-4">
+          <h2 className="team-display text-xl font-bold uppercase">Jugadores</h2>
+          <p className="my-3 text-sm text-[var(--team-muted)]">{members.data!.filter(m => m.role === "TEAM_ADMIN").length}{" "}administradores en el equipo</p>
+          <Link className={quiet + " w-full"} href={base + "/admin/jugadores"}>Ver miembros →</Link>
+          <h3 className="mt-5 text-sm font-semibold">Últimos miembros</h3>
+          <div className="divide-y divide-[var(--team-line)]">{members.data!.slice(-3).reverse().map(m => <div className="py-3 text-sm" key={m.id}>
+              <strong className="break-words">{m.displayName}</strong>
+              <p className="mt-1 text-xs text-[var(--team-muted)]">Desde {date(m.joinedAt)}</p>
+            </div>)}</div>
+        </TeamSurface>
+        <TeamSurface className="min-w-0 !p-4">
+          <h2 className="team-display text-xl font-bold uppercase">Gestión de logros</h2>
+          <p className="my-3 text-sm text-[var(--team-muted)]">Concede logros y actualiza el progreso.</p>
+          <Link className={quiet + " w-full"} href={base + "/admin/logros"}>Gestionar catálogo →</Link>
+          <h3 className="mt-5 text-sm font-semibold">Últimos logros</h3>
+          <div className="divide-y divide-[var(--team-line)]">{catalog.data!.filter(r => !r.isHidden).slice(0, 3).map(
+              r => !r.isHidden ? <Link className="block py-3 text-sm hover:underline" key={r.id} href={base + "/logros/" + r.id}>
+                <strong className="block break-words">{r.nombre}</strong>
+                <span className="mt-1 block text-xs text-[var(--team-muted)]">{r.puntos}{" "}puntos</span>
+              </Link> : null
+            )}</div>
+        </TeamSurface>
+      </div>
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <TeamSurface>
+          <h2 className="team-display text-xl font-bold uppercase">Accesos rápidos</h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link className={quiet} href={base + "/admin/invitaciones"}>Invitar</Link>
+            <Link className={quiet} href={base + "/admin/solicitudes"}>Revisar solicitudes</Link>
+            <Link className={quiet} href={base + "/logros/nuevo"}>Crear logro</Link>
+            <Link className={quiet} href={base + "/admin/temporadas"}>Gestionar temporadas</Link>
+          </div>
+        </TeamSurface>
+        <TeamSurface>
+          <h2 className="team-display text-xl font-bold uppercase">Consejo para administradores</h2>
+          <p className="mt-4 text-sm leading-6 text-[var(--team-muted)]">Una propuesta aprobada amplía el catálogo. Para obtener el logro, el jugador debe cumplir sus criterios y solicitarlo por separado.</p>
+        </TeamSurface>
+      </div>
+    </>
+  );
 }

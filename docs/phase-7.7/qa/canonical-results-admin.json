@@ -1,0 +1,889 @@
+[
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/invitaciones",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-invitaciones-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Invitaciones del equipo",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nInvitaciones\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nINVITACIONES DEL EQUIPO\n\nInvita a nuevos jugadores y controla el acceso al equipo.\n\nInvitaciones activas\n3\nTotal de invitaciones\n6\nCon algún uso\n5\nCaducadas\n1\nCREAR NUEVA INVITACIÓN\nDuración en días\nUsos máximos\nCrear invitación\nCOMPARTE CON TU EQUIPO\n\nGenera un enlace con duración y usos limitados. Compártelo solo con las personas que quieras incorporar al equipo.\n\nLISTA DE INVITACIONES\nInvitación #6\n•\nRevocada\n\n1/10usos · Caduca el 27 sept 2026\n\nCopiar enlace\nInvitación #5\n•\nCaducada\n\n4/10usos · Caduca el 15 sept 2026\n\nCopiar enlace\nInvitación #4\n•\nAgotada\n\n10/10usos · Caduca el 27 sept 2026\n\nCopiar enlace\nInvitación #3\n✓\nActiva\n\n8/20usos · Caduca el 29 sept 2026\n\nCopiar enlace\nInvitación #2\n✓\nActiva\n\n3/10usos · Caduca el 28 sept 2026\n\nCopiar enlace\nInvitación #1\n✓\nActiva\n\n0/10usos · Caduca el 27 sept 2026\n\nCopiar enlace"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/jugadores",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-jugadores-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Gestión de jugadores",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nJugadores\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nGESTIÓN DE JUGADORES\n\nConsulta los miembros del equipo y sus roles actuales.\n\nMiembros\n12\nAdministradores\n2\nJugadores\n10\nBuscar jugador\nRol\nTodos\nAdministradores\nJugadores\nInvitar jugador\nJugador\tRol actual\tFecha de unión\n\nJavier Loro\ntest@halcones.com\t\n!\nAdministrador\t1 sept 2026\n\nDiego Ruiz\ndiego@halcones.test\t\n!\nAdministrador\t2 sept 2026\n\nAna Fernández\nana@halcones.test\t\n•\nJugador\t3 sept 2026\n\nMarcos del Río\nmarcos@halcones.test\t\n•\nJugador\t4 sept 2026\n\nLaura Sánchez\nlaura@halcones.test\t\n•\nJugador\t5 sept 2026\n\nPablo García\npablo@halcones.test\t\n•\nJugador\t6 sept 2026\n\nMaría Pérez\nmaria@halcones.test\t\n•\nJugador\t7 sept 2026\n\nCarmen Martín\ncarmen@halcones.test\t\n•\nJugador\t8 sept 2026\n\nCarlos Torres\ncarlos@halcones.test\t\n•\nJugador\t9 sept 2026\n\nÁlex Moreno de la Fuente\nalex@halcones.test\t\n•\nJugador\t10 sept 2026\n\nDaniel Molina\ndaniel@halcones.test\t\n•\nJugador\t11 sept 2026\n\nElena Castro\nelena@halcones.test\t\n•\nJugador\t12 sept 2026"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/invitaciones",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-invitaciones-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Invitaciones del equipo",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nInvitaciones\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nINVITACIONES DEL EQUIPO\n\nInvita a nuevos jugadores y controla el acceso al equipo.\n\nInvitaciones activas\n3\nTotal de invitaciones\n6\nCon algún uso\n5\nCaducadas\n1\nCREAR NUEVA INVITACIÓN\nDuración en días\nUsos máximos\nCrear invitación\nCOMPARTE CON TU EQUIPO\n\nGenera un enlace con duración y usos limitados. Compártelo solo con las personas que quieras incorporar al equipo.\n\nLISTA DE INVITACIONES\nInvitación #6\n•\nRevocada\n\n1/10usos · Caduca el 27 sept 2026\n\nCopiar enlace\nInvitación #5\n•\nCaducada\n\n4/10usos · Caduca el 15 sept 2026\n\nCopiar enlace\nInvitación #4\n•\nAgotada\n\n10/10usos · Caduca el 27 sept 2026\n\nCopiar enlace\nInvitación #3\n✓\nActiva\n\n8/20usos · Caduca el 29 sept 2026\n\nCopiar enlace\nInvitación #2\n✓\nActiva\n\n3/10usos · Caduca el 28 sept 2026\n\nCopiar enlace\nInvitación #1\n✓\nActiva\n\n0/10usos · Caduca el 27 sept 2026\n\nCopiar enlace"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/jugadores",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-jugadores-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Gestión de jugadores",
+    "overflowElements": [
+      {
+        "tag": "TABLE",
+        "cls": "w-full text-left text-sm",
+        "right": 454.875
+      },
+      {
+        "tag": "THEAD",
+        "cls": "border-b border-[var(--team-line)] text-[var(--team-muted)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 454.875
+      },
+      {
+        "tag": "TH",
+        "cls": "p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TBODY",
+        "cls": "",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 454.875
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap p-3",
+        "right": 454.875
+      }
+    ],
+    "text": "Halcones\n/\nAdministración\n/\nJugadores\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nGESTIÓN DE JUGADORES\n\nConsulta los miembros del equipo y sus roles actuales.\n\nMiembros\n12\nAdministradores\n2\nJugadores\n10\nBuscar jugador\nRol\nTodos\nAdministradores\nJugadores\nInvitar jugador\nJugador\tRol actual\tFecha de unión\n\nJavier Loro\ntest@halcones.com\t\n!\nAdministrador\t1 sept 2026\n\nDiego Ruiz\ndiego@halcones.test\t\n!\nAdministrador\t2 sept 2026\n\nAna Fernández\nana@halcones.test\t\n•\nJugador\t3 sept 2026\n\nMarcos del Río\nmarcos@halcones.test\t\n•\nJugador\t4 sept 2026\n\nLaura Sánchez\nlaura@halcones.test\t\n•\nJugador\t5 sept 2026\n\nPablo García\npablo@halcones.test\t\n•\nJugador\t6 sept 2026\n\nMaría Pérez\nmaria@halcones.test\t\n•\nJugador\t7 sept 2026\n\nCarmen Martín\ncarmen@halcones.test\t\n•\nJugador\t8 sept 2026\n\nCarlos Torres\ncarlos@halcones.test\t\n•\nJugador\t9 sept 2026\n\nÁlex Moreno de la Fuente\nalex@halcones.test\t\n•\nJugador\t10 sept 2026\n\nDaniel Molina\ndaniel@halcones.test\t\n•\nJugador\t11 sept 2026\n\nElena Castro\nelena@halcones.test\t\n•\nJugador\t12 sept 2026"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/logros",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-logros-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Gestión de logros",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nLogros\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nGESTIÓN DE LOGROS\n\nOrganiza el catálogo y gestiona la concesión, el progreso y la visibilidad.\n\nLogros en catálogo\n14\nCategorías\n5\nProgresivos\n0\nSecretos\n0\nCrear nuevo logro\nRevisar propuestas\nBuscar logro\nTipo\nTodos los tipos\nEstándar\nProgresivo\nLogro\tPuntos\tCondiciones\tAcciones\nGuía para el siguiente vuelo\n\nComunidad\n\n\t120\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nGuía para el siguiente vuelo\n\nOrganización compartida\n\nEquipo\n\n\t100\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nOrganización compartida\n\nUna victoria compartida\n\nEquipo\n\n\t160\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nUna victoria compartida\n\nAprender y volver a intentarlo\n\nConstancia\n\n\t110\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nAprender y volver a intentarlo\n\nVoz del equipo\n\nComunidad\n\n\t70\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nVoz del equipo\n\nBienvenida al nido\n\nInicio\n\n\t40\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nBienvenida al nido\n\nLectura del juego\n\nImpacto\n\n\t130\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nLectura del juego\n\nPase decisivo\n\nEquipo\n\n\t90\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nPase decisivo\n\nRacha impecable\n\nConstancia\n\n\t150\t\n\nEstándar\n\nPermanen"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/logros",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-logros-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Gestión de logros",
+    "overflowElements": [
+      {
+        "tag": "TABLE",
+        "cls": "w-full text-left text-sm [&_td]:break-words",
+        "right": 483.140625
+      },
+      {
+        "tag": "THEAD",
+        "cls": "border-b border-[var(--team-line)] text-[var(--team-muted)]",
+        "right": 483.140625
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 483.140625
+      },
+      {
+        "tag": "TH",
+        "cls": "p-3",
+        "right": 483.140625
+      },
+      {
+        "tag": "TBODY",
+        "cls": "",
+        "right": 483.140625
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 483.140625
+      },
+      {
+        "tag": "TD",
+        "cls": "p-3",
+        "right": 483.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] focus-visible:outline-2 focus-visible:outline-offset-2",
+        "right": 471.140625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 426.046875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 483.140625
+      },
+      {
+        "tag": "TD",
+        "cls": "p-3",
+        "right": 483.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] focus-visible:outline-2 focus-visible:outline-offset-2",
+        "right": 471.140625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 426.046875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 483.140625
+      },
+      {
+        "tag": "TD",
+        "cls": "p-3",
+        "right": 483.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] focus-visible:outline-2 focus-visible:outline-offset-2",
+        "right": 471.140625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 426.046875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 483.140625
+      },
+      {
+        "tag": "TD",
+        "cls": "p-3",
+        "right": 483.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] focus-visible:outline-2 focus-visible:outline-offset-2",
+        "right": 471.140625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 426.046875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 483.140625
+      },
+      {
+        "tag": "TD",
+        "cls": "p-3",
+        "right": 483.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] focus-visible:outline-2 focus-visible:outline-offset-2",
+        "right": 471.140625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 426.046875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 483.140625
+      },
+      {
+        "tag": "TD",
+        "cls": "p-3",
+        "right": 483.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] focus-visible:outline-2 focus-visible:outline-offset-2",
+        "right": 471.140625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 426.046875
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 483.140625
+      }
+    ],
+    "text": "Halcones\n/\nAdministración\n/\nLogros\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nGESTIÓN DE LOGROS\n\nOrganiza el catálogo y gestiona la concesión, el progreso y la visibilidad.\n\nLogros en catálogo\n14\nCategorías\n5\nProgresivos\n0\nSecretos\n0\nCrear nuevo logro\nRevisar propuestas\nBuscar logro\nTipo\nTodos los tipos\nEstándar\nProgresivo\nLogro\tPuntos\tCondiciones\tAcciones\nGuía para el siguiente vuelo\n\nComunidad\n\n\t120\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nGuía para el siguiente vuelo\n\nOrganización compartida\n\nEquipo\n\n\t100\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nOrganización compartida\n\nUna victoria compartida\n\nEquipo\n\n\t160\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nUna victoria compartida\n\nAprender y volver a intentarlo\n\nConstancia\n\n\t110\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nAprender y volver a intentarlo\n\nVoz del equipo\n\nComunidad\n\n\t70\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nVoz del equipo\n\nBienvenida al nido\n\nInicio\n\n\t40\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nBienvenida al nido\n\nLectura del juego\n\nImpacto\n\n\t130\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nLectura del juego\n\nPase decisivo\n\nEquipo\n\n\t90\t\n\nEstándar\n\nPermanente\n\n\tGestionar\nPase decisivo\n\nRacha impecable\n\nConstancia\n\n\t150\t\n\nEstándar\n\nPermanen"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Administración del equipo",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nADMINISTRACIÓN DEL EQUIPO\n\nControla el acceso, revisa solicitudes y gestiona el catálogo.\n\nMiembros del equipo\n12\nInvitaciones activas\n3\nSolicitudes pendientes\n4\nPropuestas pendientes\n2\nLogros en catálogo\n14\nINVITACIONES\n\nCrea enlaces para incorporar nuevos jugadores.\n\nCrear invitación →\nÚltimas invitaciones\nInvitación #1\n\n0/10 usos · Activa\n\nInvitación #2\n\n3/10 usos · Activa\n\nInvitación #3\n\n8/20 usos · Activa\n\nSOLICITUDES DE LOGROS\n\n4 pendientes de revisión\n\nVer todas →\nPendientes más antiguas\nUna victoria compartida\nAna Fernández\nUna victoria compartida\nLaura Sánchez\nPrimer vuelo\nDaniel Molina\nPROPUESTAS DE NUEVOS LOGROS\n\n2 pendientes de revisión\n\nVer todas →\nPendientes más antiguas\nEncuentro de aprendizaje\nAna Fernández\nCuidar el material\nLaura Sánchez\nJUGADORES\n\n2 administradores en el equipo\n\nVer miembros →\nÚltimos miembros\nElena Castro\n\nDesde 12 sept 2026\n\nDaniel Molina\n\nDesde 11 sept 2026\n\nÁlex Moreno de la Fuente\n\nDesde 10 sept 2026\n\nGESTIÓN DE LOGROS\n\nConcede logros y actualiza el progreso.\n\nGestionar catálogo →\nÚltimos logros\nGuía para el siguiente vuelo\n120 puntos\nOrganiza"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/solicitudes",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-solicitudes-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Solicitudes de obtención",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nSolicitudes de obtención\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nSOLICITUDES DE OBTENCIÓN\n\nRevisa si los jugadores cumplen los criterios de los logros que solicitan.\n\nPendientes\n4\nAprobadas\n2\nRechazadas\n2\nPropuestas de nuevos logros →\nVer catálogo\nBuscar\nEstado\nTodos los estados\nPendientes\nAprobadas\nRechazadas\nOrden\nMás antiguas\nMás recientes\nLogro solicitado\tJugador\tFecha\tEstado\tAcción\n\nPD\nPase decisivo\n\t\nAF\nAna Fernández\n\t14 sept 2026\t\n✓\nAprobada\tVer detalle\nde Pase decisivo\n\n\nRI\nRacha impecable\n\t\nMR\nMarcos del Río\n\t14 sept 2026\t\n✓\nAprobada\tVer detalle\nde Racha impecable\n\n\nAY\nAprender y volver a intentarlo\n\t\nAF\nAna Fernández\n\t14 sept 2026\t\n×\nRechazada\tVer detalle\nde Aprender y volver a intentarlo\n\n\nAY\nAprender y volver a intentarlo\n\t\nPG\nPablo García\n\t14 sept 2026\t\n×\nRechazada\tVer detalle\nde Aprender y volver a intentarlo\n\n\nUV\nUna victoria compartida\n\t\nAF\nAna Fernández\n\t14 sept 2026\t\n!\nPendiente\tVer detalle\nde Una victoria compartida\n\n\nUV\nUna victoria compartida\n\t\nLS\nLaura Sánchez\n\t14 sept 2026\t\n!\nPendiente\tVer detalle\nde Una victoria compartida\n\n\nPV\nPrimer vuelo\n\t\nDM\nDaniel Molina\n\t14 sept 2026\t\n!\nPendiente\tVer detalle"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/propuestas",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-propuestas-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Propuestas de nuevos logros",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nPropuestas\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nPROPUESTAS DE NUEVOS LOGROS\n\nRevisa las ideas de los miembros del equipo para incorporarlas al catálogo.\n\nPendientes\n2\nAñadidas al catálogo\n2\nRechazadas\n2\nSolicitudes de obtención →\nVer catálogo\nBuscar\nEstado\nTodos los estados\nPendientes\nAñadidas al catálogo\nRechazadas\nOrden\nMás antiguas\nMás recientes\nPropuesta\tJugador\tFecha\tEstado\tAcción\n\nOC\nOrganización compartida\n\t\nAF\nAna Fernández\n\t16 sept 2026\t\n✓\nAñadida al catálogo\tVer detalle\nde Organización compartida\n\n\nGP\nGuía para el siguiente vuelo\n\t\nMR\nMarcos del Río\n\t16 sept 2026\t\n✓\nAñadida al catálogo\tVer detalle\nde Guía para el siguiente vuelo\n\n\nED\nEncuentro de aprendizaje\n\t\nAF\nAna Fernández\n\t16 sept 2026\t\n!\nPendiente\tVer detalle\nde Encuentro de aprendizaje\n\n\nCE\nCuidar el material\n\t\nLS\nLaura Sánchez\n\t16 sept 2026\t\n!\nPendiente\tVer detalle\nde Cuidar el material\n\n\nSD\nSiempre disponibles\n\t\nAF\nAna Fernández\n\t16 sept 2026\t\n×\nRechazada\tVer detalle\nde Siempre disponibles\n\n\nVI\nVictoria individual\n\t\nPG\nPablo García\n\t16 sept 2026\t\n×\nRechazada\tVer detalle\nde Victoria individual\n\n6 de 6 registros\n\nAÑADIDAS RECIENTEMENTE\nGP\nGuía para el"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/solicitudes/1",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-solicitudes-1-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Detalle de solicitud de obtención",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nSolicitudes de obtención\n/\nDetalle\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\n← Volver a solicitudes\nDETALLE DE SOLICITUD DE OBTENCIÓN\n\nComprueba los criterios antes de conceder el logro al jugador.\n\nPASE DECISIVO\n✓\nAprobada\nAF\nJugador solicitante\n\nAna Fernández\n\nana@halcones.test\n\n#1 · 14 sept 2026\n\nPD\nLOGRO SOLICITADO\n\nFacilitar una acción que permita cerrar el objetivo común.\n\nCRITERIOS DE OBTENCIÓN\nFacilitar una acción que permita cerrar el objetivo común.\nConfirmar el resultado con un administrador del equipo.\nCONTEXTO DE LA SOLICITUD\nÁmbito\nPermanente\nPuntos\n90\nTipo\nEstándar\nVer logro en el catálogo →\nRESOLUCIÓN\n✓\nAprobada\n\nRevisada el 15 sept 2026\n\nREVISA CON CRITERIO\n\nLa decisión debe basarse en condiciones claras y comprobables. El motivo de rechazo se conserva en el historial del jugador."
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/propuestas/1",
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-propuestas-1-1440.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heading": "Detalle de propuesta de nuevo logro",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nPropuestas\n/\nDetalle\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\n← Volver a propuestas\nDETALLE DE PROPUESTA DE NUEVO LOGRO\n\nDecide si esta idea debe incorporarse al catálogo del equipo.\n\nORGANIZACIÓN COMPARTIDA\n✓\nAñadida al catálogo\nAF\nPropuesta enviada por\n\nAna Fernández\n\nana@halcones.test\n\n#1 · 16 sept 2026\n\nDESCRIPCIÓN\n\nReconoce a quien organiza un encuentro y coordina al equipo.\n\nCRITERIOS DE OBTENCIÓN\nAcordar fecha y lugar con el equipo.\nComunicar la planificación a todos los miembros.\nAÑADIDA AL CATÁLOGO\n\nLos miembros pueden solicitar su obtención desde el catálogo.\n\nVer logro →\nVISTA PREVIA DEL LOGRO\nOC\nORGANIZACIÓN COMPARTIDA\n\nReconoce a quien organiza un encuentro y coordina al equipo.\n\n100 puntos\n\nRESOLUCIÓN\n✓\nAñadida al catálogo\n\nRevisada el 18 sept 2026\n\nREVISA CON CRITERIO\n\nLa decisión debe basarse en condiciones claras y comprobables. El motivo de rechazo se conserva en el historial del jugador."
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Administración del equipo",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nADMINISTRACIÓN DEL EQUIPO\n\nControla el acceso, revisa solicitudes y gestiona el catálogo.\n\nMiembros del equipo\n12\nInvitaciones activas\n3\nSolicitudes pendientes\n4\nPropuestas pendientes\n2\nLogros en catálogo\n14\nINVITACIONES\n\nCrea enlaces para incorporar nuevos jugadores.\n\nCrear invitación →\nÚltimas invitaciones\nInvitación #1\n\n0/10 usos · Activa\n\nInvitación #2\n\n3/10 usos · Activa\n\nInvitación #3\n\n8/20 usos · Activa\n\nSOLICITUDES DE LOGROS\n\n4 pendientes de revisión\n\nVer todas →\nPendientes más antiguas\nUna victoria compartida\nAna Fernández\nUna victoria compartida\nLaura Sánchez\nPrimer vuelo\nDaniel Molina\nPROPUESTAS DE NUEVOS LOGROS\n\n2 pendientes de revisión\n\nVer todas →\nPendientes más antiguas\nEncuentro de aprendizaje\nAna Fernández\nCuidar el material\nLaura Sánchez\nJUGADORES\n\n2 administradores en el equipo\n\nVer miembros →\nÚltimos miembros\nElena Castro\n\nDesde 12 sept 2026\n\nDaniel Molina\n\nDesde 11 sept 2026\n\nÁlex Moreno de la Fuente\n\nDesde 10 sept 2026\n\nGESTIÓN DE LOGROS\n\nConcede logros y actualiza el progreso.\n\nGestionar catálogo →\nÚltimos logros\nGuía para el siguiente vuelo\n120 puntos\nOrganiza"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/solicitudes",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-solicitudes-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Solicitudes de obtención",
+    "overflowElements": [
+      {
+        "tag": "TABLE",
+        "cls": "w-full text-left text-sm [&_td]:break-words",
+        "right": 675.625
+      },
+      {
+        "tag": "THEAD",
+        "cls": "border-b border-[var(--team-line)] text-[var(--team-muted)]",
+        "right": 675.625
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 675.625
+      },
+      {
+        "tag": "TH",
+        "cls": "px-3 py-3 font-medium",
+        "right": 434.671875
+      },
+      {
+        "tag": "TH",
+        "cls": "px-3 py-3 font-medium",
+        "right": 553.671875
+      },
+      {
+        "tag": "TH",
+        "cls": "px-3 py-3 font-medium",
+        "right": 675.625
+      },
+      {
+        "tag": "TBODY",
+        "cls": "",
+        "right": 675.625
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 675.625
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap px-3 py-2",
+        "right": 434.671875
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 553.671875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-success)_35%,transparent)] bg-[var(--lb-color-success-surface)] text-[var(--lb-color-success)]",
+        "right": 535.828125
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 464.671875
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 675.625
+      },
+      {
+        "tag": "A",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap",
+        "right": 663.625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 615.140625
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 675.625
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap px-3 py-2",
+        "right": 434.671875
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 553.671875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-success)_35%,transparent)] bg-[var(--lb-color-success-surface)] text-[var(--lb-color-success)]",
+        "right": 535.828125
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 464.671875
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 675.625
+      },
+      {
+        "tag": "A",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap",
+        "right": 663.625
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 615.140625
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 675.625
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap px-3 py-2",
+        "right": 434.671875
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 553.671875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-danger)_35%,transparent)] bg-[var(--lb-color-danger-surface)] text-[var(--lb-color-danger)]",
+        "right": 541.671875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 463.125
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 675.625
+      },
+      {
+        "tag": "A",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap",
+        "right": 663.625
+      }
+    ],
+    "text": "Halcones\n/\nAdministración\n/\nSolicitudes de obtención\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nSOLICITUDES DE OBTENCIÓN\n\nRevisa si los jugadores cumplen los criterios de los logros que solicitan.\n\nPendientes\n4\nAprobadas\n2\nRechazadas\n2\nPropuestas de nuevos logros →\nVer catálogo\nBuscar\nEstado\nTodos los estados\nPendientes\nAprobadas\nRechazadas\nOrden\nMás antiguas\nMás recientes\nLogro solicitado\tJugador\tFecha\tEstado\tAcción\n\nPD\nPase decisivo\n\t\nAF\nAna Fernández\n\t14 sept 2026\t\n✓\nAprobada\tVer detalle\nde Pase decisivo\n\n\nRI\nRacha impecable\n\t\nMR\nMarcos del Río\n\t14 sept 2026\t\n✓\nAprobada\tVer detalle\nde Racha impecable\n\n\nAY\nAprender y volver a intentarlo\n\t\nAF\nAna Fernández\n\t14 sept 2026\t\n×\nRechazada\tVer detalle\nde Aprender y volver a intentarlo\n\n\nAY\nAprender y volver a intentarlo\n\t\nPG\nPablo García\n\t14 sept 2026\t\n×\nRechazada\tVer detalle\nde Aprender y volver a intentarlo\n\n\nUV\nUna victoria compartida\n\t\nAF\nAna Fernández\n\t14 sept 2026\t\n!\nPendiente\tVer detalle\nde Una victoria compartida\n\n\nUV\nUna victoria compartida\n\t\nLS\nLaura Sánchez\n\t14 sept 2026\t\n!\nPendiente\tVer detalle\nde Una victoria compartida\n\n\nPV\nPrimer vuelo\n\t\nDM\nDaniel Molina\n\t14 sept 2026\t\n!\nPendiente\tVer detalle"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/propuestas",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-propuestas-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Propuestas de nuevos logros",
+    "overflowElements": [
+      {
+        "tag": "TABLE",
+        "cls": "w-full text-left text-sm [&_td]:break-words",
+        "right": 675.4375
+      },
+      {
+        "tag": "THEAD",
+        "cls": "border-b border-[var(--team-line)] text-[var(--team-muted)]",
+        "right": 675.4375
+      },
+      {
+        "tag": "TR",
+        "cls": "",
+        "right": 675.4375
+      },
+      {
+        "tag": "TH",
+        "cls": "px-3 py-3 font-medium",
+        "right": 434.484375
+      },
+      {
+        "tag": "TH",
+        "cls": "px-3 py-3 font-medium",
+        "right": 553.484375
+      },
+      {
+        "tag": "TH",
+        "cls": "px-3 py-3 font-medium",
+        "right": 675.4375
+      },
+      {
+        "tag": "TBODY",
+        "cls": "",
+        "right": 675.4375
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 675.4375
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap px-3 py-2",
+        "right": 434.484375
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 553.484375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-success)_35%,transparent)] bg-[var(--lb-color-success-surface)] text-[var(--lb-color-success)]",
+        "right": 541.484375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 464.484375
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 675.4375
+      },
+      {
+        "tag": "A",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap",
+        "right": 663.4375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 614.953125
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 675.4375
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap px-3 py-2",
+        "right": 434.484375
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 553.484375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-success)_35%,transparent)] bg-[var(--lb-color-success-surface)] text-[var(--lb-color-success)]",
+        "right": 541.484375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 464.484375
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 675.4375
+      },
+      {
+        "tag": "A",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap",
+        "right": 663.4375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "sr-only",
+        "right": 614.953125
+      },
+      {
+        "tag": "TR",
+        "cls": "border-b border-[var(--team-line)]",
+        "right": 675.4375
+      },
+      {
+        "tag": "TD",
+        "cls": "whitespace-nowrap px-3 py-2",
+        "right": 434.484375
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 553.484375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "inline-flex min-h-7 items-center gap-1.5 rounded-[var(--lb-radius-status)] border px-2 py-1 text-xs font-semibold border-[color:color-mix(in_srgb,var(--lb-color-warning)_35%,transparent)] bg-[var(--lb-color-warning-surface)] text-[var(--lb-color-warning)]",
+        "right": 532.59375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "right": 458.9375
+      },
+      {
+        "tag": "TD",
+        "cls": "px-3 py-2",
+        "right": 675.4375
+      },
+      {
+        "tag": "A",
+        "cls": "inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--team-line)] px-3 py-2 text-sm hover:bg-[var(--team-surface-strong)] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap",
+        "right": 663.4375
+      }
+    ],
+    "text": "Halcones\n/\nAdministración\n/\nPropuestas\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\nPROPUESTAS DE NUEVOS LOGROS\n\nRevisa las ideas de los miembros del equipo para incorporarlas al catálogo.\n\nPendientes\n2\nAñadidas al catálogo\n2\nRechazadas\n2\nSolicitudes de obtención →\nVer catálogo\nBuscar\nEstado\nTodos los estados\nPendientes\nAñadidas al catálogo\nRechazadas\nOrden\nMás antiguas\nMás recientes\nPropuesta\tJugador\tFecha\tEstado\tAcción\n\nOC\nOrganización compartida\n\t\nAF\nAna Fernández\n\t16 sept 2026\t\n✓\nAñadida al catálogo\tVer detalle\nde Organización compartida\n\n\nGP\nGuía para el siguiente vuelo\n\t\nMR\nMarcos del Río\n\t16 sept 2026\t\n✓\nAñadida al catálogo\tVer detalle\nde Guía para el siguiente vuelo\n\n\nED\nEncuentro de aprendizaje\n\t\nAF\nAna Fernández\n\t16 sept 2026\t\n!\nPendiente\tVer detalle\nde Encuentro de aprendizaje\n\n\nCE\nCuidar el material\n\t\nLS\nLaura Sánchez\n\t16 sept 2026\t\n!\nPendiente\tVer detalle\nde Cuidar el material\n\n\nSD\nSiempre disponibles\n\t\nAF\nAna Fernández\n\t16 sept 2026\t\n×\nRechazada\tVer detalle\nde Siempre disponibles\n\n\nVI\nVictoria individual\n\t\nPG\nPablo García\n\t16 sept 2026\t\n×\nRechazada\tVer detalle\nde Victoria individual\n\n6 de 6 registros\n\nAÑADIDAS RECIENTEMENTE\nGP\nGuía para el"
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/solicitudes/1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-solicitudes-1-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Detalle de solicitud de obtención",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nSolicitudes de obtención\n/\nDetalle\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\n← Volver a solicitudes\nDETALLE DE SOLICITUD DE OBTENCIÓN\n\nComprueba los criterios antes de conceder el logro al jugador.\n\nPASE DECISIVO\n✓\nAprobada\nAF\nJugador solicitante\n\nAna Fernández\n\nana@halcones.test\n\n#1 · 14 sept 2026\n\nPD\nLOGRO SOLICITADO\n\nFacilitar una acción que permita cerrar el objetivo común.\n\nCRITERIOS DE OBTENCIÓN\nFacilitar una acción que permita cerrar el objetivo común.\nConfirmar el resultado con un administrador del equipo.\nCONTEXTO DE LA SOLICITUD\nÁmbito\nPermanente\nPuntos\n90\nTipo\nEstándar\nVer logro en el catálogo →\nRESOLUCIÓN\n✓\nAprobada\n\nRevisada el 15 sept 2026\n\nREVISA CON CRITERIO\n\nLa decisión debe basarse en condiciones claras y comprobables. El motivo de rechazo se conserva en el historial del jugador."
+  },
+  {
+    "role": "admin",
+    "identity": "diego@halcones.test",
+    "fixture": "halcones-visual",
+    "route": "admin/propuestas/1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "path": "docs/phase-7.7/qa/screenshots/admin-admin-propuestas-1-390.png",
+    "errors": [],
+    "httpErrors": [],
+    "width": 390,
+    "scrollWidth": 390,
+    "heading": "Detalle de propuesta de nuevo logro",
+    "overflowElements": [],
+    "text": "Halcones\n/\nAdministración\n/\nPropuestas\n/\nDetalle\nResumen\nInvitaciones\nJugadores\nLogros\nSolicitudes de obtención\nPropuestas\n← Volver a propuestas\nDETALLE DE PROPUESTA DE NUEVO LOGRO\n\nDecide si esta idea debe incorporarse al catálogo del equipo.\n\nORGANIZACIÓN COMPARTIDA\n✓\nAñadida al catálogo\nAF\nPropuesta enviada por\n\nAna Fernández\n\nana@halcones.test\n\n#1 · 16 sept 2026\n\nDESCRIPCIÓN\n\nReconoce a quien organiza un encuentro y coordina al equipo.\n\nCRITERIOS DE OBTENCIÓN\nAcordar fecha y lugar con el equipo.\nComunicar la planificación a todos los miembros.\nAÑADIDA AL CATÁLOGO\n\nLos miembros pueden solicitar su obtención desde el catálogo.\n\nVer logro →\nVISTA PREVIA DEL LOGRO\nOC\nORGANIZACIÓN COMPARTIDA\n\nReconoce a quien organiza un encuentro y coordina al equipo.\n\n100 puntos\n\nRESOLUCIÓN\n✓\nAñadida al catálogo\n\nRevisada el 18 sept 2026\n\nREVISA CON CRITERIO\n\nLa decisión debe basarse en condiciones claras y comprobables. El motivo de rechazo se conserva en el historial del jugador."
+  }
+]

@@ -1,0 +1,127 @@
+{
+  "fixture": "qa79-1790269588506-main",
+  "results": [
+    {
+      "check": "same target concurrent activate and activate/close ends CLOSED",
+      "statuses": [
+        200,
+        200
+      ],
+      "result": "PASS"
+    },
+    {
+      "check": "long120 no global mobile overflow in confirm and ranking",
+      "result": "PASS"
+    }
+  ],
+  "geometry": [
+    {
+      "route": "/equipos/qa79-1790269588506-main/admin/temporadas",
+      "width": 390,
+      "scrollWidth": 390,
+      "elements": []
+    },
+    {
+      "route": "/equipos/qa79-1790269588506-main/ranking",
+      "width": 390,
+      "scrollWidth": 390,
+      "elements": [
+        {
+          "tag": "TABLE",
+          "cls": "w-full min-w-[44rem] border-collapse text-left text-sm",
+          "right": 721
+        },
+        {
+          "tag": "THEAD",
+          "cls": "bg-[var(--team-surface-low)] text-[0.6875rem] uppercase tracking-[0.08em] text-[var(--team-muted)]",
+          "right": 721
+        },
+        {
+          "tag": "TR",
+          "cls": "h-10 border-y border-[var(--team-line)]",
+          "right": 721
+        },
+        {
+          "tag": "TH",
+          "cls": "w-24 px-3 text-right font-semibold",
+          "right": 417
+        },
+        {
+          "tag": "TH",
+          "cls": "w-20 px-3 text-right font-semibold",
+          "right": 497
+        },
+        {
+          "tag": "TH",
+          "cls": "w-56 px-3 font-semibold",
+          "right": 721
+        },
+        {
+          "tag": "TBODY",
+          "cls": "",
+          "right": 721
+        },
+        {
+          "tag": "TR",
+          "cls": "h-12 border-b border-[var(--team-line)] last:border-b-0",
+          "right": 721
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3 text-right font-[var(--lb-font-data)] font-semibold tabular-nums text-[var(--team-text)]",
+          "right": 417
+        },
+        {
+          "tag": "SPAN",
+          "cls": "text-[0.625rem] font-normal text-[var(--team-muted)]",
+          "right": 405
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3 text-right font-[var(--lb-font-data)] tabular-nums text-[var(--team-text)]",
+          "right": 497
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3",
+          "right": 721
+        },
+        {
+          "tag": "SPAN",
+          "cls": "text-xs text-[var(--team-muted)]",
+          "right": 612.265625
+        },
+        {
+          "tag": "TR",
+          "cls": "h-12 border-b border-[var(--team-line)] last:border-b-0",
+          "right": 721
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3 text-right font-[var(--lb-font-data)] font-semibold tabular-nums text-[var(--team-text)]",
+          "right": 417
+        },
+        {
+          "tag": "SPAN",
+          "cls": "text-[0.625rem] font-normal text-[var(--team-muted)]",
+          "right": 405
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3 text-right font-[var(--lb-font-data)] tabular-nums text-[var(--team-text)]",
+          "right": 497
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3",
+          "right": 721
+        },
+        {
+          "tag": "SPAN",
+          "cls": "text-xs text-[var(--team-muted)]",
+          "right": 612.265625
+        }
+      ]
+    }
+  ]
+}

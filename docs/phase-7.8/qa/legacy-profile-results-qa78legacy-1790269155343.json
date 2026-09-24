@@ -1,0 +1,240 @@
+{
+  "run": "qa78legacy-1790269155343",
+  "sessionMode": "signed fixture session",
+  "results": [
+    {
+      "role": "none",
+      "method": "GET",
+      "path": "/auth/profile",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "role": "none",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "role": "none",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "role": "outsider",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/no-existe-qa78/mi-alias",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "check": "authentication and membership guards",
+      "result": "PASS"
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/auth/profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "solo",
+      "method": "GET",
+      "path": "/auth/profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "profile DTO excludes password and global flags",
+      "result": "PASS"
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "check": "strict validation boundaries",
+      "result": "PASS"
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "global names trim and preserve independent aliases",
+      "result": "PASS"
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/auth/profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa78legacy-1790269155343-main/contexto",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "own alias trim isolated by tenant/user; remove falls back to global name",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/auth/profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "PATCH",
+      "path": "/equipos/qa78legacy-1790269155343-main/mi-alias",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "TEAM_ADMIN edits only own identity",
+      "result": "PASS"
+    },
+    {
+      "check": "cleanup own IDs; shared identity fixtures unchanged",
+      "result": "PASS",
+      "teamIds": [
+        37,
+        38
+      ],
+      "userIds": [
+        67,
+        68,
+        69,
+        70
+      ]
+    }
+  ]
+}

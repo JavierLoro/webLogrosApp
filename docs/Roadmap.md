@@ -1,9 +1,11 @@
 # Roadmap
 
 ## Ruta de aprendizaje
-JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx → CI/CD → Proxmox → Hardening → Multi-tenancy (Relaciones DB) → **Frontend V1 code-first** → Roles → Auth Hardening → Solicitudes/Admin → Propuestas → Identidad → Temporadas → **Imágenes y almacenamiento (7.10)** → **Visual convergence (image-first)** → Aggregaciones SQL → Comunidad → shadcn/ui → Ampliaciones de archivos → Testing → **WebSockets**
+JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx → CI/CD → Proxmox → Multi-tenancy (Relaciones DB) → **Frontend V1 code-first** → Roles → Auth Hardening → Solicitudes/Admin → Propuestas → Identidad → Temporadas → **Imágenes y almacenamiento (7.10)** → **Visual convergence (image-first)** → Aggregaciones SQL → Comunidad → shadcn/ui → Ampliaciones de archivos → Testing → **WebSockets** → **5.5: cierre de hardening y despliegue definitivo (backups al final)**
 
 > **Concepto de la app:** plataforma multi-tenant de logros — ver mapa de rutas y roles en [Architecture.md](Architecture.md)
+
+Clasificación pedagógica de todos los pendientes: [qué aporta conceptos nuevos, práctica o cierre](ROADMAP-APRENDIZAJE.md). Implementado y aprendido se evalúan por separado; esta clasificación no cambia los estados ni las pausas.
 
 ## Situación actual — base conciliada el 2026-09-22; planificación de media actualizada el 2026-09-24
 
@@ -12,15 +14,15 @@ La numeración describe el itinerario de aprendizaje, no una secuencia estricta 
 | Área | Estado real | Qué queda |
 | --- | --- | --- |
 | Base, equipos, roles y administración V1 | Completados en su alcance | Lecturas adicionales por jugador cuando se requieran |
-| Despliegue y protección del entorno (5/5.5) | Parcial | Confirmar HTTPS y copias externas del backup |
+| Despliegue y protección del entorno (5/5.5) | Parcial | Confirmar HTTPS en el despliegue definitivo; copias externas al final del roadmap |
 | Seguridad de sesión (7.5) | Completada; QA manual 22/09 | No repetir la migración a cookies |
-| Propuestas (7.7) | Backend y formulario por rol completados | Historiales UI-G7, administración UI-G8 e imágenes en Phase 10 |
-| Identidad (7.8) | Nombre/apellidos y alias contextual implementados y validados localmente | Editar perfil/alias, retirar campo legado y avatar |
-| Temporadas (7.9) | Migración local e integración #30/#29 verificadas; fase sin cerrar | Administración visual, selector histórico y QA restante de #11 |
+| Propuestas (7.7) | Backend, formulario, historiales G7 y administración G8 verificados localmente | Imágenes en Phase 10, dependientes de 7.10 |
+| Identidad (7.8) | Nombre/apellidos, alias contextual y edición propia en `/perfil` validados localmente | Avatar en 7.10 |
+| Temporadas (7.9) | Gestión, históricos y QA completados localmente; [entrega](phase-7.9/RESULT.md) | Publicación/despliegue y cierre remoto #11; ciclo de vida del jugador separado |
 | Rediseño G0–G5 | Gates cerrados | Regresión conjunta y últimos refinamientos en el cierre final |
-| Acceso y onboarding A1/A2 | En curso; foco actual UI-A2-T04 | QA funcional y cierre visual de ambos bloques |
-| Jugadores G6 | Pantalla implementada; continuación pausada en T03 | Capturas, pruebas de navegador y gate visual |
-| Solicitudes, administración y revisión G7–G9 | Pendientes | Continuar al reanudar la línea principal |
+| Acceso y onboarding A1/A2 | Cierre aplazado hasta completar la estructura | QA y gates después de G8 y de las nuevas pestañas/controles acordados, antes de G9 |
+| Jugadores G6 | COMPLETADA PROVISIONALMENTE por decisión del usuario (2026-09-24) | T03–T05 descartadas por ahora; sin QA ni aprobación visual acreditados |
+| Solicitudes, administración y revisión G7–G9 | G7/G8 cerrados localmente; G9 pendiente | Regresión global G9 tras estructura y A1/A2 |
 | Ranking y estadísticas (8) | Capacidad entregada dentro de G1/G3/G5 | Profundización pedagógica SQL y regresión final pendiente |
 | Imágenes y almacenamiento adelantados (7.10) | Decisiones de uso locales y plan por tareas cerrados; sin implementación | [T02/T03: diseño técnico](MEDIA-PLAN.md#52-diseño-e-infraestructura), luego logro completo → logos → avatares → QA; controles aplazados a nuevas pestañas |
 | Conservación, archivo y eliminación de jugadores | Reglas acordadas; bloque propio relacionado con identidad/temporadas | [PLAYER-LC-T01–T07](PLAYER-LIFECYCLE-PLAN.md#3-tareas-y-dependencias); conservación/reingreso antes de completar avatar específico; eliminación/admin no absorbidos por uploads |
@@ -28,7 +30,9 @@ La numeración describe el itinerario de aprendizaje, no una secuencia estricta 
 
 Fuentes: [STATUS](ui-workstream/STATUS.md), [TASKS](ui-workstream/TASKS.md), [QA de UI-G1](ui-workstream/evidence/UI-G1-T05-QA.md) y [registro de pendientes](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md). El commit local `c2ca920` reúne identidad, temporadas y sesiones. La publicación remota y el estado de las issues no se verifican mediante esta conciliación documental.
 
-Orden de entrega planificado: **diseño de 7.10 y conservación del jugador → almacenamiento/base común → logro completo → logos → avatares → QA y cierre local → despliegue/backups cuando se retomen**. La línea visual sigue en UI-A2-T04 y G6–G9 pausada; este orden no cambia sus gates. El recorrido completo de cada tipo necesita ubicar sus controles, decisión aplazada. Phase 7.10 se sitúa después de temporadas y antes de continuar el frontal con imágenes reales; no requiere completar antes Comunidad, shadcn/ui ni WebSockets.
+UI Workstream V2 conserva la pausa fuera de G7/G8, ya entregados por autorización acotada del usuario; A1/A2/G9 conservan su aplazamiento/pausa.
+
+Orden de entrega planificado: **diseño de 7.10 y conservación del jugador → almacenamiento/base común → logro completo → logos → avatares → QA y cierre local → completar estructura → cierre A1/A2 → G9; despliegue definitivo y backups al final del roadmap**. A1/A2 quedan aplazados hasta completar la estructura de pantallas y navegación acordada (G6–G8 y nuevas pestañas/controles de perfil, temporadas y media), antes de G9. G6 se considera completada provisionalmente por decisión del usuario, sin gate visual PASS; esta reordenación no ejecuta tareas. El recorrido completo de cada tipo necesita ubicar sus controles, decisión aplazada. Phase 7.10 se sitúa después de temporadas y antes de continuar el frontal con imágenes reales; no requiere completar antes Comunidad, shadcn/ui ni WebSockets.
 
 ---
 
@@ -63,19 +67,6 @@ Orden de entrega planificado: **diseño de 7.10 y conservación del jugador → 
 - [x] GitHub-based deployment workflow (GitHub Actions → GHCR + Watchtower)
 - [ ] HTTPS (Let's Encrypt) — verificar si Cloudflare Tunnel ya provee TLS en el borde; quizá solo falta confirmarlo
 
-## Phase 5.5 – Hardening
-> **Concepto nuevo:** configuración por entorno, validación en runtime, defensa en profundidad
-
-- [x] **Fix URLs del frontend** — sustituir `http://localhost:3001` hardcodeado por rutas relativas `/api/*` (vía nginx) o `NEXT_PUBLIC_API_URL`. Bug latente: en producción el navegador del visitante intenta conectarse a *su propio* localhost:3001, que no existe
-- [x] Validación de entrada con **Zod** en `POST /logros` y `/auth/*` — nunca confiar en el cliente
-- [x] **Error handler global** + clases de error centralizadas (patrón de `nodejs-backend-patterns`)
-- [x] **Fail-fast al arranque** — validar `JWT_SECRET` y `DATABASE_URL` al iniciar, con mensaje claro si faltan (eliminar el `!` que revienta en runtime de forma críptica)
-- [x] **Rate limiting** en `/auth/login` con `express-rate-limit` — protección básica contra fuerza bruta (también en `/auth/register`; `trust proxy` para nginx)
-- [x] **Healthcheck** — endpoint `GET /health` (readiness, `SELECT 1` a la BD, 503 si falla) + `healthcheck:` en Docker Compose (db con `pg_isready`, backend con Node `fetch`) + `depends_on: condition: service_healthy` (resuelve el clásico "backend arranca antes que la DB")
-- [x] **Backup automático de PostgreSQL** — sidecar DIY (`postgres:16` + bucle `pg_dump | gzip`, retención 7d con `find -mtime`) a `./backups` (volumen host); `backups/` en `.gitignore` (los datos son lo único irrecuperable; una migración mala con Watchtower auto-desplegando puede destruirlos)
-- [x] `apuntes.md`: sección "Hardening — validación, errores y configuración" (fail-fast, error handler, Zod, rate limiting, healthchecks, backup)
-- [ ] **Copias offsite del backup** (pasos manuales del host, documentados en apuntes) — cronjob `rsync` a otro disco/CT del Proxmox + opción `rclone` a Google Drive (regla 3-2-1)
-
 ## Phase 6 – Multi-tenancy: modelo de datos (Relaciones en Prisma)
 > **Concepto nuevo:** relaciones one-to-many / many-to-many, `@relation`, `@@unique`, rutas dinámicas anidadas
 
@@ -108,7 +99,7 @@ Orden de entrega planificado: **diseño de 7.10 y conservación del jugador → 
 - [x] Responsive mobile-first y navegación usable con teclado
 - [x] Accesibilidad básica: landmarks, labels, foco visible, contraste y mensajes asociados a controles
 - [x] Ranking desbloqueado por UI-G1 e implementado/aprobado en UI-G5; jugadores dispone de lectura real y pantalla implementada en UI-G6-T02
-- [ ] Cierre visual y de navegador de jugadores: UI-G6-T03/T04/T05, actualmente pausado
+- [x] G6 completada provisionalmente por decisión del usuario (2026-09-24): UI-G6-T03/T04/T05 descartadas por ahora, sin ejecutar QA ni acreditar aprobación visual.
 - [ ] Comunidad: funcionalidad futura de Phase 8.5, fuera de la V1 completada
 
 ## Phase 7 – Autorización por Roles
@@ -142,9 +133,11 @@ Orden de entrega planificado: **diseño de 7.10 y conservación del jugador → 
 - [x] Landing pública `/` (publicidad de la idea) + `/solicitar-acceso` (formulario para equipos)
 - [x] `apuntes.md`: sección "Solicitudes de logro" y aceptación transaccional
 
-## Phase 7.7 – Propuestas de nuevos logros (parcial: backend y formulario entregados)
+## Phase 7.7 – Propuestas de nuevos logros (parcial: pendiente solo imagen de propuestas)
 
-Decisión de producto del 2026-09-17. Amplía Phase 7.6: proponer un logro nuevo es distinto de solicitar la obtención de uno existente. UI-G1 y UI-G4 ya entregaron el dominio y el formulario; la fase completa depende aún de UI-G7/UI-G8 y de imágenes en Phase 10.
+Plan de implementación de pendientes: [historiales, administración, QA e imágenes](PHASE-7.7-PLAN.md). Pasos 1–7 y G7/G8 entregados localmente: [resultado y validación](phase-7.7/RESULT.md). Resto de pausa conservado.
+
+Decisión de producto del 2026-09-17. Amplía Phase 7.6: proponer un logro nuevo es distinto de solicitar la obtención de uno existente. UI-G1 y UI-G4 ya entregaron el dominio y el formulario; UI-G7/UI-G8 se cierran localmente el 2026-09-24. La fase completa depende aún de imágenes en Phase 10.
 
 - [x] Persistencia/API para proponer un logro con nombre, descripción y criterios; equipo y autor conservados desde el envío.
 - [x] Estados pendiente, aprobada y rechazada con motivo; aprobar incorpora al catálogo y mantiene la creación directa administrativa.
@@ -152,9 +145,9 @@ Decisión de producto del 2026-09-17. Amplía Phase 7.6: proponer un logro nuevo
 - [x] Formulario `/equipos/[slug]/logros/nuevo` adaptado al rol en UI-G4: PLAYER propone y TEAM_ADMIN conserva creación directa.
 - [x] Aislamiento, permisos, rechazo y aprobaciones concurrentes sin duplicados validados en [UI-G1-T05](ui-workstream/evidence/UI-G1-T05-QA.md); submit real por rol validado en [UI-G4](ui-workstream/evidence/UI-G4/FORM-FLOW-QA.md).
 - [x] Referencias inventariadas y conceptos documentados en `apuntes.md`, sección «Proponer, incorporar y obtener — UI-G1-T04».
-- [ ] Separar propuestas y solicitudes de obtención en los historiales personales y sus detalles — UI-G7.
-- [ ] Dividir administración en resumen y subrutas invitaciones, jugadores, logros, solicitudes y propuestas, incluidos detalles — UI-G8.
-- [ ] Completar el recorrido visual de revisión y obtención mediante esos historiales/paneles y su QA.
+- [x] Separar propuestas y solicitudes de obtención en los historiales personales y sus detalles — UI-G7.
+- [x] Dividir administración en resumen y subrutas invitaciones, jugadores, logros, solicitudes y propuestas, incluidos detalles — UI-G8.
+- [x] Completar el recorrido visual de revisión y obtención mediante esos historiales/paneles y su QA.
 - [ ] Imagen en propuestas: ampliación de Phase 10 que reutiliza el almacenamiento de Phase 7.10.
 
 ## Phase 7.8 – Identidad global y alias contextual
@@ -167,9 +160,9 @@ Primer bloque validado localmente y versionado en `c2ca920`; ver apartados 4 y 1
 - [x] Capturar nombre y apellidos al registrar una cuenta.
 - [x] Mover el nombre visible contextual a `TeamMembership.displayName`, con migración aditiva y transición del antiguo `User.displayName`.
 - [x] Resolver lecturas tenant con prioridad alias del equipo → nombre global → fallback estable.
-- [ ] Perfil global consultable/editable y formulario correspondiente — issue #27.
-- [ ] Edición tenant-scoped del alias y decisión de permisos PLAYER/TEAM_ADMIN — issue #28.
-- [ ] Retirar `User.displayName` cuando no queden consumidores ni datos dependientes del campo legado.
+- [x] Perfil global consultable/editable en `/perfil` (nombre/apellidos, correo solo consulta) — issue #27. [Entrega local y QA](phase-7.8/RESULT.md).
+- [x] Alias propio por equipo editable en `/perfil`, con permiso propio PLAYER/TEAM_ADMIN; vacío recupera nombre global — issue #28. [Entrega local y QA](phase-7.8/RESULT.md).
+- [x] Retirar `User.displayName`: schema/seed actualizados, migración protegida aplicada localmente y conservación comprobada. [Evidencia](phase-7.8/LEGACY-CLEANUP.md).
 - [ ] Avatar general y foto opcional por equipo, validación de imágenes, almacenamiento y reemplazo seguro — issue #23, coordinado con Phase 7.10; prioridad acordada: equipo → general → iniciales.
 
 ### Bloque vinculado a 7.8/7.9 — Ciclo de vida del jugador (gap 21)
@@ -191,7 +184,7 @@ Este bloque no obliga a rehacer ranking/temporadas ya entregados. Logros/logos p
 
 > **Concepto nuevo:** separar la definición reutilizable de un logro del periodo concreto en el que una persona lo obtiene.
 
-**Estado parcial — #11:** backend versionado en `c2ca920`; migración de temporadas aplicada en la base Windows de revisión. La entrega `e50e2e3` de #30/#29 verifica progreso y concesiones por temporada, revelado persistente y aprobación de solicitudes en su temporada original. [Evidencia](issue-30/qa/RESULT.md). Esta cobertura no equivale a completar toda la API de gestión ni el frontend de temporadas.
+**COMPLETADO LOCALMENTE — #11 (2026-09-24):** gestión administrativa, selector histórico, validación y concurrencia verificadas. [Entrega, pruebas y límites](phase-7.9/RESULT.md). Conserva backend base `c2ca920` e integración #30/#29 `e50e2e3`; no implica publicación/despliegue ni cierre remoto de la issue. Conservación ante bajas de jugadores sigue en PLAYER-LC.
 
 - [x] Modelar temporadas tenant-scoped con estados `PLANNED`, `ACTIVE` y `CLOSED`; máximo una activa por equipo.
 - [x] Configurar cada logro como `PERMANENT` o `SEASONAL`, manteniendo `PERMANENT` como valor compatible.
@@ -200,10 +193,10 @@ Este bloque no obliga a rehacer ranking/temporadas ya entregados. Logros/logos p
 - [x] Adaptar solicitudes, aprobación y asignación directa al alcance del logro y a la temporada activa.
 - [x] Adaptar dashboard, catálogo, jugadores y ranking al contexto actual y exponer ranking histórico por temporada.
 - [x] Añadir API tenant-scoped para listar, crear, activar y cerrar temporadas.
-- [ ] Diseñar e implementar la administración visual de temporadas en #11: concretar ubicación/navegación, listar y crear temporadas y activar/cerrar mediante los endpoints existentes, con estados y errores reales; coordinar su entrada con UI-G8 sin añadir una ruta todavía.
-- [ ] Implementar el selector de históricos y conectar el ranking de la temporada elegida; distinguir periodo activo/cerrado, permanentes y estacionales sin mezclar progresos entre ediciones.
-- [ ] Completar QA de #11 para gestión e históricos, incluyendo permisos, transiciones inválidas, una única temporada activa, ausencia de temporada, carga/error/vacío y aislamiento; reutilizar la cobertura de #30/#29 sin declarar probados los casos restantes.
-- [x] Aplicar la migración en PostgreSQL local de revisión y verificar integración estacional de #30/#29 (progreso, concesiones, revelado y solicitud histórica); resto de QA de #11 pendiente según apartado anterior.
+- [x] Administración visual de temporadas en `/equipos/[slug]/admin/temporadas`: listar/crear y activar/cerrar con confirmación, errores y permisos reales; navegación y acceso rápido administrativos.
+- [x] Selector de históricos conectado al ranking de la edición activa/cerrada; Actual sin activa muestra permanentes. Contexto y regla de suma explícitos, sin mezclar ediciones.
+- [x] QA de #11: permisos, transiciones inválidas, concurrencia/una activa, sin temporada, carga/error/vacío, aislamiento, históricos y móvil. [HTTP/navegador y límites](phase-7.9/qa/QA.md); cobertura #30/#29 conservada.
+- [x] Aplicar la migración en PostgreSQL local de revisión y verificar integración estacional de #30/#29 (progreso, concesiones, revelado y solicitud histórica); QA de gestión/históricos completada después según el apartado anterior.
 
 
 ## Phase 7.10 — Imágenes y almacenamiento
@@ -248,7 +241,11 @@ Relación entre entregas existentes y este plan:
 La elección de objetos/blobs sustituye el planteamiento antiguo de almacenamiento en carpeta del backend y `/uploads/` servido directamente por Nginx. Cloudflare R2 queda como destino futuro preferido, con integración S3 portable desde el inicio; SeaweedFS está elegido para la etapa local. No hay despliegue, migración ni contratación actual. La librería de recepción de subidas sigue por elegir. La entrega de imágenes privadas debe preservar autorización y aislamiento. Las rutas finales serán coherentes con el alcance por equipo y el avatar asociado a cada membresía.
 
 
-## UI Workstream V2 – Visual convergence (ACTIVE)
+## UI Workstream V2 – Visual convergence (PAUSADO; G7/G8 ENTREGADOS)
+
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+
+**Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación.
 
 Registro unificado de pendientes y resoluciones detectados por el frontal: [BACKEND-GAPS.md](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md). Distingue capacidades completadas, implementación parcial, datos ausentes y decisiones pendientes. Incluye también contenido, assets y QA; no todo es backend. Registrar una idea no autoriza implementarla ni amplía el alcance visual.
 
@@ -265,11 +262,11 @@ Registro unificado de pendientes y resoluciones detectados por el frontal: [BACK
 - [x] **UI-G3 — Dashboard**: `/equipos/[slug]`; gate cerrado, refinamientos posteriores sujetos a regresión final
 - [x] **UI-G4 — Achievements**: catálogo + creación/propuesta por rol; gate y submit real aprobados
 - [x] **UI-G5 — Ranking**: `/equipos/[slug]/ranking`; gate cerrado, variantes 401/403/404 pendientes en UI-G9
-- [ ] **UI-A1 — Login/registro**: implementados y capturados; gate final UI-A1-T04 en curso
-- [ ] **UI-A2 — Mis equipos/unirse/solicitar acceso**: implementados; QA UI-A2-T04 es el foco actual y gate T05 pendiente
-- [ ] **UI-G6 — Players**: pantalla implementada (T01/T02 DONE); capturas, QA y gate pendientes, continuación pausada en T03
-- [ ] **UI-G7 — Requests / My proposals**: historial personal y detalles respaldados por las referencias vigentes
-- [ ] **UI-G8 — Team Admin**: resumen + subrutas acordadas; T05/T06/T07 integran progreso/secretos ya funcionales de #30/#29 y T08 verifica su regresión. Gestión visual de temporadas e históricos permanece en #11. [Alcance](ui-workstream/PLAN.md#ui-g8--team-admin).
+- [x] **UI-G6 — Players**: COMPLETADA PROVISIONALMENTE por decisión del usuario (2026-09-24). T01/T02 implementadas; T03/T04/T05 descartadas por ahora, sin QA ni gate visual PASS.
+- [x] **UI-G7 — Requests / My proposals**: historial personal y detalles respaldados por las referencias vigentes
+- [x] **UI-G8 — Team Admin**: resumen + subrutas acordadas; T05/T06/T07 integran progreso/secretos ya funcionales de #30/#29 y T08 verifica su regresión. Gestión visual de temporadas e históricos permanece en #11. [Alcance](ui-workstream/PLAN.md#ui-g8--team-admin).
+- [ ] **UI-A1 — Login/registro**: implementados y capturados; gate final UI-A1-T04 aplazado hasta completar la estructura
+- [ ] **UI-A2 — Mis equipos/unirse/solicitar acceso**: implementados; QA UI-A2-T04 aplazado hasta completar la estructura y gate T05 pendiente
 - [ ] **UI-G9 — Consistency Pass**: regresión visual, responsive base y gates finales
 - [ ] Integrar imágenes reales de logros/logos/avatares mediante Phase 7.10 tras definir controles y excepción visual; hasta entonces mantener placeholders. Banners/fotografía siguen en las ampliaciones futuras de Phase 10.
 
@@ -316,14 +313,6 @@ El almacenamiento y las imágenes básicas ya tienen su propio bloque anterior: 
 - [ ] Otros tipos de archivos, banners o fotografía decorativa: definir alcance, permisos y ciclo de vida antes de integrar.
 - [ ] Documentar en `apuntes.md` los conceptos de cada ampliación efectivamente implementada.
 
-## Preparación de despliegue y evolución del alojamiento — seguimiento separado
-
-Se activa al preparar producción o solicitar migración, sin esperar a terminar las ampliaciones de Phase 10 ni condicionar el piloto local de 7.10.
-
-- [ ] MEDIA-DEP-T01–T04 — Preparar servidor propio, decidir backups, probar restauración conjunta y desplegar. Coordinado con Phase 5.5 y HTTPS; aplazado por el usuario.
-- [ ] MEDIA-R2-T01 — Migración a Cloudflare R2 cuando se solicite: copia verificada, coordinación de escrituras y vuelta atrás; sin contratación actual.
-- [ ] Reutilizar evidencia de 7.10 y comprobar el entorno de destino; piloto local no equivale a despliegue.
-
 ## Phase 11 – Testing
 > **Concepto nuevo:** pirámide de tests, unit vs integration, TDD básico
 
@@ -352,3 +341,29 @@ Al resolver cada issue, marcar COMPLETADO su apartado y fila de BACKEND-GAPS.md 
 - [ ] Evento `logro:assigned` — toast de notificación en tiempo real al ganar un logro (scoped al equipo)
 - [ ] Feed en vivo en el dashboard del equipo (últimas 5 asignaciones)
 - [ ] `apuntes.md`: sección "WebSockets — Tiempo real con socket.io"
+
+
+## Phase 5.5 – Hardening
+Trasladada al final por petición del usuario (2026-09-24). Se conservan los elementos ya completados; los pendientes se retoman con el despliegue definitivo. No se desactivan las copias existentes.
+
+> **Concepto nuevo:** configuración por entorno, validación en runtime, defensa en profundidad
+
+- [x] **Fix URLs del frontend** — sustituir `http://localhost:3001` hardcodeado por rutas relativas `/api/*` (vía nginx) o `NEXT_PUBLIC_API_URL`. Bug latente: en producción el navegador del visitante intenta conectarse a *su propio* localhost:3001, que no existe
+- [x] Validación de entrada con **Zod** en `POST /logros` y `/auth/*` — nunca confiar en el cliente
+- [x] **Error handler global** + clases de error centralizadas (patrón de `nodejs-backend-patterns`)
+- [x] **Fail-fast al arranque** — validar `JWT_SECRET` y `DATABASE_URL` al iniciar, con mensaje claro si faltan (eliminar el `!` que revienta en runtime de forma críptica)
+- [x] **Rate limiting** en `/auth/login` con `express-rate-limit` — protección básica contra fuerza bruta (también en `/auth/register`; `trust proxy` para nginx)
+- [x] **Healthcheck** — endpoint `GET /health` (readiness, `SELECT 1` a la BD, 503 si falla) + `healthcheck:` en Docker Compose (db con `pg_isready`, backend con Node `fetch`) + `depends_on: condition: service_healthy` (resuelve el clásico "backend arranca antes que la DB")
+- [x] **Backup automático de PostgreSQL** — sidecar DIY (`postgres:16` + bucle `pg_dump | gzip`, retención 7d con `find -mtime`) a `./backups` (volumen host); `backups/` en `.gitignore` (los datos son lo único irrecuperable; una migración mala con Watchtower auto-desplegando puede destruirlos)
+- [x] `apuntes.md`: sección "Hardening — validación, errores y configuración" (fail-fast, error handler, Zod, rate limiting, healthchecks, backup)
+- [ ] **Copias offsite del backup** (pasos manuales del host, documentados en apuntes) — cronjob `rsync` a otro disco/CT del Proxmox + opción `rclone` a Google Drive (regla 3-2-1)
+
+## Preparación de despliegue y evolución del alojamiento — seguimiento separado
+
+Se sitúa al final del roadmap por decisión del usuario del 2026-09-24. Se activa con el despliegue definitivo; backups y restauración son el último bloque de preparación y verificación de esa entrega. R2 conserva su activación futura independiente.
+
+- [ ] MEDIA-DEP-T01–T04 — Preparar servidor propio, decidir backups, probar restauración conjunta y desplegar. Coordinado con Phase 5.5 y HTTPS; aplazado por el usuario.
+- [ ] MEDIA-R2-T01 — Migración a Cloudflare R2 cuando se solicite: copia verificada, coordinación de escrituras y vuelta atrás; sin contratación actual.
+- [ ] Reutilizar evidencia de 7.10 y comprobar el entorno de destino; piloto local no equivale a despliegue.
+
+Último trabajo del despliegue definitivo: decidir y configurar backups de PostgreSQL + archivos, copia offsite y prueba de restauración conjunta (MEDIA-DEP-T02/T03); verificar su funcionamiento en el cierre de MEDIA-DEP-T04.

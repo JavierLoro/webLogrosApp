@@ -14,10 +14,9 @@ model User {
   // 📚 @unique: no puede haber dos usuarios con el mismo email (lo aprovechamos en register).
   email              String           @unique
   // 📚 Estos campos son nullable para migrar cuentas antiguas sin inventar datos; el registro
-  //    nuevo sí los exige en el borde HTTP. displayName queda temporalmente como legado.
+  //    nuevo y la edición de perfil sí los exigen en el borde HTTP.
   firstName          String?
   lastName           String?
-  displayName        String?
   // 📚 Guardamos el HASH de bcrypt, nunca la contraseña en claro (ver routes/auth.ts).
   password           String
   logrosGanados      UserLogro[]

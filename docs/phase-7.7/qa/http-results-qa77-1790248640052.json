@@ -1,0 +1,72 @@
+{
+  "run": "qa77-1790248640052",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-24T11:17:56.048Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "result": "FAIL",
+      "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/No tienes acceso/).first() to be visible\u001b[22m\n",
+      "stack": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/No tienes acceso/).first() to be visible\u001b[22m\n\n    at module.exports (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.7\\qa\\states.cjs:4:79)\n    at async main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.7\\qa\\http.cjs:69:35)"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        25,
+        26
+      ],
+      "userIds": [
+        46,
+        47,
+        48
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

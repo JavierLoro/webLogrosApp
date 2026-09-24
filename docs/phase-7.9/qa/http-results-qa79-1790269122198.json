@@ -1,0 +1,374 @@
+{
+  "run": "qa79-1790269122198",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-24T16:58:45.353Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "path": "/equipos/qa79-1790269122198-main/temporadas",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa79-1790269122198-main/temporadas",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "check": "auth and tenant isolation",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "check": "strict names and real ISO date validation",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/19/activar",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/22/activar",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/19/cerrar",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/22/cerrar",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa79-1790269122198-main/temporadas/22/ranking",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/19/cerrar",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "check": "foreign season IDs and role actions",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/19/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/19/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/20/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/19/activar",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/20/cerrar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/20/cerrar",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "check": "activate closes previous; closed cannot reopen; close idempotence conflict",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa79-1790269122198-main/temporadas/19/ranking",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa79-1790269122198-main/temporadas/20/ranking",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa79-1790269122198-main/ranking",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/logros/84/solicitudes",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "check": "rankings isolate A B and retain permanent points; no active is permanent only",
+      "result": "PASS"
+    },
+    {
+      "concurrentCreate": [
+        201,
+        409
+      ]
+    },
+    {
+      "check": "concurrent create translates unique constraint to409",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/25/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269122198-main/admin/temporadas/26/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "concurrent activation serialized; exactly one active; no500",
+      "result": "PASS"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        35,
+        36
+      ],
+      "userIds": [
+        64,
+        65,
+        66
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "run": "qa79-1790269588506",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-24T17:06:35.449Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269588506-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269588506-main/admin/temporadas/36/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269588506-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269588506-main/admin/temporadas/37/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269588506-main/admin/temporadas/37/activar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269588506-main/admin/temporadas/37/activar",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        47,
+        48
+      ],
+      "userIds": [
+        83,
+        84,
+        85
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

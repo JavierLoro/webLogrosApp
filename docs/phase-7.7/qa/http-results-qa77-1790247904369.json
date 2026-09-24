@@ -1,0 +1,251 @@
+{
+  "run": "qa77-1790247904369",
+  "base": "http://localhost:3001",
+  "sessionMode": "real login",
+  "at": "2026-09-24T11:05:06.903Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/propuestas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/propuestas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/propuestas",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "role": "outsider",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/propuestas",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/propuestas/13",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/propuestas/13",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-other/admin/propuestas/13",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "check": "proposal authorization and tenant isolation",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/admin/propuestas/14/rechazar",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/admin/propuestas/14/rechazar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/propuestas/14",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/admin/propuestas/14/aceptar",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "check": "reject reason and immutable resolution",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/admin/propuestas/13/aceptar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/admin/propuestas/13/aceptar",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "role": "player",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/logros/74/solicitudes",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/23",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/23/aceptar",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "check": "proposal approval creates catalog only; obtaining is separate",
+      "result": "PASS"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa77-1790247904369-main/logros",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/24",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/24",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/24",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/24",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "role": "player",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/24",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-other/admin/solicitudes/24",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "path": "/equipos/qa77-1790247904369-main/admin/solicitudes/2147483647",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "check": "request detail uses original season progress and award",
+      "result": "PASS"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        17,
+        18
+      ],
+      "userIds": [
+        35,
+        36,
+        37
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

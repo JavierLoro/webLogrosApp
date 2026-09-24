@@ -1,0 +1,25 @@
+{
+  "run": "qa78-1790260136133",
+  "sessionMode": "signed fixture session",
+  "results": [
+    {
+      "result": "FAIL",
+      "message": "locator.waitFor: Error: strict mode violation: getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" class=\"profile_error__Iko6K\">Fallo QA de guardado</div> aka getByText('Fallo QA de guardado')\n    2) <div role=\"alert\" aria-live=\"assertive\" id=\"__next-route-announcer__\"></div> aka locator('[id=\"__next-route-announcer__\"]')\n\nCall log:\n\u001b[2m  - waiting for getByRole('alert') to be visible\u001b[22m\n",
+      "stack": "locator.waitFor: Error: strict mode violation: getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" class=\"profile_error__Iko6K\">Fallo QA de guardado</div> aka getByText('Fallo QA de guardado')\n    2) <div role=\"alert\" aria-live=\"assertive\" id=\"__next-route-announcer__\"></div> aka locator('[id=\"__next-route-announcer__\"]')\n\nCall log:\n\u001b[2m  - waiting for getByRole('alert') to be visible\u001b[22m\n\n    at module.exports (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.8\\qa\\browser.cjs:18:461)\n    at async main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.8\\qa\\http.cjs:19:39)"
+    },
+    {
+      "check": "cleanup own IDs; shared identity fixtures unchanged",
+      "result": "PASS",
+      "teamIds": [
+        31,
+        32
+      ],
+      "userIds": [
+        56,
+        57,
+        58,
+        59
+      ]
+    }
+  ]
+}

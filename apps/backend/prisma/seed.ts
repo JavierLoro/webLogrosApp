@@ -167,10 +167,10 @@ async function main() {
       //    indicado en esta ejecución, sin revelar ese valor en la salida del comando.
       const user = await tx.user.upsert({
         where: { email: userSeed.email },
-        // 📚 User conserva la identidad real; displayName solo se mantiene como legado durante
-        //    la transición y ya no participa en la resolución de nombres tenant.
-        update: { password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, firstName: userSeed.firstName, lastName: userSeed.lastName, displayName: userSeed.displayName },
-        create: { email: userSeed.email, password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, firstName: userSeed.firstName, lastName: userSeed.lastName, displayName: userSeed.displayName },
+        // 📚 User conserva solo la identidad global; el alias se guarda en la membresía
+        // 📚 para que una persona pueda presentarse de forma distinta en cada equipo.
+        update: { password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, firstName: userSeed.firstName, lastName: userSeed.lastName },
+        create: { email: userSeed.email, password: passwordHash, isSuperAdmin: userSeed.isSuperAdmin, firstName: userSeed.firstName, lastName: userSeed.lastName },
       })
       await tx.teamMembership.upsert({
         where: { userId_teamId: { userId: user.id, teamId } },

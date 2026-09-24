@@ -1,0 +1,169 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 2,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 3,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 4,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 5,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 6,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 7,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 8,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 9,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 10,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 11,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 12,
+      "firstName": null,
+      "lastName": null
+    },
+    {
+      "id": 13,
+      "firstName": null,
+      "lastName": null
+    }
+  ],
+  "memberships": [
+    {
+      "id": 1,
+      "userId": 1,
+      "teamId": 1,
+      "role": "TEAM_ADMIN",
+      "displayName": "Javier Loro"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "teamId": 1,
+      "role": "TEAM_ADMIN",
+      "displayName": "Diego Ruiz"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Ana Fernández"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Marcos del Río"
+    },
+    {
+      "id": 5,
+      "userId": 5,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Laura Sánchez"
+    },
+    {
+      "id": 6,
+      "userId": 6,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Pablo García"
+    },
+    {
+      "id": 7,
+      "userId": 7,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "María Pérez"
+    },
+    {
+      "id": 8,
+      "userId": 8,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Carmen Martín"
+    },
+    {
+      "id": 9,
+      "userId": 9,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Carlos Torres"
+    },
+    {
+      "id": 10,
+      "userId": 10,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Álex Moreno de la Fuente"
+    },
+    {
+      "id": 11,
+      "userId": 11,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Daniel Molina"
+    },
+    {
+      "id": 12,
+      "userId": 12,
+      "teamId": 1,
+      "role": "PLAYER",
+      "displayName": "Elena Castro"
+    },
+    {
+      "id": 13,
+      "userId": 13,
+      "teamId": 2,
+      "role": "PLAYER",
+      "displayName": "Lucía Fernández"
+    },
+    {
+      "id": 14,
+      "userId": 3,
+      "teamId": 2,
+      "role": "PLAYER",
+      "displayName": "Ana Fernández"
+    }
+  ]
+}

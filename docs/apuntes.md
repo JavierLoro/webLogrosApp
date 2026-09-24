@@ -2257,3 +2257,55 @@ espere a la otra; la segunda vuelve a consultar el estado confirmado por la prim
 El incremento es un comando, no una sustitución del valor. Repetir `delta: 1` suma otra unidad,
 por lo que la interfaz impide el doble envío y no reintenta automáticamente una escritura tras
 un error de red. Primero vuelve a consultar el contador real para saber qué terminó persistido.
+
+
+## 7.7 — Leer el progreso de la temporada original de una solicitud
+
+Al revisar una solicitud antigua, el administrador necesita ver el progreso del periodo que la solicitud conserva en `seasonId`. La lectura ordinaria de progreso usa la temporada activa: reutilizarla aquí mostraría otra edición si el equipo ya empezó una temporada nueva.
+
+El detalle `GET /equipos/:slug/admin/solicitudes/:id` sigue protegido por sesión, rol TEAM_ADMIN y filtro de equipo. Después de encontrar la solicitud autorizada, consulta contador y concesión por la misma combinación `(userId, logroId, seasonId)`. Devuelve `progress` mediante el `progressDTO` existente y `season` con nombre/estado. Un logro estándar devuelve progreso nulo; un logro permanente no tiene temporada. Esta información es una lectura, no concede el logro ni modifica contadores.
+
+Reutilizar el cálculo de estados evita otra definición de «objetivo alcanzado» o «concedido». La concesión continúa verificándose en el servidor al resolver; el dato mostrado no sustituye esa comprobación porque puede cambiar entre lectura y acción.
+
+Verificación del 2026-09-24: compilación backend PASS y pruebas HTTP en base Windows aislada. Se comprobó una temporada cerrada con contador 7 frente a 2 en la activa, que una concesión activa no convierte el historial anterior en concedido, y que la concesión original sí cambia ese estado. También estándar/permanente, 401/403/404 y aislamiento. Evidencia: [QA de 7.7](phase-7.7/qa/http-results.json). Sin migración ni cambios de schema.
+
+
+## Perfil global y alias propios — Phase 7.8
+
+La identidad de una persona vive en `User` (`firstName`, `lastName`); cómo aparece en un equipo vive en `TeamMembership.displayName`. Cambiar la primera no modifica los alias. Guardar un alias vacío se normaliza a `null`: hay una sola representación de «sin alias», y `publicName` recupera nombre/apellidos o el fallback estable existente.
+
+`GET /auth/profile` consulta exclusivamente la cuenta identificada por la sesión. No recibe un ID de usuario editable. Prisma `select` construye la respuesta con los campos necesarios y evita devolver el hash de contraseña. `satisfies Prisma.UserSelect` comprueba que la selección es válida sin perder la inferencia precisa del resultado en TypeScript.
+
+`PATCH /auth/profile` modifica solo nombre y apellidos. El esquema de Zod reutiliza sus reglas de registro con `pick`, y `strict` rechaza campos adicionales: esto evita *mass assignment*, es decir, que campos enviados arbitrariamente como `isSuperAdmin` o `email` terminen guardándose. La transacción agrupa modificación y lectura de respuesta; `updateMany` permite detectar una cuenta eliminada y responder 401.
+
+`PATCH /equipos/:slug/mi-alias` vuelve a comprobar la pertenencia al equipo y filtra la escritura por usuario de sesión y equipo resuelto. Ser TEAM_ADMIN no concede aquí permiso para editar a otros. El filtro también protege si la membresía desaparece entre la comprobación y la escritura: cero filas modificadas produce 403, sin recrear acceso. Repetir los mismos valores es idempotente: deja el mismo estado, no crea nuevas membresías.
+
+Pruebas HTTP locales verifican límites, normalización, campos extra rechazados, permisos y separación entre usuarios/equipos. Evidencia completa en `docs/phase-7.8/qa/`. No se retira aún el campo legado `User.displayName`: su escritura en el seed debe eliminarse junto con una migración compatible posterior.
+
+
+## Retirar un campo legado sin perder identidad — cierre técnico 7.8
+
+Una migración **aditiva** introduce los campos nuevos manteniendo el antiguo durante la transición. La retirada posterior completa el proceso: primero buscar lectores/escritores, adaptar el seed y comprobar los datos; después eliminar la columna y regenerar Prisma Client. Las migraciones históricas permanecen: una base nueva necesita recorrer también la historia anterior.
+
+Aquí `User.displayName` ya no alimentaba las lecturas. El alias vive en `TeamMembership.displayName`; el nombre global en `firstName`/`lastName`. Un alias vacío puede ser una decisión reciente del usuario: copiar otra vez el legado lo desharía. Tampoco podemos dividir un apodo para inventar un nombre y unos apellidos reales.
+
+Por eso la nueva migración comprueba que cada texto antiguo no vacío ya esté representado por el nombre global o por un alias del usuario. Si alguno no lo está, aborta antes de retirar la columna. `BEGIN`/`COMMIT` agrupan la comprobación y el cambio; los bloqueos impiden que una escritura cambie la identidad entre ambos. En la base local los 13 valores estaban conservados en alias; no se rellenaron identidades incompletas. Los resultados de aplicación y pruebas se documentan en [la evidencia](phase-7.8/LEGACY-CLEANUP.md).
+
+`prisma generate` actualiza el cliente tipado; no migra PostgreSQL. `prisma migrate deploy` aplica el SQL versionado; no ejecuta el seed. Son responsabilidades distintas. Comprobar los tipos del seed tampoco lo ejecuta ni restablece contraseñas.
+
+
+## Temporadas: transacciones y escrituras concurrentes — cierre funcional 7.9
+
+Una **máquina de estados** define qué cambios se permiten: una temporada planificada puede activarse; una activa puede cerrarse; una cerrada no se reactiva. Las fechas describen el periodo, pero no cambian esos estados automáticamente.
+
+La transacción permite cerrar una edición y activar otra como una sola operación: o se guardan ambos cambios o ninguno. Sin embargo, dos transacciones pueden leer el mismo estado antes de escribir. Por eso activar y cerrar bloquean primero la fila del equipo mediante `SELECT ... FOR UPDATE`: la segunda petición espera y consulta después el estado que dejó la primera. Bloquear el equipo, en lugar de cada temporada por separado, coordina incluso acciones dirigidas a dos ediciones distintas. El índice único parcial continúa garantizando que no existan dos activas en ese equipo.
+
+Prisma parametriza la consulta con su plantilla SQL; el identificador no se concatena como texto ejecutable. El bloqueo termina con la transacción y no detiene operaciones de otros equipos. Solo coordina estas transiciones administrativas: no implica congelar los rankings ni cambiar la lógica existente de concesiones.
+
+Crear una temporada también puede sufrir una carrera: dos peticiones ven un nombre libre y ambas intentan insertarlo. La restricción única de PostgreSQL decide cuál lo consigue. Capturamos el error Prisma `P2002` y devolvemos `409 Conflict`, un conflicto que la interfaz puede explicar, en lugar de un error inesperado 500.
+
+Las fechas se validan **antes de convertirlas**. Convertir directamente con `Date` puede aceptar valores como `null` o números. El contrato exige texto ISO con zona horaria; después se transforma a `Date` y se comprueba que el fin sea posterior al inicio. El formulario recoge días y los convierte a ISO; no envía objetos Date por JSON.
+
+El ranking reutiliza la suma existente: permanentes más concesiones de la temporada elegida. Sin activa, Actual contiene solo permanentes. Cerrar conserva el periodo de las concesiones, pero el histórico no es una fotografía inmutable: nuevas concesiones permanentes o aprobaciones de solicitudes antiguas pueden modificarlo. La conservación ante bajas de jugadores sigue en su plan propio.
+
+Contratos y pruebas: [backend](phase-7.9/BACKEND.md), [plan de entrega](phase-7.9/PLAN.md).

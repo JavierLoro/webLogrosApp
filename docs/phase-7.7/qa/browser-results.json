@@ -1,0 +1,36 @@
+{
+  "fixture": "qa77-1790248313458-main",
+  "viewport": {
+    "width": 1440,
+    "height": 1024
+  },
+  "locale": "es-ES",
+  "timezone": "Europe/Madrid",
+  "results": [
+    {
+      "check": "PLAYER form double submit creates one; history opens own detail",
+      "result": "PASS"
+    },
+    {
+      "check": "Admin approval double submit once; progressive/target/secret/points persisted; no award or request",
+      "result": "PASS"
+    },
+    {
+      "check": "Request UI blocks early award, then awards eligible progress exactly once",
+      "result": "PASS"
+    },
+    {
+      "check": "propuestas rejection requires reason; personal history displays it",
+      "result": "PASS"
+    },
+    {
+      "check": "solicitudes rejection requires reason; personal history displays it",
+      "result": "PASS"
+    },
+    {
+      "check": "Stale resolution shows real 409 and refreshes final state",
+      "result": "PASS"
+    }
+  ],
+  "errors": []
+}

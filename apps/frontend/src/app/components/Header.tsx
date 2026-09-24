@@ -23,7 +23,7 @@ export default function Header() {
 
   // El selector de equipos y cada tenant tienen navegación propia; el header
   // global se mantiene en las demás superficies hasta que adopten su reemplazo.
-  if (pathname === "/login" || pathname === "/register" || pathname === "/equipos" || pathname === "/unirse" || pathname === "/solicitar-acceso" || pathname.startsWith("/equipos/")) {
+  if (pathname === "/perfil" || pathname === "/login" || pathname === "/register" || pathname === "/equipos" || pathname === "/unirse" || pathname === "/solicitar-acceso" || pathname.startsWith("/equipos/")) {
     return null
   }
 

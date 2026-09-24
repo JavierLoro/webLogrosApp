@@ -1,0 +1,79 @@
+{
+  "run": "qa79-1790269244543",
+  "base": "http://localhost:3001",
+  "sessionMode": "signed fixture session",
+  "at": "2026-09-24T17:01:38.191Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "path": "/equipos/qa79-1790269244543-main/admin/temporadas",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "result": "FAIL",
+      "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Fallo QA lista', { exact: true }) to be visible\u001b[22m\n\u001b[2m    - waiting for \"http://localhost:3000/equipos/qa79-1790269244543-main/admin/temporadas\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"http://localhost:3000/equipos/qa79-1790269244543-main/admin/temporadas\"\u001b[22m\n",
+      "stack": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Fallo QA lista', { exact: true }) to be visible\u001b[22m\n\u001b[2m    - waiting for \"http://localhost:3000/equipos/qa79-1790269244543-main/admin/temporadas\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"http://localhost:3000/equipos/qa79-1790269244543-main/admin/temporadas\"\u001b[22m\n\n    at module.exports (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\browser.cjs:9:373)\n    at async main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\http.cjs:72:41)"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        39,
+        40
+      ],
+      "userIds": [
+        71,
+        72,
+        73
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

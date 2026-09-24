@@ -10,11 +10,46 @@ import { registerSchema, loginSchema } from "../schemas/auth"
 import { registerLimiter, loginLimiter } from "../middleware/rateLimit"
 import { clearAuthCookie, setAuthCookie } from "../lib/authCookie"
 import { authMiddleware } from "../middleware/auth"
+import type { Prisma } from "@prisma/client"
+import { profileSchema } from "../schemas/profile"
+import { AppError } from "../errors/AppError"
 
 
 // 📚 Router de Express: mini-app con sus rutas, que server.ts monta bajo el prefijo /auth.
 const router = express.Router()
 const SECRET = JWT_SECRET
+
+// 📚 Proyección explícita: el perfil privado incluye identidad y membresías propias,
+// 📚 pero nunca hash, permisos globales ni el displayName antiguo de User.
+const profileSelect = {
+  id: true, email: true, firstName: true, lastName: true,
+  memberships: {
+    select: { role: true, displayName: true, team: { select: { slug: true, nombre: true } } },
+    orderBy: [{ joinedAt: "asc" }, { id: "asc" }],
+  },
+} satisfies Prisma.UserSelect
+
+// 📚 La cuenta se obtiene del JWT, no de un ID enviado por el navegador: esta ruta
+// 📚 sirve al propietario incluso si todavía no pertenece a ningún equipo.
+router.get("/profile", authMiddleware, async (req: Request, res: Response) => {
+  const user = await prisma.user.findUnique({ where: { id: req.userId! }, select: profileSelect })
+  if (!user) throw new AppError(401, "Sesión no válida")
+  res.json(user)
+})
+
+// 📚 PATCH modifica solo la identidad global. Los alias pertenecen a TeamMembership
+// 📚 y permanecen intactos; reenviar los mismos nombres produce el mismo estado.
+router.patch("/profile", authMiddleware, validate(profileSchema), async (req: Request, res: Response) => {
+  const { firstName, lastName } = req.body
+  const user = await prisma.$transaction(async tx => {
+    // 📚 updateMany devuelve count=0 si la cuenta desapareció, sin convertir un JWT
+    // 📚 de una cuenta eliminada en un error interno de Prisma.
+    const updated = await tx.user.updateMany({ where: { id: req.userId! }, data: { firstName, lastName } })
+    if (updated.count !== 1) throw new AppError(401, "Sesión no válida")
+    return tx.user.findUniqueOrThrow({ where: { id: req.userId! }, select: profileSelect })
+  })
+  res.json(user)
+})
 
 // POST /auth/register — crear cuenta
 // 📚 CADENA: registerLimiter → validate(registerSchema) → handler. El limiter va PRIMERO

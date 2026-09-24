@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-24T16:54:53.745Z",
+  "migration": "apps/backend/prisma/migrations/20260924180000_remove_legacy_user_display_name/migration.sql",
+  "sha256": "db7c7ac68be94f22b118d990e2f0ef7e847d49467cee8fe9304d511928a44433",
+  "mode": "TEMP tables, pg_temp search_path, SAVEPOINT and final ROLLBACK; no public table mutation",
+  "results": [
+    {
+      "scenario": "represented globally, alias, empty, null; null alias remains null",
+      "result": "PASS",
+      "guard": "drop permitted",
+      "namesAliases": "unchanged"
+    },
+    {
+      "scenario": "unrepresented legacy blocks drop",
+      "result": "PASS",
+      "guard": "rejected; legacy retained",
+      "namesAliases": "unchanged"
+    },
+    {
+      "scenario": "same alias on another user does not represent this identity",
+      "result": "PASS",
+      "guard": "rejected; legacy retained",
+      "namesAliases": "unchanged"
+    }
+  ]
+}

@@ -14,6 +14,8 @@ import progressRouter from "./progress"
 import { awardSeasonId } from "../lib/seasonContext"
 import { isAchievementHidden, presentAchievement, revealedAchievementIds } from "../lib/achievementVisibility"
 import { grantAchievement } from "../lib/achievementProgress"
+import { progressDTO } from "../lib/achievementProgressState"
+import { teamAliasSchema } from "../schemas/profile"
 
 // 📚 ROUTER SCOPED POR EQUIPO. Se monta en server.ts como app.use("/equipos/:slug", router),
 //    así que aquí las rutas son relativas: "/logros" = "/equipos/:slug/logros".
@@ -38,6 +40,20 @@ router.use(resolveTeam)
 router.use(seasonsRouter)
 router.use(propuestasRouter)
 router.use(progressRouter)
+
+// 📚 Autorización contextual: ser miembro permite editar el alias propio, no el de
+// 📚 otro jugador. Tanto userId como teamId proceden de los middleware, nunca del body.
+router.patch("/mi-alias", authMiddleware, requireTeamMember, validate(teamAliasSchema), async (req, res) => {
+  const { displayName } = req.body
+  // 📚 El filtro sigue presente al escribir: si se revocó la membresía después del
+  // 📚 middleware, no se recrea ni se modifica ninguna pertenencia ajena.
+  const updated = await prisma.teamMembership.updateMany({
+    where: { userId: req.userId!, teamId: req.team!.id },
+    data: { displayName },
+  })
+  if (updated.count !== 1) throw new AppError(403, "No perteneces a este equipo")
+  res.json({ displayName })
+})
 
 // 📚 Contexto fiable del shell sin cambiar JWT ni confiar en un nombre derivado del slug.
 router.get("/contexto", authMiddleware, requireTeamMember, async (req, res) => {
@@ -227,7 +243,19 @@ router.get("/admin/solicitudes/:id", authMiddleware, requireTeamAdmin, async (re
   })
   if (!solicitud) throw new AppError(404, "Solicitud no encontrada")
   const { user, ...data } = solicitud
-  res.json({ ...data, user: { id: user.id, email: user.email, displayName: publicName({ displayName: user.memberships[0]?.displayName ?? null, user }) } })
+  // 📚 La solicitud guarda su periodo: consultar la temporada activa mezclaría dos ediciones.
+  // 📚 Esta lectura es solo administrativa; conserva el filtro tenant del detalle y no concede nada.
+  const [counter, award, season] = await Promise.all([
+    solicitud.logro.kind === "PROGRESSIVE"
+      ? prisma.achievementProgress.findFirst({ where: { userId: solicitud.userId, logroId: solicitud.logroId, seasonId: solicitud.seasonId } })
+      : null,
+    prisma.userLogro.findFirst({ where: { userId: solicitud.userId, logroId: solicitud.logroId, seasonId: solicitud.seasonId } }),
+    solicitud.seasonId === null ? null : prisma.season.findFirst({ where: { id: solicitud.seasonId, teamId: req.team!.id }, select: { id: true, name: true, status: true } }),
+  ])
+  const progress = solicitud.logro.kind === "PROGRESSIVE" && solicitud.logro.targetValue !== null
+    ? progressDTO(counter?.currentValue ?? 0, solicitud.logro.targetValue, solicitud.seasonId, Boolean(award))
+    : null
+  res.json({ ...data, progress, season, user: { id: user.id, email: user.email, displayName: publicName({ displayName: user.memberships[0]?.displayName ?? null, user }) } })
 })
 
 // 📚 Esta lista devuelve solo identidad y rol de miembros del tenant; nunca expone hashes

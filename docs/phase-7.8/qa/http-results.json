@@ -1,0 +1,20 @@
+{
+  "run": "qa78-1790260173743",
+  "sessionMode": "signed fixture session",
+  "results": [
+    {
+      "check": "cleanup own IDs; shared identity fixtures unchanged",
+      "result": "PASS",
+      "teamIds": [
+        33,
+        34
+      ],
+      "userIds": [
+        60,
+        61,
+        62,
+        63
+      ]
+    }
+  ]
+}

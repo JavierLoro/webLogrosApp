@@ -19,7 +19,7 @@ Al resolver una issue, actualizar **en el mismo cambio** tanto su apartado de es
 | Apartado | Issue | Estado | Alcance |
 | --- | --- | --- | --- |
 | 1. Estadísticas | [#10](https://github.com/JavierLoro/webLogrosApp/issues/10) | COMPLETADO | PR #26; logros y jugadores reales |
-| 2. Temporada | [#11](https://github.com/JavierLoro/webLogrosApp/issues/11) | PARCIAL — migración local e integración verificadas | Phase 7.9; gestión visual, selector histórico y QA restante pendientes |
+| 2. Temporada | [#11](https://github.com/JavierLoro/webLogrosApp/issues/11) | COMPLETADO LOCALMENTE | Gestión, selector histórico y QA; [entrega](../../../phase-7.9/RESULT.md). Sin publicación/cierre remoto |
 | 3. Deporte | [#12](https://github.com/JavierLoro/webLogrosApp/issues/12) | PENDIENTE | Presentación solicitada; diseño backend pendiente |
 | 4. Identidad global | [#13](https://github.com/JavierLoro/webLogrosApp/issues/13) | COMPLETADO EN REPOSITORIO LOCAL | c2ca920; nombre/apellidos y alias tenant; edición separada en #27/#28 |
 | 5. Seguimiento de solicitudes | [#14](https://github.com/JavierLoro/webLogrosApp/issues/14) | PENDIENTE DE DECISIÓN | Producto, permisos y lectura por acordar |
@@ -32,9 +32,9 @@ Al resolver una issue, actualizar **en el mismo cambio** tanto su apartado de es
 | 12. Logos de equipo PNG transparentes | [#22](https://github.com/JavierLoro/webLogrosApp/issues/22) | PENDIENTE — visual, alcance y lectura acordados | 7.10: logos visibles para cualquier usuario autenticado; SeaweedFS elegido; edición por TEAM_ADMIN acordada, implementación pendiente |
 | 13. Imágenes reales, avatares y uploads | [#23](https://github.com/JavierLoro/webLogrosApp/issues/23) | PLAN DEFINIDO — implementación pendiente | Phase 7.10: tareas y decisiones de uso locales acordadas; diseño técnico pendiente, sin implementación ni cierre de la issue |
 | 14. Auth Hardening con cookies HttpOnly | [#24](https://github.com/JavierLoro/webLogrosApp/issues/24) | COMPLETADO EN REPOSITORIO LOCAL | c2ca920; Phase 7.5 y QA manual del 22/09 completadas |
-| 15. Cerrar QA y convergencia visual de acceso y onboarding | [#25](https://github.com/JavierLoro/webLogrosApp/issues/25) | EN CURSO — gate pendiente | Frontend/QA — no gap backend |
-| 16. Perfil global editable | [#27](https://github.com/JavierLoro/webLogrosApp/issues/27) | PENDIENTE | Consulta/edición autenticada y formulario |
-| 17. Alias editable por equipo | [#28](https://github.com/JavierLoro/webLogrosApp/issues/28) | PENDIENTE DE DECISIÓN | Permisos y edición tenant-scoped |
+| 15. Cerrar QA y convergencia visual de acceso y onboarding | [#25](https://github.com/JavierLoro/webLogrosApp/issues/25) | APLAZADO — gate pendiente | Tras completar estructura G6–G8 y nuevas pestañas/controles, antes de G9; no gap backend |
+| 16. Perfil global editable | [#27](https://github.com/JavierLoro/webLogrosApp/issues/27) | COMPLETADO LOCALMENTE | `/perfil`, identidad propia validada; [entrega y QA](../../../phase-7.8/RESULT.md), sin publicación/cierre remoto |
+| 17. Alias editable por equipo | [#28](https://github.com/JavierLoro/webLogrosApp/issues/28) | COMPLETADO LOCALMENTE | Edición propia PLAYER/TEAM_ADMIN, vacío recupera nombre global; [entrega y QA](../../../phase-7.8/RESULT.md) |
 | 18. Logros secretos | [#29](https://github.com/JavierLoro/webLogrosApp/issues/29) | COMPLETADO LOCALMENTE | Censura y revelado global; entrega conjunta #30, [evidencia](../../../issue-30/RESULT.md) |
 | 19. Progreso parcial por jugador | [#30](https://github.com/JavierLoro/webLogrosApp/issues/30) | COMPLETADO LOCALMENTE | Contador entero atómico, objetivo obligatorio y cierre tras concesión; [evidencia](../../../issue-30/RESULT.md) |
 | 20. Etiquetas personalizables de jugadores | [#31](https://github.com/JavierLoro/webLogrosApp/issues/31) | PENDIENTE DE DEFINICIÓN | Catálogo por equipo y concesión por TEAM_ADMIN |
@@ -83,11 +83,11 @@ Integración local: se conserva TeamsOverview y el rediseño de onboarding; mét
 
 ## 2. Temporada
 
-**PARCIAL — migración local e integración verificadas.** El dominio se incorporó en Phase 7.9, commit local `c2ca920`. La entrega `e50e2e3` de #30/#29 confirma la migración aplicada y pruebas de progreso/concesiones estacionales, revelado entre temporadas y aprobación histórica. [Validaciones y límites](../../../issue-30/qa/RESULT.md); no acredita despliegue ni cierre de #11.
+**COMPLETADO LOCALMENTE — 2026-09-24.** Gestión e históricos de #11 entregados con [QA y revisión visual](../../../phase-7.9/RESULT.md), sin publicación ni cierre remoto. El dominio se incorporó en Phase 7.9, commit local `c2ca920`. La entrega `e50e2e3` de #30/#29 confirma la migración aplicada y pruebas de progreso/concesiones estacionales, revelado entre temporadas y aprobación histórica. [Validaciones y límites](../../../issue-30/qa/RESULT.md); no acredita despliegue ni cierre de #11.
 
 Roadmap y Architecture registran temporadas por equipo, logros permanentes/estacionales, contexto de temporada en solicitudes y concesiones, ranking histórico y API de gestión. Los conceptos están documentados en `docs/apuntes.md`, sección «Temporadas — catálogo reutilizable e historial por periodo».
 
-Pendiente en **#11**, sin duplicar issue: concretar navegación/diseño de la gestión visual, conectar listar/crear/activar/cerrar temporadas y selector de ranking histórico, y completar QA de gestión, permisos, estados y aislamiento aún no cubiertos. Coordinar la entrada administrativa con UI-G8. Elegir alcance estacional al crear un logro ya es funcional, pero no sustituye estas pantallas. UI-A2 sigue omitiendo el dato hasta disponer de su integración real; no mostrar una temporada copiada de la referencia.
+Entregado en **#11**, sin duplicar issue: nueva sección `/admin/temporadas` dentro del equipo, listar/crear/activar/cerrar con confirmación y selector histórico en ranking. QA cubre gestión, permisos, estados, aislamiento y concurrencia; evidencia de defectos y corrección incluida. Históricos conservan la fórmula vigente (permanentes + edición), sin prometer instantánea inmutable. UI-A2 mantiene su presentación aplazada; esta entrega no inventa allí una temporada ni reanuda su gate.
 
 ## 3. Tipo o descripción del equipo
 
@@ -210,16 +210,13 @@ Origen: UI-A1 y UI-A2/BROWSER-QA.md; UI-A2/COMPARISON-COORDINATOR-1.md. La tabla
 
 Categoría: **Producto/backend/frontend**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/27.
 
-Pendiente: lectura autenticada del perfil propio, edición validada de nombre y apellidos y su
-formulario. No incluye cambio de email, contraseña ni avatar.
+2026-09-24 — COMPLETADO LOCALMENTE: GET/PATCH `/auth/profile` y pantalla `/perfil`; nombre/apellidos validados, correo de consulta. Usuario tomado de sesión, campos extra rechazados. No incluye cambio de email, contraseña ni avatar. [Implementación y evidencia HTTP/navegador](../../../phase-7.8/RESULT.md). Sin commit/publicación/cierre remoto en esta entrega.
 
 ## 17. Alias editable por equipo
 
 Categoría: **Producto/backend/frontend**. Issue: https://github.com/JavierLoro/webLogrosApp/issues/28.
 
-Pendiente: decidir si el alias puede cambiarlo el propio miembro, el `TEAM_ADMIN` o ambos;
-implementar después una escritura tenant-scoped con aislamiento y autorización contextual. El alias
-no requiere unicidad en la decisión vigente.
+2026-09-24 — COMPLETADO LOCALMENTE: permiso aprobado exclusivamente para el propio miembro, tanto PLAYER como TEAM_ADMIN. PATCH `/equipos/:slug/mi-alias` con pertenencia actual y filtro de escritura por usuario/equipo. No edición ajena; alias no único, vacío/null recupera nombre global. Formularios independientes en `/perfil`. [Implementación y pruebas de aislamiento](../../../phase-7.8/RESULT.md). Sin publicación/cierre remoto.
 
 ## 18. Logros secretos
 

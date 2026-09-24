@@ -1,0 +1,113 @@
+{
+  "fixture": "qa79-1790269401840-main",
+  "locale": "es-ES",
+  "timezone": "Europe/Madrid",
+  "results": [
+    {
+      "check": "Empty admin and UI create doubleclick creates once and clears successful form",
+      "result": "PASS"
+    },
+    {
+      "check": "Activation requires confirmation, doubleclick once, preserves creation draft",
+      "result": "PASS"
+    },
+    {
+      "check": "Activation B closes A and removes reopening action",
+      "result": "PASS"
+    },
+    {
+      "check": "Admin list500 and explicit retry recover",
+      "result": "PASS"
+    },
+    {
+      "check": "PLAYER admin access403 UI",
+      "result": "PASS"
+    },
+    {
+      "check": "Historical selector and rapid A/B changes keep newest response",
+      "result": "PASS"
+    },
+    {
+      "check": "Close season confirmation and current no-active fallback",
+      "result": "PASS"
+    },
+    {
+      "check": "Mutation500 preserves all create draft fields; explicit retry succeeds",
+      "result": "PASS"
+    },
+    {
+      "result": "FAIL",
+      "message": "Expected values to be strictly equal:\n\n654 !== 390\n",
+      "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n654 !== 390\n\n    at module.exports (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\browser.cjs:15:247)\n    at async main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.9\\qa\\http.cjs:72:41)"
+    }
+  ],
+  "captures": [
+    {
+      "role": "TEAM_ADMIN",
+      "route": "/equipos/qa79-1790269401840-main/admin/temporadas",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "path": "docs/phase-7.9/qa/screenshots/admin-confirm-1440.png",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "role": "TEAM_ADMIN",
+      "route": "/equipos/qa79-1790269401840-main/admin/temporadas",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "path": "docs/phase-7.9/qa/screenshots/admin-populated-1440.png",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "role": "TEAM_ADMIN",
+      "route": "/equipos/qa79-1790269401840-main/admin/temporadas",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/phase-7.9/qa/screenshots/admin-populated-390.png",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "role": "PLAYER",
+      "route": "/equipos/qa79-1790269401840-main/ranking",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "path": "docs/phase-7.9/qa/screenshots/ranking-history-1440.png",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "role": "PLAYER",
+      "route": "/equipos/qa79-1790269401840-main/ranking",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/phase-7.9/qa/screenshots/ranking-history-390.png",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "role": "PLAYER",
+      "route": "/equipos/qa79-1790269401840-main/ranking",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/phase-7.9/qa/screenshots/ranking-no-active-390.png",
+      "width": 390,
+      "scrollWidth": 390
+    }
+  ],
+  "errors": []
+}

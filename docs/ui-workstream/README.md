@@ -1,8 +1,10 @@
 # LockerBoard UI Visual Convergence Workstream
 
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+
 Este directorio es la fuente operativa del rediseño visual de LockerBoard. Permite retomar el trabajo desde CLI, Work, Codex u otra sesión sin depender del historial de conversación.
 
-Estado conciliado al 2026-09-22: G0–G5 cerrados; jugadores implementado con continuación pausada en G6-T03; acceso/onboarding en revisión, foco A2-T04 y gate A1-T04 pendiente. G7–G9 pendientes. Confirmar siempre el punto de continuación en STATUS. Por override del usuario del 2026-09-21, las comparaciones pendientes se realizan directamente por Coordinator; las referencias al crítico independiente más abajo describen el flujo estándar anterior.
+**Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación. Confirmar siempre el estado en STATUS. Las comparaciones siguen asignadas al Coordinator por el override del 2026-09-21.
 
 ## Orden de lectura
 

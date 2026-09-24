@@ -1,0 +1,71 @@
+{
+  "run": "qa77-1790248234942",
+  "base": "http://localhost:3001",
+  "sessionMode": "real login",
+  "at": "2026-09-24T11:10:35.391Z",
+  "results": [
+    {
+      "check": "migration preserves existing default catalog",
+      "result": "PASS",
+      "rows": 14
+    },
+    {
+      "result": "FAIL",
+      "error": "real fixture login\n\n429 !== 200\n",
+      "stack": "AssertionError [ERR_ASSERTION]: real fixture login\n\n429 !== 200\n\n    at main (C:\\Users\\javie\\Proyectos\\webLogrosApp\\docs\\phase-7.7\\qa\\http.cjs:64:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    },
+    {
+      "cleanup": "PASS",
+      "teamIds": [
+        19,
+        20
+      ],
+      "userIds": [
+        38,
+        39
+      ]
+    },
+    {
+      "check": "existing fixture unchanged",
+      "result": "PASS",
+      "before": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      },
+      "after": {
+        "teams": [
+          {
+            "id": 1,
+            "slug": "halcones",
+            "nombre": "Halcones"
+          },
+          {
+            "id": 2,
+            "slug": "lobos",
+            "nombre": "Lobos"
+          }
+        ],
+        "memberships": 14,
+        "logros": 19,
+        "awards": 42,
+        "requests": 8,
+        "proposals": 6
+      }
+    }
+  ]
+}

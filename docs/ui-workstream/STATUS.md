@@ -1,23 +1,46 @@
 # UI Workstream Status
 
-workstream: IN_PROGRESS
+workstream: PAUSED — G7/G8 entregados; resto de pausa conservado
 orchestration: ADAPTIVE_ROUTER_READY
-current_phase: UI-A2
-current_task: UI-A2-T04
-current_iteration: 1
-last_completed: UI-A2-T03 — Unirse/solicitud/éxito implementados; contratos preservados, lint/TypeScript/build PASS
-next_action: Revisar COMPARISON-COORDINATOR-1.md: ajustes de geometría/jerarquía implementados y capturados, ESLint/TypeScript PASS. Completar QA pendiente de BROWSER-QA.md (éxito real/preview válido/estados alternativos) y convergencia tipográfica antes de cerrar A2. Coordinator compara directamente, sin visual_critic. No forzar éxito ni inventar datos. A1 gate final pendiente. Windows local; no reanudar G6-G9 ni implementar backend.
-paused_mainline_task: UI-G6-T03
+current_phase: NONE — entrega local Phase 7.7 sin imágenes finalizada
+current_task: NONE
+last_functional_delivery: limpieza 7.8 y temporadas 7.9 DONE LOCAL — docs/phase-7.9/RESULT.md
+current_iteration: 3 — correcciones y captura final
+last_completed: UI-G7-T01–T05 / UI-G8-T01–T08 — PASS local, evidencia docs/phase-7.7/RESULT.md
+next_action: Esperar nueva indicación; no iniciar G9 ni A1/A2 automáticamente. Imágenes de propuestas dependen de 7.10/Phase 10.
+paused_mainline_task: UI-G9-T01 — fuera del alcance actual; A1/A2 aplazados
 
 ## Planificación vinculada vigente — 2026-09-24
+
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+
+**Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación.
 
 - [Phase 7.10: tareas, dependencias y criterios](../MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre), enlazadas en el Roadmap general. T00/T01 DONE solo para plan y decisiones de uso locales; T02–T09 TODO. Siguiente tarea de diseño: T02.01 (inventario). No implementación, servicios, migraciones ni pruebas de media ejecutadas.
 - Recorridos previstos: base común → logro completo y QA T08.01 → logos → avatares → QA/cierre local. Compresión, metadatos, tamaños/variantes, cancelación y recuperación del aviso ya acordados; no reabrirlos por entradas históricas anteriores.
 - [Ciclo de vida del jugador](../PLAYER-LIFECYCLE-PLAN.md): T00 documental DONE, T01–T07 TODO. Diseño antes de relación avatar/equipo; archivo/reingreso antes de completar avatar específico; eliminación administrativa es entrega aparte, no absorbida por uploads.
 - Ubicaciones de edición T07.01 aplazadas hasta nuevas pestañas. Backups/despliegue MEDIA-DEP-T01–T04 aplazados; R2 y media de propuestas futuros. Mantener #11/#27/#28, A1/A2 y G6–G9 con sus propios pendientes y gates.
-- Esta planificación no cambia current_task, next_action visual ni el override de comparación directa del Coordinator. Contrato vigente resumido en MEDIA-PLAN; los apuntes de decisiones siguientes son cronológicos y pueden reflejar propuestas posteriormente resueltas.
+- La reordenación posterior de esta fecha aplaza A1/A2 y sustituye el foco anterior; conserva el override de comparación directa del Coordinator. Contrato vigente resumido en MEDIA-PLAN; los apuntes de decisiones siguientes son cronológicos y pueden reflejar propuestas posteriormente resueltas.
 
 ## Registro cronológico de decisiones
+
+- 2026-09-24 — Limpieza 7.8 y temporadas 7.9 COMPLETADAS LOCALMENTE: migración conserva 13 usuarios/14 membresías, gestión administrativa y selector histórico, builds/HTTP/navegador/revisión Coordinator PASS. [Resultado y límites](../phase-7.9/RESULT.md). #11 sin cierre remoto. Avatares/media 7.10 pendientes; pausa A1/A2/G9 intacta.
+
+- 2026-09-24 — Autorizada continuación «vamos con ello»: limpieza del campo legado 7.8 y gestión/históricos de temporadas 7.9. [Plan acotado](../phase-7.9/PLAN.md). Trabajo funcional EN CURSO, sin reanudar A1/A2/G9 ni media. Nueva sección administrativa de temporadas y selector en ranking; migración legacy protegida por auditoría de datos.
+
+- 2026-09-24 — #27/#28 entregados localmente: `/perfil`, nombre/apellidos y alias propios. HTTP/navegador, lint/TypeScript y revisión desktop/móvil PASS. [Resultado y límites](../phase-7.8/RESULT.md). Sin migración, retirada del campo legado ni avatares; sin reanudar otros gates visuales.
+
+- 2026-09-24 — Autorizada implementación funcional de 7.8 (#27/#28): `/perfil` con nombre/apellidos y alias propios por equipo, correo solo consulta. Permisos propios para PLAYER/TEAM_ADMIN; no edición ajena ni avatares. [Plan](../phase-7.8/PLAN.md). Trabajo separado de la pausa visual general.
+
+- 2026-09-24 — Entrega G7/G8 sin imágenes finalizada: historiales, subrutas administrativas, revisión y progreso histórico. Build/lint/TypeScript, HTTP/E2E y capturas PASS; comparación Coordinator en [evidencia](../phase-7.7/COMPARISON-COORDINATOR.md). Se conserva pausa fuera del alcance autorizado. Phase 7.7 parcial solo por imágenes.
+
+- 2026-09-24 — «montalo y ves explicando lo realizado y porque»: autoriza implementación de pendientes 7.7 y reanuda únicamente G7/G8 con QA. Auditoría descubre progreso histórico ausente en detalle administrativo de solicitud: ampliación de lectura scoped con temporada original, sin schema ni cambio de reglas. El resto de la pausa permanece vigente.
+
+- 2026-09-24 — Usuario solicita pausar todo UI Workstream V2. Estado PAUSED, ninguna tarea visual activa; G7-T01 se conserva como punto pendiente, sin ejecución. A1/A2 aplazados y G6 provisional se mantienen. Reanudación solo por indicación del usuario; las fases independientes del roadmap conservan su estado.
+
+- 2026-09-24 — Usuario pide descartar el trabajo restante de G6 y marcarla completada temporalmente. G6 COMPLETADA PROVISIONALMENTE; T03/T04/T05 DESCARTADAS por ahora, no ejecutadas. Se conserva la implementación T01/T02 y su evidencia; no se acredita QA ni gate visual PASS. No reabrir automáticamente esas tareas; G9 conserva su regresión general. G7 queda como siguiente bloque visual pendiente, sin iniciarlo. Esta decisión sustituye las menciones históricas a G6 pausado.
+
+- 2026-09-24 — Reordenación solicitada: Phase 5.5 pasa al final del roadmap; backups como último bloque del despliegue definitivo. A1-T04 y A2-T04/T05 APLAZADAS hasta completar estructura G6–G8 y pestañas/controles acordados (perfil, temporadas, media), antes de G9. No se reanuda G6 ni se ejecuta media. Las menciones anteriores a A2 como foco son históricas.
 
 - 2026-09-24 — Usuario aprueba adelantar el bloque como **Phase 7.10 — Imágenes y almacenamiento**, después de identidad/temporadas y antes de continuar el frontal con imágenes reales. Phase 10 queda para ampliaciones; despliegue/backups y R2 conservan seguimiento separado. IDs MEDIA-10A mantenidos por trazabilidad, sin cambiar tareas/estados, current_task UI-A2-T04 ni pausa G6–G9. Referencias históricas a 10A corresponden ahora a 7.10.
 
@@ -144,7 +167,7 @@ El frontend administrativo V1 aún rechaza solicitudes sin enviar `reason`; se a
 - Sesiones 2026-09-22: login con cookie HttpOnly, persistencia tras recarga, acceso protegido y logout PASS; validación ya registrada en las decisiones vigentes y en `apuntes.md`. La conciliación documental no la vuelve a ejecutar.
 - Slice de identidad 2026-09-21: QA independiente PASS para `prisma validate/generate`, build backend, `seed:check`, lint/TypeScript/build frontend y `git diff --check`. La migración 14/14 se aplicó después únicamente a `127.0.0.1:55437/weblogros_ui`; login Ana/PLAYER y contexto Halcones PASS (`Ana Fernández`, 2 equipos), sin P2022. No hubo seed, reset ni screenshots. Implementación posteriormente versionada en `c2ca920`; cierre remoto de #13/#20 no verificado. Esta validación no cubre temporadas, no cierra UI-A1/UI-A2 ni cambia `current_task`.
 
-- Estado vigente: gates UI-G0 a UI-G5 cerrados; UI-G6-T01/T02 DONE y UI-G6-T03 READY. La línea G6–G9 está pausada por petición del usuario; A1/A2 permanece activa en UI-A2-T04. Jugadores implementado con lint/build/checks dirigidos PASS; captura, pruebas de navegador y gate visual UI-G6 pendientes. Evidencia: `evidence/UI-G6/UI-G6-T02-IMPLEMENTATION.md`.
+- Estado vigente: gates UI-G0 a UI-G5 cerrados; UI-G6-T01/T02 DONE y G6 completada provisionalmente por decisión del usuario, T03–T05 descartadas por ahora. G7–G9 pendientes; A1/A2 queda aplazada hasta completar la estructura, antes de G9. Jugadores implementado con lint/build/checks dirigidos PASS; captura, pruebas de navegador y gate visual UI-G6 pendientes. Evidencia: `evidence/UI-G6/UI-G6-T02-IMPLEMENTATION.md`.
 - Pendiente explícito para UI-G9: ejecutar variantes HTTP 401/403/404 del ranking; loading, 500/retry, empty y 1–2 miembros ya tienen evidencia funcional. No confundir inspección de código con prueba runtime.
 - Último runtime verificado por QA de UI-G5: frontend PID 712719/sesión 56528; backend PID 620960/sesión 88569; PostgreSQL temporal `weblogros_ui_review_g3` saludable. Directorio `/tmp/weblogros-ui-review-g3`, URL `http://100.65.11.85:3000/login`. QA y crítica UI-G5 iteración 2 PASS. No actualizado ni revalidado durante cierre T02 de jugadores; verificar identidad/salud antes de operar.
 - Gate UI-G4 cerrado: crítica independiente sin P0/P1 y FORM-FLOW-QA.md PASS. Submit real por rol, payload exacto, redirect, doble envío (un único POST), vacío sin POST y filtro sin resultados verificados. Solo se eliminaron los dos registros QA por ID; conteos 6/19/42/8 restaurados. Shell permanece congelado con la excepción tipográfica de PageHeader ya validada.

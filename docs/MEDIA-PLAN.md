@@ -44,8 +44,8 @@ Las tareas siguientes convierten estos acuerdos en entregables; no vuelven a ped
 
 ## 2. Encaje con el trabajo actual
 
-- Punto visual conservado: `UI-A2-T04`; `UI-A1-T04` sigue abierto y la continuación G6–G9 permanece pausada en `UI-G6-T03`.
-- Propuesta de orden: **decisiones de 7.10 → implementación acotada → imágenes de prueba reales → revisión de pantallas afectadas → retomar A1/A2**. Reanudar G6 mantiene su condición vigente; este plan no lo reanuda automáticamente.
+- Reordenación 2026-09-24: A1-T04 y A2-T04/T05 aplazados hasta completar estructura G6–G8 y nuevas pestañas/controles acordados, antes de G9. G6 completada provisionalmente por decisión posterior del usuario; T03–T05 descartadas por ahora, sin gate visual PASS.
+- Propuesta de orden: **decisiones de 7.10 → implementación acotada → imágenes de prueba reales → revisión de pantallas afectadas → completar estructura y nuevas pestañas/controles → retomar A1/A2 → G9**. El cierre provisional de G6 no reanuda G7–G9 automáticamente.
 - Los gates G0–G5 existentes siguen siendo evidencia histórica válida. Incorporar imágenes exigirá regresión de las pantallas tocadas; no constituye una reaprobación automática de todo el frontal.
 - El plan visual actual excluye media real. Al cerrar las decisiones, registrar expresamente la excepción para los tipos y pantallas aprobados. Banners y fotografía decorativa siguen fuera de esa excepción salvo acuerdo específico.
 - #22 sigue logos; #23 sigue imágenes/avatares/almacenamiento. #27/#28 mantienen edición de identidad y alias; 7.10 no los absorbe. No crear issues duplicadas ni marcar las existentes como resueltas al aprobar el plan.
@@ -395,7 +395,7 @@ Ruta prevista de evidencia: `docs/media/evidence/<ID>/`, con un índice final `d
 
 ### 5.6 Trabajo aplazado y seguimiento futuro
 
-Las ampliaciones de producto pertenecen a Phase 10. Despliegue/backups y migración R2 tienen seguimiento independiente, activado al preparar producción o solicitar migración; no esperan a Phase 10 ni condicionan el piloto local:
+Las ampliaciones de producto pertenecen a Phase 10. Despliegue/backups y migración R2 tienen seguimiento independiente, al final del roadmap para el despliegue definitivo, con backups como último bloque de preparación/verificación. R2 se activa al solicitar migración; no condicionan el piloto local:
 
 | ID | Estado | Activador / dependencias | Entregable y cierre |
 | --- | --- | --- | --- |

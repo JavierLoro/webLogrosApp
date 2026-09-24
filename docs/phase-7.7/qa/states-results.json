@@ -1,0 +1,37 @@
+{
+  "fixture": "qa77-1790248742991-main",
+  "results": [
+    {
+      "check": "Empty own history",
+      "result": "PASS"
+    },
+    {
+      "check": "PLAYER admin 403 view",
+      "result": "PASS"
+    },
+    {
+      "check": "Anonymous 401 view",
+      "result": "PASS"
+    },
+    {
+      "check": "Admin invalid ID 404 view",
+      "result": "PASS"
+    },
+    {
+      "check": "A-list-B client navigation resets fields",
+      "result": "PASS"
+    },
+    {
+      "check": "New admin/logros progress then reselect and award works",
+      "result": "PASS"
+    },
+    {
+      "check": "New admin/logros secret mutation persists",
+      "result": "PASS"
+    },
+    {
+      "check": "New invitation configurable creation and copy clicked",
+      "result": "PASS"
+    }
+  ]
+}
