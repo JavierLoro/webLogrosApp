@@ -9,9 +9,73 @@ last_completed: UI-A2-T03 — Unirse/solicitud/éxito implementados; contratos p
 next_action: Revisar COMPARISON-COORDINATOR-1.md: ajustes de geometría/jerarquía implementados y capturados, ESLint/TypeScript PASS. Completar QA pendiente de BROWSER-QA.md (éxito real/preview válido/estados alternativos) y convergencia tipográfica antes de cerrar A2. Coordinator compara directamente, sin visual_critic. No forzar éxito ni inventar datos. A1 gate final pendiente. Windows local; no reanudar G6-G9 ni implementar backend.
 paused_mainline_task: UI-G6-T03
 
-## Decisiones vigentes
+## Planificación vinculada vigente — 2026-09-24
+
+- [Phase 7.10: tareas, dependencias y criterios](../MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre), enlazadas en el Roadmap general. T00/T01 DONE solo para plan y decisiones de uso locales; T02–T09 TODO. Siguiente tarea de diseño: T02.01 (inventario). No implementación, servicios, migraciones ni pruebas de media ejecutadas.
+- Recorridos previstos: base común → logro completo y QA T08.01 → logos → avatares → QA/cierre local. Compresión, metadatos, tamaños/variantes, cancelación y recuperación del aviso ya acordados; no reabrirlos por entradas históricas anteriores.
+- [Ciclo de vida del jugador](../PLAYER-LIFECYCLE-PLAN.md): T00 documental DONE, T01–T07 TODO. Diseño antes de relación avatar/equipo; archivo/reingreso antes de completar avatar específico; eliminación administrativa es entrega aparte, no absorbida por uploads.
+- Ubicaciones de edición T07.01 aplazadas hasta nuevas pestañas. Backups/despliegue MEDIA-DEP-T01–T04 aplazados; R2 y media de propuestas futuros. Mantener #11/#27/#28, A1/A2 y G6–G9 con sus propios pendientes y gates.
+- Esta planificación no cambia current_task, next_action visual ni el override de comparación directa del Coordinator. Contrato vigente resumido en MEDIA-PLAN; los apuntes de decisiones siguientes son cronológicos y pueden reflejar propuestas posteriormente resueltas.
+
+## Registro cronológico de decisiones
+
+- 2026-09-24 — Usuario aprueba adelantar el bloque como **Phase 7.10 — Imágenes y almacenamiento**, después de identidad/temporadas y antes de continuar el frontal con imágenes reales. Phase 10 queda para ampliaciones; despliegue/backups y R2 conservan seguimiento separado. IDs MEDIA-10A mantenidos por trazabilidad, sin cambiar tareas/estados, current_task UI-A2-T04 ni pausa G6–G9. Referencias históricas a 10A corresponden ahora a 7.10.
+
+- 2026-09-24 — Petición de consolidación: plan de media desglosado por subtareas con responsables/dependencias/evidencia y enlazado en Roadmap. Plan separado PLAYER-LC para conservación/archivo/eliminación. T01 local cerrado documentalmente; diseño y ejecución pendientes. Comprobación documental únicamente; sin cierre de gates UI.
+
+- 2026-09-24 — Phase 10A D05: recuperación del aviso al recargar/volver aceptada. Consultar estado real: espera/proceso recuperan indicador, éxito muestra imagen vigente y aviso, fallo conserva anterior/respaldo con alerta/reintento manual. Sin reenvío automático; continuidad solo tras recepción/admisión del archivo, permisos actuales y aislamiento de cuentas. Reconocimiento/caducidad de avisos y mecanismo técnico pendientes en T02. Solo documentación, sin implementación ni cambios de gates.
+
+- 2026-09-24 — Phase 10A: compresión aceptada (JPEG 85; PNG sin pérdida adicional por compresión, sin paletas). Cancelar cambio pendiente conserva imagen anterior/respaldo; no admitir otro cambio de la misma imagen/recurso mientras haya trabajo pendiente. Coordinar cancelación/publicación y bloqueo entre pestañas/administradores en T02; no interpretar como límite nuevo por usuario/plataforma. Aviso al recargar/volver pendiente de explicar y decidir. Solo documentación; sin implementación ni cambios de gates.
+
+- 2026-09-24 — Phase 10A D04: usuario pide retirar metadatos incrustados; aplicar antes orientación y normalización sRGB, conservar transparencia/estructura de formato y gestionar dimensiones/formato/peso en DB. Descarta optimización mediante paletas, tanto exacta como reducción de colores; no excluye PNG estático de entrada con paleta. Tamaños/variantes acordados se mantienen; JPEG 85 pendiente de aprobación. Solo documentación, sin implementación ni cambios de gates.
+
+- 2026-09-24 — Phase 10A D04: variantes pequeñas aceptadas con su coste adicional estimado. Avatar 256 + 96 px; logo 512 + 128 px (sin variante 256); logro 1280 + 640 + 320 px. Una subida, generación automática, sin ampliar ni duplicar resultados equivalentes. Extras teóricos por píxeles: 14,06 %, 6,25 % y 31,25 % frente a guardar solo principal; no pesos medidos. Calidad de compresión pendiente. Solo documentación; T01 IN_PROGRESS, sin implementación ni cambios de gates.
+
+- 2026-09-23 — Gap 21: acordadas acciones **Archivar** (retirar acceso, conservar ficha/avatar/resultados y recuperar al volver) y **Eliminar del equipo** (confirmación, sin deshacer, retirar datos actuales/avatar específico, cancelar solicitudes pendientes). Eliminar conserva decisiones resueltas, logros de catálogo derivados de propuestas y resultados cerrados con último alias/iniciales, sin alterar puntos ni puestos. Tras eliminación, reingreso empieza de nuevo. Cuenta global y otros equipos intactos. Producto definido; diseño técnico y controles pendientes. Solo documentación, sin implementación ni cambios de gates.
+
+- 2026-09-23 — Conservación de jugador acordada: salida retira acceso pero mantiene ficha, progreso, logros y relaciones de rankings mientras exista equipo; reingreso recupera historial salvo eliminación explícita anterior. Los efectos de archivar/eliminar se precisan en el acuerdo anterior. Nuevo gap documental 21, dependiente del diseño de membresía; sin schema/API ni cambios de gates.
+
+- 2026-09-23 — Phase 10A D03/D06: avatar específico se conserva mientras exista el equipo aunque la persona salga; recuperar al reingresar con la misma cuenta, sin conservar permisos durante su ausencia. Excluir de limpieza temporal/huérfanos; sin historial de sustituidas. Capacidad incluye antiguos miembros. Sin implementación ni cambios de gates.
+
+- 2026-09-23 — Phase 10A D03: caché privada con revalidación obligatoria elegida. Navegador conserva copia; backend comprueba sesión, permiso y versión antes de permitir reutilización (304). Sin permiso no hay 304; sin caché compartida ni fallback offline. Pruebas e implementación pendientes, alcance solo documental. D03 sigue parcial por detalles de salida/reingreso y revocación.
+
+- 2026-09-23 — Usuario reitera solo definición, sin montar nada. MEDIA-PLAN concreta propuesta de configuración local (contenedor/volumen/bucket/puerto privados) y compara caché privada con revalidación frente a no-store. Caché privada con revalidación aceptada posteriormente el mismo día; no modifica decisiones aprobadas ni acredita ejecución. Sin servicios, credenciales ni configuración ejecutable creados.
+
+- 2026-09-23 — Phase 10A D02: montaje de pruebas aprobado por el usuario. Un contenedor SeaweedFS Windows con volumen propio, datos/metadatos persistentes y acceso privado con credenciales desde backend; conservar servicios existentes. Versión/configuración/recursos pendientes, sin arranque. Destino futuro servidor propio y R2 posterior conservados; no cambia current_task ni gates.
+
+- 2026-09-23 — Phase 10A D03: entrega de imágenes a través del backend y almacenamiento privado acordados, compatibles con mantener el diseño al migrar a R2; permisos por petición, sin descarga directa por enlaces firmados. Caché y detalles de revocación pendientes. Propuesta de D02: contenedor SeaweedFS aislado en Windows con volumen propio; pendiente de elección, sin arranque.
+
+- 2026-09-23 — Phase 10A D07: copias y restauración aplazadas por el usuario hasta preparar despliegue. No bloquean trabajo/piloto local; persistencia y material QA siguen vigentes. T02/T04 y gate local ajustados en MEDIA-PLAN. Sin tocar backups existentes ni cerrar pendientes offsite; sin implementación.
+
+- 2026-09-23 — Phase 10A D06: limpieza tras éxito/fallo, revisión de restos cada hora y retirada de temporales abandonados tras 24 h acordadas; nunca archivos referenciados o de trabajos/transferencias activos. No amplía plazos de cola/proceso ni introduce reintento automático de subida. Implementación/coordinación pendientes. Próximo tema: copias de seguridad D07. Sin ejecución ni cambio de gates.
+
+- 2026-09-23 — Phase 10A D06: reemplazo correcto borra principal anterior y variantes sin referencias, sin historial activo. Fallo de reemplazo conserva anterior; fallo de eliminación deja limpieza pendiente. No borrar avatar general al añadir específico. Retención de backups independiente y pendiente. Docs sincronizados; sin implementación ni borrados ejecutados.
+
+- 2026-09-22 — Phase 10A D05: usuario aplaza ubicaciones de edición hasta definir nuevas pestañas. No se aprueban destinos propuestos ni añadir imagen después de crear logro; permisos y segundo plano conservados. Siguiente decisión independiente: limpieza/retención de imágenes sustituidas (D06). Sin implementación ni cambios en gates UI.
+
+- 2026-09-22 — Seguimiento documental tras #30/#29: UI-G8-T05/T06/T07 deben integrar progreso/secretos ya funcionales en las subrutas administrativas definitivas; T08 incorpora regresión de sus estados. #11 conserva gestión visual de temporadas, selector histórico y QA restante; migración local y cobertura de integración ya verificadas. TASKS/PLAN/Roadmap/BACKEND-GAPS sincronizados; sin nueva issue, implementación ni cierre de gates. Corregidos IDs/estados/enlaces de TASKS afectados por sustitución accidental T→0. `current_task` sigue UI-A2-T04 y G6–G9 pausados.
+
+- 2026-09-22 — Phase 10A D05/D06 parciales: espera máxima de 180 s, procesamiento de 30 s y reintento manual acordados. Proceso en segundo plano durante navegación interna, aviso flotante minimizable con estados reales, confirmación de éxito y alerta al fallar; mantener imagen anterior. Reinicios interrumpen trabajos afectados; recuperación del aviso y mecanismo técnico de limpieza pendientes; plazos acordados posteriormente el 2026-09-23. Sin implementación; estado UI conservado.
+
+- 2026-09-22 — Phase 10A: máximo global de 2 imágenes en procesamiento simultáneo, incluido recorte/compresión/variantes, y 10 esperando por orden de llegada acordados. Las pendientes muestran «Esperando para procesar»; cola llena rechaza otra admisión con aviso para reintentar, conservando la imagen actual. Tiempos acordados en D06; pendientes admisión durante transferencia y validación de memoria/tiempos con los límites acordados de 10 MB/24 MP; sin implementación. D04 sigue parcial y T01 IN_PROGRESS; no cambia el estado UI.
+
+- 2026-09-22 — Phase 10A: usuario confirma «sin originales». Conservar principal procesada y variantes necesarias; entrada temporal, retirada tras procesamiento/guardado/asociación correctos y exclusión de backups. Limpieza de fallos/abandonos acordada posteriormente en D06; implementación pendiente. MEDIA-PLAN, MEDIA-CAPACITY y Decisions sincronizados; D04 sigue parcial, sin implementación ni borrado de archivos.
+
+- 2026-09-22 — Previsión de almacenamiento de Phase 10A documentada en [MEDIA-CAPACITY](../MEDIA-CAPACITY.md): fórmulas por usuario/membresía/equipo/logro, variantes incluidas, sensibilidad de PNG, originales y backups. Supuestos aritméticos verificados; no medición de archivos ni capacidad del servidor. No cierra D02/D04/D07 ni autoriza cuotas o infraestructura.
+
+- 2026-09-22 — MEDIA-10A-D04 parcial: PNG/JPG estáticos y tamaños principales 256/512/1280 px aceptados para avatar/logo/logro. Logos y logros completos y proporcionales; sin ampliar fuentes pequeñas. Inspección de jugadores (avatar propio 96 px, filas 32 px) y referencia de detalle comunitario (bloque de logro aprox. 487 × 517 px). Encuadre de avatar general y específico acordado: vista previa circular con movimiento y zoom antes de guardar. Límites de entrada de hasta 10 MB y 24 MP por imagen acordados, sujetos a prueba de consumo. Dimensiones de variantes y calidad pendientes. Tiempos y flujo en segundo plano acordados posteriormente en D05/D06. Sin implementación de media ni ampliación de comunidad.
+
+- 2026-09-22 — Phase 10A: avatar general y foto opcional por equipo acordados. Prioridad equipo → general → iniciales; fuera de equipo general → iniciales. Cambiar la general actualiza solo contextos que la heredan. Visibilidad acordada: general para cualquier usuario autenticado, específica solo para miembros de su equipo. Edición acordada: cada persona gestiona sus avatares; TEAM_ADMIN gestiona logo/logros de su equipo, sin editar avatares ajenos. Entrega/caché/revocación pendientes; no hay implementación ni cambios de schema.
+
+- 2026-09-22 — MEDIA-10A-D03 parcial: cualquier usuario autenticado de la plataforma puede ver los logos de equipo, sin membresía ni invitación. No implica acceso anónimo ni acceso a otros datos privados. Edición del logo acordada para TEAM_ADMIN de ese equipo; matriz de producto acordada, entrega/caché/revocación pendientes. T01 sigue IN_PROGRESS, sin implementación de media.
 
 - 2026-09-22 — #30 + #29 COMPLETADAS LOCALMENTE: progreso entero, objetivo obligatorio antes de conceder y contador cerrado tras concesión; secretos censurados y revelado histórico global. Migración16/16 aplicada en base Windows de revisión; builds/lint/TypeScript, 7 unitarias, 103 peticiones HTTP y flujo navegador PASS. 26 capturas y comparación directa Coordinator PASS para el alcance añadido. Fixtures existentes conservados; [entrega y evidencia](../issue-30/RESULT.md). No desplegado ni cerrado remotamente; no cierra gates anteriores ni reanuda G6–G9. `current_task` permanece UI-A2-T04.
+
+- 2026-09-22 — MEDIA-10A-D02 parcial: SeaweedFS elegido para servidor propio y Cloudflare R2 como destino futuro preferido acordado. Diseñar integración S3 portable. Pendientes versión, montaje, capacidad y mantenimiento; siguiente decisión de producto D03 (permisos). T01 sigue IN_PROGRESS; sin despliegue, contratación ni migración.
+
+- 2026-09-22 — [MEDIA-PLAN](../MEDIA-PLAN.md), Phase 10A: D01 acordada — imágenes de logros, logos, avatar general y opcional por equipo, por etapas y empezando por el recorrido completo de un logro. T00 completada; T01 IN_PROGRESS. D02–D06 parciales según entradas anteriores; D07 pendiente. No hay implementación ni integración de media real. `current_task` permanece UI-A2-T04 y G6 sigue pausado. Alcance de #22/#23 enlazado sin cierre remoto.
+
+- 2026-09-22 — Conciliación documental solicitada por el usuario: Roadmap y BACKEND-GAPS reflejan gates G0–G5 cerrados, propuestas/ranking ya entregados en su alcance, identidad y sesiones versionadas en `c2ca920`, y temporadas parcialmente implementadas. Migración/pruebas HTTP y frontend de temporadas pendientes. No se ejecutan pruebas nuevas, no se cierran issues remotas ni gates, y `current_task` sigue en UI-A2-T04 con G6 pausado.
 
 - 2026-09-22 — Phase 7.5 Auth Hardening completada y verificada manualmente: login con cookie HttpOnly, persistencia tras recarga, acceso protegido y logout PASS. Frontend sin `localStorage` para JWT, Bearer ni `auth: true`; TypeScript, lint y build backend PASS. No cambia `current_task`: continúa UI-A2-T04.
 
@@ -25,7 +89,7 @@ paused_mainline_task: UI-G6-T03
 
 - 2026-09-21 — Override explícito del usuario: no volver a delegar en visual_critic; el Coordinator realiza directamente la comparación referencia/capturas y registra hallazgos y veredicto. El agente visual_critic_g3 fue interrumpido. Esta decisión sustituye la exigencia previa de crítico independiente; no elimina QA, evidencia visual ni criterios del gate. Próxima acción visual: comparación directa por Coordinator, sin esperar ni relanzar al crítico.
 
-- Usuario pidió continuar resto de lámina onboarding y documentar soporte backend faltante para más adelante. Ampliación UI-A2 explícita; solo frontend, datos reales disponibles y errores honestos. A1 fullscreen confirmado y móvil sin decoración, pero su gate independiente final sigue pendiente.
+- Usuario pidió continuar resto de lámina onboarding y documentar soporte backend faltante para más adelante. Ampliación UI-A2 explícita; solo frontend, datos reales disponibles y errores honestos. A1 fullscreen confirmado y móvil sin decoración, pero su gate final sigue pendiente bajo comparación directa del Coordinator.
 
 - 2026-09-20: ampliación explícita UI-A1 para login/registro desde referencia de acceso/onboarding; usuario confirmó continuar con convenciones actuales (Tailwind, sin migración). Análisis A1-T01 revisado; A1-T02 en curso. La línea G6 sigue pausada; no continuar jugadores automáticamente. Solo frontend y Header público limitado a ambas rutas; no backend/Auth Hardening ni fotografía. Consultar UI-A1 en PLAN/TASKS.
 
@@ -37,7 +101,7 @@ paused_mainline_task: UI-G6-T03
 - Delegación secuencial por defecto; paralelismo solo para trabajo independiente y permitido por el gate.
 - Solo el Coordinator modifica por defecto STATUS/TASKS/PLAN.
 - Astra Low es el perfil lógico por defecto cuando el entorno lo ofrezca; los perfiles Codex heredan la configuración del Coordinator en lugar de fijar un model ID.
-- Critic != Implementer.
+- Regla original Critic != Implementer sustituida para las comparaciones pendientes por el override del 2026-09-21: Coordinator directo, con evidencia y criterios de gate.
 - Las imágenes canónicas viven en `apps/frontend/LockerBoard-marca/ReferenciasPaginas/`.
 - `docs/ui-reference/manifest.json` es un índice; no se duplican PNG.
 - Referencias = autoridad visual. Architecture/Roadmap/Decisions = autoridad funcional.
@@ -58,8 +122,11 @@ paused_mainline_task: UI-G6-T03
 
 - Identidad separada en dos niveles: nombre/apellidos globales en `User` y alias opcional en `TeamMembership`; resolución tenant alias → nombre completo → fallback. Registro frontend/backend adaptado. El avatar no está implementado.
 
+- Identidad y sesiones están versionadas en `main` local mediante `c2ca920`. Publicación remota y cierre de #13/#20/#24 no verificados en esta conciliación; no confundir validación local con despliegue.
+- Temporadas (Phase 7.9 / #11): migración aplicada localmente y cobertura de integración con #30/#29 verificada en `e50e2e3`; gestión visual, selector histórico y QA restante de la fase pendientes. Consultar [Roadmap](../Roadmap.md#phase-79--temporadas-por-equipo). No es un gate cerrado ni una ampliación automática de A2.
+
 - Fixture objetivo: 2 equipos; Halcones con 12 miembros, 14 logros, 40 asignaciones, 8 solicitudes, 6 propuestas y 6 invitaciones.
-- `User.displayName`, criterios y fechas de alta de logros ya forman parte del contrato de datos.
+- Criterios y fechas de alta de logros forman parte del contrato de datos; `User.displayName` queda como legado de transición, reemplazado funcionalmente por identidad global y alias de membresía.
 - El dominio de propuestas distingue envío, incorporación al catálogo y obtención del logro.
 - Ranking, jugadores, dashboard y contexto disponen de lecturas tenant-scoped.
 - Solicitudes de obtención y panel admin base incluyen histórico, detalle y motivo de rechazo.
@@ -70,13 +137,14 @@ paused_mainline_task: UI-G6-T03
 
 ## Bloqueos actuales
 
-El frontend administrativo V1 aún rechaza solicitudes sin enviar `reason`; se adaptará en UI-G8 antes del gate funcional correspondiente. No hay bloqueo para UI-G6. La sesión temporal sirve dashboard, catálogo, formularios y ranking aprobados en `http://100.65.11.85:3000`; sus handles están registrados a continuación.
+El frontend administrativo V1 aún rechaza solicitudes sin enviar `reason`; se adaptará en UI-G8 antes del gate funcional correspondiente. No hay bloqueo técnico documentado para UI-G6, pero su continuación está pausada por el usuario. El entorno operativo vigente es Windows local; consultar `LOCAL_WINDOWS.md` y comprobar salud antes de usarlo. Las URLs/PID de CT112 del historial son evidencia pasada, no una afirmación de que esos servicios continúen activos.
 
 ## Última validación
 
-- Slice de identidad 2026-09-21: QA independiente PASS para `prisma validate/generate`, build backend, `seed:check`, lint/TypeScript/build frontend y `git diff --check`. La migración 14/14 se aplicó después únicamente a `127.0.0.1:55437/weblogros_ui`; login Ana/PLAYER y contexto Halcones PASS (`Ana Fernández`, 2 equipos), sin P2022. No hubo seed, reset ni screenshots; #13/#20 quedan abiertas hasta integrar y enlazar commit/PR. Esta validación no cierra UI-A1/UI-A2 ni cambia `current_task`.
+- Sesiones 2026-09-22: login con cookie HttpOnly, persistencia tras recarga, acceso protegido y logout PASS; validación ya registrada en las decisiones vigentes y en `apuntes.md`. La conciliación documental no la vuelve a ejecutar.
+- Slice de identidad 2026-09-21: QA independiente PASS para `prisma validate/generate`, build backend, `seed:check`, lint/TypeScript/build frontend y `git diff --check`. La migración 14/14 se aplicó después únicamente a `127.0.0.1:55437/weblogros_ui`; login Ana/PLAYER y contexto Halcones PASS (`Ana Fernández`, 2 equipos), sin P2022. No hubo seed, reset ni screenshots. Implementación posteriormente versionada en `c2ca920`; cierre remoto de #13/#20 no verificado. Esta validación no cubre temporadas, no cierra UI-A1/UI-A2 ni cambia `current_task`.
 
-- Estado vigente: gates UI-G0 a UI-G5 cerrados; UI-G6-T01/T02 DONE y UI-G6-T03 READY. Workstream pausado por petición del usuario. Jugadores implementado con lint/build/checks dirigidos PASS; captura, pruebas de navegador y gate visual UI-G6 pendientes. Evidencia: `evidence/UI-G6/UI-G6-T02-IMPLEMENTATION.md`.
+- Estado vigente: gates UI-G0 a UI-G5 cerrados; UI-G6-T01/T02 DONE y UI-G6-T03 READY. La línea G6–G9 está pausada por petición del usuario; A1/A2 permanece activa en UI-A2-T04. Jugadores implementado con lint/build/checks dirigidos PASS; captura, pruebas de navegador y gate visual UI-G6 pendientes. Evidencia: `evidence/UI-G6/UI-G6-T02-IMPLEMENTATION.md`.
 - Pendiente explícito para UI-G9: ejecutar variantes HTTP 401/403/404 del ranking; loading, 500/retry, empty y 1–2 miembros ya tienen evidencia funcional. No confundir inspección de código con prueba runtime.
 - Último runtime verificado por QA de UI-G5: frontend PID 712719/sesión 56528; backend PID 620960/sesión 88569; PostgreSQL temporal `weblogros_ui_review_g3` saludable. Directorio `/tmp/weblogros-ui-review-g3`, URL `http://100.65.11.85:3000/login`. QA y crítica UI-G5 iteración 2 PASS. No actualizado ni revalidado durante cierre T02 de jugadores; verificar identidad/salud antes de operar.
 - Gate UI-G4 cerrado: crítica independiente sin P0/P1 y FORM-FLOW-QA.md PASS. Submit real por rol, payload exacto, redirect, doble envío (un único POST), vacío sin POST y filtro sin resultados verificados. Solo se eliminaron los dos registros QA por ID; conteos 6/19/42/8 restaurados. Shell permanece congelado con la excepción tipográfica de PageHeader ya validada.

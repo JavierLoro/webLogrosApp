@@ -1,5 +1,11 @@
 # UI Visual Convergence Plan
 
+## Estado de ejecución — 2026-09-22
+
+Este archivo conserva dependencias y alcance; los estados de tarea están en [TASKS](TASKS.md) y el punto de continuación en [STATUS](STATUS.md). G0–G5 tienen gates cerrados. G6 tiene implementación terminada y continuación pausada en T03; A1/A2 están en revisión, con foco en A2-T04. G7–G9 no se han iniciado.
+
+Auth Hardening e identidad se implementaron posteriormente como trabajos separados. Temporadas tiene migración aplicada localmente y cobertura de integración con progreso/secretos; administración visual, selector histórico y QA restante de #11 pendientes. #30/#29 ya incluyen frontend funcional, cuya integración en el rediseño administrativo se sigue en UI-G8. Las exclusiones de estas funciones en la primera pasada no significan que sigan ausentes del repositorio. Consultar [Roadmap](../Roadmap.md) y [BACKEND-GAPS](evidence/UI-A2/BACKEND-GAPS.md); esta actualización no reanuda fases ni cierra gates.
+
 ## Principios
 
 - image-first y reference-first;
@@ -83,7 +89,7 @@ Phase 7.7 ya es una decisión de producto acordada. Implementar el mínimo de pe
 - separación clara entre proponer y solicitar obtención;
 - aislamiento tenant y protección TEAM_ADMIN para revisión.
 
-La imagen del logro se representa con placeholder en esta pasada; uploads reales siguen en Phase 10.
+La imagen del logro se representa con placeholder en esta pasada; uploads reales se planifican en Phase 7.10, con integración tras definir sus controles y excepción visual.
 
 ### UI-G1-T05 — Fixture validation
 Verificar migraciones, seed idempotente, build backend, aislamiento tenant y flujos de propuestas/solicitudes. Documentar conceptos backend en `docs/apuntes.md` y conservar learning-comments.
@@ -183,6 +189,37 @@ Gate: ambos flujos son distinguibles y coherentes con Phase 7.6/7.7.
 
 ## UI-G8 — Team Admin
 
+### Incorporación de capacidades ya entregadas (#30/#29)
+
+Actualización documental solicitada el 2026-09-22. La [entrega local](../issue-30/RESULT.md),
+commit `e50e2e3`, ya incluye creación, consulta de progreso y controles administrativos en el
+detalle existente. UI-G8 debe integrarlos en su diseño definitivo, preservando el recorrido
+actual hasta disponer de un reemplazo funcional. No se crea otra issue para duplicar este trabajo.
+
+- **T05 — Logros/asignación:** crear estándar/progresivo con objetivo entero positivo solo para
+  progresivos, alcance permanente/estacional y secreto independiente; editar la propiedad de
+  secreto; seleccionar miembro, consultar avance y aplicar deltas positivos/negativos limitados
+  a cero–objetivo. Concesión manual solo al alcanzar objetivo y contador cerrado después.
+  La edición posterior de tipo/objetivo sigue fuera de V1.
+- **T06 — Solicitudes:** mostrar el avance y la elegibilidad disponibles, conservar motivo de
+  rechazo y errores reales; una solicitud pendiente no implica progreso. La aprobación usa la
+  temporada guardada en la solicitud, aunque ya esté cerrada. Si falta un dato de avance histórico
+  en el contrato de lectura, documentarlo antes de conectar la UI; no sustituirlo por el actual.
+- **T07 — Propuestas:** al aprobar, integrar los campos tipo/objetivo/alcance/secreto que ya acepta
+  el backend. Incorporar al catálogo no concede el logro ni crea avance ficticio.
+- **T08 — QA y comparación:** verificar sin empezar, parcial, objetivo alcanzado pendiente de
+  concesión y conseguido; rechazo de decimales, doble envío, límites, bloqueo tras concesión,
+  ausencia de temporada activa y aislamiento. Secretos no revelados conservan DTO censurado;
+  solo la concesión revela a todo el equipo, también en temporadas posteriores. No incorporarlos
+  al denominador personal. Incluir regresión de catálogo/detalle/dashboard y desktop/móvil.
+
+La gestión visual de temporadas y selección de históricos siguen en **#11 / Phase 7.9**; su
+navegación debe concretarse allí y coordinarse con el shell administrativo cuando corresponda.
+No se considera entregada por haber añadido el campo de alcance al formulario de logros.
+T05–T08 permanecen TODO; A2 sigue como foco y G6–G9 continúan pausados.
+
+### Rutas y secuencia existentes
+
 Rutas acordadas:
 - `/equipos/[slug]/admin`
 - `/admin/invitaciones` bajo el slug
@@ -257,6 +294,10 @@ Gate final:
 - solo P2 de bajo impacto.
 
 ## Fuera de alcance inicial
+
+Planificación consolidada el 2026-09-24: [Phase 7.10 — tareas de imágenes y almacenamiento](../MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre). Decisiones de uso locales acordadas; T02–T09 sin ejecutar. T07.01 concretará las ubicaciones aplazadas y la excepción por tipo/pantalla antes de introducir media real; T08.01 exige un logro completo verificado antes de logos y avatares, y T08.03 regresión conjunta. Preparar este plan no cambia las exclusiones siguientes ni reanuda G6–G9.
+
+[PLAYER-LIFECYCLE-PLAN](../PLAYER-LIFECYCLE-PLAN.md) coordina la conservación de avatares con archivo/reingreso y eliminación de jugadores. Su interfaz se define con las nuevas pestañas y UI-G8; no ampliar ese bloque automáticamente ni declarar cerradas sus tareas por media. Mantener #11 y #27/#28 separados. No integrar banners, fotografía o imágenes de propuestas por inferencia.
 
 - landing;
 - integración real de imágenes de logros;

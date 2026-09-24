@@ -2,6 +2,8 @@
 
 This file provides project-wide guidance to coding agents working in this repository.
 
+Estado y excepciones operativas vigentes: leer primero `docs/ui-workstream/STATUS.md`. El override del usuario del 2026-09-21 asigna las comparaciones visuales pendientes al Coordinator, sin `visual_critic`; sustituye las reglas generales de crítico independiente de este archivo para ese alcance y conserva evidencia/QA/gates.
+
 ---
 
 # MemPalace Integration
@@ -191,21 +193,21 @@ infra/nginx/    — Reverse proxy: /api/* → backend:3001, /* → frontend:3000
 
 ### Backend (`apps/backend/src/`)
 - `server.ts` — punto de entrada: monta CORS manual, rutas `/auth` y `/equipos/:slug`
-- `routes/auth.ts` — `POST /register` y `POST /login` (bcryptjs + JWT, 7d de expiración)
+- `routes/auth.ts` — registro/login con JWT en cookie HttpOnly; `GET /session` y `POST /logout` completan el ciclo de sesión
 - `routes/equipos.ts` — resuelve el tenant y expone los endpoints scoped de logros (`GET /`, `GET /:id`, `POST /`)
-- `middleware/auth.ts` — verifica `Authorization: Bearer <token>`, inyecta `req.userId`
+- `middleware/auth.ts` — verifica el JWT de la cookie `auth_token`, inyecta `req.userId`
 - `lib/prisma.ts` — instancia singleton de PrismaClient
 
 ### Frontend (`apps/frontend/src/app/`)
 - App Router de Next.js. La V1 nació code-first; el rediseño visual actual es image-first y sigue `docs/ui-workstream/`.
-- Incluye landing, auth, shell tenant, dashboard básico, catálogo, detalle, creación de logro, solicitudes de obtención y paneles administrativos funcionales en su alcance actual.
-- Ranking y jugadores requieren el read slice definido en el workstream; propuestas de nuevos logros y las subrutas administrativas acordadas siguen pendientes de implementación.
+- Incluye landing, auth, shell tenant, dashboard con datos reales, catálogo, detalle, creación/propuesta por rol, ranking, solicitudes de obtención y paneles administrativos V1.
+- Ranking y lecturas de jugadores/propuestas ya existen; jugadores está implementado con QA/gate visual pendientes. Los historiales renovados y las subrutas administrativas acordadas corresponden a UI-G7/UI-G8, todavía pendientes.
 - La UI debe contemplar estados loading/error/empty/401/403/404, responsive y accesibilidad.
 
 ### Base de datos
 - PostgreSQL en Docker, contenedor `weblogros_db`
 - Credenciales locales: `admin:admin123`, db `weblogros`, puerto `5432`
-- Schema Prisma: `Team`, `User`, `Logro` y `UserLogro`, con logros scoped por `teamId`
+- Modelo de datos: equipos, usuarios, membresías/roles contextuales, logros, concesiones, invitaciones, solicitudes y propuestas. Identidad global/alias y temporadas se describen en `docs/Architecture.md`; temporadas tiene migración y pruebas de ejecución pendientes según Roadmap.
 - `apps/backend/.env` contiene `DATABASE_URL` y `JWT_SECRET`
 
 ### Variables de entorno necesarias (`apps/backend/.env`)
@@ -215,4 +217,6 @@ JWT_SECRET="..."
 ```
 
 ## Estado actual del roadmap
-Fases 1–4 completadas. Phase 5 y Phase 5.5 están completadas salvo las copias offsite del backup y la confirmación de HTTPS del entorno. Phase 6 y 6.5 (multi-tenancy y Frontend V1) están completadas en su alcance. Phase 7 dispone de roles contextuales, middlewares y seed; Phase 7.6 incluye solicitudes de equipos y logros, asignación directa y paneles admin. Foco de entrega activo: **UI Visual Convergence Workstream**, actualmente en `UI-G0-T04`. Phase 7.5 Auth Hardening permanece pendiente en el roadmap de aprendizaje. Ranking/jugadores requieren el read slice de UI-G1; propuestas de nuevos logros corresponden a Phase 7.7 y también entran en UI-G1.
+Conciliado el 2026-09-22. Fases 1–4, base multi-tenant, Frontend V1, roles y administración V1 completados en su alcance; HTTPS y copias offsite siguen pendientes. Phase 7.5 Auth Hardening completada y verificada manualmente. Propuestas dispone de backend y formulario por rol; faltan historiales UI-G7 y administración UI-G8. Identidad global/alias implementados y validados localmente; edición de perfil/alias pendiente. Temporadas tiene backend versionado, pero migración aplicada, pruebas HTTP y frontend pendientes.
+
+Foco actual: **UI-A2-T04**, con gate UI-A1-T04 todavía en curso. Gates UI-G0–G5 cerrados; jugadores implementado (UI-G6-T01/T02 DONE), con continuación pausada en UI-G6-T03. UI-G7–G9 pendientes. Ranking y estadísticas ya entregados dentro del workstream; no repetirlos por casillas históricas. Consultar `docs/Roadmap.md`, `docs/ui-workstream/STATUS.md` y `docs/ui-workstream/evidence/UI-A2/BACKEND-GAPS.md` para estado, evidencia y alcance. Implementado/validado localmente no equivale a publicado o desplegado.

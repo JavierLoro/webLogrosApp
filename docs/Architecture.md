@@ -15,7 +15,32 @@ administradores generan invitaciones con token aleatorio, caducidad y límite de
 se almacena como hash y se puede consumir desde un enlace (`/unirse?token=...`) o introduciéndolo
 manualmente; ambos caminos llaman a la misma operación de unión.
 
-### Identidad global y alias por equipo
+### Conservación del jugador al salir — decisión pendiente de implementación
+
+**Acordado el 2026-09-23:** salir o perder acceso a un equipo conserva la ficha contextual del jugador, alias/avatar específico, progreso, concesiones y vínculos históricos mientras exista el equipo, salvo eliminación explícita por su TEAM_ADMIN. La salida no debe borrar logros obtenidos ni hacer desaparecer aportaciones de rankings por romper las relaciones. Separar acceso activo de pertenencia histórica: una ficha conservada no concede lectura/escritura del espacio privado ni debe contarse automáticamente como miembro activo. El reingreso de la misma cuenta recupera su historial sin duplicar concesiones.
+
+La eliminación explícita por TEAM_ADMIN es una acción distinta de retirar acceso y solo afecta a su equipo: no elimina la cuenta global ni datos de otros equipos. **Confirmación del 2026-09-23 («se deben conservar si»): los resultados de temporadas cerradas se conservan incluso tras esa eliminación.** No borrar las concesiones, puntuaciones, puestos ni referencias necesarias para reproducir esos resultados; la eliminación del jugador no debe retirar su fila histórica ni desplazar los puestos de los demás. Esto incluye preservar la contribución de logros permanentes cuando formen parte del ranking cerrado según su regla vigente, sin cambiar automáticamente la fórmula de puntuación.
+
+**Temporada activa, confirmada el 2026-09-23 («igual, no se elimina a menos que lo haga explicitamente el admin»):** los datos y resultados actuales también se conservan al salir o perder acceso. Solo una acción explícita de TEAM_ADMIN puede eliminarlos de su equipo, respetando las referencias que sostienen los resultados de temporadas cerradas.
+
+**Archivar y eliminar, acordado el 2026-09-23 («me gusta si, nos quedamos con esto»):** ofrecer dos acciones distintas al TEAM_ADMIN de ese equipo.
+
+| Efecto | Archivar al jugador | Eliminar del equipo |
+| --- | --- | --- |
+| Acceso y listado | Retirar acceso y sacar del listado habitual; conservar entre antiguos jugadores | Retirar acceso y sacar del listado habitual |
+| Ficha y resultados actuales | Conservar ficha, progreso y resultados | Eliminar datos actuales, salvo registros/referencias necesarios para resultados cerrados |
+| Avatar específico | Conservar principal y variantes | Borrar principal y variantes sin referencias vigentes; no borrar avatar general ni fotos de otros equipos |
+| Temporadas cerradas | Conservar resultados | Conservar fila histórica, puntos y puestos; mostrar último alias del equipo e iniciales, sin heredar la foto general |
+| Reingreso de la misma cuenta | Recuperar ficha, avatar y progreso sin duplicados | Empezar de nuevo; conservar resultados cerrados anteriores sin restaurarlos como progreso actual |
+| Recuperación | Permitir reactivación con el acceso autorizado | Sin opción de deshacer; confirmación previa que explique las pérdidas |
+
+Al eliminar, cancelar solicitudes pendientes de ese jugador en ese equipo y conservar las decisiones ya resueltas como historial. Los logros del catálogo surgidos de sus propuestas permanecen: pertenecen al equipo. Esto no elimina la cuenta global ni datos de otros equipos. Salir o perder acceso por sí solo sigue conservando la información; nunca ejecuta automáticamente la eliminación.
+
+El contrato de producto queda acordado; falta diseñar las relaciones y operaciones que lo garanticen, sin presumir borrado físico en cascada. La ubicación de controles y presentación/filtros de antiguos miembros se decidirán con las nuevas pestañas. La conservación acordada limita los efectos de esta eliminación; no define otras políticas de corrección histórica. Solo documentación, sin implementación ni borrados ejecutados.
+
+El esquema actual de `TeamMembership` no dispone de estado activo/inactivo; diseñar esta separación, revisar autorización/lecturas y la integridad de referencias antes de implementarla. Seguimiento: [BACKEND-GAPS, conservación del jugador](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md#21-conservación-del-jugador-y-baja-del-equipo), relacionado con media pero con alcance de dominio propio.
+
+### Identidad global y alias por equipo (modelo actual)
 
 `User` conserva la identidad global de la persona: nombre (`firstName`), apellidos (`lastName`),
 email y credenciales. `lastName` es un único texto y admite uno o varios apellidos sin imponer un
@@ -28,9 +53,16 @@ apellidos globales, y finalmente `Miembro {id}` para datos históricos incomplet
 la fuente canónica. La edición posterior del perfil global se sigue en la issue #27 y la edición y
 permisos del alias en la #28.
 
-La foto de perfil será global y pertenecerá a `User`, pero no se guarda todavía: avatar, uploads y
-storage se diseñarán conjuntamente en la issue #23 y Phase 10. Mientras tanto, la interfaz usa
-iniciales/placeholders; no acepta URLs arbitrarias ni inventa una ruta de archivo.
+**Decisión del 2026-09-22, pendiente de implementación:** avatar general asociado a `User` y foto
+opcional por equipo en el contexto de `TeamMembership`. Presentación tenant: foto de equipo → foto
+general → iniciales. Fuera de equipo: general → iniciales. La herencia se resuelve al leer; cambiar
+la general actualiza los contextos que la heredan sin alterar fotos específicas. Quitar una foto de
+equipo recupera la general; quitar la general conserva las específicas. La general será visible para
+cualquier usuario autenticado; la específica, solo para miembros de ese equipo. Sin acceso anónimo.
+Cada persona gestionará sus avatares general y por equipo; los TEAM_ADMIN gestionarán el logo y las imágenes de logros de su equipo, sin editar avatares ajenos. Entrega mediante backend y caché privada con revalidación de permisos/versión acordadas; coordinación técnica e implementación pendientes.
+Avatar, uploads y storage se diseñan conjuntamente en #23 y [Phase 7.10](MEDIA-PLAN.md).
+Desglose de entrega en [MEDIA-PLAN, tareas](MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre); conservación/archivo/eliminación en [PLAYER-LIFECYCLE-PLAN](PLAYER-LIFECYCLE-PLAN.md). El diseño de historial precede a la relación avatar/equipo y su archivo/reingreso se implementa antes de completar avatares específicos. Son contratos planificados, no capacidades verificadas.
+Mientras tanto, la interfaz usa iniciales/placeholders; no acepta URLs arbitrarias ni inventa una ruta de archivo.
 
 ### Temporadas y alcance de los logros
 

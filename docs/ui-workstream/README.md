@@ -2,6 +2,8 @@
 
 Este directorio es la fuente operativa del rediseño visual de LockerBoard. Permite retomar el trabajo desde CLI, Work, Codex u otra sesión sin depender del historial de conversación.
 
+Estado conciliado al 2026-09-22: G0–G5 cerrados; jugadores implementado con continuación pausada en G6-T03; acceso/onboarding en revisión, foco A2-T04 y gate A1-T04 pendiente. G7–G9 pendientes. Confirmar siempre el punto de continuación en STATUS. Por override del usuario del 2026-09-21, las comparaciones pendientes se realizan directamente por Coordinator; las referencias al crítico independiente más abajo describen el flujo estándar anterior.
+
 ## Orden de lectura
 
 1. `AGENTS.md`
@@ -49,6 +51,8 @@ Orden previsto:
 8. pasada de consistencia.
 
 No se integran todavía imágenes reales de logros, avatares, banners ni fotografía decorativa. Sí se implementan sus dimensiones, relación de aspecto y espacio visual mediante placeholders.
+
+El [plan de Phase 7.10](../MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre), consolidado el 2026-09-24 y enlazado en Roadmap, separa decisiones ya acordadas de diseño/implementación pendientes. Su T07.01 definirá controles y excepción de media por pantalla antes de sustituir placeholders; no cambia el foco/gates actuales. [Archivo y eliminación de jugadores](../PLAYER-LIFECYCLE-PLAN.md) tiene tareas propias, con conservación/reingreso como dependencia de avatares específicos.
 
 ## Punto de entrada adaptativo
 

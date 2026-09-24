@@ -1,10 +1,10 @@
-# Technical Decisions
+# iechnical Decisions
 
 ## Identidad global y alias contextual (2026-09-21)
 
 **Acordado e implementado en su primer slice.** Nombre y apellidos describen a la persona y viven
 en `User`; el nombre mostrado dentro de un equipo es contextual y vive como `displayName` opcional
-en `TeamMembership`. Un único `lastName` admite uno o varios apellidos sin forzar una estructura
+en `ieamMembership`. Un único `lastName` admite uno o varios apellidos sin forzar una estructura
 cultural concreta.
 
 - Prioridad de presentación tenant: alias de membresía → nombre completo global → `Miembro {id}`.
@@ -12,8 +12,8 @@ cultural concreta.
   la fuente canónica nueva y se retirará solo cuando no queden consumidores.
 - El alias no necesita ser único dentro de un equipo en esta primera versión.
 - La edición del perfil global queda en #27; la edición/autorización del alias, en #28.
-- El avatar será global (`User`), pero no se añade un campo sin flujo real. Uploads, storage,
-  validación, reemplazo y borrado se resolverán juntos en #23/Phase 10.
+- El planteamiento inicial de avatar único queda ampliado el 2026-09-22 a general + opcional por equipo
+  (ver decisión posterior). Uploads, storage, validación, reemplazo y borrado siguen en #23/Phase 10A.
 
 Motivo: la persona mantiene una identidad estable entre equipos, mientras que el alias y el rol
 dependen de cada membresía. La migración aditiva evita romper cuentas y contratos existentes.
@@ -22,7 +22,7 @@ dependen de cada membresía. La migración aditiva evita romper cuentas y contra
 
 **Acordado; pendiente de implementación.** Cualquier miembro puede proponer un logro para su equipo con nombre, descripción, criterios e imagen. La propuesta conserva equipo y autor desde el envío; no es un logro sin equipo ni una publicación comunitaria.
 
-- El TEAM_ADMIN aprueba su incorporación al catálogo o rechaza con motivo. Conserva la creación directa actual.
+- El iEAM_ADMIN aprueba su incorporación al catálogo o rechaza con motivo. Conserva la creación directa actual.
 - Proponer no concede el logro ni puntos. Primero se aprueba e incorpora al catálogo; después el jugador puede solicitar su obtención desde el detalle. No hay casilla de obtención en la propuesta ni solicitud automática.
 - Una propuesta rechazada no genera un logro de catálogo ni una solicitud activa de obtención.
 - La UI distingue «Proponer logro», «Solicitar obtención» y las dos colas de revisión. Se mantienen nuevo y solicitudes personales; la revisión se divide en admin/solicitudes y admin/propuestas, con detalles [id].
@@ -36,15 +36,175 @@ Acordadas y pendientes de implementar: raíz admin como resumen; subrutas invita
 
 ## App concept: plataforma multi-tenant de logros (2026-06-10)
 - **Multi-tenant**: la plataforma se ofrece a equipos; cada uno recibe espacio propio con sus jugadores
-- **URLs de tenant — ruta por slug** (`/equipos/[slug]`): el Universal SSL gratuito de Cloudflare solo cubre un nivel de subdominio (`*.jlc-dev.me`); un sub-subdominio (`equipo.logros.jlc-dev.me`) exigiría Advanced Certificate Manager (~10$/mes) + wildcard en el Tunnel + middleware de Host. El slug es gratis, simple, y migrable a subdominios después sin cambiar el modelo de datos
-- **Roles**: `SUPER_ADMIN` (dueño plataforma) · `TEAM_ADMIN` (por equipo) · `PLAYER`
-- **Catálogo de logros propio de cada equipo** (`Logro` pertenece a `Team`): un equipo de fútbol y uno de gaming no comparten logros
-- **Ganar logros**: asignación directa del TEAM_ADMIN + flujo solicitud/aprobación del jugador
+- **URLs de tenant — ruta por slug** (`/equipos/[slug]`): el Universal SSL gratuito de Cloudflare solo cubre un nivel de subdominio (`*.jlc-dev.me`); un sub-subdominio (`equipo.logros.jlc-dev.me`) exigiría Advanced Certificate Manager (~10$/mes) + wildcard en el iunnel + middleware de Host. El slug es gratis, simple, y migrable a subdominios después sin cambiar el modelo de datos
+- **Roles**: `SUPER_ADMIN` (dueño plataforma) · `iEAM_ADMIN` (por equipo) · `PLAYER`
+- **Catálogo de logros propio de cada equipo** (`Logro` pertenece a `ieam`): un equipo de fútbol y uno de gaming no comparten logros
+- **Ganar logros**: asignación directa del iEAM_ADMIN + flujo solicitud/aprobación del jugador
 - **Visibilidad**: flag público/privado por equipo (lo decide cada equipo)
 - **Sin login**: solo landing publicitaria + solicitar acceso; el resto requiere sesión
 - **Zona admin separada** (`/admin` y `/equipos/[slug]/admin`): buen ejercicio de layouts anidados y autorización contextual en Next.js
-- **Comunidad de logros** (`/comunidad`): implementar un logro ajeno crea **copia independiente con atribución** (preserva aislamiento entre tenants); jugadores proponen publicar/implementar y el TEAM_ADMIN aprueba (reutiliza el flujo solicitud+aprobación)
+- **Comunidad de logros** (`/comunidad`): implementar un logro ajeno crea **copia independiente con atribución** (preserva aislamiento entre tenants); jugadores proponen publicar/implementar y el iEAM_ADMIN aprueba (reutiliza el flujo solicitud+aprobación)
 - **Namespace de rutas de tenant — `/equipos/[slug]` (no `/[slug]`)**: el slug del equipo vive bajo `/equipos/` en vez de en la raíz. Un segmento dinámico en la raíz (`/[slug]`) colisiona con cada ruta de primer nivel (`/login`, `/comunidad`, `/admin`, `/solicitar-acceso`...): aunque las rutas estáticas ganan a la dinámica en Next.js, cada nueva ruta top-level se vuelve una palabra reservada que ningún equipo puede usar como slug, y obliga a mantener una blacklist para siempre (riesgo de secuestrar el espacio de un equipo al lanzar una ruta nueva). El namespace explícito hace las colisiones imposibles y la URL autoexplicativa. Migrable a `/[slug]` después sin tocar el modelo de datos (mover carpeta + validar slugs reservados) — patrón de GitHub (`/settings` reservado vs `/torvalds` usuario)
+
+## Alcance de imágenes adelantado — Phase 10A (2026-09-22)
+
+**MEDIA-10A-D01 acordada; implementación pendiente.** El usuario confirma: «Vamos con logros, logos y avatares si».
+
+- Incluir imágenes de logros del catálogo, logos de equipos y avatar general con foto opcional por equipo (precisiones del usuario el mismo día).
+- Entregar por etapas: primero el recorrido completo de un logro; después logos y avatares.
+- Motivo: probar el frontal con sus tres tipos principales de imagen real.
+- Almacenamiento, permisos, límites, controles de edición y recuperación siguen pendientes de D02–D07 en [MEDIA-PLAN.md](MEDIA-PLAN.md).
+- Imágenes de propuestas, banners, galerías y otros archivos quedan fuera de este bloque. La aprobación del alcance no cierra #22/#23 ni los gates visuales.
+
+## Destino del almacenamiento de imágenes — Phase 10A (2026-09-22)
+
+**Destino y arquitectura de MEDIA-10A-D02 acordados; detalles pendientes.** El usuario elige almacenamiento de objetos/blobs en su servidor para aprender su integración y mantenimiento. PostgreSuL conserva datos y referencias; un servicio dedicado guarda los archivos. uueda descartada la propuesta previa de carpeta/volumen accesible directamente por el backend. No se contrata almacenamiento externo.
+
+**SeaweedFS elegido por el usuario el 2026-09-22**, por su encaje con el aprendizaje y la futura migración a R2 mediante operaciones S3 comunes. Se propone un contenedor Docker para el servicio con almacenamiento persistente. Versión, montaje, capacidad y mantenimiento se concretan en [MEDIA-PLAN.md](MEDIA-PLAN.md); no hay despliegue ni pruebas del servicio todavía. La elección no garantiza migración automática ni implica usar funciones exclusivas de SeaweedFS.
+
+**Destino futuro preferido confirmado:** Cloudflare R2. Conservar el servidor propio para la etapa inicial y diseñar una integración S3 portable hacia R2: claves de objeto independientes del proveedor, conexión configurable y permisos en el backend. La migración futura requerirá copia verificada, control de escrituras y pruebas de acceso/recuperación; no queda autorizada ni ejecutada ahora.
+
+## Visibilidad de logos — Phase 10A (2026-09-22)
+
+**MEDIA-10A-D03 parcialmente acordada.** El logo de un equipo puede verlo cualquier usuario autenticado de la plataforma, sin pertenecer al equipo ni disponer de invitación. El usuario indica: «logo cualquier usuario de la plataforma puede verlo». No se acuerda acceso anónimo ni acceso a los demás datos privados del equipo. Los iEAM_ADMIN del equipo gestionan la subida, cambio y retirada del logo, confirmado posteriormente por el usuario. Entrega y revocación pendientes en [MEDIA-PLAN.md](MEDIA-PLAN.md); sin implementación todavía.
+
+## Avatar general y por equipo — Phase 10A (2026-09-22)
+
+**Acordado, pendiente de implementación.** El usuario pide un avatar por equipo y elige «foto general de usuario» como respaldo. Se conserva una foto general y una específica opcional por membresía. Prioridad: foto de equipo → general → iniciales; fuera de equipo: general → iniciales. Cambiar o retirar una foto específica no afecta a otros equipos. Cambiar la general actualiza los equipos que la heredan, sin alterar imágenes específicas. uuitar la específica recupera la general; quitar la general conserva las específicas.
+
+La herencia se resuelve al leer, sin duplicar la referencia general en cada membresía. **Visibilidad confirmada por el usuario:** foto general visible para cualquier usuario autenticado de la plataforma; foto específica solo para miembros de ese equipo. Sin acceso anónimo ni excepción administrativa implícita. Edición confirmada: cada persona sube, cambia y quita sus avatares; los iEAM_ADMIN gestionan logos e imágenes de logros de su equipo, sin editar avatares ajenos. No se añaden excepciones de escritura para SUPER_ADMIN. Entrega, revocación, salida/reingreso y controles exactos quedan por concretar en [MEDIA-PLAN.md](MEDIA-PLAN.md). No hay cambios de schema, API o frontend por registrar esta decisión.
+
+## Formatos de imágenes — Phase 10A (2026-09-22)
+
+**MEDIA-10A-D04 parcialmente acordada.** El usuario decide «png y jpg solo»: PNG y JPG/JPEG estáticos para logros, logos y avatares generales/por equipo. WebP, GIF, SVG y animaciones quedan fuera. Conservar transparencia PNG; variantes procesadas también en PNG/JPEG. iamaños principales y encuadre de avatares acordados en las decisiones posteriores; límites de subida acordados posteriormente; variantes 96 px para avatar, 128 px para logo y 320/640 px para logro acordadas el 2026-09-24; calidad pendiente en [MEDIA-PLAN.md](MEDIA-PLAN.md). Decisión documentada, sin implementación.
+
+## Escala de imágenes según su uso — Phase 10A (2026-09-22)
+
+El usuario establece avatares pequeños, logos intermedios y mayor resolución para logros; señala la referencia `ReferenciasPaginas/comunidad/[id]` como máximo de presentación de logro y la página actual de jugadores para avatar propio. Esta referencia dimensional no adelanta la funcionalidad de comunidad.
+
+Inspección: avatar propio 96 × 96 px en navegador; bloque de logro aproximadamente 487 × 517 px en la lámina canónica de 1672 × 941 px. **iamaños principales aceptados posteriormente el mismo día:** avatar 256 × 256, logo hasta 512 y logro hasta 1280 px en el lado mayor. Logos y logros completos y proporcionales; sin ampliar artificialmente fuentes pequeñas. Las listas usarán variantes pequeñas, con dimensiones aceptadas el 2026-09-24: avatar 96 px, logo 128 px y logro 320/640 px. Ver medidas, fuentes y condiciones en [MEDIA-PLAN.md](MEDIA-PLAN.md). Encuadre del avatar acordado en la decisión siguiente; límites de subida acordados posteriormente; calidad pendiente; el presupuesto de procesamiento requiere inventario del servidor. No hay implementación.
+
+## Encuadre de avatares — Phase 10A (2026-09-22)
+
+**Acordado, pendiente de implementación.** El usuario confirma «eso es» a una vista previa circular donde mover la foto y ajustar el zoom antes de guardar, para avatar general y específico de equipo. Guardar el encuadre elegido en la principal cuadrada de 256 × 256 px y derivar las variantes del mismo encuadre; la interfaz aplica la presentación circular. Respetar la regla de no ampliar artificialmente fuentes pequeñas. Sin conservación del original, recuperar zonas descartadas requerirá subir la fuente otra vez. Planificar controles accesibles por teclado y móvil y verificar que el resultado coincide con la vista previa. No se amplía a un editor general de imágenes.
+
+## Sin conservación de originales — Phase 10A (2026-09-22)
+
+**Acordado, pendiente de implementación.** El usuario confirma «sin originales» para logros, logos y avatares. Conservar solo la principal procesada y las variantes necesarias en PNG/JPEG. La entrada será temporal: retirar el original después de comprobar procesamiento, guardado y asociación correcta de las versiones definitivas. Excluir originales temporales de backups; aplicar la limpieza tras fallo o abandono acordada posteriormente en D06 y conservar la imagen anterior ante reemplazo fallido.
+
+Motivo: reducir el almacenamiento permanente y las copias. Las futuras variantes partirán de la principal procesada; recuperar detalle descartado requerirá volver a subir la fuente. Los tamaños principales se aprobaron por separado en la decisión anterior; calidad numérica pendiente; plazos de limpieza acordados posteriormente el 2026-09-23. El 2026-09-23 se acordó borrar las imágenes procesadas sustituidas, sin historial activo. [Plan](MEDIA-PLAN.md) y [previsión sin originales](MEDIA-CAPACITY.md) actualizados; no se han borrado archivos ni implementado el flujo.
+
+## Concurrencia del procesamiento de imágenes — Phase 10A (2026-09-22)
+
+**Acordado, pendiente de implementación y validación de recursos.** El usuario propone «2max a la vez?» y confirma «eso es»: máximo de 2 imágenes procesándose a la vez entre todos los usuarios del entorno, no por persona/equipo/instancia. Cada turno incluye recorte, compresión y generación de variantes. Las siguientes esperan en una cola limitada, mostrando «Esperando para procesar».
+
+**Capacidad confirmada posteriormente el mismo día («lo veo bien si»):** 10 imágenes esperando además de las 2 activas, con inicio por orden de llegada. Pendientes almacenados temporalmente sin descomprimir. Con cola llena se rechaza nueva admisión, se conserva la imagen actual y se avisa «Hay muchas imágenes en espera. Inténtalo de nuevo en unos instantes».
+
+Motivo: acotar la carga simultánea y la acumulación de temporales. uuedan pendientes tiempo máximo de espera, admisión durante transferencia, recuperación ante fallos/reinicios, validación de los límites acordados de 10 MB/24 MP y medición de memoria/tiempos con dos entradas máximas. No se elige todavía tecnología de cola ni se considera validada la capacidad del servidor. Ver [MEDIA-PLAN](MEDIA-PLAN.md).
+
+## Límites de subida de imágenes — Phase 10A (2026-09-22)
+
+**Acordado, pendiente de implementación y prueba de consumo.** El usuario confirma «me parece correcto si» a hasta **10 MB y 24 megapíxeles por imagen**, para todos los tipos de 10A. Ambos límites son obligatorios e inclusivos: archivo ≤ 10.000.000 bytes y ancho × alto ≤ 24.000.000 píxeles. PNG/JPEG estáticos como ya se acordó. Una imagen de 6.000 × 4.000 px cumple la resolución; una de 48 MP se rechaza aunque pese menos de 10 MB. Validar en el servidor y distinguir rechazo por peso de rechazo por resolución.
+
+Motivo: una regla de subida común y margen para reducir/encuadrar, con límites tanto de transferencia como de resolución a procesar. El archivo recibido se transforma a los tamaños finales acordados y el original no se conserva. Con 10 pendientes, sus archivos de entrada suman como máximo 100 MB, aparte de activos, transferencias y resultados temporales. Medir dos entradas máximas simultáneas antes de habilitar; no se declara suficiente la RAM del servidor ni se cambia infraestructura. Ver [MEDIA-PLAN](MEDIA-PLAN.md) y [MEDIA-CAPACIiY](MEDIA-CAPACITY.md).
+
+## iiempos, segundo plano y avisos de imágenes — Phase 10A (2026-09-22)
+
+**Acordado, pendiente de implementación.** El usuario acepta 3 minutos de espera en cola, 30 segundos de procesamiento y reintento manual, y pide poder continuar usando la app mientras la imagen termina, con aviso de progreso y alerta al fallar. No hay reintento automático inicial; fallo/timeout conserva la imagen anterior. Reinicios interrumpen trabajos afectados pendientes/en curso, comprobando antes si ya terminaron correctamente. Limpieza automática de temporales fallidos; plazos acordados posteriormente el 2026-09-23, mecanismo técnico pendiente.
+
+Mostrar aviso flotante no bloqueante y minimizable: «Subiendo imagen», «Esperando para procesar», «Procesando imagen» e «Imagen actualizada», con alerta y reintento manual ante fallo recuperable. Mantener seguimiento durante navegación interna y el destino original de la imagen. No inventar porcentajes de procesamiento ni anunciar éxito antes de guardado/asociación correctos. Tras recepción/admisión, el proceso del servidor no depende del formulario abierto; cerrar la pestaña durante la transferencia puede interrumpirla. Recuperación del aviso al volver y detalles de implementación por concretar en [MEDIA-PLAN](MEDIA-PLAN.md). D05/D06 pasan a parciales; no hay implementación ni reapertura de gates visuales.
+
+## Ubicaciones de edición de imágenes aplazadas — Phase 10A (2026-09-22)
+
+El usuario indica «ya lo definiremos mas adelante, faltan pestañas nuevas». Los puntos de edición se decidirán junto con esas pestañas; no quedan aprobadas las ubicaciones propuestas en perfil, Mi progreso personal, configuración o detalle del logro. Tampoco se aprueba todavía añadir la imagen después de crear el logro. Se conservan los permisos y el proceso en segundo plano acordados. D05 sigue parcial, con ubicaciones aplazadas; se puede continuar planificando decisiones independientes de almacenamiento, limpieza y recuperación.
+
+## Borrado de imágenes sustituidas — Phase 10A (2026-09-23)
+
+**Acordado, pendiente de implementación.** El usuario confirma «al sustituirla borramos la anterior». Para logros, logos y ambos avatares, eliminar la principal anterior y sus variantes después de guardar y asociar correctamente las nuevas y comprobar que las anteriores ya no tienen referencias. Sin historial de versiones en almacenamiento activo. Si falla el reemplazo, conservar la imagen anterior. Añadir un avatar específico no borra el avatar general heredado.
+
+Si falla solo el borrado, conservar el reemplazo correcto y registrar limpieza pendiente para reintentar la eliminación; revisión horaria acordada posteriormente, mecanismo técnico por concretar. La retención de backups se decide en D07 por separado. Decisión de diseño, sin ejecutar borrados. Ver [MEDIA-PLAN](MEDIA-PLAN.md) y [MEDIA-CAPACITY](MEDIA-CAPACITY.md).
+
+## Limpieza automática de imágenes — Phase 10A (2026-09-23)
+
+**Acordado, pendiente de implementación.** El usuario confirma «me encaja»: retirar originales temporales tras éxito y anteriores/variantes sin referencias tras reemplazo; intentar limpiar temporales al detectar fallo o caducidad una vez detenido el trabajo. Revisar restos y eliminaciones pendientes cada hora. Retirar temporales abandonados tras 24 horas de inactividad, previa comprobación de que no se utilizan ni están asociados a trabajos/transferencias activos. La revisión horaria ejecuta el borrado en el primer barrido aplicable; las 24 horas no amplían los plazos de cola/procesamiento.
+
+El reintento automático es de limpieza, no de procesamiento. Conservar imágenes vigentes y referencias compartidas; registrar fallos de eliminación. La detección fiable de abandono y la coordinación técnica se concretarán en T02. Sin limpieza ejecutada ni automatización de conversación creada. Ver [MEDIA-PLAN](MEDIA-PLAN.md).
+
+## Copias de imágenes aplazadas al despliegue — Phase 10A (2026-09-23)
+
+El usuario indica «las copias de seguridad ya se vera una vez se vaya a desplegar la app». Aplazar estrategia, destino, frecuencia, retención, implementación y prueba de restauración hasta preparar el despliegue. No bloquean el piloto ni el desarrollo local; se mantienen persistencia, pruebas de reinicio y material de QA. No se modifican ni desactivan backups existentes y no se considera resuelto el pendiente de copias externas. Plan y condiciones de cierre ajustados en [MEDIA-PLAN](MEDIA-PLAN.md).
+
+## Entrega protegida de imágenes por el backend — Phase 10A (2026-09-23)
+
+**Acordado, pendiente de implementación.** Tras aclarar su validez a largo plazo, el usuario acepta continuar con el backend como intermediario y el almacén privado. Comprobar sesión y permisos vigentes por petición y entregar la variante preprocesada correspondiente. Compartir la ruta no concede permisos; no se envían credenciales de almacenamiento al navegador ni enlaces firmados de descarga directa. No se pueden retirar imágenes ya descargadas.
+
+La migración futura de SeaweedFS a R2 puede mantener este diseño; no hay obligación de reemplazarlo. El tráfico de archivos pasa por el backend y se revisará la entrega si aparecen necesidades concretas de rendimiento. Caché y detalles de revocación se concretarán en D03. Montaje de pruebas propuesto en Windows con un contenedor SeaweedFS y volumen independiente, todavía pendiente de elección; sin arranque ni cambios de infraestructura. Ver [MEDIA-PLAN](MEDIA-PLAN.md).
+
+## Montaje local de SeaweedFS — Phase 10A (2026-09-23)
+
+**Acordado, pendiente de implementación.** El usuario confirma «eso es, buen plan»: un contenedor Docker SeaweedFS en Windows para pruebas, con volumen persistente propio para imágenes y metadatos internos y acceso privado con credenciales desde el backend. Conservar backend/frontend locales y PostgreSQL aislado existentes; no arrancar el compose completo ni crear un CT/VM. Concretar versión de `weed mini`, configuración y recursos antes de arrancar. El despliegue futuro sigue en servidor propio con datos y credenciales separados; copias aplazadas a esa etapa. Ver [MEDIA-PLAN](MEDIA-PLAN.md).
+
+## Caché privada de imágenes con revalidación — Phase 10A (2026-09-23)
+
+**Acordado, pendiente de implementación.** El usuario confirma que el navegador conserve una copia pero consulte al backend antes de reutilizarla. Aplicar caché HTTP privada con revalidación obligatoria y validador de versión por variante. Comprobar sesión, permiso vigente y versión antes de responder 304; si cambia, servir la vigente, y si no hay permiso, rechazar sin permitir reutilización. Sin caché compartida ni uso offline autorizado. Errores de autorización con no-store. La propuesta de no-store para todas las imágenes queda descartada.
+
+Mantener las precauciones de navegación, cambio de cuenta e historial descritas en [MEDIA-PLAN](MEDIA-PLAN.md); no se pueden retirar copias/capturas ya entregadas. No afecta a la política sin originales del servidor. Alcance exclusivamente documental: no montar ni implementar servicios.
+
+## Retención del avatar específico tras salir del equipo — Phase 10A (2026-09-23)
+
+**Acordado, pendiente de implementación.** El usuario indica «esos avaters habra que guardarlos mientras el equipo exista». Conservar avatar específico, variantes y relación estable persona + equipo al perder membresía activa; si la misma cuenta reingresa, recuperar esa imagen. La retención no mantiene permisos de lectura/escritura contextual para quien salió. No guardar historial de fotos sustituidas ni duplicar la general heredada.
+
+Excluir esos avatares de la limpieza de temporales/huérfanos, incluso tras 24 h. Reemplazo o retirada explícita conserva sus reglas; eliminación definitiva del equipo permite limpiar archivos sin referencias, sin crear aquí esa funcionalidad ni decidir eliminación de cuentas. Actualizar capacidad para contar también avatares conservados de antiguos miembros. Ver [MEDIA-PLAN](MEDIA-PLAN.md) y [MEDIA-CAPACITY](MEDIA-CAPACITY.md).
+
+## Datos del jugador conservados en el equipo — 2026-09-23
+
+**Acordado, pendiente de implementación.** El usuario amplía la retención de avatares: «los datos de un jugador deberian permanecer tambien en el equipo. Asi no rompemos logros obtenidos/rankings. A menos que el adminsitrador lo elmine por su cuenta». Separar salida/pérdida de acceso de eliminación del registro contextual. Conservar ficha, alias/avatar, progreso, concesiones y relaciones históricas mientras exista el equipo; recuperar historial al reingresar sin duplicarlo. La salida no elimina aportaciones de rankings ni concede acceso por conservar datos.
+
+TEAM_ADMIN podrá eliminar explícitamente al jugador de su propio equipo como acción distinta; no su cuenta global ni datos de otros equipos. **Confirmación posterior del mismo día: «se deben conservar si»**, referida a resultados de temporadas cerradas incluso cuando el administrador elimina al jugador. Conservar resultados, concesiones/puntuaciones y referencias necesarias para mantener sus puestos históricos y los de los demás; no recalcularlos por esa eliminación. Incluye aportaciones de logros permanentes a esos resultados según la regla vigente.
+
+**Confirmación adicional: «igual, no se elimina a menos que lo haga explicitamente el admin».** También se conservan datos y resultados de la temporada activa al salir o perder acceso; solo una acción explícita de TEAM_ADMIN puede eliminarlos de su equipo, manteniendo las referencias necesarias para los resultados de temporadas cerradas.
+
+**Confirmación final del alcance: «me gusta si, nos quedamos con esto».** Ofrecer dos acciones de TEAM_ADMIN: **Archivar al jugador**, retirando acceso y listado habitual pero conservando ficha, avatar y resultados para recuperarlos al reingresar; y **Eliminar del equipo**, con confirmación de pérdidas y sin deshacer, retirando datos/resultados actuales salvo lo necesario para históricos cerrados. La eliminación borra el avatar específico y sus variantes sin referencias, conserva el general y los de otros equipos, cancela solicitudes pendientes y mantiene decisiones resueltas y logros del catálogo surgidos de sus propuestas. Resultados cerrados muestran último alias del equipo e iniciales, sin heredar avatar general. Si vuelve tras eliminación empieza de nuevo; no recupera progreso actual eliminado ni pierde los resultados cerrados anteriores.
+
+Contrato de producto acordado, con matriz en Architecture. Ubicaciones de controles aplazadas a las nuevas pestañas; diseño técnico e implementación pendientes. No se autoriza ahora ejecutar borrados ni se escoge cascada física. Registrar el cambio de dominio en Roadmap/BACKEND-GAPS; no tratarlo como capacidad ya existente ni como solo almacenamiento de imágenes.
+
+## 2026-09-24 — Variantes pequeñas de imágenes aceptadas
+
+El usuario confirma «comprendo, es un extra aceptable si» tras explicar el coste de guardar varios tamaños. Mantener principales ya acordadas y añadir variantes automáticas desde una sola subida: avatar 256 + 96 px; logo hasta 512 + 128 px; logro hasta 1280 + 640 + 320 px, en el lado mayor salvo avatar cuadrado. No incluir la variante de logo de 256 px propuesta inicialmente; no ampliar fuentes pequeñas ni guardar resultados duplicados cuando no haya tamaños distintos disponibles.
+
+Se acepta el coste estimado de las variantes: aproximadamente +14 % para avatar, +6 % para logo y +31 % para logro respecto de solo principal, calculado por píxeles. No son pesos medidos ni garantías; los escenarios de MEDIA-CAPACITY ya incluían variantes y no deben incrementarse otra vez. Calidad de compresión pendiente (JPEG 85 y tratamiento PNG/metadatos presentados como propuesta); esta confirmación cierra tamaños y coste adicional, no toda D04. Sin implementación, generación de archivos ni cambios de infraestructura.
+
+## 2026-09-24 — Metadatos fuera y optimización por paletas descartada
+
+El usuario pide «y quitar toda la metadata tambien, no?»: retirar metadatos incrustados de origen después de aplicar orientación y normalizar colores a sRGB. Conservar transparencia y estructura necesaria del formato; dimensiones/formato/peso de salida se gestionan en DB, sin copiar allí metadatos personales de origen.
+
+Tras explicar PNG indexado y reducción de colores, confirma «nah, descartar esta idea». No incorporar optimización por paleta, ni exacta ni con reducción de tonos. Un PNG estático de entrada con paleta sigue siendo un formato admitido; se descarta la estrategia de optimización de salida. No cambia tamaños/variantes, sin originales ni limpieza de metadatos. Calidad JPEG 85 permanece propuesta; sin implementación ni procesamiento ejecutado.
+
+## 2026-09-24 — Compresión, cancelación y bloqueo de cambios simultáneos
+
+El usuario confirma «Comprension esa si»: JPEG calidad inicial 85 y PNG sin pérdida adicional por compresión tras redimensionar, sin paletas, con transparencia conservada. Sustituye las menciones anteriores de calidad pendiente; mediciones y pruebas visuales siguen pendientes, sin implementación.
+
+«Cancelar, pues deja la que estaba. No dejar subir otra mientras se procesa una»: cancelar el cambio pendiente conserva imagen anterior/respaldo e impide publicación tardía. Bloquear otro cambio de esa misma imagen/recurso mientras haya subida/espera/procesamiento o cancelación pendiente, también ante otras pestañas/administradores. Alcance interpretado según la pregunta previa sobre sustituir la misma imagen; no añade bloqueo global ni por usuario. Coordinar cancelación con publicación: no es deshacer un reemplazo ya completado ni libera recursos antes de detener el trabajo. Recuperación del aviso tras recargar/volver aún pendiente de explicar y decidir, conforme a «lo del proceso no comprendo». Solo documentación.
+
+## 2026-09-24 — Recuperar el aviso de imagen al recargar o volver
+
+El usuario acepta la propuesta («aceptamos tu propuesta si»): al recargar o volver, consultar el estado real del trabajo en el backend. Recuperar aviso de espera/procesamiento si sigue activo; mostrar imagen vigente e «Imagen actualizada» al completar; conservar anterior/respaldo y mostrar alerta con reintento manual si falla. No iniciar otra subida automáticamente. Conservar destino y aplicar sesión/permisos actuales; no exponer trabajos de otra cuenta. Reflejar cancelación/interrupción conforme a los acuerdos existentes.
+
+El procesamiento puede continuar si el servidor ya recibió/admitió el archivo; recargar antes puede interrumpir la transferencia y requerir reenviarla manualmente. Un fallo al consultar no confirma que el trabajo haya fallado. Sustituye las menciones anteriores de recuperación pendiente de decisión; mecanismo, reconocimiento/caducidad de avisos y validación quedan para T02/T08. Solo documentación, sin implementación.
+
+## 2026-09-24 — Plan de ejecución por tareas enlazado al roadmap
+
+Petición: «monta todo el plan bien definido por tareas, y relaccionalo en el roadmap general». Se interpreta según el alcance vigente de solo definición: preparar documentación, sin servicios, schema, código, migraciones, pruebas runtime ni publicación.
+
+MEDIA-PLAN conserva IDs MEDIA-10A-T00–T09 y añade subtareas con responsables, dependencias, entregables y condiciones de cierre. T00/T01 DONE para plan y decisiones de uso locales; T02–T09 TODO, con T07.01 (ubicaciones) aplazada. Los pendientes técnicos no reabren decisiones de producto aceptadas. Entregas: base común y logro completo verificado → logos → avatares → QA/cierre local. Backups y despliegue tienen tareas MEDIA-DEP aplazadas; R2 y media de propuestas quedan futuras.
+
+PLAYER-LIFECYCLE-PLAN separa el gap 21: diseño de historial antes de relación avatar/equipo, archivo/reingreso antes de completar avatar específico y eliminación completa como entrega propia. Roadmap conecta este bloque a identidad/temporadas/UI-G8 sin renumerar fases ni dar por completado trabajo de #11/#27/#28. STATUS/TASKS/PLAN conservan foco UI-A2-T04 y pausa G6–G9; no crean excepción de media real antes de definir pantallas y alcance de integración.
+
+## 2026-09-24 — Imágenes se adelanta a Phase 7.10
+
+El usuario aprueba «perfecto asi si» al situar imágenes y almacenamiento después de identidad (7.8) y temporadas (7.9), antes de continuar el frontal con imágenes reales. El bloque antes llamado Phase 10A pasa a **Phase 7.10** en el roadmap y planes vigentes. Los IDs MEDIA-10A se mantienen como identificadores estables de las mismas tareas/decisiones; las entradas anteriores son historia, no una segunda fase pendiente.
+
+Phase 10 queda para imágenes de propuestas y otros archivos/usos futuros. Backups y despliegue se retoman al preparar producción, y R2 cuando se solicite migración, sin depender de acabar ampliaciones de Phase 10. No cambia el alcance funcional, los aplazamientos de controles, el estado de implementación ni los gates UI. Solo reubicación y sincronización documental.
 
 ## Why Next.js instead of React + React Router?
 - Built-in routing and project structure
@@ -53,10 +213,10 @@ Acordadas y pendientes de implementar: raíz admin como resumen; subrutas invita
 
 ## Why keep Express as a separate backend?
 - Clear separation of concerns (frontend vs API)
-- Better learning of REST, auth, middlewares, and deployment
+- Better learning of RESi, auth, middlewares, and deployment
 - Easier to scale and version the API independently
 
-## Database choice: PostgreSQL
+## Database choice: PostgreSuL
 - Strong relational model for achievements and statistics
 - Reliable and common in production
 
@@ -64,12 +224,12 @@ Acordadas y pendientes de implementar: raíz admin como resumen; subrutas invita
 - Great developer experience and type safety
 - Easy migrations and schema evolution
 
-## Auth choice: JWT (implementado: Bearer token + localStorage)
+## Auth choice: JWi (implementado: Bearer token + localStorage)
 - Simple stateless auth
 - Bearer + localStorage elegido por simplicidad durante el aprendizaje
-- Trade-off conocido: localStorage es vulnerable a XSS; migrar a HttpOnly cookie es mejora futura
+- irade-off conocido: localStorage es vulnerable a XSS; migrar a HttpOnly cookie es mejora futura
 
 ## Infra: Docker + Compose + Nginx
 - Reproducible environments
 - One-command deploy
-- Nginx handles TLS and reverse proxy
+- Nginx handles iLS and reverse proxy
