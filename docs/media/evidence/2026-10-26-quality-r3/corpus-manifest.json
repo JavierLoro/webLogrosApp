@@ -1,0 +1,1372 @@
+{
+  "createdAt": "2026-10-26T23:00:05.065Z",
+  "versions": {
+    "aom": "3.15.1",
+    "archive": "3.8.9",
+    "cairo": "1.18.6",
+    "cgif": "0.5.4",
+    "exif": "0.6.26",
+    "expat": "2.8.5",
+    "ffi": "3.8.0",
+    "fontconfig": "2.18.3",
+    "freetype": "2.14.3",
+    "fribidi": "1.0.17",
+    "glib": "2.90.0",
+    "harfbuzz": "14.5.0",
+    "heif": "1.23.5",
+    "highway": "1.4.0",
+    "imagequant": "2.4.1",
+    "lcms": "2.19.1",
+    "mozjpeg": "0826579",
+    "pango": "1.58.2",
+    "pixman": "0.46.4",
+    "png": "1.6.58",
+    "proxy-libintl": "0.5",
+    "rsvg": "2.63.2",
+    "tiff": "4.7.2",
+    "uhdr": "2.0.2",
+    "vips": "8.18.7",
+    "webp": "1.6.0",
+    "xml2": "2.15.4",
+    "zlib-ng": "2.3.3",
+    "sharp": "0.35.5"
+  },
+  "entries": [
+    {
+      "id": "landscape-detail",
+      "filename": "landscape-detail.jpg",
+      "bytes": 933355,
+      "sha256": "f6ca484985a267d9b3e4fbd19c93a47bea05c8b88b85414b5b80e3f564bbeb57",
+      "features": [
+        "composition",
+        "fine-detail",
+        "colour"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 2400,
+        "height": 1600
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 2400,
+        "height": 1600,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#landscape-detail",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "portrait-detail",
+      "filename": "portrait-detail.jpg",
+      "bytes": 1012896,
+      "sha256": "8c6e8043f2eef9150bfef27cad6fcafd97d10beee3350700314a998e546a7e7b",
+      "features": [
+        "composition",
+        "fine-detail",
+        "colour"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1600,
+        "height": 2400
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1600,
+        "height": 2400,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#portrait-detail",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "square-alpha",
+      "filename": "square-alpha.png",
+      "bytes": 924188,
+      "sha256": "66e7cc70b499d4b29a25a6986711ec0f4f61c97da0b0ff0cc112e71936f2cb66",
+      "features": [
+        "composition",
+        "fine-detail",
+        "colour",
+        "alpha"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1600
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 1600,
+        "height": 1600,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#square-alpha",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "odd-dimensions",
+      "filename": "odd-dimensions.jpg",
+      "bytes": 632962,
+      "sha256": "708e92399103eb732001bdaab53d2af0c9082ede59cc6a86f7dae65c8a5e748d",
+      "features": [
+        "composition",
+        "fine-detail",
+        "colour"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1921,
+        "height": 1081
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1921,
+        "height": 1081,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#odd-dimensions",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "high-entropy-alpha",
+      "filename": "high-entropy-alpha.png",
+      "bytes": 7694873,
+      "sha256": "1d51355af318632f2cf92a7d02c39a44d732d6742a69084b23e0e7517db70be7",
+      "features": [
+        "high-entropy",
+        "alpha",
+        "no-padding"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1200
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 1600,
+        "height": 1200,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#high-entropy-alpha",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "repository-dark-texture",
+      "filename": "repository-dark-texture.jpg",
+      "bytes": 1055971,
+      "sha256": "da30b5d7899eff7cf7017bfa9a28fea37e91ac32615a42664891c9d029e6c0a4",
+      "features": [
+        "repository-art",
+        "dark-texture",
+        "photo-like",
+        "shadow-detail"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 2560,
+        "height": 1440
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 2560,
+        "height": 1440,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "repository",
+        "source": "apps/frontend/LockerBoard-marca/otros/hero/final/lockerboard-hero-mural-landscape-2560x1440.png",
+        "sourceSha256": "ac989f1e9a855c1eccbddd64e460d3cf1dc201828079a354bff2c32c14887569",
+        "rights": "Arte existente aportado en el repositorio del usuario; uso autorizado por la tarea como fixture local. No se obtiene fotografía personal externa."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-1",
+      "filename": "exif-1.jpg",
+      "bytes": 325939,
+      "sha256": "87d7a65dd3266ba90e01d469b24021968e06784a0f37436f21771bbe8ca4058a",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 1
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 1,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-1",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-2",
+      "filename": "exif-2.jpg",
+      "bytes": 325939,
+      "sha256": "ce1e2608bd249ab5be1e584099405119cebf0cd057e0915cb64ae8243505c9f4",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 2
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 2,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-2",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-3",
+      "filename": "exif-3.jpg",
+      "bytes": 325939,
+      "sha256": "991d9106e082ff6170e2dbde5b6d2ecf1574b01d9167a95cbe4b44a201e028c1",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 3
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 3,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-3",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-4",
+      "filename": "exif-4.jpg",
+      "bytes": 325939,
+      "sha256": "f448dfe64e7cb08a6e334e6dc3c194fe2f9ffcfec3929c1d21b29b3835fd0c7e",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 4
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 4,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-4",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-5",
+      "filename": "exif-5.jpg",
+      "bytes": 325939,
+      "sha256": "45b3104bee55edc090890fd49d92b407ba0141f548b804070b486712c3675c11",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 5
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 5,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-5",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-6",
+      "filename": "exif-6.jpg",
+      "bytes": 325939,
+      "sha256": "0b571212bdaa9534a04c6fd23384b6e0e3fedbadce03f3f3bf8578c6435be569",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 6
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 6,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-6",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-7",
+      "filename": "exif-7.jpg",
+      "bytes": 325939,
+      "sha256": "d138ca5787549b83b9b37c2d6b3dee815e4f2b5e0e2f1221ca387f765e4cd7cb",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 7
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 7,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-7",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "exif-8",
+      "filename": "exif-8.jpg",
+      "bytes": 325939,
+      "sha256": "402419e340add29dc509f18cfdd3376250fc8a20b9fa9f9edfeecbbb634da035",
+      "features": [
+        "orientation",
+        "exif",
+        "xmp",
+        "icc",
+        "corner-oracle"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 8
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 8,
+        "pages": 1,
+        "exif": true,
+        "xmp": true,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#exif-8",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "display-p3",
+      "filename": "display-p3.png",
+      "bytes": 431921,
+      "sha256": "c82a8f090603081484e6ff19b7dbc365cff5a9d8ad7fcd003471e7802261df7a",
+      "features": [
+        "colour-profile",
+        "display-p3"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1200
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 1600,
+        "height": 1200,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#display-p3",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "cmyk-jpeg",
+      "filename": "cmyk-jpeg.jpg",
+      "bytes": 2260865,
+      "sha256": "ad3e566f3103eb65a5baaabc5bafe8611bb420dcd74971dfc940d02456918472",
+      "features": [
+        "colour-profile",
+        "cmyk"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1600,
+        "height": 1200
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1600,
+        "height": 1200,
+        "space": "cmyk",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": true,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#cmyk-jpeg",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "grayscale-progressive",
+      "filename": "grayscale-progressive.jpg",
+      "bytes": 329768,
+      "sha256": "dd3e7f53bfdb4c46e833c94ffea14ecef229cd0be6772d49f6e308c932160cfc",
+      "features": [
+        "grayscale",
+        "progressive"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1600,
+        "height": 1200
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 1600,
+        "height": 1200,
+        "space": "b-w",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#grayscale-progressive",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "png-16bit",
+      "filename": "png-16bit.png",
+      "bytes": 628546,
+      "sha256": "1ad4377e56810cbed8bf1202ce577acae5d4ef08497545dcce6676567fb44878",
+      "features": [
+        "16-bit",
+        "colour"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1200
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 1600,
+        "height": 1200,
+        "space": "rgb16",
+        "depth": "ushort",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#png-16bit",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "palette-alpha",
+      "filename": "palette-alpha.png",
+      "bytes": 54470,
+      "sha256": "e74f17fe35f1eb1de136a66ec99e75d3e0bfe5d31cc3ffb0540f119a3d75b5e1",
+      "features": [
+        "palette-input",
+        "alpha"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 900,
+        "height": 900
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 900,
+        "height": 900,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#palette-alpha",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "small-png",
+      "filename": "small-png.png",
+      "bytes": 321,
+      "sha256": "70bd2170051fb7554f7fb41602266023adb8f004229b316db70a707a9c79417e",
+      "features": [
+        "no-enlargement",
+        "aspect-ratio"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 96,
+        "height": 64
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 96,
+        "height": 64,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#small-png",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "single-pixel",
+      "filename": "single-pixel.png",
+      "bytes": 91,
+      "sha256": "0205255985fe14304665ee2571cd05e9a901f7d1312b9165e12abb7ef2f7a2a4",
+      "features": [
+        "no-enlargement",
+        "aspect-ratio"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1,
+        "height": 1
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 1,
+        "height": 1,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#single-pixel",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "thin-panorama",
+      "filename": "thin-panorama.png",
+      "bytes": 576,
+      "sha256": "969d0607dbee25401fe70df75e1495797bcea39c9e9cb082e4c68a83f76eb962",
+      "features": [
+        "no-enlargement",
+        "aspect-ratio"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 24000,
+        "height": 1
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 24000,
+        "height": 1,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#thin-panorama",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "thin-portrait",
+      "filename": "thin-portrait.png",
+      "bytes": 764,
+      "sha256": "1394b335e093cbe5047c99cbde5a72d1b821fc94b1701a36a72505744bf8443b",
+      "features": [
+        "no-enlargement",
+        "aspect-ratio"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1,
+        "height": 24000
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 1,
+        "height": 24000,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#thin-portrait",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "boundary-jpeg-textured",
+      "filename": "boundary-jpeg-textured.jpg",
+      "bytes": 10000000,
+      "sha256": "771178594a73c569831221245c347ac7b62f3e192a10ee13a21f92d4304a0412",
+      "features": [
+        "24MP",
+        "exact-10MB",
+        "legal-padding:8053087"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 6000,
+        "height": 4000
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 6000,
+        "height": 4000,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#boundary-jpeg-textured",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "boundary-png-transparent",
+      "filename": "boundary-png-transparent.png",
+      "bytes": 10000000,
+      "sha256": "18e2e87a7b917a2e5d4048f156cd12b5b9739a24f2b29d7917f0d35b7c22af01",
+      "features": [
+        "24MP",
+        "exact-10MB",
+        "legal-padding:4954252"
+      ],
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 6000,
+        "height": 4000
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 6000,
+        "height": 4000,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#boundary-png-transparent",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "too-many-bytes",
+      "filename": "too-many-bytes.bin",
+      "bytes": 10000001,
+      "sha256": "7b14ef8da6950bd43bc583786d485197a36e6ba864553b63fb8ba30647015839",
+      "features": [
+        "over-10MB-by-one"
+      ],
+      "expected": {
+        "status": 413
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 640,
+        "height": 480,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#too-many-bytes",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "too-many-pixels",
+      "filename": "too-many-pixels.bin",
+      "bytes": 141455,
+      "sha256": "543d9bbf94a4eca7c85650bd6dfc29cca9f7c351769756a432d10f29e048a8ab",
+      "features": [
+        "over-24MP"
+      ],
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_TOO_MANY_PIXELS"
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 6000,
+        "height": 4001,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#too-many-pixels",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "animated-png",
+      "filename": "animated-png.bin",
+      "bytes": 205,
+      "sha256": "113879d8a71d363ebb5c1380ddde5a1fbf86ec834ab7fa2f2ad728fd66b371d9",
+      "features": [
+        "APNG-two-frames"
+      ],
+      "expected": {
+        "status": 202,
+        "failureCode": "ANIMATED_IMAGE"
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 2,
+        "height": 2,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#animated-png",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "truncated-jpeg",
+      "filename": "truncated-jpeg.bin",
+      "bytes": 71487,
+      "sha256": "cfed15feccfb3c24140fa72ec8216905e7d88fbaa4ef54038485fb2e3a94aa84",
+      "features": [
+        "truncated"
+      ],
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "inputMetadata": {
+        "format": "jpeg",
+        "width": 640,
+        "height": 480,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#truncated-jpeg",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "truncated-png",
+      "filename": "truncated-png.bin",
+      "bytes": 32,
+      "sha256": "536c7344995a7dc3e104fd31e7704035f5a84c767d54c44dcfd6521251ed03c6",
+      "features": [
+        "truncated"
+      ],
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "inputMetadata": {
+        "readableHeader": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#truncated-png",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "png-trailing-data",
+      "filename": "png-trailing-data.bin",
+      "bytes": 96370,
+      "sha256": "beb1baa399ff8b4cf870d286c6b6275a1dd55b689d8d909372057d3da74b6782",
+      "features": [
+        "trailing-data"
+      ],
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 640,
+        "height": 480,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#png-trailing-data",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "corrupt-png",
+      "filename": "corrupt-png.bin",
+      "bytes": 96349,
+      "sha256": "2f26bb32cee628be8fa6c46c3504e24b132966f95ed29490406cfc10a6bbd93a",
+      "features": [
+        "corrupt-crc-or-data"
+      ],
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "inputMetadata": {
+        "format": "png",
+        "width": 640,
+        "height": 480,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#corrupt-png",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "unsupported-webp",
+      "filename": "unsupported-webp.bin",
+      "bytes": 820,
+      "sha256": "fb389bc6ea560ce056ae2a2ae1c1062bf6a53996048c555fe40c8138f8b6c3fb",
+      "features": [
+        "wrong-format",
+        "misleading-filename"
+      ],
+      "expected": {
+        "status": 415
+      },
+      "inputMetadata": {
+        "format": "webp",
+        "width": 80,
+        "height": 60,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#unsupported-webp",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "unsupported-gif",
+      "filename": "unsupported-gif.bin",
+      "bytes": 2545,
+      "sha256": "d07d1974cb3a280805f55d3957be361f7a9e8b5c2cd96a757136ad1e2ea66515",
+      "features": [
+        "wrong-format",
+        "misleading-filename"
+      ],
+      "expected": {
+        "status": 415
+      },
+      "inputMetadata": {
+        "format": "gif",
+        "width": 80,
+        "height": 60,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#unsupported-gif",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "unsupported-tiff",
+      "filename": "unsupported-tiff.bin",
+      "bytes": 1872,
+      "sha256": "6f7b598f5b60e1f4661054b7b0b3663444ebbbaf51acb17e991b190a647637b2",
+      "features": [
+        "wrong-format",
+        "misleading-filename"
+      ],
+      "expected": {
+        "status": 415
+      },
+      "inputMetadata": {
+        "format": "tiff",
+        "width": 80,
+        "height": 60,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": false,
+        "orientation": 1,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#unsupported-tiff",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "unsupported-svg",
+      "filename": "unsupported-svg.bin",
+      "bytes": 3679,
+      "sha256": "46c39030b64332a838acfc79a995881abf00b2847378de90a9ae1e63c7f78c8a",
+      "features": [
+        "wrong-format",
+        "misleading-filename"
+      ],
+      "expected": {
+        "status": 415
+      },
+      "inputMetadata": {
+        "format": "svg",
+        "width": 80,
+        "height": 60,
+        "space": "srgb",
+        "depth": "uchar",
+        "hasAlpha": true,
+        "orientation": null,
+        "pages": 1,
+        "exif": false,
+        "xmp": false,
+        "icc": false,
+        "iptc": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#unsupported-svg",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "garbage",
+      "filename": "garbage.bin",
+      "bytes": 12,
+      "sha256": "5464533c9647b67eb320c40ccc5959537c09102ae75388f6a7675b433e745c9d",
+      "features": [
+        "invalid-content"
+      ],
+      "expected": {
+        "status": 415
+      },
+      "inputMetadata": {
+        "readableHeader": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#garbage",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    },
+    {
+      "id": "empty",
+      "filename": "empty.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "features": [
+        "empty"
+      ],
+      "expected": {
+        "status": 415
+      },
+      "inputMetadata": {
+        "readableHeader": false
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source": "media-quality/corpus.ts#empty",
+        "rights": "Fixture propia creada por código para este proyecto; sin personas reales ni descargas."
+      },
+      "recipe": "corpus.js"
+    }
+  ]
+}

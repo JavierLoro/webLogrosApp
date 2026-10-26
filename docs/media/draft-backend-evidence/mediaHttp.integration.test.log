@@ -1,0 +1,22 @@
+▶ API media conectada con runtime, permisos y caché privada
+  ✔ POST 202 dispara la cola sin tick manual y el DTO no filtra rutas (914.609ms)
+  ✔ miembro lee variante privada y revalida por ETag (77.6113ms)
+  ✔ sin sesión, caducada o fuera del equipo no devuelve 304 (38.0813ms)
+  ✔ fallo de lectura previo al primer byte devuelve JSON 503 sin cabeceras de imagen (37.4227ms)
+  ✔ POST rechaza PLAYER/origen ajeno sin reservar trabajos (30.548ms)
+  ✔ estado scoped: propietario, equipo y UUID (34.8403ms)
+  ✔ multipart incorrecto y tamaño excesivo devuelven JSON sin cortar la respuesta (265.9633ms)
+  ✔ reemplazo cambia ETag y elimina la versión vieja sin invalidar la nueva (767.3882ms)
+  ✔ secreto no descubierto oculta la imagen al PLAYER (707.769ms)
+  ✔ desconexión durante body termina recepción sin publicar (114.3606ms)
+  ✔ desconexión mientras se espera el lease no reserva ni retiene la recepción (71.7927ms)
+  ✔ stop espera leases y cierra una sola vez el almacén (45.7547ms)
+✔ API media conectada con runtime, permisos y caché privada (3820.2901ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3826.6589

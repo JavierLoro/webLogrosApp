@@ -1,0 +1,21 @@
+▶ cancelación durable por API conserva reservas hasta cierre y arbitra el commit final
+  ✔ sin sesión, Origin ajeno, rol, propietario, equipo e ID inválidos no escriben (256.025ms)
+  ✔ cancelar QUEUED es idempotente, retira su temporal y no arranca Sharp (193.6305ms)
+  ✔ acuse de cancelación perdido before del commit da 503 y admite reintento seguro (138.141ms)
+  ✔ acuse de cancelación perdido after del commit da 503 y admite reintento seguro (126.8042ms)
+  ✔ imagen base se publica y cancelación tardía conserva su referencia (609.0773ms)
+  ✔ cancelación durable entre claim y ejecución impide arrancar Sharp sin signal (145.4694ms)
+  ✔ acuse de recepción cerrado respeta cancelación durable antes de QUEUED (105.1765ms)
+  ✔ cancelación durante registro del worker no libera PROCESSING antes de cerrar (170.9839ms)
+  ✔ cancelar PUBLISHING antes del commit bloquea asociación aun sin signal local (609.1321ms)
+  ✔ commit definitivo que ganó el lock responde too_late a cancelar (620.9307ms)
+  ✔ cancelar RECEIVING aborta su lease y espera al cierre del source (80.0686ms)
+✔ cancelación durable por API conserva reservas hasta cierre y arbitra el commit final (3694.0041ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3701.5656

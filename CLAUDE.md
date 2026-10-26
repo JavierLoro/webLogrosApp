@@ -128,13 +128,13 @@ infra/nginx/    — Reverse proxy: /api/* → backend:3001, /* → frontend:3000
 ### Frontend (`apps/frontend/src/app/`)
 - App Router de Next.js. La sesión se consulta al servidor; el frontend no almacena el JWT en `localStorage` ni lo envía como Bearer.
 - Las pantallas de equipo viven bajo `/equipos/[slug]`; las peticiones usan el contrato `/api`/configuración de entorno, sin URL localhost fija para visitantes.
-- Shell, dashboard, catálogo/formulario por rol y ranking tienen gates cerrados. Jugadores está implementado con QA/gate pendiente; historiales y administración renovados siguen pendientes.
+- Shell, dashboard, catálogo/formulario por rol y ranking tienen gates cerrados. Jugadores conserva cierre provisional sin QA/gate visual PASS; historiales y administración G7/G8 están entregados. El formulario por rol necesita integrar el contrato de borradores/media al reanudar el frontal.
 - Acceso y onboarding están implementados y en revisión. Continuar desde STATUS/TASKS; no inferir la tarea activa a partir de la numeración del roadmap.
 
 ### Base de datos
 - PostgreSQL en Docker, contenedor `weblogros_db`
 - Credenciales locales: `admin:admin123`, db `weblogros`, puerto `5432`
-- Modelo de datos: equipos, usuarios, membresías/roles contextuales, logros, concesiones, invitaciones, solicitudes y propuestas. Identidad global/alias y temporadas están descritos en `docs/Architecture.md`; consultar Roadmap para validación y migración pendientes de temporadas.
+- Modelo de datos: equipos, usuarios, membresías/roles contextuales, logros, concesiones, invitaciones, solicitudes y propuestas. Identidad global/alias y temporadas están descritos en `docs/Architecture.md`; temporadas fue verificada localmente; borradores/MediaJob/MediaAsset y sus migraciones se describen en la evidencia de media. Consultar Roadmap antes de operar otra base.
 - `apps/backend/.env` contiene `DATABASE_URL` y `JWT_SECRET`
 
 ### Variables de entorno necesarias (`apps/backend/.env`)
@@ -144,6 +144,9 @@ JWT_SECRET="..."
 ```
 
 ## Estado actual del roadmap
-Conciliado el 2026-09-22. Base, equipos, roles, seed y administración V1 completados en su alcance. Confirmación de HTTPS y copias offsite pendientes. Sesiones con cookies HttpOnly completadas y verificadas manualmente. Ranking/estadísticas, backend de propuestas y formulario por rol ya entregados; identidad global/alias implementados y validados localmente. Temporadas parcialmente implementadas, con migración aplicada, pruebas HTTP y pantallas pendientes.
 
-Foco: **UI-A2-T04**; UI-A1-T04 sigue en curso. Gates UI-G0–G5 cerrados, UI-G6-T01/T02 DONE y continuación pausada en UI-G6-T03; UI-G7–G9 pendientes. Fuente de estado: [Roadmap](docs/Roadmap.md) y [STATUS](docs/ui-workstream/STATUS.md). Funciones detectadas por el frontal: [BACKEND-GAPS](docs/ui-workstream/evidence/UI-A2/BACKEND-GAPS.md). No equiparar implementación local con despliegue ni cierre remoto de issues.
+Conciliado el 2026-10-27. Base multi-tenant, roles/sesión, G7/G8, perfil/alias y temporadas entregados y verificados localmente en su alcance. Backend multimedia de catálogo/borradores/propuestas/revisión verificado (192 comprobaciones y27 migraciones solo en base aislada); corpus/calidad de logros verificados (38 casos,71 variantes,7 pruebas de herramienta y11 de compatibilidad Sharp). Evidencia en `docs/media/MEDIA-DRAFTS-PROPOSALS.md` y `docs/media/MEDIA-QUALITY-CORPUS.md`.
+
+Siguiente trabajo: carga sostenida/mixta con el corpus validado, incluido PNG de alta entropía (6,13MB por imagen con variantes), y revisión de recursos/provisiones. Revisión administrativa de casos multimedia conservados pendiente aparte. Frontal pausado: los formularios de creación/propuesta son temporalmente incompatibles con el contrato nuevo `{ borradorId, version }`; adaptar enT07.01/T07.02 cuando se reanude. T08.01 sigue abierto y bloquea logos; avatares conservan dependencia PLAYER-LC-T03. Despliegue y backups siguen aplazados.
+
+La línea visual conserva G0–G5 cerrados, G6 provisional sin gate visual PASS, G7/G8 entregados, A1/A2 aplazados yG9 sin iniciar; `current_task` visual esNONE. Consultar siempre `docs/ui-workstream/STATUS.md`, `TASKS.md`, `docs/MEDIA-PLAN.md` y `docs/Roadmap.md`. No repetir ranking/estadísticas, perfil/alias, temporadas ni backend media por notas históricas. Implementación, publicación de una rama/PR y despliegue son estados distintos.

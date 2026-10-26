@@ -1,5 +1,63 @@
 # iechnical Decisions
 
+## Enlace interno de recepción y Prisma (2026-10-15)
+
+**Implementado/probado por petición explícita tras comprender await.** Nueva fachada `receiveAndQueueMediaJob` coordina admisión, claim de recepción, receptor fuera de tx y confirmación QUEUED. `receiptToken`/`receiptStartedAt` identifican un intento de un solo uso y se guardan con ruta/tipo antes de IO; no certifican que ya exista un archivo. El acuse requiere claim completo y confirma metadata/estado/fechas con CAS bajo lock común. Idempotencia solo del mismo claim, sin renovar los180s.
+
+Fallo de transporte conocido se registra después del cierre; EEXIST/propiedad dudosa conserva RECEIVING. Error de ACK antes/después del commit devuelve503 y no inventa FAILED ni borra input. Abort antes de handoff puede guardar CANCELED con cleanupPending; si QUEUED gana durante el ACK, devuelve too_late. Fuente compatible se cierra también ante rechazo de admisión; el futuro adaptador HTTP coordinará su respuesta sin asumir socket disponible.
+
+Migración aditiva solo Windows aislado/22 al día; enlace14/14, admisión9/9, toma5/5 y build/seed:check PASS. Revisión estática PASS; snapshots y temporales propios retirados. [Evidencia/límites](media/MEDIA-UPLOAD-INTAKE.md): pruebas con Proxy, no caída real de red; fuente debe emitir close; admisión que pierde respuesta antes de devolver UUID puede quedar reservada hasta recuperación. Sin HTTP/autorización/controlador/presupuesto físico/limpiador durable/S3. Explicar código y esperar comprensión antes de siguiente bloque.
+
+## Receptor aislado y separación transporte/estado (2026-10-15)
+
+**Implementado/probado por petición de continuar; explicación ahora centrada en código.** `receiveMediaUpload` recibe Readable/cabeceras/opciones confiables y devuelve Promise de archivo cerrado/bytes/formato por firma. Busboy interpreta multipart; Transform cuenta bytes/prefijo; pipeline conecta archivo a disco. No depende de Prisma/Sharp/env global ni añade una ruta. El controlador posterior deberá autorizar/admitir antes, persistir referencia y confirmar QUEUED después, sin transacciones durante red/disco.
+
+Cancelar coordina pipelines y espera close antes de limpiar. `setImmediate` deja terminar el ciclo interno de Busboy; corrigió el fallo nativo observado con cancelación en microtask. Limpieza solo de input propio y rmdir vacío; restos ajenos quedan con cleanupPendingDirectory privado. Fuentes que no emitan close quedan fuera del contrato soportado, y preflight no consume la fuente: el futuro adaptador HTTP responde por su cierre y la reserva durable.
+
+Build/14 pruebas/diff-check PASS en Windows Node24.14.0, sin DB/migración/servicios nuevos. [Evidencia y límites](media/MEDIA-UPLOAD-RECEIVER.md). Revisión estática PASS con precondiciones, sin acreditar integración HTTP, decodificación, presupuesto físico ni cola completa. Esperar comprensión del código antes del enlace.
+
+## Admisión y espera de imágenes (2026-10-13)
+
+**Implementadas/probadas como funciones internas; recepción HTTP pendiente.** Diez plazas compartidas RECEIVING/QUEUED, dos activas PROCESSING/PUBLISHING; admisión, acuse y toma comparten lock transaccional global. Archivo completo/cerrado entra en QUEUED con queuedAt/reloj DB y deadline de 180 s; FIFO queuedAt/id. Se conserva el acuerdo de espera en cola: la transferencia no consume esos 180 s. Recepción incompleta reserva plaza pero no puede tomar turno; no se libera por antigüedad sin cierre confirmado.
+
+Barrido oportunista solo QUEUED al admitir, confirmar o tomar; aún no hay controlador permanente. Reintento del acuse no renueva plazo; vencido confirma FAILED/WAIT_TIMEOUT antes del 409. Preservar rutas conocidas para limpieza, sin borrado físico: receptor futuro debe guardar ruta en QUEUED o limpiador derivarla de raíz/UUID. Registro bajo nivel no sustituye admisión ni permisos.
+
+Admisión8/8, toma5/5, enlace12/12, registro8/8 y build/seed:check PASS, 21 migraciones solo Windows aislado, recuentos conservados. [Evidencia y límites](media/MEDIA-JOB-ADMISSION.md). Sin HTTP/disparador/presupuesto físico/reinicio/S3/asociación; esperar comprensión antes de avanzar.
+
+## Inicio único de Sharp y resultado por identidad de toma (2026-10-12)
+
+**Implementado y probado localmente.** Una escritura CAS por identidad completa exige executorStartedAt null antes del fork; otra guarda resultado tras cierre. PUBLISHING conserva turno/destino y exige manifiesto/ruta privados, sin anunciar SUCCEEDED. El directorio deriva de raíz confiable + UUID; metadata técnica en DB, archivos temporales en disco. Cancelación confirmada precede al borrado; cleanup pendiente no convierte cancelación en fallo. Si entrega gana, señal local devuelve too_late; fallo DB/CAS conserva resultados y no fuerza liberar reserva.
+
+Motivo: impedir doble arranque, resultado antiguo y pérdida de archivos por limpieza anterior a la confirmación. [Evidencia](media/MEDIA-JOB-EXECUTION.md): migración sólo Windows aislado/20 al día, build/seed:check, enlace12/12, toma5/5 y registro8/8 PASS, datos/temporales propios limpiados. Cancel local y fallos inyectados; sin cancel entre instancias, HTTP, S3/asociación o recuperación automática. Comprensión antes del siguiente bloque.
+
+## Dos turnos persistentes de media y toma atómica (2026-10-12)
+
+**Implementados/probados localmente; enlace de ejecución pendiente.** Cada toma de QUEUED decide dentro de una transacción corta `ReadCommitted`, con `pg_advisory_xact_lock(7100,1)`. Puestos 1/2, UNIQUE y CHECK protegen capacidad de PROCESSING/PUBLISHING; un UUID y fecha DB identifican el intento. No se mantiene transacción durante Sharp. Orden entre elegibles por createdAt/id, sin SKIP LOCKED; admisión/RECEIVING/diez esperas y FIFO completo/180 s se completan aparte. El token creado se comparará en futuras transiciones; no afirma que ya se acepten/rechacen resultados ni que haya recuperación automática.
+
+Motivo: coordinar procesos que comparten la base, evitando decisiones con contadores locales. [Evidencia](media/MEDIA-JOB-CLAIMS.md): migración solo Windows aislado, 19 al día; build/seed:check, toma 5/5 y registro 8/8 PASS con datos conservados. Usuario autorizó subagentes y mantiene pausa de comprensión antes de conectar ejecutor/resultados. No hay HTTP/S3/Sharp iniciados por este servicio.
+
+## Ejecución de Sharp en proceso Node hijo (2026-10-12)
+
+**Implementada y verificada localmente por petición incremental.** Un controlador crea un proceso por imagen; el trabajador genera variantes secuenciales y comunica un manifiesto por IPC. Cancelación/timeout guardan la primera causa, solicitan terminación y esperan `close` antes de aceptar resultado o limpiar el intento. Los 30 s se cuentan desde `started`; el arranque tiene vigilancia técnica de 10 s. Perder IPC detiene al trabajador, pero la limpieza/recuperación durable sigue pendiente.
+
+No requiere otro contenedor. Sharp usa un hilo y caché de 32 MB; no es un límite de RAM total. Sin heredar secretos DB/JWT/S3 al trabajador. Entrada temporal bajo responsabilidad del ciclo futuro de asociación; el ejecutor solo limpia su propia salida fallida. No conecta HTTP/DB/S3 ni implementa admisión global 2+10. [Código/evidencia](media/MEDIA-IMAGE-EXECUTOR.md): build, 11/11 pruebas y arranque TS PASS. Esperar comprensión antes de integrar cola/transiciones; los apartados anteriores de cola reflejan el momento previo a este bloque.
+
+## Cola persistente de imágenes en PostgreSQL (2026-10-12)
+
+**Elegida; primer registro de trabajos implementado y probado localmente.** Usar PostgreSQL existente para registrar trabajos de media, propietario/alcance, estado, referencias internas y tiempos. La base MediaJob, reserva activa y consulta propia ya tienen migración/funciones y pruebas en Windows aislado; ejecución/cola global siguen pendientes. El directorio temporal conservará las entradas y SeaweedFS las variantes definitivas. No guardar originales como blobs en la base de datos.
+
+El backend coordinará toma y cambios mediante transacciones cortas, preservando máximo global de 2 activos + 10 pendientes y bloqueo por recurso. Ejecución aislada/cancelación real, admisión/FIFO/tiempos, reinicio y avisos aún se completan en T02.03; modelos/migración/API en T03. La cola persistente permite consultar estado al volver, pero no autoriza reanudar o reenviar trabajos automáticamente tras un reinicio. Imagen lista exige guardado y asociación, y no envía automáticamente un borrador a revisión.
+
+Motivo: aprovechar la base relacional existente para la escala inicial y conservar estado fuera del navegador. [Diseño](media/T02-03-JOBS.md) y [primer slice real](media/MEDIA-JOB-REGISTRY.md). El usuario pidió montar por piezas; esperar comprensión del código del registro antes de ejecución/cancelación. Las transiciones del ejecutor y el máximo global todavía no están implementados.
+
+## Cola persistente de imágenes en PostgreSQL (2026-10-12)
+
+**Elegida; primer registro de trabajos implementado y probado localmente.** Usar PostgreSQL existente para registrar trabajos de media, propietario/alcance, estado, referencias internas y tiempos. La base MediaJob, reserva activa y consulta propia ya tienen migración/funciones y pruebas en Windows aislado; ejecución/cola global siguen pendientes. El directorio temporal conservará las entradas y SeaweedFS las variantes definitivas. No guardar originales como blobs en la base de datos.
+
+El backend coordinará toma y cambios mediante transacciones cortas, preservando máximo global de 2 activos + 10 pendientes y bloqueo por recurso. Ejecución aislada/cancelación real, admisión/FIFO/tiempos, reinicio y avisos aún se completan en T02.03; modelos/migración/API en T03. La cola persistente permite consultar estado al volver, pero no autoriza reanudar o reenviar trabajos automáticamente tras un reinicio. Imagen lista exige guardado y asociación, y no envía automáticamente un borrador a revisión.
+
+Motivo: aprovechar la base relacional existente para la escala inicial y conservar estado fuera del navegador. [Diseño](media/T02-03-JOBS.md) y [primer slice real](media/MEDIA-JOB-REGISTRY.md). El usuario pidió montar por piezas; esperar comprensión del código del registro antes de ejecución/cancelación. Las transiciones del ejecutor y el máximo global todavía no están implementados.
+
 ## Identidad global y alias contextual (2026-09-21)
 
 **Acordado e implementado en su primer slice.** Nombre y apellidos describen a la persona y viven
@@ -144,6 +202,8 @@ La migración futura de SeaweedFS a R2 puede mantener este diseño; no hay oblig
 
 **Acordado, pendiente de implementación.** El usuario confirma «eso es, buen plan»: un contenedor Docker SeaweedFS en Windows para pruebas, con volumen persistente propio para imágenes y metadatos internos y acceso privado con credenciales desde el backend. Conservar backend/frontend locales y PostgreSQL aislado existentes; no arrancar el compose completo ni crear un CT/VM. Concretar versión de `weed mini`, configuración y recursos antes de arrancar. El despliegue futuro sigue en servidor propio con datos y credenciales separados; copias aplazadas a esa etapa. Ver [MEDIA-PLAN](MEDIA-PLAN.md).
 
+**Aclaración del 2026-09-28:** el aislamiento del Compose completo rige para las pruebas locales en Windows. En producción, SeaweedFS formará parte del mismo `docker-compose.prod.yml` que la aplicación, como servicio con volumen y credenciales propios y conexión privada desde backend. No publicar S3 ni otras interfaces de SeaweedFS a Internet. La configuración de producción y las copias siguen pendientes; esta aclaración no equivale a un despliegue.
+
 ## Caché privada de imágenes con revalidación — Phase 10A (2026-09-23)
 
 **Acordado, pendiente de implementación.** El usuario confirma que el navegador conserve una copia pero consulte al backend antes de reutilizarla. Aplicar caché HTTP privada con revalidación obligatoria y validador de versión por variante. Comprobar sesión, permiso vigente y versión antes de responder 304; si cambia, servir la vigente, y si no hay permiso, rechazar sin permitir reutilización. Sin caché compartida ni uso offline autorizado. Errores de autorización con no-store. La propuesta de no-store para todas las imágenes queda descartada.
@@ -206,6 +266,42 @@ El usuario aprueba «perfecto asi si» al situar imágenes y almacenamiento desp
 
 Phase 10 queda para imágenes de propuestas y otros archivos/usos futuros. Backups y despliegue se retoman al preparar producción, y R2 cuando se solicite migración, sin depender de acabar ampliaciones de Phase 10. No cambia el alcance funcional, los aplazamientos de controles, el estado de implementación ni los gates UI. Solo reubicación y sincronización documental.
 
+## 2026-09-25 — Imagen lista obligatoria para publicar un logro
+
+Durante el aprendizaje guiado de 7.10, el usuario aclara que la imagen debe ser obligatoria y confirma «deberia tener la imagen lista». El nuevo logro permanece pendiente de publicación mientras se procesa; solo aparece en catálogo tras guardar y asociar correctamente la imagen. Fallo permite reintento manual y no publica el logro. Una imagen de catálogo se comparte entre jugadores que obtienen ese logro; no se duplica por obtención. El reemplazo conserva la anterior hasta éxito.
+
+Confirmación posterior del mismo día: se permite sustituir la imagen, pero no quitarla sin reemplazo mientras el logro esté publicado. Debe exigirse también en backend. Diseño técnico, transición de logros existentes sin imagen y encaje de incorporación desde propuestas pendientes de concretar en MEDIA-PLAN. No amplía automáticamente el alcance a imágenes adjuntas a propuestas. Cambios documentales únicamente, sin schema, migraciones ni servicios.
+
+## 2026-09-25 — Subida de imagen desde la propuesta: incluida en 7.10
+
+El usuario distingue subir una imagen al proponer un logro de modificar la imagen del logro ya incorporado al equipo. El miembro autorizado para proponer puede adjuntar imagen a su propuesta propia sin ser TEAM_ADMIN. Aprobar/incorporar y modificar el catálogo mantiene permiso administrativo. La autorización depende del destino, autor, equipo y estado, no de un requisito TEAM_ADMIN aplicado a todas las subidas.
+
+Este acuerdo sustituye el aplazamiento anterior: MEDIA-EXT-T01 pasa expresamente de Phase 10 a 7.10 y se exige antes de cerrar T08.01. Diseño T02/T03 y entrega T05–T07 deben incluir propuestas, revisión e incorporación con imagen lista. Pendientes permisos detallados de lectura/edición por estado, relación entre procesamiento y envío a revisión, retención y limpieza ante rechazo/cancelación/salida. No se inventan plazos ni permisos adicionales. Solo documentación; sin implementación.
+
+## 2026-09-25 — Borradores retomables y límites personales
+
+El usuario confirma guardar borradores incompletos y retomarlos más adelante, tanto para propuestas como para creación directa: «si, poder retomarlo mas adelante. ademas restringiremos a 3 borradores por persona, y 5 solicitudes pendientes». Máximo 3 borradores por persona; todavía no enviados ni publicados. Las imágenes procesadas con referencia válida en un borrador se conservan, no se consideran temporales abandonados por cumplir 24 h. No se ha acordado caducidad automática de borradores.
+
+Aclaración posterior del usuario: las 5 pendientes son propuestas de nuevos logros en revisión, no solicitudes de obtención. El diseño T02/T03 concretará contadores, transiciones y concurrencia antes de implementar: enviar correctamente deja de contar como borrador y pasa a pendiente; si no hay plaza o falla, conservar el borrador. Creación directa administrativa no cuenta como propuesta en revisión. El límite de borradores es distinto de los 2 procesamientos activos y 10 en cola. Solo documentación.
+
+## 2026-09-25 — Envío de propuesta solo con imagen lista
+
+El usuario confirma que una propuesta de nuevo logro se puede enviar a revisión solo después de procesar, guardar y asociar su imagen. Mientras se procesa, el trabajo permanece como borrador guardable y retomable; si falla, conserva el borrador para reintento manual. El envío valida además los campos completos, autoría/membresía y plaza entre las 5 propuestas pendientes. Tras éxito deja de contar entre los 3 borradores. El backend aplicará la regla; deshabilitar el botón por sí solo no basta. Aprobar para publicar exige volver a comprobar imagen disponible. Retención de imágenes rechazadas y salida del autor siguen pendientes. Documentación únicamente, sin código ni servicios.
+
+## 2026-09-25 — Conservar la imagen de una propuesta rechazada
+
+El usuario elige conservar la imagen enviada junto a la propuesta rechazada para consulta posterior. Al rechazar deja de contar entre las 5 propuestas pendientes, pero imagen y registro mantienen su relación y ocupan almacenamiento. La limpieza de archivos abandonados no debe tratarla como temporal o huérfana. No hay caducidad automática acordada; el eventual borrado explícito sigue pendiente. MEDIA-CAPACITY añade las rechazadas a su fórmula y advierte que el límite de pendientes no limita su acumulación. Sin implementación.
+
+Derivación de la política de sustitución ya aceptada: una propuesta aprobada se consulta con la imagen vigente de su logro de catálogo. Al sustituirla, no se conserva otra copia de la imagen inicial solo por existir el historial de la propuesta; eliminar la anterior sigue requiriendo comprobar que ninguna referencia válida la usa. Las rechazadas sí conservan la imagen exacta del envío. Modelado y pruebas pendientes, sin código.
+
+## 2026-09-28 — Cancelar propuesta pendiente al eliminar al jugador del equipo
+
+Ante la eliminación explícita del jugador por TEAM_ADMIN, el usuario elige cancelar sus propuestas de nuevos logros todavía pendientes en ese equipo. Dejan la cola de revisión y reducen el contador de ese jugador en ese equipo, cuyo máximo de 5 se precisa en la decisión siguiente. Su imagen se elimina cuando ya no tenga otra referencia; un fallo de borrado queda para limpieza segura. La cancelación por baja no se presenta como rechazo. Archivar o salir sin eliminación conserva propuestas e imágenes, aunque el autor pierda acceso al equipo. Las rechazadas mantienen imagen e historial como decisiones resueltas, y los logros aprobados permanecen en el catálogo. PLAYER-LC-T01 y MEDIA-10A-T03 concretarán estado de cancelación, carreras con el procesamiento y borradores del jugador eliminado. Solo documentación; no se han cancelado propuestas ni borrado archivos.
+
+## 2026-09-28 — Cinco propuestas pendientes por jugador y equipo
+
+La aclaración final del usuario es **hasta 5 propuestas de nuevos logros pendientes de cada jugador en cada equipo**. El contador usa la pareja jugador + equipo: si tiene 5 pendientes en A, no puede enviar una sexta en A, pero conserva su cupo propio de hasta 5 en B; otros jugadores de A tienen también su propio cupo. Una interpretación documental intermedia que sumaba todos los equipos de una persona fue incorrecta y queda sustituida por esta regla. Los 3 borradores siguen limitados por persona entre sus equipos. Si TEAM_ADMIN elimina al jugador de A, se cancelan sus pendientes en A y baja ese contador; las propuestas y el cupo de B no cambian. T02/T03 y QA deberán comprobar ambos límites y las carreras de envío en la misma pareja jugador/equipo. Sin código.
+
 ## Why Next.js instead of React + React Router?
 - Built-in routing and project structure
 - Better SEO options (SSR/SSG) for public pages
@@ -233,3 +329,17 @@ Phase 10 queda para imágenes de propuestas y otros archivos/usos futuros. Backu
 - Reproducible environments
 - One-command deploy
 - Nginx handles iLS and reverse proxy
+
+
+## 2026-10-26 — Borradores y propuestas con imagen, backend local
+
+Implementación completa del alcance solicitado en [MEDIA-DRAFTS-PROPOSALS](media/MEDIA-DRAFTS-PROPOSALS.md). Imagen obligatoria desde esta entrega para nuevas propuestas/altas y aprobaciones; frontal pausado y cuerpos antiguos400 hasta adaptar sus formularios. Modelo separado de borrador, finalidad inmutable,3 plazas por usuario globales y5 PENDING por usuario/equipo; descarte manual sin caducidad. Perder membresía conserva imágenes/borradores y sus plazas, sin lectura/descarte hasta reingreso. Terminales retenidos para reintentos/trabajos tardíos. Migración marca solo legacy PENDING sin imagen para subsanación por autor, sin editar textos; nuevas/resueltas no admiten sustitución.
+
+Transferencias de referencia dentro de transacciones, sin copiar S3; claves conservan origen. Aprobar exige imagen disponible/READY sin trabajo activo y permiso actual; rechazo conserva su imagen exacta. Limpieza/recuperación cuentan referencias de los tres modelos.192 pruebas PASS,27 migraciones solo base aislada; no cambia formatos/variantes/compresión/2+10/plazos/cacheSharp/Go384MiB. No cierra7.10/T08.01, no habilita logos y no incluye frontend, bajas administrativas, dimensionamiento sostenido, despliegue ni backups.
+
+
+## 2026-10-27 — Corpus y calidad de logros
+
+[Verificación local](media/MEDIA-QUALITY-CORPUS.md):38 casos/71 variantes por HTTP→borrador→Sharp/S3→publicación/propuesta/revisión y lectura privada; siete pruebas de la herramienta y11 de compatibilidad Sharp PASS. Fuentes sintéticas deterministas y arte propio del repo con procedencia/hash, sin fotos personales externas ni integración en pantallas. PNG igual a referencia normalizada; JPEG sin avisos bajo PSNR30dB/SSIM0,95 fijados antes del ensayo y muestreo visual de13 paneles1×/2×. No se cambia calidad85, formatos, variantes, límites, cuotas, caché Sharp ni Go384MiB.
+
+Se mide un máximo6.126.090B por imagen con variantes para PNG de alta entropía; supera el escenario pesado hipotético3MB, que sigue sin ser una cota. Revisar presupuesto con carga sostenida/mixta y repetir en servidor. T06.01/T06.02 solo logros DONE LOCAL; T08.02 parcial yT08.01 abierto por frontal/QA. Logos/avatares conservan gates; revisión de casos multimedia conservados, despliegue y backups mantienen sus tareas/pausas. No se reejecutaron las192 pruebas anteriores ni se aplicaron migraciones/seed. Fixtures y71 objetos propios retirados, datos ajenos conservados.

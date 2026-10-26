@@ -29,6 +29,8 @@ model User {
   solicitudesLogro   SolicitudLogro[]
   propuestasLogro    PropuestaLogro[]
   achievementProgress AchievementProgress[]
+  borradores         AchievementDraft[]
+  mediaJobs          MediaJob[]
 }
 
 // 📚 Team = el "tenant" (inquilino) de la multi-tenancy. Todo cuelga de un equipo.
@@ -46,6 +48,9 @@ model Team {
   invitations TeamInvitation[]
   propuestas  PropuestaLogro[]
   seasons     Season[]
+  mediaJobs   MediaJob[]
+  mediaAssets MediaAsset[]
+  borradores AchievementDraft[]
 }
 
 enum SeasonStatus {
@@ -182,6 +187,11 @@ model Logro {
   solicitudes SolicitudLogro[]
   propuesta   PropuestaLogro?
   progress    AchievementProgress[]
+  // 📚 La clave compuesta con teamId impide asociar desde Prisma un asset de otro tenant.
+  imageAssetId String?           @db.Uuid
+  imageAsset   MediaAsset?       @relation(fields: [teamId, imageAssetId], references: [teamId, id], onDelete: Restrict)
+
+  @@unique([teamId, imageAssetId])
 }
 
 enum AchievementScope {
@@ -235,6 +245,12 @@ model PropuestaLogro {
   user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   logro           Logro?               @relation(fields: [logroId], references: [id], onDelete: Restrict)
 
+  imageAssetId String? @db.Uuid
+  imageAsset MediaAsset? @relation(fields: [teamId, imageAssetId], references: [teamId, id], onDelete: Restrict, map: "PropuestaLogro_imageAsset_fkey")
+  // 📚 Solo la migración marca pendientes antiguas; las propuestas nuevas no admiten subsanación.
+  imageRepairAllowed Boolean @default(false)
+
+  @@unique([teamId, imageAssetId])
   // 📚 Los dos índices corresponden a cola administrativa e historial propio dentro del tenant.
   @@index([teamId, status, createdAt])
   @@index([teamId, userId, createdAt])
@@ -276,4 +292,210 @@ model UserLogro {
   // 📚 La unicidad depende de si seasonId es NULL; PostgreSQL la aplica con dos índices
   // 📚 parciales definidos en la migración, algo que Prisma Schema aún no puede expresar.
   @@index([seasonId])
+}
+
+// 📚 Estos estados describen el trabajo técnico de imagen, no el estado de una
+// 📚 propuesta. La transición/cancelación se conectará al ejecutor en otro bloque.
+enum MediaJobState {
+  RECEIVING
+  QUEUED
+  PROCESSING
+  PUBLISHING
+  SUCCEEDED
+  FAILED
+  CANCELED
+  INTERRUPTED
+}
+
+// 📚 El owner identifica una vida concreta del runtime, no una sesión de usuario;
+// 📚 el advisory lock protege la exclusividad y este registro permite recuperar tras reinicio.
+model MediaRuntimeOwner {
+  id            String      @id @default(uuid()) @db.Uuid
+  hostId        String      @db.VarChar(255)
+  // 📚 La migración exige processId > 0: cero no es un PID verificable.
+  processId     Int
+  temporaryRoot String      @db.VarChar(2048)
+  startedAt     DateTime    @default(now()) @db.Timestamp(3)
+  closedAt      DateTime?   @db.Timestamp(3)
+  jobs          MediaJob[]
+  orphanCleanups MediaOrphanCleanup[]
+
+  @@index([hostId, processId, startedAt])
+  @@index([closedAt, startedAt])
+}
+
+enum MediaOrphanCleanupStatus {
+  PENDING
+  COMPLETE
+}
+
+// 📚 El journal se persiste antes de retirar archivos sin MediaJob, para que un reinicio pueda reanudar exactamente ese workspace.
+model MediaOrphanCleanup {
+  id              String                    @id @default(uuid()) @db.Uuid
+  jobId           String                    @unique @db.Uuid
+  runtimeOwnerId  String                    @db.Uuid
+  receiptToken    String                    @db.Uuid
+  temporaryRoot   String                    @db.VarChar(2048)
+  path            String                    @db.VarChar(2048)
+  status          MediaOrphanCleanupStatus  @default(PENDING)
+  attempts        Int                       @default(0)
+  lastErrorCode   String?
+  lastActivityAt  DateTime                  @default(now()) @db.Timestamp(3)
+  completedAt     DateTime?                 @db.Timestamp(3)
+  createdAt       DateTime                  @default(now()) @db.Timestamp(3)
+  updatedAt       DateTime                  @updatedAt @db.Timestamp(3)
+  runtimeOwner    MediaRuntimeOwner         @relation(fields: [runtimeOwnerId], references: [id], onDelete: Restrict)
+
+  @@index([status, lastActivityAt])
+}
+
+// 📚 El registro conserva propietario, destino y estado aunque cierre la página.
+// 📚 Admisión/toma viven en el dominio; rutas HTTP, receptor y almacenamiento siguen fuera de este bloque.
+model MediaJob {
+  id                String        @id @default(uuid()) @db.Uuid
+  ownerId           Int
+  teamId            Int?
+  resourceKey       String        @db.VarChar(255)
+  // 📚 UNIQUE nullable reserva el destino mientras el trabajo siga activo. La
+  // 📚 migración añade CHECK para impedir liberarlo solo cambiando este campo a null.
+  activeResourceKey String?       @unique @db.VarChar(255)
+  status            MediaJobState @default(RECEIVING)
+  // 📚 La solicitud se conserva aunque el proceso siga escribiendo; solo el dueño del cierre seguro libera el destino.
+  cancelRequestedAt DateTime?     @db.Timestamp(3)
+  // 📚 La espera FIFO empieza al cerrar recepción; una transferencia lenta aún no ha llegado a la cola.
+  queuedAt          DateTime?
+  // 📚 Este plazo libera solo una reserva QUEUED; nunca supone que un stream RECEIVING se haya cerrado.
+  queueExpiresAt    DateTime?
+  // 📚 Los dos puestos representan capacidad global; UNIQUE evita que un error de
+  // 📚 coordinación asigne el mismo puesto a dos trabajos activos.
+  processingSlot    Int?          @unique
+  // 📚 El UUID cambia en cada toma: identifica qué intento puede actuar sobre el trabajo.
+  executionToken    String?       @db.Uuid
+  processingStartedAt DateTime?
+  // 📚 NULL conserva trabajos de versiones anteriores; nunca se interpreta como dueño muerto.
+  runtimeOwnerId    String?       @db.Uuid
+  // 📚 Cada lease de recepción queda asociado a un UUID propio para distinguir
+  // 📚 streams vivos de recepciones abandonadas durante una caída del proceso.
+  // 📚 La migración exige owner cuando hay receiptId y PID/ruta de worker emparejados.
+  runtimeReceiptId  String?       @db.Uuid
+  workerPid         Int?
+  // 📚 La ruta variants-* exacta se persiste antes del fork para poder limpiar solo ese intento tras un reinicio.
+  workerDirectory   String?       @db.VarChar(2048)
+  // 📚 Este token identifica qué recepción está autorizada a escribir y confirmar el recibo.
+  receiptToken      String?       @db.Uuid
+  receiptStartedAt  DateTime?
+  // 📚 El marcador one-shot CAS impide arrancar dos workers para la misma toma.
+  executorStartedAt DateTime?
+  // 📚 Este CAS hace one-shot la publicación remota, aunque el worker reciba el mismo claim otra vez.
+  publisherStartedAt DateTime?
+  imageKind         String?       @db.VarChar(24)
+  inputDirectory    String?       @db.VarChar(2048)
+  resultDirectory   String?       @db.VarChar(2048)
+  resultManifest    Json?
+  cleanupPendingDirectory String? @db.VarChar(2048)
+  // 📚 El path histórico se conserva; este marcador permite al reconciliador dejar
+  // 📚 de revisar trabajos terminales cuya eliminación física ya quedó confirmada.
+  // 📚 La migración solo permite marcarlo cuando el trabajo está terminal.
+  temporaryCleanedAt DateTime?   @db.Timestamp(3)
+  failureCode       String?       @db.VarChar(64)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  completedAt       DateTime?
+  // 📚 Restrict evita borrar el propietario/equipo mientras haya trabajos referidos;
+  // 📚 las futuras operaciones de baja deben coordinar sus trabajos y limpieza.
+  owner             User          @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+  team              Team?         @relation(fields: [teamId], references: [id], onDelete: Restrict)
+  runtimeOwner      MediaRuntimeOwner? @relation(fields: [runtimeOwnerId], references: [id], onDelete: Restrict)
+  asset             MediaAsset?
+
+  @@index([ownerId, createdAt])
+  @@index([teamId, status])
+  @@index([status, createdAt])
+  @@index([status, queuedAt, id])
+  @@index([runtimeOwnerId, status])
+  @@index([runtimeOwnerId, runtimeReceiptId, status])
+  @@index([runtimeOwnerId, cancelRequestedAt, status])
+  @@index([status, temporaryCleanedAt, completedAt])
+}
+
+enum MediaAssetState {
+  STAGING
+  READY
+  RETIRED
+}
+
+enum MediaAssetCleanupStatus {
+  PENDING
+  COMPLETE
+}
+
+// 📚 Un asset es una versión privada e inmutable; Logro solo apunta a ella al completar la publicación.
+model MediaAsset {
+  id          String          @id @default(uuid()) @db.Uuid
+  jobId       String          @unique @db.Uuid
+  teamId      Int
+  state       MediaAssetState @default(STAGING)
+  variants    Json
+  createdAt   DateTime        @default(now())
+  job         MediaJob        @relation(fields: [jobId], references: [id], onDelete: Restrict)
+  team        Team            @relation(fields: [teamId], references: [id], onDelete: Restrict)
+  achievement Logro?
+  draft AchievementDraft?
+  proposal PropuestaLogro?
+  cleanup     MediaAssetCleanup?
+
+  // 📚 Esta clave única permite que Logro valide el tenant y el asset en la misma FK.
+  @@unique([teamId, id])
+  @@index([teamId, state])
+}
+
+// 📚 Las claves se guardan antes de borrarlas para que un reinicio no pierda limpieza pendiente.
+model MediaAssetCleanup {
+  id            String                  @id @default(uuid()) @db.Uuid
+  assetId       String                  @unique @db.Uuid
+  keys          String[]
+  status        MediaAssetCleanupStatus @default(PENDING)
+  attempts      Int                     @default(0)
+  lastErrorCode String?
+  createdAt     DateTime                @default(now())
+  completedAt   DateTime?
+  asset         MediaAsset              @relation(fields: [assetId], references: [id], onDelete: Restrict)
+
+  @@index([status, createdAt])
+}
+
+
+enum AchievementDraftPurpose {
+  PROPOSAL
+  DIRECT
+}
+
+enum AchievementDraftStatus {
+  DRAFT
+  SUBMITTED
+  PUBLISHED
+  DISCARDED
+}
+
+// 📚 El registro terminal conserva la identidad del envío para resolver un ACK perdido y rechazar workers tardíos.
+model AchievementDraft {
+  id String @id @default(uuid()) @db.Uuid
+  userId Int
+  teamId Int
+  purpose AchievementDraftPurpose
+  status AchievementDraftStatus @default(DRAFT)
+  fields Json @default("{}")
+  version Int @default(1)
+  submittedVersion Int?
+  resultId Int?
+  imageAssetId String? @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Restrict)
+  imageAsset MediaAsset? @relation(fields: [teamId, imageAssetId], references: [teamId, id], onDelete: Restrict, map: "AchievementDraft_imageAsset_fkey")
+
+  @@unique([teamId, imageAssetId])
+  @@index([userId, status])
+  @@index([teamId, userId, status])
 }

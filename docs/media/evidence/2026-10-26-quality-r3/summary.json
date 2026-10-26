@@ -1,0 +1,165 @@
+{
+  "cases": 38,
+  "processed": 25,
+  "rejected": 13,
+  "variants": 71,
+  "pngVariants": 26,
+  "jpegVariants": 45,
+  "allPngPixelsExact": true,
+  "jpegMinPsnrDb": 31.257341281304917,
+  "jpegMinSsimLuma": 0.9627985033143771,
+  "metricWarnings": 0,
+  "totalVariantBytes": 15704249,
+  "statisticMethod": "median interpolates the middle pair; p95 nearest-rank; bytes include all variants per image",
+  "bytesPerImage": {
+    "min": 91,
+    "median": 140323,
+    "p95": 3488075,
+    "max": 6126090
+  },
+  "bytesPerFormat": {
+    "png": {
+      "min": 91,
+      "median": 748664.5,
+      "p95": 6126090,
+      "max": 6126090
+    },
+    "jpeg": {
+      "min": 114358,
+      "median": 140246,
+      "p95": 315423,
+      "max": 315423
+    }
+  },
+  "weights": [
+    {
+      "id": "single-pixel",
+      "format": "png",
+      "bytes": 91
+    },
+    {
+      "id": "small-png",
+      "format": "png",
+      "bytes": 321
+    },
+    {
+      "id": "thin-panorama",
+      "format": "png",
+      "bytes": 357
+    },
+    {
+      "id": "thin-portrait",
+      "format": "png",
+      "bytes": 386
+    },
+    {
+      "id": "grayscale-progressive",
+      "format": "jpeg",
+      "bytes": 114358
+    },
+    {
+      "id": "odd-dimensions",
+      "format": "jpeg",
+      "bytes": 136438
+    },
+    {
+      "id": "cmyk-jpeg",
+      "format": "jpeg",
+      "bytes": 138636
+    },
+    {
+      "id": "exif-7",
+      "format": "jpeg",
+      "bytes": 139079
+    },
+    {
+      "id": "exif-6",
+      "format": "jpeg",
+      "bytes": 139160
+    },
+    {
+      "id": "exif-5",
+      "format": "jpeg",
+      "bytes": 139458
+    },
+    {
+      "id": "exif-8",
+      "format": "jpeg",
+      "bytes": 139551
+    },
+    {
+      "id": "exif-3",
+      "format": "jpeg",
+      "bytes": 140246
+    },
+    {
+      "id": "exif-4",
+      "format": "jpeg",
+      "bytes": 140323
+    },
+    {
+      "id": "exif-2",
+      "format": "jpeg",
+      "bytes": 140610
+    },
+    {
+      "id": "exif-1",
+      "format": "jpeg",
+      "bytes": 140635
+    },
+    {
+      "id": "repository-dark-texture",
+      "format": "jpeg",
+      "bytes": 144357
+    },
+    {
+      "id": "portrait-detail",
+      "format": "jpeg",
+      "bytes": 159379
+    },
+    {
+      "id": "landscape-detail",
+      "format": "jpeg",
+      "bytes": 164313
+    },
+    {
+      "id": "boundary-jpeg-textured",
+      "format": "jpeg",
+      "bytes": 315423
+    },
+    {
+      "id": "palette-alpha",
+      "format": "png",
+      "bytes": 678130
+    },
+    {
+      "id": "display-p3",
+      "format": "png",
+      "bytes": 819199
+    },
+    {
+      "id": "png-16bit",
+      "format": "png",
+      "bytes": 933255
+    },
+    {
+      "id": "square-alpha",
+      "format": "png",
+      "bytes": 1366379
+    },
+    {
+      "id": "boundary-png-transparent",
+      "format": "png",
+      "bytes": 3488075
+    },
+    {
+      "id": "high-entropy-alpha",
+      "format": "png",
+      "bytes": 6126090
+    }
+  ],
+  "panels": 30,
+  "completed": true,
+  "cleanupVerified": true,
+  "ownS3KeysDeletedAndHeadVerified": 71
+}

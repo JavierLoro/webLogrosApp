@@ -1,0 +1,425 @@
+{
+  "schemaVersion": 1,
+  "runId": "80d7f34d-92dd-424e-9b27-7273fca73ece",
+  "startedAt": "2026-10-17T23:22:31.221Z",
+  "finishedAt": "2026-10-17T23:24:11.244Z",
+  "fatal": null,
+  "passed": false,
+  "checks": {
+    "allJobsSucceeded": true,
+    "workerMetricsComplete": true,
+    "workerLifecycleComplete": true,
+    "twoWorkersObserved": true,
+    "fullQueueAndRejection": true,
+    "cleanupPassed": true,
+    "fifo": true,
+    "sharpTimeout": true,
+    "queueTimeout": true,
+    "backendResponsive": true,
+    "workerMemoryBudget": true,
+    "temporaryBudget": true,
+    "initialFreeDiskMargin": true,
+    "dockerMetricsAvailable": true,
+    "dockerConfigurationAvailable": true,
+    "seaweedMemoryBudget": false,
+    "actorExitClean": true
+  },
+  "environment": {
+    "os": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64"
+    },
+    "node": "v24.14.0",
+    "cpuCount": 20,
+    "totalMemoryBytes": 34151231488,
+    "freeMemoryBytes": 8836136960,
+    "cgroup": {},
+    "versions": {
+      "node": "24.14.0",
+      "acorn": "8.15.0",
+      "ada": "3.4.2",
+      "amaro": "1.1.7",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.2",
+      "llhttp": "9.3.0",
+      "merve": "1.0.0",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.1",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.68.0",
+      "openssl": "3.5.5",
+      "simdjson": "4.2.4",
+      "simdutf": "6.4.0",
+      "sqlite": "3.51.2",
+      "tz": "2025c",
+      "undici": "7.21.0",
+      "unicode": "17.0",
+      "uv": "1.51.0",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.41",
+      "zlib": "1.3.1-e00f703",
+      "zstd": "1.5.7"
+    },
+    "initialTemporaryFsFreeBytes": 83967414272,
+    "sharpVersions": {
+      "aom": "3.15.1",
+      "archive": "3.8.9",
+      "cairo": "1.18.6",
+      "cgif": "0.5.4",
+      "exif": "0.6.26",
+      "expat": "2.8.5",
+      "ffi": "3.8.0",
+      "fontconfig": "2.18.3",
+      "freetype": "2.14.3",
+      "fribidi": "1.0.17",
+      "glib": "2.90.0",
+      "harfbuzz": "14.5.0",
+      "heif": "1.23.5",
+      "highway": "1.4.0",
+      "imagequant": "2.4.1",
+      "lcms": "2.19.1",
+      "mozjpeg": "0826579",
+      "pango": "1.58.2",
+      "pixman": "0.46.4",
+      "png": "1.6.58",
+      "proxy-libintl": "0.5",
+      "rsvg": "2.63.2",
+      "tiff": "4.7.2",
+      "uhdr": "2.0.2",
+      "vips": "8.18.7",
+      "webp": "1.6.0",
+      "xml2": "2.15.4",
+      "zlib-ng": "2.3.3",
+      "sharp": "0.35.5"
+    },
+    "containerConfiguration": [
+      {
+        "name": "weblogros_ui_windows",
+        "image": "postgres:16",
+        "memoryLimitBytes": null,
+        "cpuQuotaCores": null
+      },
+      {
+        "name": "weblogros_media_windows-seaweedfs-1",
+        "image": "chrislusf/seaweedfs:4.47",
+        "memoryLimitBytes": null,
+        "cpuQuotaCores": null
+      }
+    ],
+    "compiledMediaSha256": "72b8a4f3ac6e42491f81c24d6c14d6aa996dcecf380959cb91656e6507005c41",
+    "packageLockSha256": "e369f0eb3d83078230e31c3d7d77470557816dfe47891dd57a122c738e8a0a14"
+  },
+  "methodology": {
+    "sampleIntervalMs": 100,
+    "healthIntervalMs": 250,
+    "dockerTimeoutMs": 3000,
+    "batches": 8,
+    "jobsPerBatch": 4,
+    "gate": "Solo queue_hold bloquea antes de fork; queue_work mide procesamiento real. No se modifican límites productivos.",
+    "limitations": [
+      "Corpus sintético con padding: frontera de bytes/píxeles, no peor entropía posible.",
+      "RSS combinado muestreado; high-water por proceso con solapamiento es cota superior, no pico simultáneo exacto.",
+      "Docker stats es memoria de contenedor, no RSS, con menor frecuencia; disco temporal lógico no es disco físico S3.",
+      "Sin frontend ni carga funcional mixta; salud verifica HTTP/DB, no experiencia completa.",
+      "Tandas cortas sin GC forzado: retención del allocator no demuestra fuga ni su ausencia."
+    ]
+  },
+  "corpus": [
+    {
+      "name": "jpeg-textured",
+      "format": "jpeg",
+      "width": 6000,
+      "height": 4000,
+      "bytes": 10000000,
+      "sha256": "771178594a73c569831221245c347ac7b62f3e192a10ee13a21f92d4304a0412",
+      "paddingBytes": 8053087,
+      "description": "24 MP, gradientes, tablero y 180 círculos deterministas; JPEG con padding COM legal. sharp=0.35.5; sharp-libvips=8.18.7."
+    },
+    {
+      "name": "png-transparent",
+      "format": "png",
+      "width": 6000,
+      "height": 4000,
+      "bytes": 10000000,
+      "sha256": "18e2e87a7b917a2e5d4048f156cd12b5b9739a24f2b29d7917f0d35b7c22af01",
+      "paddingBytes": 4954252,
+      "description": "24 MP, alpha variable, gradientes, tablero y formas deterministas; PNG con tEXt legal. sharp=0.35.5; sharp-libvips=8.18.7."
+    }
+  ],
+  "stages": [
+    {
+      "name": "two_max",
+      "jobs": 2,
+      "durationMs": 1488,
+      "workerCpuMs": 1717,
+      "averageWorkerCores": 1.1538978494623655,
+      "peakBackendRssBytes": 152494080,
+      "peakWorkerRssBytes": 642330624
+    },
+    {
+      "name": "two_jpeg",
+      "jobs": 2,
+      "durationMs": 1263,
+      "workerCpuMs": 1529,
+      "averageWorkerCores": 1.210609659540776,
+      "peakBackendRssBytes": 153796608,
+      "peakWorkerRssBytes": 994775040
+    },
+    {
+      "name": "two_png",
+      "jobs": 2,
+      "durationMs": 1523,
+      "workerCpuMs": 2029,
+      "averageWorkerCores": 1.3322390019697965,
+      "peakBackendRssBytes": 161808384,
+      "peakWorkerRssBytes": 276635648
+    },
+    {
+      "name": "queue_hold",
+      "active": 2,
+      "waiting": 10,
+      "overflowStatus": 503,
+      "controlledGate": true,
+      "workerCpuMs": 0,
+      "averageWorkerCores": null,
+      "peakBackendRssBytes": 169484288,
+      "peakWorkerRssBytes": 0
+    },
+    {
+      "name": "queue_work",
+      "jobs": 12,
+      "durationMs": 8260,
+      "workerCpuMs": 10677,
+      "averageWorkerCores": 1.2926150121065376,
+      "peakBackendRssBytes": 171864064,
+      "peakWorkerRssBytes": 756678656
+    },
+    {
+      "name": "batch_1",
+      "jobs": 4,
+      "durationMs": 3083,
+      "workerCpuMs": 3450,
+      "averageWorkerCores": 1.1190398962049952,
+      "peakBackendRssBytes": 172646400,
+      "peakWorkerRssBytes": 525926400
+    },
+    {
+      "name": "batch_2",
+      "jobs": 4,
+      "durationMs": 3061,
+      "workerCpuMs": 3153,
+      "averageWorkerCores": 1.0300555374060765,
+      "peakBackendRssBytes": 180523008,
+      "peakWorkerRssBytes": 574275584
+    },
+    {
+      "name": "batch_3",
+      "jobs": 4,
+      "durationMs": 3038,
+      "workerCpuMs": 3183,
+      "averageWorkerCores": 1.0477287689269257,
+      "peakBackendRssBytes": 185913344,
+      "peakWorkerRssBytes": 466624512
+    },
+    {
+      "name": "batch_4",
+      "jobs": 4,
+      "durationMs": 3042,
+      "workerCpuMs": 3746,
+      "averageWorkerCores": 1.2314266929651545,
+      "peakBackendRssBytes": 190136320,
+      "peakWorkerRssBytes": 629788672
+    },
+    {
+      "name": "batch_5",
+      "jobs": 4,
+      "durationMs": 2909,
+      "workerCpuMs": 3480,
+      "averageWorkerCores": 1.1962873839807493,
+      "peakBackendRssBytes": 184381440,
+      "peakWorkerRssBytes": 536817664
+    },
+    {
+      "name": "batch_6",
+      "jobs": 4,
+      "durationMs": 3370,
+      "workerCpuMs": 3637,
+      "averageWorkerCores": 1.0792284866468842,
+      "peakBackendRssBytes": 184279040,
+      "peakWorkerRssBytes": 559177728
+    },
+    {
+      "name": "batch_7",
+      "jobs": 4,
+      "durationMs": 3037,
+      "workerCpuMs": 3420,
+      "averageWorkerCores": 1.1261112940401712,
+      "peakBackendRssBytes": 190758912,
+      "peakWorkerRssBytes": 544587776
+    },
+    {
+      "name": "batch_8",
+      "jobs": 4,
+      "durationMs": 3120,
+      "workerCpuMs": 3230,
+      "averageWorkerCores": 1.0352564102564104,
+      "peakBackendRssBytes": 194678784,
+      "peakWorkerRssBytes": 663744512
+    }
+  ],
+  "idle": [
+    {
+      "label": "idle_two_max",
+      "rssBytes": 142323712,
+      "heapUsedBytes": 46879408,
+      "at": "2026-10-17T23:23:08.579Z"
+    },
+    {
+      "label": "idle_two_jpeg",
+      "rssBytes": 160235520,
+      "heapUsedBytes": 64399680,
+      "at": "2026-10-17T23:23:11.993Z"
+    },
+    {
+      "label": "idle_two_png",
+      "rssBytes": 161959936,
+      "heapUsedBytes": 48990336,
+      "at": "2026-10-17T23:23:15.628Z"
+    },
+    {
+      "label": "idle_queue",
+      "rssBytes": 163409920,
+      "heapUsedBytes": 42479520,
+      "at": "2026-10-17T23:23:27.007Z"
+    },
+    {
+      "label": "idle_batch_1",
+      "rssBytes": 162488320,
+      "heapUsedBytes": 44803656,
+      "at": "2026-10-17T23:23:32.057Z"
+    },
+    {
+      "label": "idle_batch_2",
+      "rssBytes": 175054848,
+      "heapUsedBytes": 45227080,
+      "at": "2026-10-17T23:23:37.134Z"
+    },
+    {
+      "label": "idle_batch_3",
+      "rssBytes": 162107392,
+      "heapUsedBytes": 44662720,
+      "at": "2026-10-17T23:23:42.206Z"
+    },
+    {
+      "label": "idle_batch_4",
+      "rssBytes": 184369152,
+      "heapUsedBytes": 45557560,
+      "at": "2026-10-17T23:23:47.284Z"
+    },
+    {
+      "label": "idle_batch_5",
+      "rssBytes": 174534656,
+      "heapUsedBytes": 46803296,
+      "at": "2026-10-17T23:23:52.389Z"
+    },
+    {
+      "label": "idle_batch_6",
+      "rssBytes": 175849472,
+      "heapUsedBytes": 46300320,
+      "at": "2026-10-17T23:23:57.873Z"
+    },
+    {
+      "label": "idle_batch_7",
+      "rssBytes": 169639936,
+      "heapUsedBytes": 46445248,
+      "at": "2026-10-17T23:24:02.927Z"
+    },
+    {
+      "label": "idle_batch_8",
+      "rssBytes": 189235200,
+      "heapUsedBytes": 47441920,
+      "at": "2026-10-17T23:24:08.083Z"
+    }
+  ],
+  "summary": {
+    "jobs": 50,
+    "workers": 50,
+    "peakWorkerRssBytes": 994775040,
+    "overlapUpperBoundBytes": 1047248896,
+    "peakBackendRssBytes": 194678784,
+    "peakTemporaryBytes": 123555079,
+    "sharpMs": {
+      "p50": 568,
+      "p95": 794,
+      "max": 899
+    },
+    "queueWaitMs": {
+      "max": 7018
+    },
+    "healthMs": {
+      "samples": 251,
+      "p50": 4.299399999988964,
+      "p95": 9.196900000009919,
+      "max": 100.71959999999672
+    },
+    "workerCpuMs": 43251,
+    "backendCpuMs": 17156,
+    "baselineBackendRssBytes": 125800448,
+    "containers": [
+      {
+        "name": "weblogros_ui_windows",
+        "samples": 17,
+        "peakMemoryBytes": 69038244,
+        "peakCpuPercent": 17.98
+      },
+      {
+        "name": "weblogros_media_windows-seaweedfs-1",
+        "samples": 17,
+        "peakMemoryBytes": 556269568,
+        "peakCpuPercent": 24.36
+      }
+    ]
+  },
+  "cleanup": {
+    "before": {
+      "users": 13,
+      "teams": 2,
+      "memberships": 14,
+      "achievements": 19,
+      "jobs": 0,
+      "assets": 0,
+      "cleanups": 0,
+      "owners": 3,
+      "orphanCleanups": 0
+    },
+    "after": {
+      "users": 13,
+      "teams": 2,
+      "memberships": 14,
+      "achievements": 19,
+      "jobs": 0,
+      "assets": 0,
+      "cleanups": 0,
+      "owners": 3,
+      "orphanCleanups": 0
+    },
+    "objectsRemoved": 151,
+    "errors": [],
+    "namespace": "media-benchmark-80d7f34d-92dd-424e-9b27-7273fca73ece"
+  },
+  "actorShutdown": {
+    "actorExited": true,
+    "actorClosed": true,
+    "actorExitCode": 0,
+    "activeResourceCounts": {
+      "PipeWrap": 3,
+      "TCPSocketWrap": 9
+    }
+  },
+  "functionalPassed": true,
+  "budgetPassed": false
+}

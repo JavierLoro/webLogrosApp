@@ -1,0 +1,22 @@
+▶ ejecución one-shot de un trabajo reclamado
+  ✔ Sharp cerrado persiste manifiesto privado en PUBLISHING y conserva la reserva (405.5044ms)
+  ✔ token obsoleto no arranca Sharp ni altera la toma vigente (31.4496ms)
+  ✔ dos llamadas para una toma producen un solo worker (301.4144ms)
+  ✔ imagen inválida queda FAILED y libera puesto y destino (241.8886ms)
+  ✔ cancelar en transformación espera el cierre y conserva entrada/variantes previas (363.1044ms)
+  ✔ timeout termina en FAILED después de cerrar el worker (434.9167ms)
+  ✔ si PUBLISHING gana la carrera local, la cancelación se informa too_late (277.0607ms)
+  ✔ fallo al persistir PUBLISHING conserva reserva y archivos para recuperación (281.8718ms)
+  ✔ abort tras cierre real de Sharp confirma CANCELED y limpia solo el intento (286.9545ms)
+  ✔ fallo del CAS de cancelación post-Sharp conserva PROCESSING, reserva y variantes (302.3112ms)
+  ✔ PostgreSQL rechaza PUBLISHING sin manifiesto y conserva PROCESSING (32.5073ms)
+✔ ejecución one-shot de un trabajo reclamado (3314.2129ms)
+ℹ {"before":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"after":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"fixturesRemoved":true,"claimedIds":["5ef600cc-9fc3-4487-b6cc-4a1740c36c48","4182e445-e648-48d5-b54a-0c33c88bca1f","754f3b3d-b0b6-4a3a-8087-452c306d3af8","20b669e8-846b-4899-9025-bfe89598d6ad","c924df47-e7a9-4840-a57f-a8fd9eb5a720","568ba6ed-afe8-4109-9793-530603252d13","5a1ee8e9-8b21-4b36-bfd2-f5b4d8955df6","453dcd7a-d10d-4421-bfb3-02bb80414984","b6e30f0c-76ec-4c86-8275-4af23b5baf8c","fd21dc78-f807-4b89-81ef-77db3ff90cb1","22b1ec69-0475-4062-8949-03702d745716"]}
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3321.4871

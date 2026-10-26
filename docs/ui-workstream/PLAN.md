@@ -1,6 +1,6 @@
 # UI Visual Convergence Plan
 
-**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas en 7.10: backend local verificado el 2026-10-26; frontal y QA completos pendientes.
 
 **Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación.
 
@@ -309,7 +309,19 @@ Gate final:
 
 Planificación consolidada el 2026-09-24: [Phase 7.10 — tareas de imágenes y almacenamiento](../MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre). Decisiones de uso locales acordadas; T02–T09 sin ejecutar. T07.01 concretará las ubicaciones aplazadas y la excepción por tipo/pantalla antes de introducir media real; T08.01 exige un logro completo verificado antes de logos y avatares, y T08.03 regresión conjunta. Preparar este plan no cambia las exclusiones siguientes ni reanuda G6–G9.
 
-[PLAYER-LIFECYCLE-PLAN](../PLAYER-LIFECYCLE-PLAN.md) coordina la conservación de avatares con archivo/reingreso y eliminación de jugadores. Su interfaz se define con las nuevas pestañas y UI-G8; no ampliar ese bloque automáticamente ni declarar cerradas sus tareas por media. Mantener #11 y #27/#28 separados. No integrar banners, fotografía o imágenes de propuestas por inferencia.
+2026-10-27 — [Corpus y calidad de logros](../media/MEDIA-QUALITY-CORPUS.md) PASS local el 2026-10-27:38 casos (25 válidos/13 rechazos),71 variantes privadas,7 pruebas de herramienta y11 de compatibilidad Sharp. PNG exacto respecto a referencia; JPEG sin avisos de métricas y13 paneles inspeccionados a1×/2×. Máximo observado6,13MB por imagen con variantes; carga sostenida/mixta y servidor pendientes. Frontal pausado yT08.01 abierto; no habilita logos.
+
+2026-10-26 — [Borradores/propuestas con imagen](../media/MEDIA-DRAFTS-PROPOSALS.md): recorrido backend local verificado el 2026-10-26; 192/192 comprobaciones PASS, 27 migraciones solo base aislada. Frontal pausado y formularios de creación/propuesta temporalmente incompatibles. 7.10 parcial por corpus/calidad, dimensionamiento sostenido/servidor, revisión de casos multimedia conservados, frontal/QA y otros destinos; T08.01 sigue abierto y logos dependen de ese gate.
+
+Entrega previa 2026-10-18 — [Barrido de abandonados](../media/MEDIA-ABANDONED-CLEANUP.md) implementado:24h de inactividad demostrada, referencias literales Windows, journal para carpetas sin job, reintento seguro y stop cooperativo; arranque por lotes y revisión horaria. Barrido24/24 y155 comprobaciones totales PASS;26 migraciones solo base aislada. Pendientes recursos/corpus/carga, borradores/propuestas, revisión administrativa, otros destinos y UI. Explicar código antes del siguiente bloque; no reanudar visual.
+
+Entrega previa 2026-10-17 — [Cancelación persistente](../media/MEDIA-CANCELLATION.md) conectada por API: flag en Prisma, aborto del runtime/receipts, guard en commit final y recuperación que conserva intención. Cancelación12/12, recuperación17/17 y131 comprobaciones totales PASS;25 migraciones solo base aislada. T02/T03/T05 parciales por abandonados24h, recursos/corpus/carga, borradores/propuestas, otros destinos y UI. Siguiente: explicar código de cancelación; después barrido de abandonados. UI conserva pausa.
+
+Entrega previa 2026-10-17 — Recuperación solicitada e implementada: [owners/reinicio/commit incierto](../media/MEDIA-RECOVERY.md), PID registrado antes de Sharp, receipts activos protegidos, limpieza propia y reintentos. Recuperación16/16, HTTP13/13 y pipeline18/18 PASS; migración aditiva solo base aislada/24 al día. T02/T03/T05 parciales; cancelación distribuida, abandonados24h, corpus/carga/RAM, borradores/propuestas, otros destinos y UI pendientes. Revisar código con usuario; no reanudar visual.
+
+Entrega previa 2026-10-17: después del bloque interno, usuario autoriza conectarlo y explicar después. [API/runtime](../media/MEDIA-HTTP.md): Express scoped con cookie/Origin/roles, puente multipart, POST202 y poll500ms, GET de estado/imagen privada con secreto/permiso antes de304. Bootstrap preflight, presupuesto temporal provisional y apagado con S3 abierto hasta cierre HTTP. HTTP13/13 + pipeline18/18 + adaptador1/1 PASS finales; build/seed:check y arranque real3001/health200. Sin nueva migración/23 al día; snapshots conservados. T02/T03/T05 parciales: reconciliación/reinicio/limpieza programada, cancel distribuida, corpus/carga/RAM, borradores/propuestas y UI pendientes. No cierra T08.01 ni habilita logos/avatares; UI pausada. Siguiente revisar el flujo de código montado.
+
+[PLAYER-LIFECYCLE-PLAN](../PLAYER-LIFECYCLE-PLAN.md) coordina la conservación de avatares con archivo/reingreso y eliminación de jugadores. Su interfaz se define con las nuevas pestañas y UI-G8; no ampliar ese bloque automáticamente ni declarar cerradas sus tareas por media. Mantener #11 y #27/#28 separados. No integrar banners ni fotografía por inferencia. Imágenes de propuestas incluidas expresamente en 7.10 desde el 2026-09-25; concretar diseño y controles antes de integrar.
 
 - landing;
 - integración real de imágenes de logros;

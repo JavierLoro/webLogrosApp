@@ -1,0 +1,9 @@
+{
+  "runId": "2ec4a908-facc-4c82-9054-33dfe976784b",
+  "reportSha256": "4f8d84564ce84ab1081e4a5b7000508030f4812a2f79ad7e11e0e3da0b5208b9",
+  "deploymentSha256": "e9fe5ea67e9c2d99b566c08ae0ecfff0056f7829277a9c4aee6d2f8ac063f69f",
+  "samplesSha256": "97ef9e4ccdd204d12a0d8c34f2d8a7341ce2efede846f92da9be5d1967171020",
+  "gzipSha256": "bb807ab1702a1b7674dc4ea2736d4f0b8a7c17cc330a76cc58dbe5975d2ccee1",
+  "samplesBytes": 5450365,
+  "gzipBytes": 272213
+}

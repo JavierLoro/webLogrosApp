@@ -7,7 +7,7 @@ JS → TS → Express → PostgreSQL → Docker → Prisma → JWT → Nginx →
 
 Clasificación pedagógica de todos los pendientes: [qué aporta conceptos nuevos, práctica o cierre](ROADMAP-APRENDIZAJE.md). Implementado y aprendido se evalúan por separado; esta clasificación no cambia los estados ni las pausas.
 
-## Situación actual — base conciliada el 2026-09-22; planificación de media actualizada el 2026-09-24
+## Situación actual — conciliada el 2026-10-27
 
 La numeración describe el itinerario de aprendizaje, no una secuencia estricta de entrega. El rediseño ha adelantado trabajo de propuestas, ranking y estadísticas. Las casillas completadas describen su alcance concreto; no implican despliegue en producción ni cierre de toda la fase.
 
@@ -16,7 +16,7 @@ La numeración describe el itinerario de aprendizaje, no una secuencia estricta 
 | Base, equipos, roles y administración V1 | Completados en su alcance | Lecturas adicionales por jugador cuando se requieran |
 | Despliegue y protección del entorno (5/5.5) | Parcial | Confirmar HTTPS en el despliegue definitivo; copias externas al final del roadmap |
 | Seguridad de sesión (7.5) | Completada; QA manual 22/09 | No repetir la migración a cookies |
-| Propuestas (7.7) | Backend, formulario, historiales G7 y administración G8 verificados localmente | Imágenes en Phase 10, dependientes de 7.10 |
+| Propuestas (7.7) | Dominio, historiales y administración entregados; backend con imagen verificado en 7.10 | Adaptar creación/propuesta y revisión al flujo de borradores e imágenes; QA completo. El formulario anterior es temporalmente incompatible |
 | Identidad (7.8) | Nombre/apellidos, alias contextual y edición propia en `/perfil` validados localmente | Avatar en 7.10 |
 | Temporadas (7.9) | Gestión, históricos y QA completados localmente; [entrega](phase-7.9/RESULT.md) | Publicación/despliegue y cierre remoto #11; ciclo de vida del jugador separado |
 | Rediseño G0–G5 | Gates cerrados | Regresión conjunta y últimos refinamientos en el cierre final |
@@ -24,15 +24,28 @@ La numeración describe el itinerario de aprendizaje, no una secuencia estricta 
 | Jugadores G6 | COMPLETADA PROVISIONALMENTE por decisión del usuario (2026-09-24) | T03–T05 descartadas por ahora; sin QA ni aprobación visual acreditados |
 | Solicitudes, administración y revisión G7–G9 | G7/G8 cerrados localmente; G9 pendiente | Regresión global G9 tras estructura y A1/A2 |
 | Ranking y estadísticas (8) | Capacidad entregada dentro de G1/G3/G5 | Profundización pedagógica SQL y regresión final pendiente |
-| Imágenes y almacenamiento adelantados (7.10) | Decisiones de uso locales y plan por tareas cerrados; sin implementación | [T02/T03: diseño técnico](MEDIA-PLAN.md#52-diseño-e-infraestructura), luego logro completo → logos → avatares → QA; controles aplazados a nuevas pestañas |
+| Imágenes y almacenamiento adelantados (7.10) | [Backend completo de logro](media/MEDIA-DRAFTS-PROPOSALS.md) verificado localmente:192 pruebas/27 migraciones aisladas; [corpus y calidad de logros](media/MEDIA-QUALITY-CORPUS.md) PASS:38 casos/71 variantes | Dimensionamiento sostenido, revisión de casos conservados, frontal/QA y etapas de logos/avatares con sus corpus. Fase parcial |
 | Conservación, archivo y eliminación de jugadores | Reglas acordadas; bloque propio relacionado con identidad/temporadas | [PLAYER-LC-T01–T07](PLAYER-LIFECYCLE-PLAN.md#3-tareas-y-dependencias); conservación/reingreso antes de completar avatar específico; eliminación/admin no absorbidos por uploads |
 | Comunidad, evolución UI, imágenes, testing y tiempo real | Futuro | Fases 8.5–12 y decisiones del backlog |
+
+Publicación del bloque multimedia: rama y PR agrupan las bases S3/cola/runtime/migraciones, borradores/propuestas con imagen y corpus/calidad verificados. La PR es para revisión del alcance backend local;7.10 y el frontal conservan sus pendientes. Abrir o publicar esa rama no aplica migraciones fuera del piloto ni despliega la aplicación.
 
 Fuentes: [STATUS](ui-workstream/STATUS.md), [TASKS](ui-workstream/TASKS.md), [QA de UI-G1](ui-workstream/evidence/UI-G1-T05-QA.md) y [registro de pendientes](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md). El commit local `c2ca920` reúne identidad, temporadas y sesiones. La publicación remota y el estado de las issues no se verifican mediante esta conciliación documental.
 
 UI Workstream V2 conserva la pausa fuera de G7/G8, ya entregados por autorización acotada del usuario; A1/A2/G9 conservan su aplazamiento/pausa.
 
-Orden de entrega planificado: **diseño de 7.10 y conservación del jugador → almacenamiento/base común → logro completo → logos → avatares → QA y cierre local → completar estructura → cierre A1/A2 → G9; despliegue definitivo y backups al final del roadmap**. A1/A2 quedan aplazados hasta completar la estructura de pantallas y navegación acordada (G6–G8 y nuevas pestañas/controles de perfil, temporadas y media), antes de G9. G6 se considera completada provisionalmente por decisión del usuario, sin gate visual PASS; esta reordenación no ejecuta tareas. El recorrido completo de cada tipo necesita ubicar sus controles, decisión aplazada. Phase 7.10 se sitúa después de temporadas y antes de continuar el frontal con imágenes reales; no requiere completar antes Comunidad, shadcn/ui ni WebSockets.
+### Orden de los pendientes
+
+| Orden | Entrega pendiente | Condición para avanzar |
+| --- | --- | --- |
+| 1 | Medir carga sostenida/mixta de media y revisar recursos; revisión de casos conservados pendiente aparte | Corpus/calidad de logros ya verificados. Incluir PNG de alta entropía de6,13MB; frontal conserva pausa. Detalle en Phase 7.10 |
+| 2 | Integrar borradores e imágenes de logros/propuestas en el frontal y verificar el recorrido completo | Reanudación explícita del frontal y ubicaciones T07.01; después T07.02 y gate T08.01 |
+| 3 | Logos y, después, avatares general/de equipo | Logos tras T08.01; avatares tras logos y conservación/reingreso PLAYER-LC-T01–T03. Eliminación administrativa completa es una entrega separada |
+| 4 | Cerrar QA y evidencia de 7.10, completar la estructura pendiente y cerrar A1/A2 antes de G9 | Regresión funcional, de navegador y visual con los controles acordados; G6 conserva su cierre provisional sin gate visual PASS |
+| 5 | Continuar el itinerario restante: profundización SQL, comunidad, evolución UI, ampliaciones de archivos, programa general de tests y tiempo real | Respetar los alcances y dependencias de sus fases; ranking y estadísticas ya entregados no se reimplementan por sus casillas pedagógicas |
+| Final | Hardening y despliegue definitivo; backups/offsite y restauración conjunta al cierre de esa preparación | Reanudación del despliegue y verificación del servidor. R2 solo cuando se solicite |
+
+El trabajo de diseño PLAYER-LC-T01 puede prepararse sin reabrir pantallas; su implementación mantiene las dependencias de [PLAYER-LIFECYCLE-PLAN](PLAYER-LIFECYCLE-PLAN.md). La pausa del frontal, A1/A2 y G9 sigue vigente. Esta actualización organiza los pendientes; no inicia las tareas ni modifica sus gates.
 
 ---
 
@@ -133,22 +146,23 @@ Orden de entrega planificado: **diseño de 7.10 y conservación del jugador → 
 - [x] Landing pública `/` (publicidad de la idea) + `/solicitar-acceso` (formulario para equipos)
 - [x] `apuntes.md`: sección "Solicitudes de logro" y aceptación transaccional
 
-## Phase 7.7 – Propuestas de nuevos logros (parcial: pendiente solo imagen de propuestas)
+## Phase 7.7 – Propuestas de nuevos logros (backend completo local; frontal con imagen y QA pendientes)
 
-Plan de implementación de pendientes: [historiales, administración, QA e imágenes](PHASE-7.7-PLAN.md). Pasos 1–7 y G7/G8 entregados localmente: [resultado y validación](phase-7.7/RESULT.md). Resto de pausa conservado.
+Plan original: [historiales, administración, QA e imágenes](PHASE-7.7-PLAN.md). Pasos 1–7 y G7/G8 entregados localmente: [resultado y validación](phase-7.7/RESULT.md). El backend del paso de imágenes está [verificado en 7.10](media/MEDIA-DRAFTS-PROPOSALS.md); su frontal y QA completo siguen pendientes en esa misma fase, sin otra tarea duplicada.
 
-Decisión de producto del 2026-09-17. Amplía Phase 7.6: proponer un logro nuevo es distinto de solicitar la obtención de uno existente. UI-G1 y UI-G4 ya entregaron el dominio y el formulario; UI-G7/UI-G8 se cierran localmente el 2026-09-24. La fase completa depende aún de imágenes en Phase 10.
+Decisión de producto del 2026-09-17. Amplía Phase 7.6: proponer un logro nuevo es distinto de solicitar la obtención de uno existente. UI-G1 y UI-G4 ya entregaron el dominio y el formulario; UI-G7/UI-G8 se cierran localmente el 2026-09-24. El cierre completo depende de integrar y verificar imágenes en Phase 7.10; no es trabajo de Phase 10.
 
 - [x] Persistencia/API para proponer un logro con nombre, descripción y criterios; equipo y autor conservados desde el envío.
 - [x] Estados pendiente, aprobada y rechazada con motivo; aprobar incorpora al catálogo y mantiene la creación directa administrativa.
 - [x] Flujo de dominio secuencial: incorporar al catálogo antes de solicitar obtención. No crea solicitud simultánea, concesión ni puntos por proponer.
-- [x] Formulario `/equipos/[slug]/logros/nuevo` adaptado al rol en UI-G4: PLAYER propone y TEAM_ADMIN conserva creación directa.
+- [x] Formulario por rol entregado en UI-G4: PLAYER propone y TEAM_ADMIN crea directamente. Entrega histórica: necesita adaptarse ahora al contrato de borradores e imagen de 7.10 para volver a completar ambos envíos.
 - [x] Aislamiento, permisos, rechazo y aprobaciones concurrentes sin duplicados validados en [UI-G1-T05](ui-workstream/evidence/UI-G1-T05-QA.md); submit real por rol validado en [UI-G4](ui-workstream/evidence/UI-G4/FORM-FLOW-QA.md).
 - [x] Referencias inventariadas y conceptos documentados en `apuntes.md`, sección «Proponer, incorporar y obtener — UI-G1-T04».
 - [x] Separar propuestas y solicitudes de obtención en los historiales personales y sus detalles — UI-G7.
 - [x] Dividir administración en resumen y subrutas invitaciones, jugadores, logros, solicitudes y propuestas, incluidos detalles — UI-G8.
 - [x] Completar el recorrido visual de revisión y obtención mediante esos historiales/paneles y su QA.
-- [ ] Imagen en propuestas: ampliación de Phase 10 que reutiliza el almacenamiento de Phase 7.10.
+- [x] Backend de imagen de propuesta: borrador propio, imagen READY, envío atómico, subsanación legacy, aprobación sin copia S3 y rechazo con conservación; [verificado localmente](media/MEDIA-DRAFTS-PROPOSALS.md).
+- [ ] Frontal y QA de imagen de propuesta: guardar/retomar, subir, enviar, consultar y revisar con el contrato nuevo — MEDIA-EXT-T01 / T07.02 / T08.01 de 7.10.
 
 ## Phase 7.8 – Identidad global y alias contextual
 
@@ -167,7 +181,7 @@ Primer bloque validado localmente y versionado en `c2ca920`; ver apartados 4 y 1
 
 ### Bloque vinculado a 7.8/7.9 — Ciclo de vida del jugador (gap 21)
 
-Plan y criterios: [PLAYER-LIFECYCLE-PLAN.md](PLAYER-LIFECYCLE-PLAN.md). Producto definido, sin implementación ni issue remota creada. Archivar conserva ficha/avatar/resultados y permite recuperación; eliminar exige confirmación, retira datos actuales/avatar y conserva históricos cerrados con último alias e iniciales. Reingreso tras eliminación empieza de nuevo. Cuenta global, otros equipos y logros de catálogo derivados de propuestas permanecen.
+Plan y criterios: [PLAYER-LIFECYCLE-PLAN.md](PLAYER-LIFECYCLE-PLAN.md). Producto definido, sin implementación ni issue remota creada. Archivar conserva ficha/avatar/resultados y propuestas pendientes con imagen, sin acceso mientras no haya membresía activa; eliminar exige confirmación, retira datos actuales/avatar, cancela propuestas pendientes y limpia sus imágenes sin referencias, y conserva históricos cerrados con último alias e iniciales. Reingreso tras eliminación empieza de nuevo. Cuenta global, otros equipos, decisiones resueltas y logros de catálogo derivados de propuestas permanecen.
 
 - [x] PLAYER-LC-T00 — Consolidar reglas y límites.
 - [ ] PLAYER-LC-T01 — Diseñar separación entre acceso, ficha actual e historial; depende del inventario de media T02.01 y precede a su relación avatar/equipo T03.02.
@@ -201,49 +215,55 @@ Este bloque no obliga a rehacer ranking/temporadas ya entregados. Logros/logos p
 
 ## Phase 7.10 — Imágenes y almacenamiento
 
-> **Concepto nuevo:** archivos persistentes separados de sus referencias en base de datos, subida validada, permisos de lectura y recuperación.
->
-> Ubicación aprobada el 2026-09-24: después de identidad/temporadas y antes de continuar el frontal con imágenes reales. Sustituye el nombre anterior «Phase 10A». Los identificadores `MEDIA-10A-Txx` se conservan como referencias estables de las mismas tareas; no son otra fase pendiente.
+**PARCIAL — backend del recorrido de logro verificado el 2026-10-26 y corpus/calidad de logros el 2026-10-27; frontal pausado.** [Contrato, implementación y evidencia](media/MEDIA-DRAFTS-PROPOSALS.md): 192/192 comprobaciones PASS, build y seed:check correctos, 27 migraciones aplicadas solo en la base aislada. Implementado localmente no equivale a desplegado ni a cerrar T08.01.
 
-Acuerdo del 2026-09-23 para la baja del jugador: ofrecer **Archivar** (sin acceso, conservando ficha/avatar/resultados y recuperación al volver) y **Eliminar del equipo** (confirmación de pérdidas, sin deshacer; retira datos actuales y avatar específico, cancela solicitudes pendientes). Eliminar conserva decisiones resueltas, logros del catálogo surgidos de propuestas y resultados cerrados con último alias e iniciales, sin alterar puntos/puestos históricos. Reingreso tras eliminación empieza de nuevo. Cuenta global y otros equipos intactos. Contrato de producto definido en Architecture; diseño técnico, implementación y pruebas pendientes.
+**Pendiente de integración:** los formularios actuales de creación/propuesta no completan el envío hasta adaptarse a `{ borradorId, version }` y a la imagen obligatoria. El catálogo anterior sin imagen se conserva; nuevas altas/propuestas/aprobaciones exigen imagen READY disponible en S3.
 
-Dependencia funcional detectada al definir media (2026-09-23): salir o perder acceso conserva ficha y datos; reingreso recupera historial salvo eliminación explícita anterior, según las dos acciones acordadas. Trabajo de dominio pendiente y separado de uploads; [BACKEND-GAPS, apartado 21](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md#21-conservación-del-jugador-y-baja-del-equipo). Sin implementación autorizada ni issue remota creada.
+> **Concepto nuevo:** archivos persistentes separados de sus referencias en base de datos, procesamiento en segundo plano, permisos y recuperación. Los IDs `MEDIA-10A-Txx` pertenecen a esta fase y se conservan para trazabilidad.
 
-Plan operativo reconciliado el 2026-09-24: [MEDIA-PLAN.md](MEDIA-PLAN.md), con [dependencias y subtareas](MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre) y [matriz de pruebas](MEDIA-PLAN.md#6-pruebas-que-permiten-darlo-por-terminado). Estado: **decisiones de uso locales acordadas; diseño técnico e implementación pendientes**. Esta petición solo define tareas; no autoriza montar servicios ni cambiar código. Se sitúa antes de revisar las pantallas con imágenes reales, sin cerrar A1/A2 ni reanudar G6 automáticamente.
+### Entregado y verificado
 
-- [x] Preparar decisiones, tareas, dependencias y criterios de prueba — MEDIA-10A-T00
-- [x] MEDIA-10A-T01 — Cerrar decisiones de uso locales: tipos/proveedor/permisos, formatos/tamaños/compresión, cola/cancelación/recuperación y conservación. Ubicaciones y backups aplazados explícitamente.
-- [ ] MEDIA-10A-T02 — Inventario, componentes/configuración, recursos, cola/temporales y contrato técnico — T02.01–T02.04.
-- [ ] MEDIA-10A-T03 — Diseñar API/permisos, referencias, migración compatible y pruebas — T03.01–T03.03; coordinar PLAYER-LC-T01.
-- [ ] MEDIA-10A-T04 — Servicio privado y adaptador S3; operaciones y persistencia tras recreación — T04.01/T04.02.
-- [ ] MEDIA-10A-T05 — Base común y logros (T05.01–T05.06); logos (T05.07) después del logro completo; avatares (T05.08) después de logos y PLAYER-LC-T03.
-- [ ] MEDIA-10A-T06 — Corpus autorizado y carga repetible por etapa — T06.01/T06.02; pesos reales en MEDIA-CAPACITY.
-- [ ] MEDIA-10A-T07 — Ubicaciones/excepción visual T07.01 (aplazada); integrar logro T07.02 → logo T07.03 → avatares T07.04.
-- [ ] MEDIA-10A-T08 — Puerta del logro completo T08.01 antes de ampliar; consumo T08.02 y regresión conjunta T08.03.
-- [ ] MEDIA-10A-T09 — Evidencia/apuntes T09.01 y sincronización de entrega local T09.02; sin declarar despliegue.
+- [x] MEDIA-10A-T00/T01 — Plan y decisiones de uso locales: proveedor, permisos, formatos, variantes, compresión, cuotas, cancelación y conservación. Ubicaciones de edición y backups siguen aplazados.
+- [x] T02.01/T02.02 — Inventario, componentes, ensayos y presupuesto provisional. El dimensionamiento definitivo sigue pendiente.
+- [x] T04.01/T04.02 — Piloto privado SeaweedFS, adaptador S3 y persistencia tras recrear el servicio conservando su volumen.
+- [x] Base backend de catálogo/borradores/propuestas — recepción con sesión y Origin, cola 2+10, Sharp, variantes, S3 privado, lectura autorizada y caché revalidada, recuperación, cancelación y limpieza con diario.
+- [x] T05.05, alcance backend — guardar/retomar/descarte manual sin caducidad; máximo tres borradores globales por autor y cinco propuestas pendientes por autor/equipo; versiones y envío/publicación idempotentes. Pérdida de membresía conserva borradores/imágenes y plazas sin acceso hasta reingreso.
+- [x] MEDIA-EXT-T01, alcance backend — imagen propia desde borrador, subsanación de propuestas antiguas pendientes, aprobación con traslado de referencia sin copiar S3 y rechazo conservando su imagen exacta.
+- [x] Migración aditiva, regresión del backend y documentación de esta entrega. Los registros terminales permiten resolver reintentos y trabajos tardíos; las referencias de los tres modelos protegen la limpieza.
+- [x] [Carga sintética local y ajustes de memoria](media/MEDIA-LOAD-TESTING.md): caché Sharp desactivada y objetivo Go 384 MiB aplicados. Se midió carga real; falta acreditar capacidad sostenida y revisar las provisiones.
 
-Acuerdos vigentes: logros del catálogo, logos (#22), avatar general y opcional por equipo (#23); SeaweedFS inicial y R2 futuro; entrega por backend con caché privada revalidada; PNG/JPEG estáticos hasta 10 MB/24 MP; avatar 256/96, logo 512/128 y logro 1280/640/320 px; JPEG 85, PNG sin paletas y retirada de metadatos. Dos imágenes procesándose y diez esperando globalmente; cancelación conserva anterior, bloqueo por recurso y recuperación de avisos al volver. Sin originales ni historial de sustituidas; limpieza segura. Ver contrato completo en MEDIA-PLAN. Edición de perfil/alias sigue en #27/#28; ubicaciones con las nuevas pestañas y backups al despliegue. Ningún montaje o prueba de media se presenta como realizado.
+- [x] T06.01/T06.02-logros y formatos/calidad local deT08.02 — [38 casos y71 variantes verificadas](media/MEDIA-QUALITY-CORPUS.md),7 pruebas de herramienta y11 de compatibilidad Sharp;13 paneles inspeccionados a1×/2×, PNG exacto y JPEG sin avisos. Máximo6,13MB/imagen con variantes. Logos/avatares, carga sostenida y QA de navegador siguen pendientes.
 
-Relación entre entregas existentes y este plan:
+### Pendiente para cerrar la fase
 
-| Seguimiento | Tareas de este plan | Límite |
+Prefijo de los IDs abreviados: `MEDIA-10A-`. El desglose y los criterios completos permanecen en [MEDIA-PLAN](MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre).
+
+| Tarea | Pendiente concreto | Dependencia o estado |
 | --- | --- | --- |
-| #23 / Phase 7.10 | T02–T05 base/logros/avatares, T06–T09 | No completar por subir un único archivo |
-| #22 logos | T05.07 + T06.02-logos + T07.03 + QA/cierre | Sin directorio público ni permisos adicionales |
-| #27/#28 / Phase 7.8 | Coordinar T07.01/T07.04 | Media no implementa edición general de perfil/alias |
-| Gap 21 / PLAYER-LC | Diseño T01 y archivo T03 antes de completar avatar específico | Eliminación completa y su UI son entrega separada |
-| #11 / Phase 7.9 | PLAYER-LC preserva históricos; QA cruza casos | No declara terminada administración/selector de temporadas |
-| UI-A1/A2, G6–G9 | T07.01 define excepción; T08 revisa pantallas afectadas | Sin avance automático de gates ni banners/propuestas |
-| Phase 5.5 / despliegue | MEDIA-DEP-T01–T04 | Copias/HTTPS pendientes; piloto local no es producción |
-| Phase 11 / pruebas | Reutilizar evidencia T08 | No posponer pruebas críticas de media a la fase general |
-| Phase 12 / tiempo real | Recuperación del aviso definida por consulta de estado | No introducir una dependencia obligatoria de WebSockets |
+| T02.03/T02.04 / T04 / T08.02 | Medir carga sostenida/mixta con el corpus validado, incluido PNG de alta entropía; revisar RAM/CPU/disco, provisiones y contrato técnico final; repetir en servidor cuando se retome ese entorno | La medición local previa y el objetivo Go 384 MiB no acreditan estabilización ni una cuota dura. Preparación/despliegue del servidor siguen en MEDIA-DEP |
+| T05.06 | Completar revisión administrativa de casos multimedia conservados o de propiedad dudosa | Es distinta de aprobar/rechazar propuestas, ya implementado. Conservar los casos dudosos hasta su resolución |
+| T07.01 | Definir ubicaciones de edición y excepción de imágenes reales por pantalla/tipo | APLAZADA hasta reanudación explícita del frontal; mantener placeholders mientras tanto |
+| T07.02 / MEDIA-EXT-T01 | Integrar borradores, subida/preview, creación/propuesta y revisión con imagen; adaptar los formularios incompatibles y el Origin de las escrituras. Recuperar avisos por estado real tras navegar o recargar | Corpus funcional T06.02-logros ya PASS; requiere T07.01 y conserva QA/recursos pendientes. Reutilizar el backend verificado |
+| T08.01 | Verificar logro completo en navegador: guardar/retomar → imagen → propuesta/publicación → revisión; estados, errores, cuotas, permisos, caché, navegación, responsive y comparación visual | Después de T07.02. **Gate abierto: bloquea logos** |
+| T05.07 / T06.02-logos / T07.03 | Implementar, integrar y verificar logos de equipo | Solo después de T08.01 PASS; edición TEAM_ADMIN y lectura autenticada según contrato |
+| PLAYER-LC-T01–T03 | Diseñar acceso/ficha/historial y entregar persistencia, conservación, salida/archivo y reingreso | Bloque propio; requisito para completar avatar específico. No incluye automáticamente eliminación administrativa |
+| T05.08 / T06.02-avatares / T07.04 | Implementar, integrar y verificar avatar general/específico: recorte, reemplazo y fallback equipo → general → iniciales | Después de logos T07.03 verificado y PLAYER-LC-T03; controles sujetos a T07.01 |
+| T03 y partes restantes de T05 | Completar contratos, relaciones tenant, migraciones y regresiones de logos/avatares | Se cierran con cada destino; las tablas de borradores/propuestas ya están entregadas |
+| T08.03 / T09.01/T09.02 | Regresión conjunta, evidencia/apuntes finales y sincronización del cierre local | Después de todos los recorridos y su QA. La evidencia del backend actual ya existe y se reutiliza |
 
-La elección de objetos/blobs sustituye el planteamiento antiguo de almacenamiento en carpeta del backend y `/uploads/` servido directamente por Nginx. Cloudflare R2 queda como destino futuro preferido, con integración S3 portable desde el inicio; SeaweedFS está elegido para la etapa local. No hay despliegue, migración ni contratación actual. La librería de recepción de subidas sigue por elegir. La entrega de imágenes privadas debe preservar autorización y aislamiento. Las rutas finales serán coherentes con el alcance por equipo y el avatar asociado a cada membresía.
+T02–T09 no están cerradas en su alcance global; T00/T01 y las subtareas locales identificadas arriba están entregadas. No repetir inventario, montaje S3, cola, recuperación, borradores ni revisión de propuestas como si faltaran por implementar.
 
+### Acuerdos y trabajo separado
+
+Se mantienen PNG/JPEG estáticos hasta 10 MB/24 MP; variantes de logro 1280/640/320, logo 512/128 y avatar 256/96; JPEG 85, PNG sin paletas y retirada de metadatos. Dos imágenes activas y diez esperando globalmente, sin originales ni historial de sustituidas. Los límites y recursos se revisan con evidencia, sin elevarlos para dar una prueba por aprobada.
+
+El ciclo de vida completo del jugador sigue en [PLAYER-LIFECYCLE-PLAN](PLAYER-LIFECYCLE-PLAN.md). Logros y logos pueden avanzar sin terminarlo; el avatar de equipo necesita conservación/reingreso. La eliminación administrativa, sus controles y su QA corresponden a PLAYER-LC-T04–T07 y conservan sus dependencias propias. Temporadas, perfil y alias ya entregados no se reabren por esta integración.
+
+Despliegue y backups siguen aplazados en MEDIA-DEP-T01–T04/Phase 5.5; no bloquean el cierre local del piloto. SeaweedFS se integrará en el Compose de producción al preparar ese despliegue, con volumen/credenciales propios y red privada. R2 es futuro y solo se activa cuando se solicite. Banners, fotografía decorativa y otros archivos permanecen en Phase 10. No se exige WebSockets para recuperar el estado de trabajos.
 
 ## UI Workstream V2 – Visual convergence (PAUSADO; G7/G8 ENTREGADOS)
 
-**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas en7.10: backend local verificado el 2026-10-26; frontend y QA completos pendientes.
 
 **Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación.
 
@@ -309,14 +329,14 @@ Plan futuro pendiente de reconciliar con las primitivas compartidas y el catálo
 
 El almacenamiento y las imágenes básicas ya tienen su propio bloque anterior: [Phase 7.10](#phase-710--imágenes-y-almacenamiento). Esta fase queda para ampliar usos; no retrasa logros, logos ni avatares.
 
-- [ ] MEDIA-EXT-T01 — Imagen adjunta a propuestas y su ciclo de revisión/incorporación al catálogo, vinculada a Phase 7.7 y apoyada en el almacenamiento de 7.10.
+MEDIA-EXT-T01 (imagen de propuestas) trasladada a Phase 7.10 por acuerdo del 2026-09-25; conserva su ID, no se ejecuta como bloque separado de Phase 10.
 - [ ] Otros tipos de archivos, banners o fotografía decorativa: definir alcance, permisos y ciclo de vida antes de integrar.
 - [ ] Documentar en `apuntes.md` los conceptos de cada ampliación efectivamente implementada.
 
 ## Phase 11 – Testing
 > **Concepto nuevo:** pirámide de tests, unit vs integration, TDD básico
 
-Pendiente como programa general de pruebas automatizadas y gate de publicación. Ya existen validaciones de compilación, lint, fixtures, HTTP y navegador dentro del workstream; esta fase no significa que el proyecto carezca de pruebas.
+Pendiente como programa general de pruebas automatizadas y gate de publicación. Ya existen pruebas backend con `node:test`, incluyendo las 192 comprobaciones de media, y validaciones de compilación, lint, fixtures, HTTP y navegador dentro del workstream. Reutilizar esa cobertura al organizar la fase; no exige reescribir las suites existentes para cambiar de herramienta.
 
 - [ ] Backend: tests con Vitest + supertest (rutas /logros, /auth, middlewares)
 - [ ] Frontend: React Testing Library para componentes clave (ranking, login form)

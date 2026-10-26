@@ -1,14 +1,21 @@
 # Phase 7.10 — Previsión de almacenamiento de imágenes
 
-Fecha: 2026-09-22. Estimación de planificación, no medición ni cuota aprobada.
+Estimación inicial: 2026-09-25. Actualización 2026-10-27: medición de un corpus local de logros; los escenarios de planificación siguen siendo hipotéticos.
 
 Fuente de alcance y tamaños principales/variantes acordados: [MEDIA-PLAN](MEDIA-PLAN.md). Variantes aceptadas el 2026-09-24. PNG/JPEG estáticos; avatar general y opcional por equipo, logo de equipo e imagen del logro. SeaweedFS inicial; R2 preferido a futuro. **Política confirmada el 2026-09-22: sin originales**, solo principal procesada y variantes necesarias. No se modifica infraestructura.
+
+## Medición local de corpus — 2026-10-27
+
+[Corpus y calidad de logros](media/MEDIA-QUALITY-CORPUS.md):25 imágenes válidas/71 variantes,15.704.249 bytes de salida en total. Se mide la suma de variantes por imagen, sin originales. Mediana global140.323B, p95 por rango más próximo3.488.075B y máximo6.126.090B. PNG:10 fuentes, mediana748.664,5B y máximo6.126.090B; JPEG:15 fuentes, mediana140.246B y máximo315.423B. [Pesos por caso y método](media/evidence/2026-10-26-quality-r3/summary.json).
+
+El PNG de alta entropía sin padding suma6,13MB, y el PNG de frontera suma3,49MB: superan los3MB del escenario pesado hipotético de logro. Se confirma que ese escenario no es una cota. Corpus sintético más arte propio, no muestra estadística de uso; no sustituye la revisión del presupuesto bajo carga sostenida/mixta ni permite extrapolar ahorro o capacidad a logos/avatares. No se cambian límites ni compresión.
 
 ## 1. Qué se cuenta
 
 - Una imagen de catálogo se almacena una vez con sus variantes, independientemente de cuántos jugadores consigan el logro. Las concesiones añaden registros en PostgreSQL, no copias de la imagen.
 - El avatar general se guarda una vez por persona. Cada equipo con avatar específico añade una imagen; heredar el general no añade copias.
 - Un logo por equipo; una imagen actual por logro. No se presupone deduplicación entre logros/equipos distintos.
+- Los borradores y las propuestas de nuevos logros pendientes o rechazadas pueden conservar una imagen válida aunque todavía no exista un logro en el catálogo. Contarlas aparte; al incorporar la propuesta al catálogo, su imagen pasa al grupo de logros y no se cuenta dos veces. El historial de una propuesta aprobada muestra la imagen vigente del logro; sustituirla no conserva una copia de la anterior. Una propuesta rechazada sí mantiene la imagen que se envió.
 - Se suman todas las variantes de cada imagen (principal y miniaturas), no solo la más grande.
 - Unidades decimales: 1 MB = 1.000.000 bytes; 1 GB = 1.000 MB.
 
@@ -22,7 +29,7 @@ Son valores hipotéticos para estimar sensibilidad, pendientes de sustituir por 
 | Logo | Lado mayor 512 y 128 px | 0,30 MB | 0,80 MB |
 | Imagen de logro | Lado mayor 1280, 640 y 320 px | 1,00 MB | 3,00 MB |
 
-El escenario pesado no representa un máximo garantizado. No se conservan originales. Entrada acordada: hasta 10 MB (10.000.000 bytes) y 24 MP (24.000.000 píxeles) por imagen, sujeta a prueba de consumo. Sin historial activo de versiones sustituidas, acordado el 2026-09-23. Limpieza acordada: intento tras éxito/fallo, revisión horaria de restos y retirada de abandonados tras 24 h. Peso de salida, mecanismo de limpieza y retención de backups siguen por concretar en D04/D06/D07, después de medir calidad, bytes y recursos.
+El escenario pesado no representa un máximo garantizado. No se conservan originales. Entrada acordada: hasta 10 MB (10.000.000 bytes) y 24 MP (24.000.000 píxeles) por imagen, sujeta a prueba de consumo. Sin historial activo de versiones sustituidas, acordado el 2026-09-23. Limpieza acordada: intento tras éxito/fallo, revisión horaria de restos y retirada de abandonados tras 24 h. Pesos medidos del corpus de logros registrados arriba; limpieza con diario ya implementada en el backend. Dimensionamiento sostenido y retención de backups siguen en sus tareas, con backups aplazados al despliegue.
 
 ### Espacio adicional de variantes frente a guardar solo la principal
 
@@ -44,18 +51,25 @@ Variables:
 - A: relaciones persona + equipo con avatar específico conservado, tanto de miembros activos como de personas que salieron mientras el equipo siga existiendo. Cada imagen se cuenta una vez, también si la persona reingresa.
 - T: equipos con logo.
 - L: logros con imagen.
+- D: borradores con imagen procesada, tanto propuestas como creación directa.
+- P: propuestas de nuevos logros pendientes de revisión con imagen procesada; máximo 5 por cada pareja jugador + equipo, no 5 por persona entre todos sus equipos.
+- R: propuestas rechazadas cuya imagen enviada se conserva.
 
-**Base, en MB = 0,10 × (U + A) + 0,30 × T + 1,00 × L.**
+**Base, en MB = 0,10 × (U + A) + 0,30 × T + 1,00 × (L + D + P + R).**
 
-**Pesado, en MB = 0,30 × (U + A) + 0,80 × T + 3,00 × L.**
+**Pesado, en MB = 0,30 × (U + A) + 0,80 × T + 3,00 × (L + D + P + R).**
 
 Para contar por usuario, su aportación base es 0,10 MB por foto general + 0,10 MB por cada avatar específico. Un usuario con foto general y dos avatares de equipo suma 0,30 MB; un usuario que hereda la general en todos sus equipos suma 0,10 MB.
 
 Por cada 1.000 logros distintos con imagen, añadir 1 GB en el escenario base o 3 GB en el pesado. Conseguir esos mismos logros por más jugadores no multiplica esta cantidad.
 
+Los límites acordados son **3 borradores por persona** entre todos sus equipos y **5 propuestas pendientes por jugador en cada equipo**. Con 1.000 personas que participaran en un equipo cada una y llenaran ambos límites con imágenes distintas, habría hasta 8.000 imágenes adicionales: **8 GB base o 24 GB en el escenario pesado**. Si esas 1.000 personas participaran en dos equipos cada una y llenaran las cinco pendientes en ambos, serían 13.000 imágenes (3.000 borradores + 10.000 pendientes): **13 GB base o 39 GB en el pesado**. Son extremos teóricos antes de margen y copias, no previsiones de uso. Al aprobar una propuesta, su imagen queda contabilizada en L; al rechazarla pasa de P a R y sigue ocupando espacio. **El límite de 5 pendientes por jugador/equipo no limita el número acumulado de rechazadas**, por lo que esta fórmula suma R aparte y no ofrece un máximo total por usuario. Las imágenes temporales de trabajos y las pendientes de limpieza requieren espacio aparte.
+
 ## 4. Escenarios de crecimiento
 
 Supuesto común: 20 personas por equipo, una membresía por persona, 50 logros por equipo; todos tienen foto general y específica, todos los equipos tienen logo y todos los logros tienen imagen. Por tanto, A = U. Cambiar la media de equipos por persona exige recalcular A; las fotos ausentes reducen el total.
+
+Las tablas siguientes suponen D = 0, P = 0 y R = 0. Sumar los borradores y propuestas con imagen mediante la fórmula anterior. Los límites de borradores y pendientes no fijan una ocupación real ni acotan el historial de rechazadas.
 
 **Retención acordada el 2026-09-23:** las tablas siguientes suponen que todavía no hay avatares adicionales de antiguos miembros. Salir del equipo no libera su avatar específico; sumar esos avatares conservados a A. Cada 1.000 adicionales añaden 0,10 GB en base o 0,30 GB en el escenario pesado, incluidas las variantes previstas. No es historial de versiones de una foto: se conserva únicamente la última imagen de cada relación persona + equipo.
 
@@ -107,4 +121,17 @@ Para el escenario de 1.000 usuarios/2.500 logros, la base elegida sin originales
 3. Confirmar usuarios, membresías, equipos y logros previstos, espacio libre y presupuesto de recursos del servidor.
 4. Con originales descartados, concretar limpieza temporal y de sustituidas, réplicas y backups, sin historial activo de procesadas; fijar límites y alertas con margen operativo.
 
-No se han procesado imágenes ni inspeccionado recursos del servidor para esta estimación. Los cálculos aritméticos sí se han verificado. No se fija todavía capacidad de disco, cuota de usuario ni contratación de R2.
+Actualización 2026-10-12: se ejecutaron ensayos sintéticos de Busboy/Sharp y se inventariaron RAM/disco del Windows local en [el presupuesto provisional](media/T02-02-RESOURCES.md). Esas pruebas no proporcionan todavía pesos representativos del corpus real ni consumo bajo carga integrada. No se han inspeccionado recursos del servidor de despliegue para esta estimación. Los cálculos aritméticos sí se han verificado. No se fija aquí capacidad permanente de disco, cuota de usuario ni contratación de R2.
+
+## 8. Pesos observados en el corpus sintético integrado — 2026-10-18
+
+El [ensayo repetible](media/MEDIA-LOAD-TESTING.md) procesa imágenes de6000×4000/24MP mediante recepción, Sharp, S3 y asociación reales. Estas cifras son dos ejemplos controlados, no una media de usuarios ni un nuevo máximo contractual. No sustituyen las estimaciones anteriores por promedios de solo dos imágenes.
+
+| Imagen de logro | Principal1280×853 | Variante640×427 | Variante320×213 | Total conservado |
+| --- | ---: | ---: | ---: | ---: |
+| JPEG con textura | 229.312bytes | 68.221bytes | 17.890bytes | **315.423bytes ≈0,315MB** |
+| PNG con transparencia | 2.366.503bytes | 871.230bytes | 250.342bytes | **3.488.075bytes ≈3,488MB** |
+
+Las variantes añaden aproximadamente37,6% y47,4% sobre su principal respectivamente. El PNG transparente detallado puede superar el escenario pesado estimado; este no era un límite técnico. Confirmar distribución real antes de fijar capacidad y mantener margen para este tipo de archivo.
+
+Cada entrada del ensayo llega a10MB mediante padding válido documentado en el manifiesto. No atribuir toda la diferencia10MB→salida a compresión: una parte es retirada de ese padding/metadatos. Tras completar cada trabajo se retira la entrada temporal; solo se conservan las tres variantes. El borrado S3 se comprueba con HEAD, sin afirmar recuperación inmediata del espacio físico del volumen.

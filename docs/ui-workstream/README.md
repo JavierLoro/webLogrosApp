@@ -1,6 +1,6 @@
 # LockerBoard UI Visual Convergence Workstream
 
-**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas en7.10: backend y corpus de logros verificados localmente, frontal/QA pendientes. Consultar [estado vigente](STATUS.md); no reanudar por esta nota.
 
 Este directorio es la fuente operativa del rediseño visual de LockerBoard. Permite retomar el trabajo desde CLI, Work, Codex u otra sesión sin depender del historial de conversación.
 

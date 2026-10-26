@@ -1,6 +1,6 @@
 # UI Workstream Tasks
 
-**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](../phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas en 7.10: backend local verificado el 2026-10-26; frontal y QA completos pendientes.
 
 **Pausa vigente fuera de la entrega:** G7/G8 cerrados localmente tras la reanudación autorizada de 7.7. Se conservan G0–G5 cerrados, G6 provisional, A1/A2 aplazados y G9 sin iniciar. Las fases independientes, como 7.10, mantienen su planificación.
 
@@ -91,24 +91,32 @@ Por override del usuario (2026-09-21), el Coordinator asume todas las comparacio
 
 ## Planificación vinculada: imágenes y almacenamiento (Phase 7.10)
 
-**Actualizado el 2026-09-24.** Fuente única del desglose: [MEDIA-PLAN, tareas y dependencias](../MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre). Este índice no duplica las subtareas ni sus criterios; al ejecutar, actualizar estados allí y resumir aquí y en STATUS en el mismo cambio.
+**Actualizado el 2026-10-27.** Fuente única del desglose: [MEDIA-PLAN, tareas y dependencias](../MEDIA-PLAN.md#5-tareas-ejecutables-y-condiciones-de-cierre). Este índice no duplica las subtareas ni sus criterios; al ejecutar, actualizar estados allí y resumir aquí y en STATUS en el mismo cambio.
+
+Conciliación documental del 2026-10-26: el [Roadmap](../Roadmap.md#phase-710--imágenes-y-almacenamiento) separa subtareas entregadas de pendientes concretos y sus dependencias. Siguiente trabajo: corpus/calidad y dimensionamiento sostenido; revisión de casos multimedia conservados pendiente. Frontal T07.01/T07.02 aplazado y gate T08.01 abierto antes de logos. No cambia estados de implementación ni añade pruebas, migraciones o autorización de reanudación.
 
 | Bloque | Estado | Entrega |
 | --- | --- | --- |
 | MEDIA-10A-T00 | DONE | Plan por tareas y conexión con Roadmap |
 | MEDIA-10A-T01 | DONE — alcance de uso local | Decisiones acumuladas hasta compresión, cancelación, bloqueo y recuperación del aviso. Ubicaciones y backups aplazados explícitamente |
-| MEDIA-10A-T02/T03 | TODO | Inventario, contrato técnico y diseño de datos/API/pruebas. Siguiente: T02.01 |
-| MEDIA-10A-T04 | TODO | Almacenamiento privado y persistencia, solo tras solicitar implementación |
-| MEDIA-10A-T05/T06/T07 | TODO | Entregas por tipo: logro completo → logos → avatares. Corpus y cargas por etapa; T07.01 ubicaciones APLAZADA |
-| MEDIA-10A-T08/T09 | TODO | QA, consumo, evidencia/apuntes y cierre local |
+| MEDIA-10A-T02/T03 | EN CURSO parcial | Catálogo/borradores/propuestas/revisión backend PASS local;27 migraciones base aislada. Contrato/datos de otros destinos y QA completos pendientes |
+| MEDIA-10A-T04 | EN CURSO | SDK/persistencia y carga integrada medidos; dimensionamiento sostenido/servidor pendiente |
+| MEDIA-10A-T05 | BACKEND LOGRO DONE LOCAL / BLOQUE PARCIAL | [Borradores→imagen→propuesta/publicación→revisión](../media/MEDIA-DRAFTS-PROPOSALS.md) PASS local;192 pruebas y27 migraciones. Frontal pausado/formularios incompatibles; corpus de otros destinos/dimensionamiento, revisión de casos conservados y frontal/QA pendientes |
+| MEDIA-10A-T06/T07 | LOGROS CORPUS DONE LOCAL / OTROS TIPOS Y UI PENDIENTES | [Corpus/calidad](../media/MEDIA-QUALITY-CORPUS.md):38 casos y71 variantes; T06.01/T06.02-logros verificados localmente. Logos/avatares conservan sus etapas y T07.01 sigue APLAZADA. Carga sostenida/mixta pendiente enT08.02 |
+| MEDIA-10A-T08/T09 | EN CURSO parcial | Formatos/calidad del corpus de logros y evidencia PASS local; recursos sostenidos/servidor, T08.01 con frontal/QA, otros destinos y cierre global pendientes |
 | MEDIA-DEP-T01–T04 | APLAZADAS | Servidor, copias, restauración y despliegue; no bloquean piloto local |
-| MEDIA-R2-T01 / MEDIA-EXT-T01 | FUTURAS | Migración R2 e imágenes de propuestas, fuera del bloque local |
+| MEDIA-R2-T01 | FUTURA | Migración R2, fuera del bloque local |
+| MEDIA-EXT-T01 | BACKEND DONE LOCAL / UI PENDIENTE | Borrador/imagen propia, subsanación legacy, incorporación sin copia S3 y rechazo con conservación PASS; falta frontal/QA T08.01 |
 
 **Dependencia separada de jugadores:** [PLAYER-LIFECYCLE-PLAN](../PLAYER-LIFECYCLE-PLAN.md), gap 21. PLAYER-LC-T00 DONE documental; T01–T07 TODO. Diseño de acceso/historial T01 antes de MEDIA-T03.02; archivo/reingreso T03 antes de avatar específico T05.08; eliminación T04 usa media T05.06/T05.08. No absorber sus controles administrativos ni cerrar UI-G8 por añadir avatares.
 
-**Gate de integración:** T07.01 define nuevas pestañas/controles y la excepción de imágenes reales por pantalla/tipo. T08.01 verifica el logro completo antes de ampliar a logos. Banners/fotografía y media de propuestas siguen excluidos. Perfil/alias #27/#28 y temporadas #11 conservan su propio alcance.
+**Gate de integración:** T07.01 define nuevas pestañas/controles y la excepción de imágenes reales por pantalla/tipo. T08.01 verifica el logro completo antes de ampliar a logos. Banners/fotografía siguen excluidos. Media de propuestas incluida expresamente en 7.10; ubicar controles y autorizar pantallas en T07.01. Perfil/alias #27/#28 y temporadas #11 conservan su propio alcance.
 
-**Estado operativo vigente:** A1/A2 aplazados hasta completar la estructura y antes de G9; G6 completada provisionalmente; G7/G8 cerrados localmente; ver [entrega](../phase-7.7/RESULT.md). G9 sin iniciar. Siguiente tarea de diseño prevista: MEDIA-10A-T02.01, sin iniciar. No se ha implementado media, arrancado contenedores ni ejecutado pruebas de aplicación por preparar este plan. Los roles indican responsabilidad futura; no agentes lanzados ni permiso para ejecutar.
+[Corpus y calidad de logros](../media/MEDIA-QUALITY-CORPUS.md) PASS local el 2026-10-27:38 casos (25 válidos/13 rechazos),71 variantes privadas,7 pruebas de herramienta y11 de compatibilidad Sharp. PNG exacto respecto a referencia; JPEG sin avisos de métricas y13 paneles inspeccionados a1×/2×. Máximo observado6,13MB por imagen con variantes; carga sostenida/mixta y servidor pendientes. Frontal pausado yT08.01 abierto; no habilita logos.
+
+Preparación de publicación —2026-10-27: documentación/roadmap/contexto conciliados y PR del bloque backend multimedia preparada para revisión; el alcance incluye sus bases locales necesarias. La publicación de rama/PR no cierra T08.01/T09 ni reanuda frontal, logos o despliegue.
+
+**Estado operativo vigente:** A1/A2 aplazados, G9 sin iniciar, G6 provisional y G7/G8 cerrados localmente. [Borradores/propuestas con imagen](../media/MEDIA-DRAFTS-PROPOSALS.md): recorrido backend local verificado el 2026-10-26; 192/192 comprobaciones PASS, 27 migraciones solo base aislada. Frontal pausado y formularios de creación/propuesta temporalmente incompatibles. 7.10 parcial por corpus/calidad, dimensionamiento sostenido/servidor, revisión de casos multimedia conservados, frontal/QA y otros destinos; T08.01 sigue abierto y logos dependen de ese gate.
 
 ## Ejecución vinculada: progreso y secretos (#30 + #29)
 
