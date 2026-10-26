@@ -5,6 +5,7 @@ orchestration: ADAPTIVE_ROUTER_READY
 current_phase: NONE — entrega local Phase 7.7 sin imágenes finalizada
 current_task: NONE
 last_functional_delivery: 7.10 recorrido backend borradores/propuestas con imagen DONE LOCAL — docs/media/MEDIA-DRAFTS-PROPOSALS.md
+publication: PR #33 DRAFT — https://github.com/JavierLoro/webLogrosApp/pull/33; rama codex/media-backend-drafts-quality-20261027; sin merge/despliegue
 current_iteration: 3 — correcciones y captura final
 last_completed: UI-G7-T01–T05 / UI-G8-T01–T08 — PASS local, evidencia docs/phase-7.7/RESULT.md
 next_action: Carga sostenida/mixta con el corpus de logros ya validado, incluido PNG de alta entropía; revisar RAM/CPU/disco/provisiones y repetir en servidor al retomar ese entorno. Revisión de casos conservados pendiente aparte. Frontal pausado; T08.01 sigue abierto antes de logos. No reanudar G9 ni A1/A2.

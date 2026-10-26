@@ -114,7 +114,7 @@ Conciliación documental del 2026-10-26: el [Roadmap](../Roadmap.md#phase-710--i
 
 [Corpus y calidad de logros](../media/MEDIA-QUALITY-CORPUS.md) PASS local el 2026-10-27:38 casos (25 válidos/13 rechazos),71 variantes privadas,7 pruebas de herramienta y11 de compatibilidad Sharp. PNG exacto respecto a referencia; JPEG sin avisos de métricas y13 paneles inspeccionados a1×/2×. Máximo observado6,13MB por imagen con variantes; carga sostenida/mixta y servidor pendientes. Frontal pausado yT08.01 abierto; no habilita logos.
 
-Preparación de publicación —2026-10-27: documentación/roadmap/contexto conciliados y PR del bloque backend multimedia preparada para revisión; el alcance incluye sus bases locales necesarias. La publicación de rama/PR no cierra T08.01/T09 ni reanuda frontal, logos o despliegue.
+Preparación de publicación —2026-10-27: documentación/roadmap/contexto conciliados y [PR #33 del bloque backend multimedia](https://github.com/JavierLoro/webLogrosApp/pull/33) abierta como borrador para revisión; el alcance incluye sus bases locales necesarias. La publicación de rama/PR no cierra T08.01/T09 ni reanuda frontal, logos o despliegue.
 
 **Estado operativo vigente:** A1/A2 aplazados, G9 sin iniciar, G6 provisional y G7/G8 cerrados localmente. [Borradores/propuestas con imagen](../media/MEDIA-DRAFTS-PROPOSALS.md): recorrido backend local verificado el 2026-10-26; 192/192 comprobaciones PASS, 27 migraciones solo base aislada. Frontal pausado y formularios de creación/propuesta temporalmente incompatibles. 7.10 parcial por corpus/calidad, dimensionamiento sostenido/servidor, revisión de casos multimedia conservados, frontal/QA y otros destinos; T08.01 sigue abierto y logos dependen de ese gate.
 

@@ -28,7 +28,7 @@ La numeración describe el itinerario de aprendizaje, no una secuencia estricta 
 | Conservación, archivo y eliminación de jugadores | Reglas acordadas; bloque propio relacionado con identidad/temporadas | [PLAYER-LC-T01–T07](PLAYER-LIFECYCLE-PLAN.md#3-tareas-y-dependencias); conservación/reingreso antes de completar avatar específico; eliminación/admin no absorbidos por uploads |
 | Comunidad, evolución UI, imágenes, testing y tiempo real | Futuro | Fases 8.5–12 y decisiones del backlog |
 
-Publicación del bloque multimedia: rama y PR agrupan las bases S3/cola/runtime/migraciones, borradores/propuestas con imagen y corpus/calidad verificados. La PR es para revisión del alcance backend local;7.10 y el frontal conservan sus pendientes. Abrir o publicar esa rama no aplica migraciones fuera del piloto ni despliega la aplicación.
+Publicación del bloque multimedia: [PR #33 en borrador](https://github.com/JavierLoro/webLogrosApp/pull/33), rama `codex/media-backend-drafts-quality-20261027`, agrupa las bases S3/cola/runtime/migraciones, borradores/propuestas con imagen y corpus/calidad verificados. La PR es para revisión del alcance backend local;7.10 y el frontal conservan sus pendientes. Abrir o publicar esa rama no aplica migraciones fuera del piloto ni despliega la aplicación.
 
 Fuentes: [STATUS](ui-workstream/STATUS.md), [TASKS](ui-workstream/TASKS.md), [QA de UI-G1](ui-workstream/evidence/UI-G1-T05-QA.md) y [registro de pendientes](ui-workstream/evidence/UI-A2/BACKEND-GAPS.md). El commit local `c2ca920` reúne identidad, temporadas y sesiones. La publicación remota y el estado de las issues no se verifican mediante esta conciliación documental.
 
