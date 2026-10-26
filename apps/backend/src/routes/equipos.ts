@@ -4,10 +4,14 @@ import { resolveTeam } from "../middleware/resolveTeam"
 import { authMiddleware } from "../middleware/auth"
 import { requireTeamAdmin, requireTeamMember } from "../middleware/teamAccess"
 import { validate } from "../middleware/validate"
-import { crearLogroSchema, achievementConfigurationSchema } from "../schemas/logros"
+import { achievementConfigurationSchema } from "../schemas/logros"
 import { AppError } from "../errors/AppError"
 import { publicName, readCatalog, readTeam } from "../lib/teamRead"
 import { rejectAchievementRequestSchema, requestStatusSchema } from "../schemas/achievementRequests"
+import draftsRouter from "./drafts"
+import { draftSubmissionSchema } from "../schemas/drafts"
+import { submitDraft } from "../lib/achievementDrafts"
+import { requireMediaOrigin } from "../middleware/mediaOrigin"
 import propuestasRouter from "./propuestas"
 import seasonsRouter from "./seasons"
 import progressRouter from "./progress"
@@ -16,6 +20,8 @@ import { isAchievementHidden, presentAchievement, revealedAchievementIds } from 
 import { grantAchievement } from "../lib/achievementProgress"
 import { progressDTO } from "../lib/achievementProgressState"
 import { teamAliasSchema } from "../schemas/profile"
+import { createMediaRouter } from "./media"
+import { getMediaRuntime } from "../lib/mediaRuntime"
 
 // 📚 ROUTER SCOPED POR EQUIPO. Se monta en server.ts como app.use("/equipos/:slug", router),
 //    así que aquí las rutas son relativas: "/logros" = "/equipos/:slug/logros".
@@ -37,7 +43,11 @@ function parsePositiveId(value: string | string[]) {
 //    Traduce :slug → req.team (o lanza 404). Puesto aquí una vez, no hay que repetirlo por ruta.
 //    Es lo que garantiza que req.team exista en los handlers y justifica el "!" de req.team!.id.
 router.use(resolveTeam)
+// 📚 El getter resuelve el runtime cuando llega la petición: importar rutas no
+// 📚 arranca Sharp/S3, y el servidor puede seguir funcionando con media desactivado.
+router.use(createMediaRouter({ getRuntime: getMediaRuntime }))
 router.use(seasonsRouter)
+router.use(draftsRouter)
 router.use(propuestasRouter)
 router.use(progressRouter)
 
@@ -290,17 +300,10 @@ router.post("/admin/asignaciones", authMiddleware, requireTeamAdmin, async (req,
 
 // 📚 POST (escritura): cadena authMiddleware → validate → handler. Orden intencionado: primero auth
 //    (sin token, 401 y no gastamos esfuerzo), luego validar el body, y solo entonces crear.
-router.post("/logros", authMiddleware, requireTeamAdmin, validate(crearLogroSchema), async (req, res) => {
-  const { nombre, puntos, descripcion, categoria, criterios, scope, kind, targetValue, isSecret } = req.body
-
-  // 📚 teamId NO viene del body: lo dicta el :slug de la URL (ya resuelto en req.team). Que el
-  //    cliente eligiera el equipo sería un fallo de seguridad. Añadir teamId aquí es además lo que
-  //    arregla el "Property 'team' is missing" que rompía el build tras la migración multi-tenant.
-  const nuevoLogro = await prisma.logro.create({
-    data: { nombre, puntos, descripcion, categoria, criterios, scope, kind, targetValue, isSecret, teamId: req.team!.id }
-  })
-
-  res.status(201).json(nuevoLogro)
+router.post("/logros", authMiddleware, requireTeamAdmin, requireMediaOrigin, validate(draftSubmissionSchema), async (req, res) => {
+  const runtime = getMediaRuntime()
+  if (!runtime) throw new AppError(503, "La gestión de imágenes no está disponible")
+  res.status(201).json(await submitDraft(req.userId!, req.team!.id, req.body.borradorId, req.body.version, "DIRECT", runtime.store))
 })
 
 

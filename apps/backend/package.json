@@ -8,7 +8,9 @@
   },
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
+    "dev:media:windows": "node --env-file=../../.env.media.local --env-file=.env.ui-windows -r ts-node/register src/server.ts",
     "build": "tsc",
+    "bench:media": "node dist/experiments/media-benchmark/run.js",
     "seed": "prisma db seed",
     "seed:dev": "sh -c 'set -a && . ./.env.seed.local && set +a && prisma db seed'",
     "seed:check": "tsc --project tsconfig.seed.json",
@@ -28,9 +30,11 @@
   },
   "homepage": "https://github.com/JavierLoro/webLogrosApp#readme",
   "dependencies": {
+    "@aws-sdk/client-s3": "3.1141.0",
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
     "bcryptjs": "^3.0.3",
+    "busboy": "1.6.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
@@ -39,10 +43,12 @@
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",
     "prisma": "^7.5.0",
+    "sharp": "0.35.5",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/busboy": "1.5.5",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",

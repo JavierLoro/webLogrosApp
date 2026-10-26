@@ -1,0 +1,109 @@
+{
+  "createdAt": "2026-10-26T22:56:30.792Z",
+  "scope": "achievement corpus and backend quality; no frontend or sustained load",
+  "runId": "a262501c-568f-440b-ab2b-c4def49769c4",
+  "completed": false,
+  "cleanupVerified": true,
+  "thresholds": {
+    "psnrDb": 30,
+    "ssimLuma": 0.95
+  },
+  "thresholdPolicy": "metric warnings require recorded visual review; no compression changes",
+  "counts": {
+    "before": {
+      "users": 13,
+      "teams": 2,
+      "memberships": 14,
+      "logros": 19,
+      "proposals": 6,
+      "drafts": 0,
+      "jobs": 0,
+      "assets": 0,
+      "cleanups": 0,
+      "orphanCleanups": 0,
+      "owners": 5
+    },
+    "after": {
+      "users": 13,
+      "teams": 2,
+      "memberships": 14,
+      "logros": 19,
+      "proposals": 6,
+      "drafts": 0,
+      "jobs": 0,
+      "assets": 0,
+      "cleanups": 0,
+      "orphanCleanups": 0,
+      "owners": 5
+    }
+  },
+  "sourceWorkspacesRemoved": true,
+  "ownS3KeysDeletedAndHeadVerified": 3,
+  "results": [
+    {
+      "id": "landscape-detail",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 2400,
+        "height": 1600
+      },
+      "variants": [
+        {
+          "filename": "landscape-detail-1280x853.jpg",
+          "width": 1280,
+          "height": 853,
+          "bytes": 122088,
+          "sha256": "9a73e14218bb059cdb026606932e5aa462acd845a39bf41fdab9fef4cc651b81",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.7646755324345447,
+            "psnrDb": 37.11009058413931,
+            "ssimLuma": 0.9658484119743751,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "landscape-detail-640x427.jpg",
+          "width": 640,
+          "height": 427,
+          "bytes": 33111,
+          "sha256": "fc49e8a16e26ed6332bf4593c193f50676167f8f9f9352c66fb2d18ca9fad376",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.1685511807181888,
+            "psnrDb": 35.529672076566364,
+            "ssimLuma": 0.9617768210175842,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "landscape-detail-320x213.jpg",
+          "width": 320,
+          "height": 213,
+          "bytes": 9114,
+          "sha256": "b715d4f21d0e06ab551161b0bd0793b2810d0a5e1eeaaaa65827130b6378f673",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.5245843114241002,
+            "psnrDb": 34.48091503867081,
+            "ssimLuma": 0.9658290969215316,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "landscape-detail-1280-review.png"
+      ],
+      "alerts": [],
+      "outcome": "RUNNING",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    }
+  ]
+}

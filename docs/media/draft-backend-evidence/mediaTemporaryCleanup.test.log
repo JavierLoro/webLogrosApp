@@ -1,0 +1,13 @@
+✔ a dead owned receipt can discover variants created before onSpawn recorded them (24.7468ms)
+✔ unknown files in an orphan variants directory remain quarantined (15.4581ms)
+✔ a foreign receipt marker preserves the input directory (14.1062ms)
+✔ a missing marker does not authorize deleting a known input path (5.7992ms)
+✔ an empty directory after marker unlink can finish an exact pending rmdir (2.8289ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67.2101

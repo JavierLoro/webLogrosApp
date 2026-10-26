@@ -1,0 +1,102 @@
+{
+  "baselineRunId": "80d7f34d-92dd-424e-9b27-7273fca73ece",
+  "methodology": "Mismo corpus, límites y ocho tandas por ejecución; mismo volumen existente. Servicio recreado para aplicar Go antes de la primera; segunda sin reinicio ni GC forzado. Comparación histórica, no ensayo aleatorizado.",
+  "runs": [
+    {
+      "label": "initial",
+      "runId": "1d93f9d3-6197-4abc-91c8-5a85643ce364",
+      "functionalPassed": true,
+      "budgetPassed": false,
+      "sameVariantDimensionsAndBytes": true,
+      "variantCount": 150,
+      "summary": {
+        "jobs": 50,
+        "workers": 50,
+        "peakWorkerRssBytes": 467648512,
+        "overlapUpperBoundBytes": 503566336,
+        "peakBackendRssBytes": 196272128,
+        "peakTemporaryBytes": 123555079,
+        "sharpMs": {
+          "p50": 531,
+          "p95": 785,
+          "max": 822
+        },
+        "queueWaitMs": {
+          "max": 6621
+        },
+        "healthMs": {
+          "samples": 246,
+          "p50": 3.819600000002538,
+          "p95": 8.944700000000012,
+          "max": 84.56749999999738
+        },
+        "workerCpuMs": 41304,
+        "backendCpuMs": 14500,
+        "baselineBackendRssBytes": 123912192,
+        "containers": [
+          {
+            "name": "weblogros_ui_windows",
+            "samples": 17,
+            "peakMemoryBytes": 70715965,
+            "peakCpuPercent": 12.41
+          },
+          {
+            "name": "weblogros_media_windows-seaweedfs-1",
+            "samples": 17,
+            "peakMemoryBytes": 284583526,
+            "peakCpuPercent": 184.38
+          }
+        ]
+      },
+      "queueWorkMs": 7635
+    },
+    {
+      "label": "warm",
+      "runId": "2ec4a908-facc-4c82-9054-33dfe976784b",
+      "functionalPassed": true,
+      "budgetPassed": false,
+      "sameVariantDimensionsAndBytes": true,
+      "variantCount": 150,
+      "summary": {
+        "jobs": 50,
+        "workers": 50,
+        "peakWorkerRssBytes": 466866176,
+        "overlapUpperBoundBytes": 503046144,
+        "peakBackendRssBytes": 196845568,
+        "peakTemporaryBytes": 123555079,
+        "sharpMs": {
+          "p50": 564,
+          "p95": 770,
+          "max": 887
+        },
+        "queueWaitMs": {
+          "max": 7488
+        },
+        "healthMs": {
+          "samples": 256,
+          "p50": 4.001699999993434,
+          "p95": 11.234900000003108,
+          "max": 50.1079000000027
+        },
+        "workerCpuMs": 42500,
+        "backendCpuMs": 16781,
+        "baselineBackendRssBytes": 123994112,
+        "containers": [
+          {
+            "name": "weblogros_ui_windows",
+            "samples": 17,
+            "peakMemoryBytes": 70674022,
+            "peakCpuPercent": 11.14
+          },
+          {
+            "name": "weblogros_media_windows-seaweedfs-1",
+            "samples": 17,
+            "peakMemoryBytes": 370986189,
+            "peakCpuPercent": 255.16
+          }
+        ]
+      },
+      "queueWorkMs": 8759
+    }
+  ]
+}

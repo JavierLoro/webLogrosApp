@@ -201,13 +201,13 @@ infra/nginx/    — Reverse proxy: /api/* → backend:3001, /* → frontend:3000
 ### Frontend (`apps/frontend/src/app/`)
 - App Router de Next.js. La V1 nació code-first; el rediseño visual actual es image-first y sigue `docs/ui-workstream/`.
 - Incluye landing, auth, shell tenant, dashboard con datos reales, catálogo, detalle, creación/propuesta por rol, ranking, solicitudes de obtención y paneles administrativos V1.
-- Ranking y lecturas de jugadores/propuestas ya existen; jugadores está implementado con QA/gate visual pendientes. Los historiales renovados y las subrutas administrativas acordadas corresponden a UI-G7/UI-G8, todavía pendientes.
+- Ranking y lecturas de jugadores/propuestas ya existen; jugadores está implementado con QA/gate visual pendientes. Los historiales renovados y las subrutas administrativas de UI-G7/UI-G8 están entregados; media frontend y su QA siguen pendientes.
 - La UI debe contemplar estados loading/error/empty/401/403/404, responsive y accesibilidad.
 
 ### Base de datos
 - PostgreSQL en Docker, contenedor `weblogros_db`
 - Credenciales locales: `admin:admin123`, db `weblogros`, puerto `5432`
-- Modelo de datos: equipos, usuarios, membresías/roles contextuales, logros, concesiones, invitaciones, solicitudes y propuestas. Identidad global/alias y temporadas se describen en `docs/Architecture.md`; temporadas tiene migración y pruebas de ejecución pendientes según Roadmap.
+- Modelo de datos: equipos, usuarios, membresías/roles contextuales, logros, concesiones, invitaciones, solicitudes y propuestas. Identidad global/alias y temporadas se describen en `docs/Architecture.md`; temporadas fue verificada localmente; media añade borradores, assets y trabajos. Consultar Roadmap para alcance y migraciones de cada entrega.
 - `apps/backend/.env` contiene `DATABASE_URL` y `JWT_SECRET`
 
 ### Variables de entorno necesarias (`apps/backend/.env`)
@@ -217,6 +217,9 @@ JWT_SECRET="..."
 ```
 
 ## Estado actual del roadmap
-Conciliado el 2026-09-22. Fases 1–4, base multi-tenant, Frontend V1, roles y administración V1 completados en su alcance; HTTPS y copias offsite siguen pendientes. Phase 7.5 Auth Hardening completada y verificada manualmente. Propuestas dispone de backend y formulario por rol; faltan historiales UI-G7 y administración UI-G8. Identidad global/alias implementados y validados localmente; edición de perfil/alias pendiente. Temporadas tiene backend versionado, pero migración aplicada, pruebas HTTP y frontend pendientes.
 
-Foco actual: **UI-A2-T04**, con gate UI-A1-T04 todavía en curso. Gates UI-G0–G5 cerrados; jugadores implementado (UI-G6-T01/T02 DONE), con continuación pausada en UI-G6-T03. UI-G7–G9 pendientes. Ranking y estadísticas ya entregados dentro del workstream; no repetirlos por casillas históricas. Consultar `docs/Roadmap.md`, `docs/ui-workstream/STATUS.md` y `docs/ui-workstream/evidence/UI-A2/BACKEND-GAPS.md` para estado, evidencia y alcance. Implementado/validado localmente no equivale a publicado o desplegado.
+Conciliado el 2026-10-27. Base multi-tenant, roles/sesión, G7/G8, perfil/alias y temporadas entregados y verificados localmente en su alcance. Backend multimedia de catálogo/borradores/propuestas/revisión verificado (192 comprobaciones y27 migraciones solo en base aislada); corpus/calidad de logros verificados (38 casos,71 variantes,7 pruebas de herramienta y11 de compatibilidad Sharp). Evidencia en `docs/media/MEDIA-DRAFTS-PROPOSALS.md` y `docs/media/MEDIA-QUALITY-CORPUS.md`.
+
+Siguiente trabajo: carga sostenida/mixta con el corpus validado, incluido PNG de alta entropía (6,13MB por imagen con variantes), y revisión de recursos/provisiones. Revisión administrativa de casos multimedia conservados pendiente aparte. Frontal pausado: los formularios de creación/propuesta son temporalmente incompatibles con el contrato nuevo `{ borradorId, version }`; adaptar enT07.01/T07.02 cuando se reanude. T08.01 sigue abierto y bloquea logos; avatares conservan dependencia PLAYER-LC-T03. Despliegue y backups siguen aplazados.
+
+La línea visual conserva G0–G5 cerrados, G6 provisional sin gate visual PASS, G7/G8 entregados, A1/A2 aplazados yG9 sin iniciar; `current_task` visual esNONE. Consultar siempre `docs/ui-workstream/STATUS.md`, `TASKS.md`, `docs/MEDIA-PLAN.md` y `docs/Roadmap.md`. No repetir ranking/estadísticas, perfil/alias, temporadas ni backend media por notas históricas. Implementación, publicación de una rama/PR y despliegue son estados distintos.

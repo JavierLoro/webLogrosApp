@@ -1,0 +1,27 @@
+▶ recuperación durable tras caídas y pérdida de acuses
+  ✔ caída real en receiving: reinicio conserva la imagen vigente (1005.9766ms)
+  ✔ caída real en queued: reinicio conserva la imagen vigente (915.9549ms)
+  ✔ caída real en processing: reinicio conserva la imagen vigente (1173.2342ms)
+  ✔ caída real en publishing: reinicio conserva la imagen vigente (1667.2942ms)
+  ✔ caída real en committed: reinicio conserva la imagen vigente (1422.0943ms)
+  ✔ caída real en processing con cancelación durable: reinicio conserva la imagen vigente (1344.4835ms)
+  ✔ una segunda instancia no puede adquirir la cola mientras la primera vive (294.2749ms)
+Media runtime operation failed { name: 'Error', jobId: '0a8e4463-6bd4-44e8-934b-97e38505fa35' }
+  ✔ acuse perdido before del commit se reconcilia en el runtime vivo sin reprocesar (2426.9685ms)
+  ✔ acuse perdido after del commit se reconcilia en el runtime vivo sin reprocesar (643.6155ms)
+  ✔ recepción local sin callback activo se interrumpe, una recepción viva se conserva (2420.7134ms)
+  ✔ release anticipado no deja recuperar un callback que todavía trabaja (4381.7179ms)
+  ✔ un PID de worker vivo conserva su plaza aunque no haya tarea local (189.6429ms)
+  ✔ RECEIVING y QUEUED sin owner bloquean el arranque de forma conservadora (63.2737ms)
+  ✔ limpieza S3 fallida queda pendiente y retira un PUT que reaparece tarde (154.2211ms)
+  ✔ perder la sesión exclusiva detiene admisión y no afirma cierre limpio (172.544ms)
+  ✔ perder el lock durante preflight impide terminar el arranque (121.6243ms)
+✔ recuperación durable tras caídas y pérdida de acuses (18931.0659ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18936.6356

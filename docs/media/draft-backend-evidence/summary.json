@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-26",
+  "environment": "Windows / Node 24.14.0 / PostgreSQL 127.0.0.1:55437/weblogros_ui / private S3 127.0.0.1:8333",
+  "suites": [
+    {
+      "name": "achievementDrafts.integration.test.log",
+      "tests": 20,
+      "pass": 20,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaAbandonedCleanup.integration.test.log",
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaAchievementPipeline.integration.test.log",
+      "tests": 18,
+      "pass": 18,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaDraftRecovery.integration.test.log",
+      "tests": 9,
+      "pass": 9,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaHttp.integration.test.log",
+      "tests": 13,
+      "pass": 13,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaImageExecutor.test.log",
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaJobAdmission.integration.test.log",
+      "tests": 9,
+      "pass": 9,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaJobCancellation.integration.test.log",
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaJobClaims.integration.test.log",
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaJobExecution.integration.test.log",
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaJobRecovery.integration.test.log",
+      "tests": 17,
+      "pass": 17,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaJobs.integration.test.log",
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaTemporaryCleanup.test.log",
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaUploadIntake.integration.test.log",
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "mediaUploadReceiver.test.log",
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "objectStore.integration.test.log",
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    }
+  ],
+  "total": 192,
+  "pass": 192,
+  "counts": {
+    "User": 13,
+    "Team": 2,
+    "TeamMembership": 14,
+    "Logro": 19,
+    "PropuestaLogro": 6,
+    "AchievementDraft": 0,
+    "MediaJob": 0,
+    "MediaAsset": 0,
+    "MediaAssetCleanup": 0,
+    "MediaOrphanCleanup": 0,
+    "MediaRuntimeOwner": 5
+  },
+  "activeJobs": 0,
+  "migrations": 27,
+  "scope": "backend local; frontend paused; no deployment"
+}

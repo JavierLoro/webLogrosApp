@@ -1,8 +1,8 @@
 # Phase 7.7 — Plan de implementación de pendientes
 
-Fecha: 2026-09-24. Estado: PASOS 1–7 COMPLETADOS LOCALMENTE; paso 8 pendiente. Petición: planificar lo pendiente de propuestas, sin reanudar UI Workstream V2.
+Fecha: 2026-09-24. Actualizado: 2026-10-27. Estado: PASOS 1–7 COMPLETADOS LOCALMENTE; paso8 con backend de imagen verificado y frontal/QA pendientes. Petición: planificar lo pendiente de propuestas, sin reanudar UI Workstream V2.
 
-**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas pendientes de 7.10/Phase 10.
+**Entrega acotada — 2026-09-24:** G7/G8 y pasos 1–7 de 7.7 completados y verificados localmente. Evidencia: [resultado](phase-7.7/RESULT.md). A1/A2 siguen aplazados, G6 provisional y G9 sin iniciar; el resto del workstream conserva la pausa solicitada. Imágenes de propuestas incluidas en7.10: [backend verificado](media/MEDIA-DRAFTS-PROPOSALS.md) y [corpus/calidad de logros](media/MEDIA-QUALITY-CORPUS.md) PASS local; frontal/QA pendientes.
 
 ## Objetivo y límites
 
@@ -12,7 +12,7 @@ Ya existen persistencia, permisos, aprobación/rechazo y formulario por rol. Reu
 
 Fuentes: [Roadmap](Roadmap.md), [Architecture](Architecture.md), [PLAN visual](ui-workstream/PLAN.md), [TASKS](ui-workstream/TASKS.md) y [STATUS](ui-workstream/STATUS.md). Este plan desglosa las tareas existentes G7/G8; no crea una cola paralela. Su ejecución y estados se siguen en TASKS/STATUS. La inspección documental y del árbol de rutas identifica las páginas actuales de solicitudes y administración; la auditoría de contratos está documentada en [CONTRACTS](phase-7.7/CONTRACTS.md).
 
-**Autorización vigente:** «montalo y ves explicando lo realizado y porque» reanuda pasos 1–7 (G7/G8 y su QA). Las imágenes conservan la dependencia pendiente de 7.10/Phase 10. Al ejecutar trabajo visual, usar manifest, referencias canónicas y skill image-to-code; comparación directa por Coordinator.
+**Autorización vigente:** «montalo y ves explicando lo realizado y porque» reanuda pasos 1–7 (G7/G8 y su QA). La ampliación posterior de7.10 entregó el backend de imágenes; el frontal conserva su pausa y necesita integrar borradores y el contrato `{ borradorId, version }`. Al ejecutar trabajo visual, usar manifest, referencias canónicas y skill image-to-code; comparación directa por Coordinator.
 
 ## Secuencia de entrega
 
@@ -25,7 +25,7 @@ Fuentes: [Roadmap](Roadmap.md), [Architecture](Architecture.md), [PLAN visual](u
 | 5. Solicitudes de obtención | G8-T06 | Listado y `/admin/solicitudes/[id]` bajo el slug. Mostrar estado, contexto estacional y progreso disponible; aprobar/rechazar con motivo y refrescar datos tras la respuesta real. | Paso 4 | Concesión progresiva solo con objetivo cumplido; se conserva la temporada original de la solicitud y el error real del servidor. |
 | 6. Revisión de propuestas | G8-T07 | Listado y `/admin/propuestas/[id]` bajo el slug. Al incorporar, integrar tipo, objetivo cuando corresponda, alcance y secreto según el contrato existente. Rechazar con motivo. | Paso 4; ejecutar después del paso 5 | Aprobar incorpora un único logro; no concede, no suma puntos y no crea solicitud de obtención. Rechazar conserva motivo en el historial. |
 | 7. Regresión y cierre de la entrega sin imágenes | G8-T08 y cierre de pendientes 7.7 relacionados | Comprobar recorridos personales/administrativos, roles, errores y estados; regresión de progreso, secretos y temporadas. Capturas y comparación directa del Coordinator. | Pasos 3–6 | Evidencia funcional y visual, lint/TypeScript/build pertinentes, sin regresiones materiales; actualizar TASKS y STATUS conjuntamente cuando se cierre. |
-| 8. Imágenes en propuestas | Phase 10, MEDIA-EXT-T01 | Definir adjunto, lectura, rechazo, conservación, retirada y relación con el logro creado; implementar mediante la base de media existente cuando esté lista. | Base necesaria de 7.10 implementada y verificada; alcance de ampliación definido | Recorrido con imagen y fallos probado; permisos y limpieza reales; cierre independiente documentado. |
+| 8. Imágenes en propuestas | Phase7.10, MEDIA-EXT-T01 / T07.02 / T08.01 | Backend DONE LOCAL: imagen desde borrador, subsanación legacy, lectura propia, aprobación y rechazo con conservación. Pendiente integrar el frontal y verificar navegador/visual con el contrato nuevo. | Reanudación del frontal y ubicacionesT07.01; backend/corpus de logros verificados | T08.01 PASS con recorrido completo, permisos, fallos y limpieza; la entrega backend no cierra el gate. |
 
 El paso 4 incluye trabajo compartido de administración que el roadmap ya vincula a 7.7/G8. No implica que las invitaciones o los jugadores sean nuevas capacidades del dominio de propuestas.
 

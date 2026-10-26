@@ -1,0 +1,19 @@
+✔ trabajador real genera tamaños de logro y solo devuelve después de cerrar (356.4555ms)
+✔ JPEG se orienta y retira metadatos sin ampliar ni duplicar la fuente pequeña (319.2303ms)
+✔ PNG mantiene transparencia y proporción, sin convertir a paleta (284.715ms)
+✔ avatar necesita encuadre cuadrado y produce 256/96 (578.8414ms)
+✔ rechazos de formato, archivo dañado, bytes y píxeles limpian solo su intento (1276.7857ms)
+✔ PNG con bloque acTL se rechaza incluso si Sharp lo considera una página (195.0174ms)
+✔ cancelación previa no crea salidas ni arranca un trabajador (7.8297ms)
+✔ cancelar una transformación real espera cierre y conserva entrada/imagen anterior (424.4038ms)
+✔ timeout durante trabajo real cierra Sharp y retira sus salidas (428.9342ms)
+✔ caída inesperada del trabajador no se confunde con éxito y limpia el intento (426.4694ms)
+✔ perder el canal del padre detiene al trabajador; la recuperación limpiará restos (480.3246ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4789.3108

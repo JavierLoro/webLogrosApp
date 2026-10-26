@@ -1,0 +1,20 @@
+[
+  {
+    "directory": "2026-10-26-quality",
+    "completed": false,
+    "cleanupVerified": true,
+    "reason": "Recorte de panel 320x213 fuera de límites; corregido reviewCrop y añadido test."
+  },
+  {
+    "directory": "2026-10-26-quality-r2",
+    "completed": false,
+    "cleanupVerified": true,
+    "reason": "Baseline fill con dimensiones redondeadas alteraba el muestreo PNG; corregida referencia proporcional y añadido test."
+  },
+  {
+    "directory": "2026-10-26-quality-r3",
+    "completed": true,
+    "cleanupVerified": true,
+    "reason": "38 casos PASS; inspección muestral registrada en visual-review.json."
+  }
+]

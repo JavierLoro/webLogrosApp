@@ -1,0 +1,15 @@
+▶ toma atómica de trabajos QUEUED
+  ✔ FIFO determinista excluye RECEIVING y el DTO de propietario oculta datos internos (64.7936ms)
+  ✔ PUBLISHING conserva capacidad y al liberar una ranura se toma el siguiente QUEUED (52.2979ms)
+  ✔ varios clientes concurrentes nunca reclaman más de dos puestos (205.307ms)
+  ✔ PostgreSQL rechaza puesto inválido, duplicado y transición incompleta (89.3835ms)
+✔ toma atómica de trabajos QUEUED (788.2179ms)
+ℹ {"before":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"after":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"fixturesRemoved":true}
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 796.8485

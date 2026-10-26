@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-10-18T18:34:23.544Z",
+  "container": "weblogros_media_windows-seaweedfs-1",
+  "imageId": "sha256:ce9e796f1fe6f06968f4c04bdaf8f678dad9c8acdfef3d244133d71bfa6bf882",
+  "image": "chrislusf/seaweedfs:4.47",
+  "command": [
+    "mini",
+    "-dir=/data"
+  ],
+  "goMemoryLimit": "GOMEMLIMIT=384MiB",
+  "dockerMemoryLimitBytes": 0,
+  "mounts": [
+    {
+      "Type": "volume",
+      "Name": "weblogros_media_windows_data",
+      "Destination": "/data"
+    }
+  ],
+  "sharpCache": false,
+  "sharpConcurrency": 1,
+  "composeSha256": "73d6df901dc007891c3e2e88d6db965ebca5cc5d152945d443d12bc5bbb84328",
+  "workerSourceSha256": "3fd9a866c4ea5acac7b71c6a2a936c87bfbb62b6dfc24ed8f630c277c8a002b7",
+  "note": "Solo se conserva la variable Go autorizada; no se guarda el entorno del contenedor.",
+  "verifiedAfterRunAt": "2026-10-18T18:37:00.734Z",
+  "runId": "2ec4a908-facc-4c82-9054-33dfe976784b"
+}

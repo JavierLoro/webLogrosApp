@@ -1,0 +1,19 @@
+▶ admisión compartida, cierre de recepción y FIFO por llegada completa
+  ✔ 12 admisiones concurrentes admiten exactamente 10 plazas de espera (321.723ms)
+  ✔ la admisión y la toma concurrentes comparten el límite global 10+2 (280.3552ms)
+  ✔ destino concurrente único y confirmación scoped al propietario (118.9661ms)
+  ✔ el inicio del recibo emite un solo token y requiere ruta con UUID del trabajo (31.8739ms)
+  ✔ FIFO sigue el orden de cierre de recepción, con createdAt invertido (127.8391ms)
+  ✔ dos puestos activos y diez en espera se coordinan como doce plazas totales (302.143ms)
+  ✔ plazo alcanzado libera QUEUED antes de contar incluso si el nuevo intento queda lleno (301.11ms)
+  ✔ toma terminaliza un QUEUED cuyo plazo ya se alcanzó (63.8358ms)
+✔ admisión compartida, cierre de recepción y FIFO por llegada completa (1886.7612ms)
+ℹ {"before":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"after":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"fixturesRemoved":true}
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1897.3901

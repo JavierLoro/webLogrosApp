@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-18T18:27:21.532Z",
+  "image": "sha256:ce9e796f1fe6f06968f4c04bdaf8f678dad9c8acdfef3d244133d71bfa6bf882",
+  "method": "Fresh isolated containers, two concurrent publishers, 50 synthetic image publications each, 30 seconds idle, cleanup and 5 seconds idle. Same executable and workload, metrics/debug enabled in all three. No hard cgroup memory limit. Forced GC occurs only after workload measurements.",
+  "cases": [
+    {
+      "label": "default",
+      "goMemoryTarget": null,
+      "completedPublications": 50,
+      "keysChecked": 150,
+      "cleanupErrors": [],
+      "samplingError": false,
+      "error": null,
+      "peakDockerEquivalentMiB": 255.6484375,
+      "peakLoadDockerEquivalentMiB": 228.63671875,
+      "publicationDurationMs": 5740,
+      "durationSource": "rounded stdout measurement of the workload",
+      "numGCAtNaturalProfile": 12,
+      "heapAllocAfterForcedGcMiB": 305.8098449707031,
+      "containerAndVolumeCleanup": [
+        "container-stopped-and-removed",
+        "own-volume-removed"
+      ]
+    },
+    {
+      "label": "go-192mib",
+      "goMemoryTarget": "192MiB",
+      "completedPublications": 50,
+      "keysChecked": 150,
+      "cleanupErrors": [],
+      "samplingError": false,
+      "error": null,
+      "peakDockerEquivalentMiB": 71.8984375,
+      "peakLoadDockerEquivalentMiB": 71.8984375,
+      "publicationDurationMs": 7514,
+      "durationSource": "rounded stdout measurement of the workload",
+      "numGCAtNaturalProfile": 1741,
+      "heapAllocAfterForcedGcMiB": 240.1245574951172,
+      "containerAndVolumeCleanup": [
+        "container-stopped-and-removed",
+        "own-volume-removed"
+      ]
+    },
+    {
+      "label": "go-384mib",
+      "goMemoryTarget": "384MiB",
+      "completedPublications": 50,
+      "keysChecked": 150,
+      "cleanupErrors": [],
+      "samplingError": false,
+      "error": null,
+      "peakDockerEquivalentMiB": 192.8671875,
+      "peakLoadDockerEquivalentMiB": 191.60546875,
+      "publicationDurationMs": 4882,
+      "durationSource": "rounded stdout measurement of the workload",
+      "numGCAtNaturalProfile": 16,
+      "heapAllocAfterForcedGcMiB": 242.65985107421875,
+      "containerAndVolumeCleanup": [
+        "container-stopped-and-removed",
+        "own-volume-removed"
+      ]
+    }
+  ],
+  "findings": {
+    "leveldb2WriteBuffersReservedMiB": 128,
+    "filerEventBuffersReservedMiB": 80,
+    "reservationsAreNotAllResident": true,
+    "originalContainerConfigChanged": false
+  },
+  "limitations": [
+    "One run per configuration; not a statistical performance comparison.",
+    "This is direct S3 storage traffic, not the full HTTP/Prisma/Sharp pipeline.",
+    "Fresh-volume trials are not directly comparable to the earlier warm 531MiB peak.",
+    "A Go memory target is soft and is not a process RSS cap."
+  ]
+}

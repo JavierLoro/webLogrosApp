@@ -1,0 +1,62 @@
+{
+  "seaweed-existing.json": {
+    "rawSha256": "5f1eafe36f355d610952ec07805d845c52c24d51f43066cc419e6d784eb01668",
+    "gzipSha256": "cc232d5a1744ef0b94774a769409d784165eda5df5da75ec4c49de5e17ef7b5c",
+    "bytes": 116432,
+    "gzipBytes": 5917
+  },
+  "seaweed-default.json": {
+    "rawSha256": "0e1358fabe8b1968dff1bd04b09c59ce5e162fda8815d739462539d48cf1e296",
+    "gzipSha256": "b0955fea30381fff61cc25630a039434bea71799eca76ec3fb90acd9d4cc4246",
+    "bytes": 267802,
+    "gzipBytes": 13560
+  },
+  "seaweed-go-192mib.json": {
+    "rawSha256": "646c55ee9c1241283064474b348aa7e18def966f32f35ed8bd26184d6b06b3be",
+    "gzipSha256": "76c3e7d9f17eb23bf3e04af3828edefff5445f96e516402ec4ed75699d9265da",
+    "bytes": 271111,
+    "gzipBytes": 13902
+  },
+  "seaweed-go-384mib.json": {
+    "rawSha256": "fd3a4cf94aa66c1c9a83e7ce1a410c4193fa382ccde75eb160b801ea800a378c",
+    "gzipSha256": "aa4ed05df7b56543292edb90dbd58d993b33ace9cf58e5bc00e70837ed091642",
+    "bytes": 262522,
+    "gzipBytes": 12145
+  },
+  "default-heap-natural.txt": {
+    "rawSha256": "f339909d3c79cdcb384f2d1a87dcccb607ea9e84ea2f5d2eb42f948a04d7124e",
+    "gzipSha256": "8f10b3d2c31445f235dc2b2e504a5c03303344bc5809ef03eb78a48dd65cdf92",
+    "bytes": 776766,
+    "gzipBytes": 54391
+  },
+  "default-heap-forced-gc.txt": {
+    "rawSha256": "65b17f98b2678405ee2b2b7df9ead4d8d722a9c087664f9830541c3dc7de3587",
+    "gzipSha256": "236f607c1739bba16bdafed985b3bdbb3d9858b17aff79f7eddee65dda9463ae",
+    "bytes": 778398,
+    "gzipBytes": 57652
+  },
+  "go-192mib-heap-natural.txt": {
+    "rawSha256": "cf961b7a327d133786d616160ee9f934e2893dc3931befa5e43829b46bb4122b",
+    "gzipSha256": "85a2383a970bf6c338e8142f003484bd128ed5b36c1aa8c4efac8362513c38b6",
+    "bytes": 891685,
+    "gzipBytes": 71145
+  },
+  "go-192mib-heap-forced-gc.txt": {
+    "rawSha256": "04b312c67ec784c40485ecf7ec8dfe5147efe5c27a42e206b86f76fd991a5c6d",
+    "gzipSha256": "cc2b98df634b15d6cbcd421d0af98358956716f429b4f8bf01ce24323999a2bf",
+    "bytes": 894945,
+    "gzipBytes": 71037
+  },
+  "go-384mib-heap-natural.txt": {
+    "rawSha256": "3757c0118420f319c2f3c5acf17bcf89c518599a947af6b8381502bd5d09ae82",
+    "gzipSha256": "dd9b14b38bf888ac1b4e3973dd79ea08d770f3f619221cc925ce5106b54d2d5e",
+    "bytes": 772155,
+    "gzipBytes": 58568
+  },
+  "go-384mib-heap-forced-gc.txt": {
+    "rawSha256": "2481bb73afdab163c445d107a41c22c4b7e0ef500f97bb535138ac65de2dd775",
+    "gzipSha256": "c1f336dbc2b9bbd7343b5ceb91b0151d0b7a6d2516f716cba5c95e320be58aef",
+    "bytes": 773313,
+    "gzipBytes": 59009
+  }
+}

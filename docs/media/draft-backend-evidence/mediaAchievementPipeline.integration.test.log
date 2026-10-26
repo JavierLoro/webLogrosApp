@@ -1,0 +1,27 @@
+▶ pipeline catálogo: recepción, Sharp, S3 privado y asociación atómica
+  ✔ imagen PNG completa con tres variantes privadas y sin original temporal (699.753ms)
+  ✔ reemplazo conserva la anterior hasta confirmar nueva referencia y después la borra (573.1668ms)
+  ✔ PLAYER y destino de otro equipo no admiten ni reservan (10.8091ms)
+  ✔ JPEG usa sus bytes reales y publica image/jpeg sin depender del nombre cliente (431.6771ms)
+  ✔ un temporal perdido antes de Sharp libera solo su toma (98.2705ms)
+  ✔ la limpieza conserva un archivo ajeno y puede retomarse tras retirarlo (522.6122ms)
+  ✔ fallo remoto después de PUT parcial conserva la referencia y limpia el intento (521.6552ms)
+  ✔ verificación remota incorrecta impide SUCCEEDED (456.317ms)
+  ✔ cancelación durante la publicación no sustituye la imagen (481.6816ms)
+  ✔ permiso revocado tras la subida se vuelve a comprobar antes de asociar (548.577ms)
+  ✔ archivo con firma válida pero contenido roto falla en Sharp sin publicar (309.9411ms)
+  ✔ cancelación antes del primer PUT libera la toma (407.6479ms)
+  ✔ manifiesto inválido antes del primer PUT libera la toma (396.7192ms)
+  ✔ la limpieza S3 pendiente se puede retomar sin cambiar SUCCEEDED (613.0722ms)
+  ✔ dos controladores comparten los dos puestos incluso durante S3 (1139.2758ms)
+  ✔ fallo de acuse antes del commit final no destruye objetos (552.7216ms)
+  ✔ fallo de acuse después del commit final no destruye objetos (854.786ms)
+✔ pipeline catálogo: recepción, Sharp, S3 privado y asociación atómica (9395.0217ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9401.7519

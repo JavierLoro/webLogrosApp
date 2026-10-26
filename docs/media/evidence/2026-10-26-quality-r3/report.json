@@ -1,0 +1,1773 @@
+{
+  "createdAt": "2026-10-26T23:00:39.255Z",
+  "scope": "achievement corpus and backend quality; no frontend or sustained load",
+  "runId": "5c4d340c-2bf1-4f17-848c-5b09d72e524c",
+  "completed": true,
+  "cleanupVerified": true,
+  "thresholds": {
+    "psnrDb": 30,
+    "ssimLuma": 0.95
+  },
+  "thresholdPolicy": "metric warnings require recorded visual review; no compression changes",
+  "counts": {
+    "before": {
+      "users": 13,
+      "teams": 2,
+      "memberships": 14,
+      "logros": 19,
+      "proposals": 6,
+      "drafts": 0,
+      "jobs": 0,
+      "assets": 0,
+      "cleanups": 0,
+      "orphanCleanups": 0,
+      "owners": 5
+    },
+    "after": {
+      "users": 13,
+      "teams": 2,
+      "memberships": 14,
+      "logros": 19,
+      "proposals": 6,
+      "drafts": 0,
+      "jobs": 0,
+      "assets": 0,
+      "cleanups": 0,
+      "orphanCleanups": 0,
+      "owners": 5
+    }
+  },
+  "sourceWorkspacesRemoved": true,
+  "ownS3KeysDeletedAndHeadVerified": 71,
+  "results": [
+    {
+      "id": "landscape-detail",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 2400,
+        "height": 1600
+      },
+      "variants": [
+        {
+          "filename": "landscape-detail-1280x853.jpg",
+          "width": 1280,
+          "height": 853,
+          "bytes": 122088,
+          "sha256": "9a73e14218bb059cdb026606932e5aa462acd845a39bf41fdab9fef4cc651b81",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.7367929366940211,
+            "psnrDb": 37.31521328962958,
+            "ssimLuma": 0.9666523372494799,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "landscape-detail-640x427.jpg",
+          "width": 640,
+          "height": 427,
+          "bytes": 33111,
+          "sha256": "fc49e8a16e26ed6332bf4593c193f50676167f8f9f9352c66fb2d18ca9fad376",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.1287360948477754,
+            "psnrDb": 35.751990567092506,
+            "ssimLuma": 0.9627985033143771,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "landscape-detail-320x213.jpg",
+          "width": 320,
+          "height": 213,
+          "bytes": 9114,
+          "sha256": "b715d4f21d0e06ab551161b0bd0793b2810d0a5e1eeaaaa65827130b6378f673",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.463649256651017,
+            "psnrDb": 34.77073537023137,
+            "ssimLuma": 0.9667928983027038,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "landscape-detail-1280-review.png",
+        "landscape-detail-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "portrait-detail",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1600,
+        "height": 2400
+      },
+      "variants": [
+        {
+          "filename": "portrait-detail-853x1280.jpg",
+          "width": 853,
+          "height": 1280,
+          "bytes": 118235,
+          "sha256": "3d8436be95267c30bce0e14f3aec89d69d1f5a5d877300a745efcb472d78202a",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.657252894196952,
+            "psnrDb": 37.67531670938983,
+            "ssimLuma": 0.9720411364419994,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "portrait-detail-427x640.jpg",
+          "width": 427,
+          "height": 640,
+          "bytes": 32357,
+          "sha256": "8b494365c04c90c9f1665afb79d1df7f632361cf30c9c7974fd6f13c68cdfcd1",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.9800278103044497,
+            "psnrDb": 36.3386036674208,
+            "ssimLuma": 0.9708465727486681,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "portrait-detail-213x320.jpg",
+          "width": 213,
+          "height": 320,
+          "bytes": 8787,
+          "sha256": "ec7391ee953628b8f2ff86b584f8ff4cac71d96b738d132d922459de420e6c58",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.3246527777777777,
+            "psnrDb": 35.07852973210618,
+            "ssimLuma": 0.9724807922711065,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "portrait-detail-1280-review.png",
+        "portrait-detail-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "square-alpha",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1600
+      },
+      "variants": [
+        {
+          "filename": "square-alpha-1280x1280.png",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 971516,
+          "sha256": "9c89c3b253e88439a8d43775d6b7a89607dc1d1f02b89b59cee28fefa77d8de4",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999998956,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "square-alpha-640x640.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 325434,
+          "sha256": "f7e99cf8275692eac8dc527b96d9058df2c98886084fc090353db59f32eb2703",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999998965,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "square-alpha-320x320.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 69429,
+          "sha256": "a9e1ec673fd02ae97029836fdac2fb3d1192b8c0c8af7f2c0d2a8870fefef19a",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999999417,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "square-alpha-1280-review.png",
+        "square-alpha-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "odd-dimensions",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1921,
+        "height": 1081
+      },
+      "variants": [
+        {
+          "filename": "odd-dimensions-1280x720.jpg",
+          "width": 1280,
+          "height": 720,
+          "bytes": 101338,
+          "sha256": "5cd5b2c6f39ed43c34bf7a9ce307bb6ddd3926f322e6d3dc15defe0bec7179f2",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.7803819444444444,
+            "psnrDb": 37.384288854347645,
+            "ssimLuma": 0.9657270343505633,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "odd-dimensions-640x360.jpg",
+          "width": 640,
+          "height": 360,
+          "bytes": 27530,
+          "sha256": "23c3a6c3b7a775456c6502fcd5f4984949724ccb2cda0d21c2ba509af42c3c8a",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.1006655092592594,
+            "psnrDb": 35.97450522428619,
+            "ssimLuma": 0.9662925408663515,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "odd-dimensions-320x180.jpg",
+          "width": 320,
+          "height": 180,
+          "bytes": 7570,
+          "sha256": "cb524d5603a7e6c88c585b667a09bef412d7d489e1a3ad69c53c5b2f41a46ad2",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.454178240740741,
+            "psnrDb": 34.8974970546914,
+            "ssimLuma": 0.9666653474728223,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "high-entropy-alpha",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1200
+      },
+      "variants": [
+        {
+          "filename": "high-entropy-alpha-1280x960.png",
+          "width": 1280,
+          "height": 960,
+          "bytes": 4791402,
+          "sha256": "eec9f82b746686be26d64d95dfb046c3f84870ce40e07f3ee6dcb9ed8eebdc16",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "high-entropy-alpha-640x480.png",
+          "width": 640,
+          "height": 480,
+          "bytes": 1087336,
+          "sha256": "fa5bf840b7890e964789f3fb63d8827c0f9fd6fd14518f7f6dafbdfe795d2649",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "high-entropy-alpha-320x240.png",
+          "width": 320,
+          "height": 240,
+          "bytes": 247352,
+          "sha256": "13d4da0b0133882e6b49fe41289a80612be5edb96143ea4242790922f091fb99",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "high-entropy-alpha-1280-review.png",
+        "high-entropy-alpha-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "repository-dark-texture",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 2560,
+        "height": 1440
+      },
+      "variants": [
+        {
+          "filename": "repository-dark-texture-1280x720.jpg",
+          "width": 1280,
+          "height": 720,
+          "bytes": 106060,
+          "sha256": "257e20540684ce2191de66894be6cf1319d061cc6a98b774799afbe999d25cf3",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.4332313368055556,
+            "psnrDb": 39.9376663216814,
+            "ssimLuma": 0.981924011886176,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "repository-dark-texture-640x360.jpg",
+          "width": 640,
+          "height": 360,
+          "bytes": 29462,
+          "sha256": "cee1d560d69576e92f0ad411cbb6aaceb8bfa71550a5e73ed42b9b481ae034f3",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6432667824074074,
+            "psnrDb": 38.0030414234668,
+            "ssimLuma": 0.9834625668989143,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "repository-dark-texture-320x180.jpg",
+          "width": 320,
+          "height": 180,
+          "bytes": 8835,
+          "sha256": "374eb89ea51e89c1c8a3dba4f578d2b966274cd817591fb73ea38d799332e895",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.789375,
+            "psnrDb": 36.580428558075525,
+            "ssimLuma": 0.9862927828050154,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "repository-dark-texture-1280-review.png",
+        "repository-dark-texture-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "exif-1",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 1
+      },
+      "variants": [
+        {
+          "filename": "exif-1-1200x800.jpg",
+          "width": 1200,
+          "height": 800,
+          "bytes": 98741,
+          "sha256": "d505f213eb47944d37c247cb0e22024f52b7867062284704f7a70df36ac1e1b8",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6329836805555555,
+            "psnrDb": 37.75241747156636,
+            "ssimLuma": 0.9701310007317325,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-1-640x427.jpg",
+          "width": 640,
+          "height": 427,
+          "bytes": 32787,
+          "sha256": "b8695d3b1bbc811517e6dba7008bbdffcd03174b5c5844626aedf744b1c1d847",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.113176961358314,
+            "psnrDb": 35.81525120421807,
+            "ssimLuma": 0.964451308948441,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-1-320x213.jpg",
+          "width": 320,
+          "height": 213,
+          "bytes": 9107,
+          "sha256": "4aae91608bbbbf7b746ef9a48a205d279e162f8df1be598712a0a118d52c6ebf",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.4470608372456963,
+            "psnrDb": 34.78189759007563,
+            "ssimLuma": 0.9672940522722278,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "exif-2",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 2
+      },
+      "variants": [
+        {
+          "filename": "exif-2-1200x800.jpg",
+          "width": 1200,
+          "height": 800,
+          "bytes": 98696,
+          "sha256": "c6474bba897dd48bce6795bbacf3b01ed17c05147b5c1b034cbdf062984e79da",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6332961805555555,
+            "psnrDb": 37.7584082189253,
+            "ssimLuma": 0.9701234925640895,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-2-640x427.jpg",
+          "width": 640,
+          "height": 427,
+          "bytes": 32808,
+          "sha256": "1948f8cafcaf4163eb5199120755cfa7f96172001debf7cfc0be03de6f7922a4",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.1103605581576894,
+            "psnrDb": 35.81546038678616,
+            "ssimLuma": 0.9644416115007464,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-2-320x213.jpg",
+          "width": 320,
+          "height": 213,
+          "bytes": 9106,
+          "sha256": "c095d72caed64edcd1cbf8be3010c942538348d1bad6a7e3ad7a2370486c77de",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.4586658841940534,
+            "psnrDb": 34.758635356292785,
+            "ssimLuma": 0.9672333449729176,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "exif-3",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 3
+      },
+      "variants": [
+        {
+          "filename": "exif-3-1200x800.jpg",
+          "width": 1200,
+          "height": 800,
+          "bytes": 98685,
+          "sha256": "a2381fa181683782564bebfbddacf809ef07672df13fabe9b7870a528b96e492",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6332961805555555,
+            "psnrDb": 37.7584082189253,
+            "ssimLuma": 0.9701234925640915,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-3-640x427.jpg",
+          "width": 640,
+          "height": 427,
+          "bytes": 32338,
+          "sha256": "1587ae65afe878038c766ca7066bd8715393cd9bc3412245fb8424f912fc36fc",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.088651444184231,
+            "psnrDb": 35.95034238687768,
+            "ssimLuma": 0.9645083098065947,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-3-320x213.jpg",
+          "width": 320,
+          "height": 213,
+          "bytes": 9223,
+          "sha256": "136bcd4230a90e916c149a4ff8444e2237dea48b5cd50f55523edf996d863cca",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.4769268388106416,
+            "psnrDb": 34.65581421199224,
+            "ssimLuma": 0.9667989476574704,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "exif-4",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1200,
+        "height": 800,
+        "orientation": 4
+      },
+      "variants": [
+        {
+          "filename": "exif-4-1200x800.jpg",
+          "width": 1200,
+          "height": 800,
+          "bytes": 98763,
+          "sha256": "66513217fee6ea65ce7a36083055f025db979436d3eefdfddf50d06c7a96ff53",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6329836805555555,
+            "psnrDb": 37.75241747156636,
+            "ssimLuma": 0.9701310007317323,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-4-640x427.jpg",
+          "width": 640,
+          "height": 427,
+          "bytes": 32336,
+          "sha256": "6917480a36ff0f038d3c91144cc518374ea7a7be093deebc0f6fdf6a420a5588",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.0927937158469945,
+            "psnrDb": 35.95570926114905,
+            "ssimLuma": 0.9645187446314142,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-4-320x213.jpg",
+          "width": 320,
+          "height": 213,
+          "bytes": 9224,
+          "sha256": "c3ae30784e075437bfa17afb4c3b370677be673c938e6a8aac57052838c5f31f",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.4767996870109545,
+            "psnrDb": 34.65592871621585,
+            "ssimLuma": 0.9668332954897024,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "exif-5",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 5
+      },
+      "variants": [
+        {
+          "filename": "exif-5-800x1200.jpg",
+          "width": 800,
+          "height": 1200,
+          "bytes": 97878,
+          "sha256": "d9b78be091870a5afa5b2b698953f45d06a746f841dd7914fc14a55a562b9e69",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6404847222222223,
+            "psnrDb": 37.73273934385939,
+            "ssimLuma": 0.9695524279343521,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-5-427x640.jpg",
+          "width": 427,
+          "height": 640,
+          "bytes": 32511,
+          "sha256": "b5ea489fb52713e6ea1565fce1bd439a8701a21ce6828d1ac4dc89825d1c92a5",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.1153420179547227,
+            "psnrDb": 35.805971839602535,
+            "ssimLuma": 0.9635645090460004,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-5-213x320.jpg",
+          "width": 213,
+          "height": 320,
+          "bytes": 9069,
+          "sha256": "dd36f1f2f2bb6430628fafc8294267314fb3c4598225cda32cf492f38ac28139",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.4502005086071987,
+            "psnrDb": 34.77014362604202,
+            "ssimLuma": 0.9653606671609594,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "exif-5-1280-review.png",
+        "exif-5-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "exif-6",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 6
+      },
+      "variants": [
+        {
+          "filename": "exif-6-800x1200.jpg",
+          "width": 800,
+          "height": 1200,
+          "bytes": 97924,
+          "sha256": "e371a2c3b027e78bb56af2363cdc4fc8d417ae068c6612e1745b23defc2685aa",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.642145486111111,
+            "psnrDb": 37.7165133522664,
+            "ssimLuma": 0.9695505064094698,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-6-427x640.jpg",
+          "width": 427,
+          "height": 640,
+          "bytes": 32068,
+          "sha256": "2f4276521ce3387326afcb4f5ab5238d84ecbd070c17cb309faf20dd7a1237a4",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.0976275858704136,
+            "psnrDb": 35.95202379449575,
+            "ssimLuma": 0.9633983596902719,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-6-213x320.jpg",
+          "width": 213,
+          "height": 320,
+          "bytes": 9168,
+          "sha256": "67c474e8eb26d7a116f91da22977e405bd24e063f1c6f4dfe4a5fac2a8d9ce8f",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.475337441314554,
+            "psnrDb": 34.643200036872656,
+            "ssimLuma": 0.965016034968913,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "exif-6-1280-review.png",
+        "exif-6-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "exif-7",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 7
+      },
+      "variants": [
+        {
+          "filename": "exif-7-800x1200.jpg",
+          "width": 800,
+          "height": 1200,
+          "bytes": 97865,
+          "sha256": "77ede69bfeec7622134ee49e8228e215dde4ffacd683e8a4e963653fad7e2be1",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.642145486111111,
+            "psnrDb": 37.7165133522664,
+            "ssimLuma": 0.969550506409498,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-7-427x640.jpg",
+          "width": 427,
+          "height": 640,
+          "bytes": 32043,
+          "sha256": "e4b5ff2f0bf928ee58ed9ebb2367252896764915772f7a81184381e7ced99e95",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.0976275858704136,
+            "psnrDb": 35.95190254973979,
+            "ssimLuma": 0.963398581248938,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-7-213x320.jpg",
+          "width": 213,
+          "height": 320,
+          "bytes": 9171,
+          "sha256": "17e15511ae203f840a2f9ba5a4cce1b63fa8fcb976722bf740dfdbba4fdba172",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.475337441314554,
+            "psnrDb": 34.643200036872656,
+            "ssimLuma": 0.9650160349689157,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "exif-7-1280-review.png",
+        "exif-7-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "exif-8",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 800,
+        "height": 1200,
+        "orientation": 8
+      },
+      "variants": [
+        {
+          "filename": "exif-8-800x1200.jpg",
+          "width": 800,
+          "height": 1200,
+          "bytes": 97974,
+          "sha256": "94635a8bef40cd38a62e7698fe82ca699e124725f2e80d35328c260074a0b276",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6404847222222223,
+            "psnrDb": 37.73273934385939,
+            "ssimLuma": 0.9695524279343773,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-8-427x640.jpg",
+          "width": 427,
+          "height": 640,
+          "bytes": 32504,
+          "sha256": "2af67182626c93e534c4f1586e4c2773a874e6ead7b3eab550261fe25b58389a",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.1153420179547227,
+            "psnrDb": 35.805971839602535,
+            "ssimLuma": 0.9635645090460364,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "exif-8-213x320.jpg",
+          "width": 213,
+          "height": 320,
+          "bytes": 9073,
+          "sha256": "d3d97b4a2f62bb2143df2e2bc13a70e96fb7cdad323266171bd42b3a7bcee933",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.4502005086071987,
+            "psnrDb": 34.77014362604202,
+            "ssimLuma": 0.9653606671609619,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "exif-8-1280-review.png",
+        "exif-8-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "display-p3",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1200
+      },
+      "variants": [
+        {
+          "filename": "display-p3-1280x960.png",
+          "width": 1280,
+          "height": 960,
+          "bytes": 632583,
+          "sha256": "6ba7f45e6c009275dfed75163d576ed84266906680612ecd3fa7f4bdf98919e5",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999999295,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "display-p3-640x480.png",
+          "width": 640,
+          "height": 480,
+          "bytes": 148403,
+          "sha256": "bc84b23ffb92429b96d17d7711b84f482bf013bba7c3706b4eecc4d3381fe487",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999999062,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "display-p3-320x240.png",
+          "width": 320,
+          "height": 240,
+          "bytes": 38213,
+          "sha256": "4cfc9ab1eff5aed6acff278ae5f889fd6695f89a21e82745e6407d3abc597ec6",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999999378,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "display-p3-1280-review.png",
+        "display-p3-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "cmyk-jpeg",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1600,
+        "height": 1200
+      },
+      "variants": [
+        {
+          "filename": "cmyk-jpeg-1280x960.jpg",
+          "width": 1280,
+          "height": 960,
+          "bytes": 95027,
+          "sha256": "77028bd4db4f0a2ab3f2c42ec97436603b7830a4c0e103ca5dd61ed4edd61f23",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.6327734375,
+            "psnrDb": 37.53116840652443,
+            "ssimLuma": 0.9812922407446217,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "cmyk-jpeg-640x480.jpg",
+          "width": 640,
+          "height": 480,
+          "bytes": 33056,
+          "sha256": "59c14b85d3575f84495bda0a3735eee2147583adb74cbfb2a94c9bd544177f6a",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.1109743923611113,
+            "psnrDb": 35.96368564846139,
+            "ssimLuma": 0.9696868902448472,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "cmyk-jpeg-320x240.jpg",
+          "width": 320,
+          "height": 240,
+          "bytes": 10553,
+          "sha256": "43bdf860fe13121d518b90342a100b670d4f3ce62960fbf53e648b5a6d18799b",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 2.431050347222222,
+            "psnrDb": 34.638392690291475,
+            "ssimLuma": 0.9763386697143281,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "cmyk-jpeg-1280-review.png",
+        "cmyk-jpeg-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "grayscale-progressive",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 1600,
+        "height": 1200
+      },
+      "variants": [
+        {
+          "filename": "grayscale-progressive-1280x960.jpg",
+          "width": 1280,
+          "height": 960,
+          "bytes": 79086,
+          "sha256": "23cfebe89e52a7271621b873b3dd5d51ab7c33f9b73157bc0aae04d1461d0395",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 0.8477644856770833,
+            "psnrDb": 43.83207090730217,
+            "ssimLuma": 0.9824535297957774,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "grayscale-progressive-640x480.jpg",
+          "width": 640,
+          "height": 480,
+          "bytes": 26705,
+          "sha256": "f71dad4c675f53f040369efad67b641d1c1449ac9634625dac669c19e7f50a3d",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.1267024739583333,
+            "psnrDb": 42.27265428086287,
+            "ssimLuma": 0.9728116854721148,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "grayscale-progressive-320x240.jpg",
+          "width": 320,
+          "height": 240,
+          "bytes": 8567,
+          "sha256": "7014d5fdc5b9de6768be7db926a8534236034dd85e3980efadd7df571260a841",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 1.1808723958333334,
+            "psnrDb": 42.15286654186619,
+            "ssimLuma": 0.9790290360499224,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "png-16bit",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1600,
+        "height": 1200
+      },
+      "variants": [
+        {
+          "filename": "png-16bit-1280x960.png",
+          "width": 1280,
+          "height": 960,
+          "bytes": 743672,
+          "sha256": "9b758fdadd918eeaba53053d6e7233f7cb04ea40916339e6d027335eac5b1de6",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999999305,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "png-16bit-640x480.png",
+          "width": 640,
+          "height": 480,
+          "bytes": 148773,
+          "sha256": "dd18cac5bedc140f83f32eaf05241e2bc7ba877df27a9657f4cfcc1e5008c648",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999998772,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "png-16bit-320x240.png",
+          "width": 320,
+          "height": 240,
+          "bytes": 40810,
+          "sha256": "8961678598e0e73b40289541210645f447ad8581e6e1bdb7fb8d8bb633eb61e3",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999999276,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "png-16bit-1280-review.png",
+        "png-16bit-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "palette-alpha",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 900,
+        "height": 900
+      },
+      "variants": [
+        {
+          "filename": "palette-alpha-900x900.png",
+          "width": 900,
+          "height": 900,
+          "bytes": 232787,
+          "sha256": "ed6ee6ce6e4b750414837e4576ed07f7c92a017ff65a20203b42659af1a46eec",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999998842,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "palette-alpha-640x640.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 374700,
+          "sha256": "5577e4fc9777850d43eef3a0d09aa441c5d01ec604fe9addc5ef79cf1d710af8",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999998961,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "palette-alpha-320x320.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 70643,
+          "sha256": "d1e8849ba75afa2acd4bd346f9025fb7001234387bd650004a939bd119cd69ad",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 0.9999999999999432,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "palette-alpha-1280-review.png",
+        "palette-alpha-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "small-png",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 96,
+        "height": 64
+      },
+      "variants": [
+        {
+          "filename": "small-png-96x64.png",
+          "width": 96,
+          "height": 64,
+          "bytes": 321,
+          "sha256": "70bd2170051fb7554f7fb41602266023adb8f004229b316db70a707a9c79417e",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "single-pixel",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1,
+        "height": 1
+      },
+      "variants": [
+        {
+          "filename": "single-pixel-1x1.png",
+          "width": 1,
+          "height": 1,
+          "bytes": 91,
+          "sha256": "0205255985fe14304665ee2571cd05e9a901f7d1312b9165e12abb7ef2f7a2a4",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "thin-panorama",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 24000,
+        "height": 1
+      },
+      "variants": [
+        {
+          "filename": "thin-panorama-1280x1.png",
+          "width": 1280,
+          "height": 1,
+          "bytes": 135,
+          "sha256": "80f135f15543b3ec6e62f8ecf27bc5ec7b100da72ec62c2cb9c6c672cd34463b",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "thin-panorama-640x1.png",
+          "width": 640,
+          "height": 1,
+          "bytes": 118,
+          "sha256": "97c2b5fdf291bc9935503f78802d06eaa816a97ff87c439ddd353abb959e3bcb",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "thin-panorama-320x1.png",
+          "width": 320,
+          "height": 1,
+          "bytes": 104,
+          "sha256": "d97e9f5527db746c1ec71d5ea3f746ce8ad787ec4446f6aa9b7214a881cd263b",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "thin-portrait",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 1,
+        "height": 24000
+      },
+      "variants": [
+        {
+          "filename": "thin-portrait-1x1280.png",
+          "width": 1,
+          "height": 1280,
+          "bytes": 145,
+          "sha256": "d5419aeb297ba18d8ee140698716c27103b7903e6728dd9d15efb122e47e3a74",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "thin-portrait-1x640.png",
+          "width": 1,
+          "height": 640,
+          "bytes": 127,
+          "sha256": "5d2d63229fe368a960285238757fa84f96c5fd521b0e32aff1d858725b1f8030",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "thin-portrait-1x320.png",
+          "width": 1,
+          "height": 320,
+          "bytes": 114,
+          "sha256": "676ea03606f82abced3a3470b69c2cff44a5c6a993f62914d5b7340531c59ffe",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_REJECTED"
+    },
+    {
+      "id": "boundary-jpeg-textured",
+      "expected": {
+        "status": 202,
+        "format": "jpeg",
+        "width": 6000,
+        "height": 4000
+      },
+      "variants": [
+        {
+          "filename": "boundary-jpeg-textured-1280x853.jpg",
+          "width": 1280,
+          "height": 853,
+          "bytes": 229312,
+          "sha256": "51ba18b81cbd3f9f29f49964bed119f8f34556ea96fd5913212f64cfcb15c568",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 3.3172430636967567,
+            "psnrDb": 34.69203157713758,
+            "ssimLuma": 0.988614320179115,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "boundary-jpeg-textured-640x427.jpg",
+          "width": 640,
+          "height": 427,
+          "bytes": 68221,
+          "sha256": "47006f5bef31d25c361607bb5abb964fd9c0ccbcf4ae6ba02a01375f2417e9c0",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 4.2287983021077284,
+            "psnrDb": 32.836991878380374,
+            "ssimLuma": 0.9906194407492935,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "boundary-jpeg-textured-320x213.jpg",
+          "width": 320,
+          "height": 213,
+          "bytes": 17890,
+          "sha256": "51c0c94a9c84f371f264dc33a007f7c24edb817d3cc184a0e0c563b10498dcfa",
+          "metrics": {
+            "exactPixels": false,
+            "meanAbsoluteError": 4.924427816901408,
+            "psnrDb": 31.257341281304917,
+            "ssimLuma": 0.9908149035417008,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "boundary-jpeg-textured-1280-review.png",
+        "boundary-jpeg-textured-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "PROPOSAL_ACCEPTED"
+    },
+    {
+      "id": "boundary-png-transparent",
+      "expected": {
+        "status": 202,
+        "format": "png",
+        "width": 6000,
+        "height": 4000
+      },
+      "variants": [
+        {
+          "filename": "boundary-png-transparent-1280x853.png",
+          "width": 1280,
+          "height": 853,
+          "bytes": 2366503,
+          "sha256": "84ec1bafca004fecae8d37a240e8487e984d4de1164c38538d2dd29be7b09028",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "boundary-png-transparent-640x427.png",
+          "width": 640,
+          "height": 427,
+          "bytes": 871230,
+          "sha256": "9a78bd4b78aa29e8012e9f401a5173237737399a7840380627d278ea16bae88e",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        },
+        {
+          "filename": "boundary-png-transparent-320x213.png",
+          "width": 320,
+          "height": 213,
+          "bytes": 250342,
+          "sha256": "d028e23da729a89c11e0f9fe6a8cedf26a61d22e560b6421d97967d1ec3ba0fc",
+          "metrics": {
+            "exactPixels": true,
+            "meanAbsoluteError": 0,
+            "psnrDb": null,
+            "ssimLuma": 1,
+            "alphaMaxError": 0
+          },
+          "privateReadVerified": true
+        }
+      ],
+      "panels": [
+        "boundary-png-transparent-1280-review.png",
+        "boundary-png-transparent-320-review.png"
+      ],
+      "alerts": [],
+      "outcome": "PASS_PROCESSED",
+      "httpStatus": 202,
+      "jobStatus": "SUCCEEDED",
+      "failureCode": null,
+      "productFlow": "DIRECT"
+    },
+    {
+      "id": "too-many-bytes",
+      "expected": {
+        "status": 413
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 413
+    },
+    {
+      "id": "too-many-pixels",
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_TOO_MANY_PIXELS"
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 202,
+      "jobStatus": "FAILED",
+      "failureCode": "IMAGE_TOO_MANY_PIXELS"
+    },
+    {
+      "id": "animated-png",
+      "expected": {
+        "status": 202,
+        "failureCode": "ANIMATED_IMAGE"
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 202,
+      "jobStatus": "FAILED",
+      "failureCode": "ANIMATED_IMAGE"
+    },
+    {
+      "id": "truncated-jpeg",
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 202,
+      "jobStatus": "FAILED",
+      "failureCode": "IMAGE_INVALID"
+    },
+    {
+      "id": "truncated-png",
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 202,
+      "jobStatus": "FAILED",
+      "failureCode": "IMAGE_INVALID"
+    },
+    {
+      "id": "png-trailing-data",
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 202,
+      "jobStatus": "FAILED",
+      "failureCode": "IMAGE_INVALID"
+    },
+    {
+      "id": "corrupt-png",
+      "expected": {
+        "status": 202,
+        "failureCode": "IMAGE_INVALID"
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 202,
+      "jobStatus": "FAILED",
+      "failureCode": "IMAGE_INVALID"
+    },
+    {
+      "id": "unsupported-webp",
+      "expected": {
+        "status": 415
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 415
+    },
+    {
+      "id": "unsupported-gif",
+      "expected": {
+        "status": 415
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 415
+    },
+    {
+      "id": "unsupported-tiff",
+      "expected": {
+        "status": 415
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 415
+    },
+    {
+      "id": "unsupported-svg",
+      "expected": {
+        "status": 415
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 415
+    },
+    {
+      "id": "garbage",
+      "expected": {
+        "status": 415
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 415
+    },
+    {
+      "id": "empty",
+      "expected": {
+        "status": 415
+      },
+      "variants": [],
+      "panels": [],
+      "alerts": [],
+      "outcome": "PASS_REJECTED",
+      "httpStatus": 415
+    }
+  ]
+}

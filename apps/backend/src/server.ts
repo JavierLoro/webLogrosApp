@@ -6,12 +6,14 @@
 import "./config/env"
 import express from "express"
 import equiposRouter from "./routes/equipos"
+import { globalDraftsRouter } from "./routes/drafts"
 import authRouter from "./routes/auth"
 import teamsRouter from "./routes/teams"
 import invitationsRouter from "./routes/invitations"
 import { errorHandler } from "./middleware/errorHandler"
 import prisma from "./lib/prisma"
 import cookieParser from "cookie-parser"
+import { getMediaRuntime, startMediaRuntimeFromEnv } from "./lib/mediaRuntime"
 
 const app = express()
 // 📚 trust proxy = 1: detrás de nginx TODAS las peticiones llegan con la IP interna del proxy.
@@ -34,8 +36,10 @@ app.use((req, res, next) => {
   // 📚 Las cookies cross-origin requieren permiso explícito y un origen concreto;
   // 📚 el navegador rechaza combinar credenciales con Access-Control-Allow-Origin: *.
   res.header("Access-Control-Allow-Credentials", "true")
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, If-None-Match")
+  // 📚 El navegador puede inspeccionar el validador de la imagen sin conocer S3.
+  res.header("Access-Control-Expose-Headers", "ETag, Location")
   // 📚 Preflight: antes de ciertas peticiones cross-origin el navegador manda un OPTIONS
   // 📚 para comprobar también la política de credenciales. Respondemos antes de las rutas.
   if (req.method === "OPTIONS") {
@@ -55,6 +59,12 @@ app.get("/health", async(_req, res) => {
   try {
     // 📚 Prisma hace ping a la BD para comprobar que está viva. Si falla, lanzará error.
     await prisma.$queryRaw`SELECT 1`
+    // 📚 Una conexión viva de Prisma no prueba que el runtime conserve su lock.
+    // 📚 Si perdió la propiedad de la cola, no anunciamos salud completa.
+    if (process.env.MEDIA_ENABLED === "true" && !getMediaRuntime()) {
+      res.status(503).json({ status: "error", message: "El procesamiento de imágenes no está disponible" })
+      return
+    }
     res.status(200).json({ status: "ok" })
   } catch (error) {
     console.error("Error de salud:", error)
@@ -68,6 +78,7 @@ app.get("/", (_req, res) => {
 
 // 📚 Montaje de routers bajo su prefijo: todo lo de authRouter cuelga de /auth, etc.
 //    El ORDEN de los app.use define la cadena de middlewares que atraviesa cada petición.
+app.use(globalDraftsRouter)
 app.use("/auth", authRouter)
 app.use("/invitaciones", invitationsRouter)
 app.use("/equipos", teamsRouter)
@@ -79,8 +90,50 @@ app.use("/equipos/:slug", equiposRouter)
 //    no llegarían aquí. En Express 5 los throw async de las rutas se reenvían solos.
 app.use(errorHandler)
 
-// 📚 app.listen arranca el servidor HTTP. El callback confirma en el log que está escuchando.
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`)
+// 📚 El composition root crea infraestructura antes de escuchar. Si media está
+// 📚 activado y falla su configuración, no publicamos rutas que aparenten funcionar.
+async function main(): Promise<void> {
+  const media = await startMediaRuntimeFromEnv()
+  const server = app.listen(PORT)
+  // 📚 La petición HTTP también tiene límite: no basta con limitar el tiempo de Sharp
+  // 📚 si un cliente puede mantener eternamente abierta la transferencia multipart.
+  server.requestTimeout = 125_000
+  let stopping = false
+  const shutdown = async (): Promise<void> => {
+    if (stopping) return
+    stopping = true
+    let closeError: Error | undefined
+    const closed = new Promise<void>((resolveClosed) => {
+      server.close((error) => {
+        if (error && (error as NodeJS.ErrnoException).code !== "ERR_SERVER_NOT_RUNNING") closeError = error
+        resolveClosed()
+      })
+    })
+    // 📚 Primero cesan nuevas peticiones y se cierran recepciones/workers; solo
+    // 📚 después desconectamos Prisma, que aún necesitan para guardar sus terminales.
+    await media?.stop(() => closed)
+    await closed
+    await prisma.$disconnect()
+    if (closeError) throw closeError
+  }
+  server.once("listening", () => console.log(`Servidor escuchando en http://localhost:${PORT}`))
+  server.once("error", () => {
+    console.error("No se pudo abrir el puerto del backend")
+    void shutdown().catch(() => {}).finally(() => { process.exitCode = 1 })
+  })
+  for (const signal of ["SIGINT", "SIGTERM"] as const) {
+    process.once(signal, () => {
+      void shutdown().catch(() => {
+        console.error("No se pudo completar el cierre del backend")
+        process.exitCode = 1
+      })
+    })
+  }
+}
+
+void main().catch(async () => {
+  console.error("No se pudo preparar el backend; revisa la configuración y los servicios locales")
+  await prisma.$disconnect()
+  process.exitCode = 1
 })
 

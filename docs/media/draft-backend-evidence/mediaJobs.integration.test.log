@@ -1,0 +1,18 @@
+▶ registro persistente de trabajos de imagen
+  ✔ registra RECEIVING y otra conexión recupera el mismo estado (40.7741ms)
+  ✔ otro usuario y un UUID inexistente no devuelven datos (7.0681ms)
+  ✔ dos reservas simultáneas del mismo destino producen un éxito y un 409 (24.6781ms)
+  ✔ el alcance de equipo se conserva sin modificar membresías (16.2971ms)
+  ✔ PostgreSQL impide liberar la clave de un trabajo que sigue activo (20.0047ms)
+  ✔ un estado terminal coherente libera el destino conservando el registro anterior (32.5585ms)
+  ✔ la FK impide borrar un propietario con trabajos referidos (10.7805ms)
+✔ registro persistente de trabajos de imagen (383.5756ms)
+ℹ {"before":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"after":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"fixturesRemoved":true}
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 387.9927

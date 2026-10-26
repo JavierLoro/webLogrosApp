@@ -14,6 +14,10 @@ dist
 build
 *.tsbuildinfo
 
+# Temporales privados de recepción/procesamiento; nunca assets de producto versionados
+.media-tmp/
+.bench-results/
+
 # Env
 .env
 .env.*

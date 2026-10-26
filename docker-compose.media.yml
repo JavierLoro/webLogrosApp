@@ -1,0 +1,19 @@
+name:
+  weblogros_media_windows
+services:
+  seaweedfs:
+    image: chrislusf/seaweedfs:4.47
+    volumes:
+      - weblogros_media_windows_data:/data
+    ports:
+      - "127.0.0.1:8333:8333"
+    env_file:
+      - .env.media.local
+    environment:
+      # Objetivo flexible de memoria gestionada por Go: ajusta la frecuencia de GC.
+      # No es un límite duro de Docker ni garantiza que el RSS quede bajo 384 MiB.
+      GOMEMLIMIT: 384MiB
+
+volumes:
+  weblogros_media_windows_data:
+    name: weblogros_media_windows_data

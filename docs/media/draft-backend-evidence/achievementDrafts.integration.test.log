@@ -1,0 +1,29 @@
+▶ borradores → imagen → propuesta/publicación → revisión
+  ✔ origen configurado también protege borradores con procesamiento desactivado (4.6582ms)
+  ✔ sesión, origen, cuerpos antiguos y campos manipulados se rechazan (244.2425ms)
+  ✔ cuota global de tres serializa carreras entre equipos y conserva incompletos (444.8302ms)
+  ✔ autor, tenant, versión obsoleta y pérdida de rol directo (233.1604ms)
+  ✔ membresía perdida oculta datos pero sigue consumiendo plaza; reingreso recupera (1060.84ms)
+  ✔ imagen obligatoria, campos completos y finalidad antes de enviar (718.8452ms)
+  ✔ sustitución activa bloquea envío aunque haya imagen READY; cancelación conserva anterior (1014.2167ms)
+  ✔ fallo de imagen y objeto ausente no permiten enviar ni liberan plaza (820.9166ms)
+  ✔ doble envío y reintento perdido devuelven un único resultado y liberan una plaza (648.3241ms)
+  ✔ aprobar transfiere referencia sin PUT; historial resuelve catálogo vigente y respeta secreto (654.4097ms)
+  ✔ rechazar conserva exactamente su imagen y prohíbe sustitución (603.9522ms)
+  ✔ publicación directa con imagen, finalidad inmutable y reintento idempotente (584.8365ms)
+  ✔ sexta pendiente conserva borrador/imagen; otros jugadores y equipos tienen contador independiente (2107.8858ms)
+  ✔ rollback transaccional y pérdida de ACK preservan la semántica del envío (554.4387ms)
+  ✔ legacy subsanable: solo autor, sin editar texto ni sustituir; aprobación espera trabajo y READY (544.7988ms)
+  ✔ descarte durante publicación libera plaza y un PUT tardío nunca vuelve a asociar (887.7582ms)
+  ✔ descarte de QUEUED confirma cancelación y libera destino inmediatamente (106.1988ms)
+  ✔ descarte durante RECEIVING aborta el stream antes de liberar su reserva (140.9652ms)
+  ✔ limpieza respeta referencias de borrador y propuesta y claves conservan origen (531.5849ms)
+✔ borradores → imagen → propuesta/publicación → revisión (12899.9677ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12904.9249

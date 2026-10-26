@@ -1,0 +1,22 @@
+✔ guarda JPEG por firma binaria e ignora filename y MIME declarados (30.3455ms)
+✔ reconoce PNG por su firma y no declara que Sharp lo haya decodificado (10.3959ms)
+✔ admite exactamente 10.000.000 bytes sin acumularlos en un Buffer (42.9947ms)
+✔ rechaza el primer byte por encima del límite y limpia después de cerrar streams (66.5331ms)
+✔ rechaza bytes exóticos aunque el cliente declare MIME JPEG (6.942ms)
+✔ rechaza formulario parcial, ausencia de archivo, campo inesperado y segundo archivo (21.036ms)
+✔ preabort y validación fallida no consumen el source ni crean workspace (2.9081ms)
+✔ abort durante transferencia espera close físico antes de limpiar (66.5309ms)
+✔ error y cierre prematuro de source no revelan detalle y limpian el archivo parcial (9.0366ms)
+✔ EEXIST y dos llamadas con el mismo UUID preservan el workspace anterior (14.3568ms)
+✔ dos UUID distintos reciben en paralelo sin borrar el espacio del otro (19.6987ms)
+✔ carrera por el mismo UUID crea solo un propietario y conserva su archivo (7.8922ms)
+✔ un resto ajeno se conserva y deja cleanup pendiente tras un fallo (15.2178ms)
+✔ rechaza root symlink sin seguirlo para crear datos (4.8625ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 324.646

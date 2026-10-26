@@ -1,0 +1,15 @@
+✔ métricas idénticas, diferencia RGB conocida y error alpha (1.3777ms)
+✔ métricas detectan contraste perdido y dimensiones inválidas (0.9403ms)
+✔ oráculo EXIF incluye las ocho permutaciones y las reflexiones (3.2682ms)
+✔ paneles de revisión acotan recortes en panoramas, retratos y fuentes pequeñas (0.1887ms)
+✔ referencia PNG conserva el muestreo proporcional con dimensiones redondeadas (172.8652ms)
+✔ resumen no inventa aprobaciones ni precisión PNG con corpus vacío (0.3022ms)
+✔ pesos suman variantes y calculan mediana par y p95 por rango (0.2982ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.4573

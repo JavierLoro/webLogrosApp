@@ -1,0 +1,37 @@
+{
+  "dateLocal": "2026-10-27",
+  "timezone": "Europe/Madrid",
+  "reviewer": "Coordinator",
+  "scope": "muestreo de corpus de logros; paneles originales con recortes 1x/2x",
+  "decision": "PASS local para este corpus y muestreo; no gate T08.01",
+  "inspectedPanels": [
+    "landscape-detail-320-review.png",
+    "repository-dark-texture-1280-review.png",
+    "square-alpha-320-review.png",
+    "portrait-detail-320-review.png",
+    "display-p3-1280-review.png",
+    "cmyk-jpeg-320-review.png",
+    "exif-5-320-review.png",
+    "exif-7-320-review.png",
+    "png-16bit-1280-review.png",
+    "high-entropy-alpha-320-review.png",
+    "palette-alpha-320-review.png",
+    "boundary-jpeg-textured-320-review.png",
+    "boundary-png-transparent-1280-review.png"
+  ],
+  "notes": [
+    "JPEG: ligera suavización y mezcla de color en líneas finas a 320px/2x; sin pérdida de composición ni defectos materiales respecto a la referencia reducida.",
+    "El texto diminuto pierde legibilidad también en la referencia al reducir; esta revisión no define tamaños de texto ni encuadres del frontal.",
+    "Arte oscuro: sombras y textura principal conservadas; la compresión reduce algo de grano fino.",
+    "PNG/alpha/16bit normalizado/paleta: sin diferencia visual nueva; igualdad exacta de píxeles/alpha en las 26 variantes PNG.",
+    "EXIF5/7: reflexiones y rotaciones coinciden con referencia y oráculo de esquinas; las ocho orientaciones tienen comprobación automática independiente.",
+    "P3 y CMYK: coherencia con la referencia normalizada sRGB; no se afirma conservar todo el gamut original de otro espacio.",
+    "El mínimo PSNR JPEG (31.257 dB) corresponde al patrón texturado 320px, revisado; cero avisos bajo los umbrales fijados.",
+    "No se inspeccionaron manualmente las 71 variantes: se conservaron 30 paneles y se revisaron 13, con comprobaciones automáticas en todas las variantes."
+  ],
+  "limits": [
+    "No es QA de navegador, tarjetas ni pantallas; frontal pausado.",
+    "No cierra corpus de logos/avatares ni dimensionamiento/carga sostenida.",
+    "Las escenas sintéticas y el único arte propio no representan todas las fotografías posibles de usuarios."
+  ]
+}

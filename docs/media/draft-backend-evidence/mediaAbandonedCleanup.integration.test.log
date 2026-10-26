@@ -1,0 +1,33 @@
+▶ barrido de abandonados verifica edad, propiedad, actividad y reanudación
+  ✔ 24h es una frontera inclusiva y el journal precede al borrado (235.0238ms)
+  ✔ mtime reciente, ctime reciente y cierre reciente del owner conservan restos (93.7492ms)
+  ✔ ningún estado activo se borra por antigüedad (177.0583ms)
+  ✔ owner actual, owner vivo y tareas protegidas nunca se adoptan (102.3272ms)
+  ✔ marker ausente, ajeno, owner desconocido y host ajeno quedan conservados (88.9036ms)
+  ✔ archivo desconocido y junction se revisan antes de borrar cualquier input (142.1734ms)
+  ✔ referencias de otro trabajo impiden adoptar un workspace sin fila propia (206.6975ms)
+  ✔ un terminal no borra referencias ajenas ni un worker cuyo PID sigue vivo (254.7195ms)
+  ✔ una modificación reciente del trabajo retrasa elegibilidad del terminal (99.5914ms)
+  ✔ el borrado de un terminal respeta abort antes de tocar sus archivos (117.2453ms)
+  ✔ un temporal reaparecido con sello previo no se declara falsamente limpio (97.6038ms)
+  ✔ limpiar el original temporal conserva asset READY y referencia del logro (197.0165ms)
+  ✔ fallo de disco deja journal pendiente y otra instancia de limpiador lo retoma (364.693ms)
+  ✔ acuse final de limpieza perdido se repara aunque la carpeta ya no exista (421.6065ms)
+  ✔ un PENDING no autoriza borrar un input recién reaparecido (371.8848ms)
+  ✔ caída después de quitar marker retoma únicamente rmdir vacío (330.9389ms)
+  ✔ owner actual falso y raíz con marker inválido no permiten borrar (79.761ms)
+  ✔ abortar después de journalizar conserva input para otro barrido (377.9019ms)
+  ✔ referencia aparecida después del journal se vuelve a comprobar antes de borrar (198.0358ms)
+  ✔ si falla consultar referencias de DB no se infiere que el archivo esté huérfano (351.5498ms)
+  ✔ el cursor deja pasar archivos elegibles detrás de uno desconocido (646.5263ms)
+  ✔ un COMPLETE reaparecido debe esperar de nuevo 24h (571.4645ms)
+  ✔ arranque drena lotes y el poll horario se espera al detener el runtime (281.4778ms)
+✔ barrido de abandonados verifica edad, propiedad, actividad y reanudación (6124.3214ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6130.742

@@ -1,0 +1,24 @@
+▶ intake enlaza reserva, archivo cerrado y confirmación QUEUED
+  ✔ éxito guarda identidad privada y no devuelve rutas (129.3188ms)
+  ✔ destino ya reservado rechaza y cierra el segundo source (41.64ms)
+  ✔ cola llena rechaza sin leer el stream y espera su cierre (237.9082ms)
+  ✔ formulario inválido cierra source, falla el job y libera el destino (52.2591ms)
+  ✔ firma de imagen inválida se terminaliza tras cerrar source (53.4229ms)
+  ✔ corte durante transferencia espera el cierre y termina CANCELED (129.6478ms)
+  ✔ colisión EEXIST después del claim conserva carpeta ajena y RECEIVING (48.9963ms)
+  ✔ pre-abort cierra source y no crea una admisión (8.1569ms)
+  ✔ fallo de confirmación incierto no borra archivo ni inventa terminal (61.8174ms)
+  ✔ fallo de ACK antes de commit conserva archivo y RECEIVING (38.0329ms)
+  ✔ cancelación durante ACK devuelve too_late cuando QUEUED ya confirmó (41.565ms)
+  ✔ fallo al crear claim conserva RECEIVING sin iniciar transferencia (28.093ms)
+  ✔ cancelación tras cerrar receiver y antes del ACK conserva cleanupPending (59.1927ms)
+✔ intake enlaza reserva, archivo cerrado y confirmación QUEUED (1198.1837ms)
+ℹ {"before":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"after":{"users":13,"teams":2,"memberships":14,"achievements":19,"jobs":0},"fixturesRemoved":true}
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1205.0096

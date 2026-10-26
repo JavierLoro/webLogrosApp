@@ -1,0 +1,18 @@
+▶ recuperación real de destinos borrador y subsanación
+  ✔ draft: receiving (1173.1154ms)
+  ✔ draft: queued (1081.2055ms)
+  ✔ draft: processing (1277.8299ms)
+  ✔ draft: publishing (1624.7219ms)
+  ✔ draft: committed (1567.1185ms)
+  ✔ draft: publishing + descarte antes del reinicio (1712.669ms)
+  ✔ proposal: publishing (1624.5135ms)
+  ✔ proposal: committed (1769.1873ms)
+✔ recuperación real de destinos borrador y subsanación (12281.388ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12285.9859
